@@ -1,4 +1,5 @@
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
+
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
@@ -31,6 +32,37 @@ const config: Config = {
     locales: ['en'],
   },
 
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preconnect',
+        href: 'https://fonts.googleapis.com'
+      }
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+      }
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        href: 'https://fonts.googleapis.com/css2?family=Spline+Sans+Mono&display=swap',
+        rel: 'stylesheet',
+      }
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        href: 'https://fonts.googleapis.com/css2?family=Rubik&display=swap',
+        rel: 'stylesheet',
+      }
+    }
+  ],
+
   presets: [
     [
       'classic',
@@ -56,6 +88,7 @@ const config: Config = {
       logo: {
         alt: 'Fluvio Logo',
         src: 'img/fluvio-with-text.svg',
+        srcDark: 'img/fluvio-with-text-white.svg',
       },
       items: [
         {

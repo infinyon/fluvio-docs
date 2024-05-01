@@ -1,9 +1,9 @@
-import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
+import clsx from 'clsx';
 
 import styles from './index.module.css';
 

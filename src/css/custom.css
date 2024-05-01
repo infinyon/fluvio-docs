@@ -4,12 +4,44 @@
  * work well for content-centric websites.
  */
 
+* {
+  font-family: "Rubik", sans-serif;
+}
+
+code, code * {
+  font-family: "Spline Sans Mono", monospace;
+  font-style: normal !important;
+  font-weight: 400 !important;
+}
+
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
+  /* Fluvio Color Palette */
+
+  /* Shades of Fluvio Logo Color */
+  --fluvio-800: #2A1B3D;
+  --fluvio-600: #412E69;
+  --fluvio-400: #44318D;
+  --fluvio-200: #7D67A3;
+
+  --green-800: #1D4249;
+  --green-400: #3B945E;
+  --green-200: #57BA98;
+
+  --ocean-400: #495890;
+
+  --red-400: #D54344;
+
+  --rose-400: #D83F87;
+
+  --slate-200: #A4B3B6;
+
+  --white: #FFFFFF;
+
+  --ifm-color-primary: var(--fluvio-400);
+  --ifm-color-primary-dark: var(--fluvio-200);
+  --ifm-color-primary-darker: var(--fluvio-600);
+  --ifm-color-primary-darkest: var(--fluvio-800);
   --ifm-color-primary-light: #33925d;
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
@@ -19,10 +51,10 @@
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary: var(--fluvio-200);
+  --ifm-color-primary-dark: var(--fluvio-400);
+  --ifm-color-primary-darker: var(--fluvio-600);
+  --ifm-color-primary-darkest: var(--fluvio-800);
   --ifm-color-primary-light: #29d5b0;
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
