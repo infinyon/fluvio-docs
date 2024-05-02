@@ -8,6 +8,11 @@
   font-family: "Rubik", sans-serif;
 }
 
+h1, h2, h3 {
+  font-family: "Rubik", sans-serif;
+  font-weight: 600;
+}
+
 code, code * {
   font-family: "Spline Sans Mono", monospace;
   font-style: normal !important;
