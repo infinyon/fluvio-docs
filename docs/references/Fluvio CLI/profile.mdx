@@ -1,0 +1,80 @@
+---
+sidebar_position: 7
+title: "Profile"
+description: "Manage Cluster Connection Details using Fluvio CLI"
+slug: /cli/profile
+---
+
+A Fluvio profile contains the a reference to cluster's connection details.
+
+Profile details are stored in the Fluvio configuration file at `~/.fluvio/config`.
+
+### `fluvio profile current`
+
+```bash
+Print the name of the current context
+
+Usage: fluvio profile current
+
+Options:
+  -h, --help  Print help
+```
+
+Prints out the name of the active Fluvio profile.
+
+[`fluvio topic create greeting`]:
+
+**Example usage**
+
+%copy first-line%
+```bash
+$ fluvio profile current
+local
+```
+
+### `fluvio profile delete`
+
+Deletes the specified Fluvio cluster connection profile from your Fluvio configuration (`~/.fluvio/config`).
+
+This will not delete a cluster. See [`fluvio cluster delete`] for more info.
+
+### `fluvio profile delete-cluster`
+
+Deletes only cluster connection information from your profile.
+
+This will not delete a cluster. See [`fluvio cluster delete`] for more info.
+
+[`fluvio cluster delete`]:
+
+**Example usage**
+
+%copy first-line%
+```bash
+$ fluvio profile delete-cluster local
+Cluster local deleted
+```
+
+### `fluvio profile list`
+
+Prints a table of your profiles, including the address of the associated
+cluster and which profile is active.
+
+**Example usage**
+
+%copy first-line%
+```bash
+$ fluvio profile list
+    PROFILE    CLUSTER    ADDRESS                          TLS
+ *  minikube   minikube   10.99.16.213:9003                Disabled
+    local      local      localhost:9003                   Disabled
+```
+
+### `fluvio profile rename`
+
+### `fluvio profile switch`
+
+### `fluvio profile sync`
+
+### `fluvio profile export`
+
+### `fluvio profile add`
