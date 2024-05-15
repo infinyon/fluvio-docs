@@ -92,12 +92,6 @@ const config: Config = {
       },
       items: [
         {
-          type: "docSidebar",
-          sidebarId: "tutorialSidebar",
-          position: "left",
-          label: "Docs",
-        },
-        {
           href: FLUVIO_REPOSITORY_URL,
           label: "GitHub",
           position: "right",
