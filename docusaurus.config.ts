@@ -151,6 +151,7 @@ const config: Config = {
         // ```
         // language: ["en", "zh"],
         // ```
+        docsRouteBasePath: '/'
       },
     ],
   ],
