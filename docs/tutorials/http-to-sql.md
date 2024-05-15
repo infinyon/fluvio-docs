@@ -342,4 +342,4 @@ With the Outbound SQL Connector, we utilized SmartModules in two different ways.
 * [SmartModule Rust API](https://docs.rs/fluvio-smartmodule/latest/fluvio_smartmodule/)
 * [Transformations](https://www.fluvio.io/docs/concepts/transformations-chain/)
 
-[docs]: /docs/quickstart
+[docs]: /
