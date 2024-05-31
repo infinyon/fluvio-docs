@@ -30,9 +30,9 @@ The **SPU** is a high performance streaming processing unit that works in unison
 
 The following diagram describes **SPU** object relationships and workflows:
 
-<img src="../images/spu-workflow.svg"
+<img src="/img/docs/concepts/architecture/spu/spu-architecture.svg"
      alt="SC Controller"
-     style="justify: center; max-width: 740px" />
+     style={{ justify: 'center', maxWidth: '740px' }} />
 
 1. Leader Controller (LC)
     * receives SPU and Partition specs from SC Dispatcher
@@ -134,10 +134,10 @@ Topics are created with a _replication factor_ which defines the number of data 
 Election algorithm and failover scenarios are described in detail in the [Replica Election] section.
 
 
-[Replica assignment]: {{< ref "./replica-assignment" >}}
-[Election algorithm]: {{< ref "./replica-election#election-algorithm" >}}
-[clients automatically reconnect]: {{< ref "./client" >}}
-[Replica Election]: {{< ref "./replica-election" >}}
+[Replica assignment]:
+[Election algorithm]:
+[clients automatically reconnect]:
+[Replica Election]:
 
 ## Replica Storage
 
