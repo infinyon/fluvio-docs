@@ -2,6 +2,7 @@
 sidebar_position: 3
 title: "HTTP to SQL"
 description: "Data pipeline that periodically reads from a websitea and sends the result to a SQL database."
+slug: /tutorials/http-to-sql
 ---
 
 This guide expects you to already have the Fluvio CLI installed, and InfinyOn Cloud set up. If neither of these is the case, please follow the instructions [here][docs]!

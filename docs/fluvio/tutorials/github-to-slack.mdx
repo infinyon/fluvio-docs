@@ -1,13 +1,14 @@
 ---
-sidebar_position: 6
-title: "GitHub to Discord"
-description: "Data pipeline that detects changes in GitHub and publishes them as events to Discord."
+sidebar_position: 5
+title: "GitHub to Slack"
+description: "Data pipeline that detects changes in GitHub and publishes them as events to Slack."
+slug: /tutorials/github-to-slack
 ---
 
-Create an end-to-end event pipeline that detects changes in github stars & forks and publishes the result to Discord. This guide uses two connectors:
+Create an end-to-end event pipeline that detects changes in github stars & forks and publishes the result to Slack. This guide uses two connectors:
 
-* [http-source]: to read periodically from a github, parse the fields from the `json` output, and publish the result to a topic.
-* [http-sink]: to listen to the same topic, detect changes, and publish the result to Discord.
+* [http-source]: to read periodically from a github, parse the fields from the `json` output, and publishes the result to a topic.
+* [http-sink]: to listen to the same topic, detect changes, and publish the result to Slack.
 
 Let's get started.
 
@@ -65,20 +66,20 @@ $ fluvio cloud secret set GITHUB_TOKEN <access-token>
 
 ### Create http-sink configuration file
 
-Create an HTTP source connector configuration file called `discord.yaml` :
+Create an HTTP source connector configuration file called `slack.yaml` :
 
 
 ```yaml
 apiVersion: 0.1.0
 meta:
   version: 0.2.5
-  name: discord-stars-out
+  name: slack-stars-out
   type: http-sink
   topic: stars-forks
   secrets:
-    - name: DISCORD_TOKEN
+    - name: SLACK_TOKEN
 http:
-  endpoint: "https://discord.com/api/webhooks/${{ secrets.DISCORD_TOKEN }}"
+  endpoint: "https://hooks.slack.com/services/${{ secrets.SLACK_TOKEN }}"
   headers:
     - "Content-Type: application/json"
 transforms:
@@ -90,16 +91,16 @@ transforms:
       spec:
         - operation: shift
           spec:
-            "result": "content"
+            "result": "text"
 ```
 
-Check out [Discord Webhooks] on how to create a channel webhook token.
+Check out [Slack Webhooks] on how to create a channel webhook token.
 
 Add the access token `secret` in [InfinyOn Cloud] :
 
 
 ```bash
-$ fluvio cloud secret set DISCORD_TOKEN <webhook-token>
+$ fluvio cloud secret set SLACK_TOKEN <webhook-token>
 ```
 
 ### Download Smartmodules
@@ -120,7 +121,7 @@ Start source & sink connectors:
 
 ```bash
 $ fluvio cloud connector create -c github.yaml
-$ fluvio cloud connector create -c discord.yaml
+$ fluvio cloud connector create -c slack.yaml
 ```
 
 Check `fluvio cloud connector log` to ensure they have been successfully provisioned.
@@ -144,7 +145,7 @@ $ fluvio produce stars-forks
 OK
 ```
 
-An alert with `:star2: 1769` will show-up in your discord channel. See it live at [Fluvio Community - #alerts] channel.
+An alert with `:star2: 1769` will show-up in your slack channel.
 
 
 ### References
@@ -160,6 +161,5 @@ An alert with `:star2: 1769` will show-up in your discord channel. See it live a
 [http-sink]: https://github.com/infinyon/http-sink-connector
 [http-source]: https://github.com/infinyon/http-source-connector
 [Access Tokens]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
-[Discord Webhooks]: https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
+[Slack Webhooks]: https://api.slack.com/messaging/webhooks
 [Create a Github Stars/Forks Event Pipeline (Blog)]: https://infinyon.com/blog/2023/07/github-stars-to-slack/
-[Fluvio Community - #alerts]: https://discord.com/channels/695712741381636168/961802307727683644

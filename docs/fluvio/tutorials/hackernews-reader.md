@@ -2,6 +2,7 @@
 sidebar_position: 1
 title: "Hackernews Reader"
 description: "Data pipeline that periodically reads articles from Hackernews and publishes them on a topic."
+slug: /tutorials/hackernews-reader
 ---
 
 Hackernews Reader helps you build an XML reader that ingests hackernews articles, converts them to `json`, divides them into records, and publishes each record to a topic. This guide uses the following connector:

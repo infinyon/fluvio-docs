@@ -84,6 +84,11 @@ const config: Config = {
   themeConfig: {
     // Replace with your project's social card
     image: "img/docusaurus-social-card.jpg",
+    docs: {
+      sidebar: {
+         autoCollapseCategories: true,
+      }
+    },
     navbar: {
       logo: {
         alt: "Fluvio Logo",
@@ -91,6 +96,18 @@ const config: Config = {
         srcDark: "img/fluvio-with-text-white.svg",
       },
       items: [
+        {
+          type: 'doc',
+          position: 'left',
+          docId: 'fluvio/quickstart',
+          label: 'Docs',
+        },
+        {
+          type: 'doc',
+          position: 'left',
+          docId: 'sdf/index',
+          label: 'SDF',
+        },
         {
           href: FLUVIO_REPOSITORY_URL,
           label: "GitHub",

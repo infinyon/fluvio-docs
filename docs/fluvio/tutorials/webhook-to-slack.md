@@ -2,6 +2,7 @@
 sidebar_position: 2
 title: "Webhook to Slack"
 description: "Event data pipeline that recevies events from an InfinyOn Cloud Webhook and sends an alert to Slack"
+slug: /tutorials/webhook-to-slack
 ---
 
 This guide shows an end-to-end event pipeline that reads an event from a webhook, generates a formatted string, and publishes the result to Slack. While this is a simple example, it has many event notification use cases, such as:
