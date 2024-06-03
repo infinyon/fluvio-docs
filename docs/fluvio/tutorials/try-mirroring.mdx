@@ -1,0 +1,221 @@
+---
+sidebar_position: 7
+title: "Try Mirroring"
+description: "Try Mirroring with a Kubernetes and local cluster"
+---
+
+This tutorial is a demonstration of mirroring locally with two clusters in the same machine. Then, it requires a local cluster for the Remote and a Kubernetes cluster for the Home.
+
+## Home and Remote
+
+To undestand mirroring, we need to undestand what is a Home and a Remote cluster:
+
+- Home cluster is the target cluster that will receive and consume data.
+- Remote cluster is the source cluster that will send data.
+
+
+## Kubernetes Cluster as Home
+
+Let's start with installing and configuring the home cluster.
+
+
+## Install Home Cluster on Local Machine
+
+Installing the home cluster on Linux or Mac requires Kubernetes. Use the following instructions to set up Kubernetes on your local machine.
+
+* [Install Rancher Desktop for Mac](https://fluvio.io/docs/get-started/mac/#install-rancher-desktop)
+* [Install k3d, kubectl and helm for Linux](https://fluvio.io/docs/get-started/linux/#installing-kubernetes-cluster)
+
+<Idea>
+  Install _Kubernetes_, then use the instructions below to install the experimental _fluvio binaries_.
+</Idea>
+
+
+### Create a new directory
+
+Create a clean directory for the configuration and metadata files:
+
+
+```bash
+mkdir -p local/projects/mirror; cd local/projects/mirror
+```
+
+
+### Download `fluvio` binary
+
+Use `curl` to download and install Fluvio:
+
+
+```bash
+curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
+```
+
+Make sure to add `.fluvio/bin` to the `$PATH`as specified in the installation script.
+
+
+### Start home cluster
+
+Use the fluvio binary to start the cluster:
+
+
+```bash
+fluvio cluster start --k8
+```
+
+Check the result with:
+
+
+```bash
+fluvio cluster status
+```
+
+### Register Edge clusters
+
+Use the `remote` CLI to register the edge clusters (edge1) with the upstream cluster:
+
+```bash
+fluvio remote register edge1
+```
+
+### Create the mirror topic
+
+Mirror topics on the upstream clusters has multiple partitions, where each partition has a `1-to-1` relationship with the edge cluster.
+
+Create a partition assignment file to define the edge devices:
+
+
+```bash
+echo '[
+    "edge1"
+]' > assignment_file.json
+```
+
+Apply the configuration file to create the topic:
+
+
+```bash
+fluvio topic create edge-topic --mirror-apply assignment_file.json
+```
+
+List partitions to check the assignment:
+
+
+```bash
+fluvio partition list
+```
+
+It should display all partitions:
+
+```bash
+  TOPIC       PARTITION  LEADER  MIRROR        REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
+  edge-topic  0          5001    edge1           []        Online      0 B   0   0    0    0                 []
+```
+
+List remote clusters to check their status:
+
+
+```bash
+fluvio remote list
+```
+
+It should show the following:
+
+```bash
+  RemoteCluster Status  Last Seen
+  edge1         Waiting -
+```
+
+### Generate Metadata for Edge Clusters
+
+Each edge cluster requires a unique metadata file that gives the edge cluster the information to connect to the upstream cluster and the topic/mirror where the data is synchronized.
+
+Generate a metadata file for edge1:
+
+```bash
+fluvio remote export edge1 --file edge1.json
+```
+
+# Local Cluster as Home
+
+First we will start the cluster:
+
+
+```bash
+fluvio cluster start
+```
+
+Then, we'll use the metadata file to connect to home:
+
+```bash
+fluvio home connect --file edge1.json
+```
+
+Let's check the partitions:
+
+
+```bash
+fluvio partition list
+```
+
+The edge device should show the following partition::
+
+```bash
+  TOPIC       PARTITION  LEADER  MIRROR                         REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
+  edge-topic  0          5001    home_name:0:public_endpoint    []        Online      0 B   11  11   11   0                 []
+```
+
+
+---
+
+## Producing and Consuming on Mirroring
+
+Let's produce on the Local cluster and consume from the Kubernetes cluster.
+
+### Produce to edge cluster
+
+Produce on the local cluster:
+
+
+```bash
+fluvio produce edge-topic
+```
+
+```bash
+> A
+Ok!
+> B
+Ok!
+```
+
+
+### Switch to Kubernetes Cluster
+
+```bash
+fluvio profile switch <KUBERNETES_PROFILE>
+```
+
+
+### Consume from upstream
+
+Consume on the `upstream` terminal:
+
+```bash
+fluvio consume edge-topic --mirror edge1 -B
+```
+
+```bash
+A
+B
+```
+
+🎉 Congratulations! You have successfully tested mirroring.
+
+
+#### Related
+* [IoT Mirroring - Cloud]
+* [IoT Mirroring -  Raspberry Pi to a Local Cluster]
+* [Discord]
+
+[Discord]: https://discord.com/invite/bBG2dTz
+[IoT Mirroring - Cloud]: /docs/tutorials/iot-mirroring-cloud.mdx
+[IoT Mirroring -  Raspberry Pi to a Local Cluster]: /docs/tutorials/iot-mirroring-local.mdx

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 title: "IoT Mirroring - Cloud"
 description: "Reliable IoT monitoring from movable Edges sensors with poor connections to Cloud."
 slug: /tutorials/iot-mirroring-cloud
@@ -55,16 +55,10 @@ After the account is created, you will be placed in the Dashboard. You may choos
 
 ### Download `fluvio` binary
 
-Download and install mirroring binary.
-
-<Alert title="Experimental Feature">
-  This is an experimental build that conflicts with other fluvio installations. To ensure proper installation, please rename or remove `~/.fluvio/` directory.
-</Alert>
-
 Use `curl` to download and install:
 
 ```bash
-curl -fsS https://hub.infinyon.cloud/install/install.sh | VERSION='0.10.15-dev-2+mirroring-9961bdb' bash
+curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
 ```
 
 Make sure to add `.fluvio/bin` to the `$PATH`as specified in the installation script.
@@ -88,10 +82,10 @@ Let's provision a new cluster in AWS `eu-central` using the experimental fluvio 
 
 
 ```bash
-fluvio cloud cluster create --region aws-eu-central-1 --version 0.10.15-dev-2+mirroring-b4f07fc
+fluvio cloud cluster create
 ```
 
-Check cluster status:
+Check the result with:
 
 
 ```bash
@@ -100,6 +94,14 @@ fluvio cluster status
 
 Next, we'll configure the cluster to receive traffic from the edge clusters.
 
+### Register Edge cluster
+
+Let's register the edge cluster `edge1` to inform our home cluster from the cloud to accept connection requests from the remote device:
+
+
+```bash
+fluvio remote register edge1
+```
 
 ### Create the mirror topic
 
@@ -110,7 +112,7 @@ Create a partition assignment file with an array of edge mirros we expect to con
 
 ```bash
 echo '[
-    "edge1", "edge2"
+    "edge1"
 ]' > assignment_file.json
 ```
 
@@ -118,7 +120,7 @@ Apply the configuration file to create the topic:
 
 
 ```bash
-fluvio topic create edge-topic --mirror-assignment assignment_file.json
+fluvio topic create edge-topic --mirror-apply assignment_file.json
 ```
 
 List partitions to check the assignment:
@@ -132,34 +134,21 @@ It should display all partitions:
 
 ```bash
   TOPIC       PARTITION  LEADER  MIRROR        REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
-  edge-topic  0          5001    edge1           []        Online      0 B   0   0    0    0                 []
-  edge-topic  1          5001    edge2           []        Online      0 B   0   0    0    0                 []
-```
-
-We created 2 partitions, but we'll only use one in this tutorial.
-
-
-### Register Edge cluster
-
-Let's register the edge cluster `edge1` to inform our Cloud cluster  to accept connection requests from the remote device:
-
-
-```bash
-fluvio cluster remote-cluster register --type mirror-edge edge1
+  edge-topic  0          5001    edge1         []        Online      0 B   0   0    0    0                 []
 ```
 
 List remote clusters to check their status:
 
 
 ```bash
-fluvio cluster remote-cluster list
+fluvio remote list
 ```
 
 It should show the following:
 
 ```bash
-  RemoteCluster  RemoteType   Paired  Status  Last Seen
-  edge1          mirror-edge  -       -       -
+  RemoteCluster Status  Last Seen
+  edge1         Waiting -
 ```
 
 
@@ -175,14 +164,14 @@ mkdir -p ~/local/projects/mirror; cd ~/local/projects/mirror
 
 ### Generate metadata for Edge Cluster
 
-Each edge cluster requires a unique metadata file that informs the edge cluster how to connect with the target cluster. Create the config file by running the following command:
+Each edge cluster requires a unique metadata file that informs the edge cluster how to connect with the home cluster. Create the config file by running the following command:
 
 
 ```bash
-fluvio cluster remote-cluster metadata export --topic edge-topic --mirror edge1 --file edge1.json
+fluvio cloud remote export edge1 --file edge1.json
 ```
 
-The Cloud cluster configuration is now complete. Next, we'll create an edge cluster and configure a mirror topic that synchronizes data to the Cloud.
+The Cloud cluster configuration is now complete. Next, we'll create an edge cluster that synchronizes data to the Cloud.
 
 
 ## Install Edge Cluster on Local VM
@@ -215,7 +204,7 @@ Download binaries:
 
 
 ```bash
-curl -fsS https://hub.infinyon.cloud/install/install.sh | VERSION='0.10.15-dev-2+mirroring-9961bdb' bash
+curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
 ```
 
 Add to path:
@@ -236,11 +225,18 @@ fluvio version
 
 ### Start Edge Cluster
 
-We'll use the metadata `edge1` to start the edge cluster:
+First we will start the cluster:
 
 
 ```bash
-fluvio cluster start --read-only edge1.json
+fluvio cluster start
+```
+
+
+Then, we'll connect to the Cloud with the metadata `edge1`:
+
+```bash
+fluvio home connect --file edge1.json
 ```
 
 Let's check the partitions:
@@ -254,7 +250,7 @@ The edge device should show the following partition:
 
 ```bash
   TOPIC       PARTITION  LEADER  MIRROR                REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
-  edge-topic  0          5001    upstream:0  []        Online      0 B   0   0    0    0                 []
+  edge-topic  0          5001    0:public_endpoint     []        Online      0 B   0   0    0    0                 []
 ```
 
 ---
@@ -362,12 +358,22 @@ Restart the cluster:
 
 
 ```bash
-fluvio cluster upgrade --read-only edge1.json
+fluvio cluster upgrade
 ```
 
 ### Consume from edge cluster
 
-On the `edge` terminal, consume from the cluster:
+First, on the `edge` terminal, check the status of the home cluster from the Cloud:
+
+```bash
+fluvio cluster home
+```
+```bash
+HOME  ROUTE            STATUS  LAST SEEN 
+home  localhost:30003  Online  3s        
+```
+
+Then, consume from the edge cluster:
 
 
 ```bash
@@ -392,7 +398,11 @@ Join us on [Discord] if you have questions, or would like to suggest new improve
 [Discord]: https://discord.com/invite/bBG2dTz
 
 #### Related
-* ["IoT Mirroring -  Raspberry Pi to a Local Cluster"]
+* [Try Mirroring]
+* [IoT Mirroring -  Raspberry Pi to a Local Cluster]
+* [Discord]
 
 
-["IoT Mirroring -  Raspberry Pi to a Local Cluster"]: /tutorials/iot-mirroring-local
+[Try Mirroring]: /docs/tutorials/try-mirroring.mdx
+[IoT Mirroring -  Raspberry Pi to a Local Cluster]: /docs/tutorials/iot-mirroring-local.mdx
+[Discord]: https://discord.com/invite/bBG2dTz
