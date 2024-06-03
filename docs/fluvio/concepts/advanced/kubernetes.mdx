@@ -20,15 +20,13 @@ If you run into any problems along the way, make sure to check out our [troubles
 
 This command will install Fluvio and it's dependencies in the default namespace. This method works with many but not all kubernetes cluster types and is an opinionated set of configurations for a simple, working fluvio cluster.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio cluster start --k8
 ```
 
 For installing on a remote Kubernetes cluster where the machine running the CLI is not the local host, consider using the `--proxy-addr <DNS or IP>` option which will access the fluvio app endpoints through the specified proxy address.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio cluster start --k8 --proxy-addr <DNS or IP>
 ```
 
@@ -39,8 +37,7 @@ to a working `kubectl` context. The charts are available in the [fluvio reposito
 
 There are two charts. First is the `fluvio-sys` chart which is common to all Fluvio instances. Second is a `fluvio-app` chart which can be configured for one or more instances of clusters
 
-%copy first-line%
-```bash
+```bash copy="fl"
 helm upgrade --install fluvio-sys ./k8-util/helm/fluvio-sys
 ```
 
@@ -63,8 +60,7 @@ the scope of this guide and require modification of the helm chart values. Feel 
 
 First, install the `fluvio-sys` chart.  This only has to be done once.
 
-%copy first-line%
-```bash
+```bash copy="fl"
 helm upgrade --install fluvio-sys ./k8-util/helm/fluvio-sys
 ```
 
@@ -110,8 +106,7 @@ and so forth.
 
 To delete a Fluvio instances, supply namespace as an argument.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio cluster delete --k8 --namespace first
 ```
 

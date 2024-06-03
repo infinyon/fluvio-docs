@@ -21,8 +21,7 @@ example looks like.
 
 Run `smdk generate` with the name of the map and choose the "map" options:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ smdk generate map-example
 Generating new SmartModule project: map-example
 project-group => 'john'
@@ -45,8 +44,7 @@ Ignoring: /var/folders/5q/jwc86771549058kmbkbqjcdc0000gn/T/.tmpNFObJj/cargo-gene
 
 We should see a new folder has been created for our project `map-example`. Let's navigate inside and take a look at the sample Map generated for us by the template:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ cd map-example && cat ./src/lib.rs
 ```
 
@@ -85,8 +83,7 @@ This template SmartModule will parse each record as an `i32` integer, then multi
 
 Let's make sure our code compiles. If eveything works as expected, there will be a `.wasm` file generated in the target directory.
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ smdk build
 ...
 Compiling map-example v0.1.0 (~/smdk/map-example)
@@ -99,8 +96,7 @@ Your WASM binary is now ready for use.
 
 Now that we've written our map, let's test using the command line.
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ smdk test --text=6
 loading module at: ~/smdk/map-example/target/wasm32-unknown-unknown/release-lto/map_example.wasm
 1 records outputed
@@ -114,16 +110,14 @@ Good news! :tada: it works as expected!
 
 Let's create a new topic to produce our source data:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio topic create map-double
 topic "map-double" created
 ```
 
 In a new terminal, producde the following entries:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio produce map-double
 > 1
 Ok!
@@ -140,8 +134,7 @@ Ok!
 
 Let's double check it's all there.
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio consume map-double -B -d
 Consuming records from the beginning of topic 'map-double'
 1
@@ -155,8 +148,7 @@ Consuming records from the beginning of topic 'map-double'
 
 The SmartModule can be loaded to local Fluvio Cluster or [InfinyOn Cloud], as determined by the [`current profile`]. In this example, the profile points to InfinyOn Cloud.
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ smdk load
 Loading package at: ~/smdk/map-example
 Found SmartModule package: map-example
@@ -167,8 +159,7 @@ Creating SmartModule: map-example
 
 Rust `fluvio smartmodule list` to ensure your SmartModule has been uploaded:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio smartmodule list
  SMARTMODULE                    SIZE
  john/map-example@0.1.0         87.5 KB
@@ -176,8 +167,7 @@ $ fluvio smartmodule list
 
 SmartModules that have been uploaded on the cluster can be used by other areas of the system (consumers, producers, connectors, etc):
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio consume map-double -B --smartmodule=john/map-example@0.1.0
 Consuming records from the beginning of topic 'map-double'
 2
@@ -194,8 +184,7 @@ Congratulations! :tada: Eveything worked as expected!
 
 As bonus, let's [publish] this SmartModule to [SmartModule Hub].
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ smdk publish
 Creating package john/map-example@0.1.0
 .. fill out info in hub/package-meta.yaml
@@ -205,8 +194,7 @@ Package uploaded!
 
 Let's double check that the SmartModule is available for download:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio hub list
   SMARTMODULE                 Visibility
   john/map-exampler@0.1.0      private

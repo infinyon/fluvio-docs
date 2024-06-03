@@ -208,8 +208,7 @@ Replicas are evenly distributed across SPUs. Racks with a higher number of SPUs 
 
 The following command creates a topic from a **replica assignment file**:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio topic create custom-topic --replica-assignment ./my-assignment
 ```
 

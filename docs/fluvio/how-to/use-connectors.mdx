@@ -19,8 +19,7 @@ This guide demonstrates creating an Inbound HTTP connector to ingest JSON data f
 
 Sign up for [InfinyOn Cloud] and log into the CLI to begin:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio cloud login
 ```
 
@@ -48,8 +47,7 @@ In this configuration, a connector named `cat-facts` is created. It requests dat
 
 Create a connector using the following command:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio cloud connector create --config catfacts-basic-connector.yml
 connector "cat-facts" (http-source) created
 ```
@@ -58,8 +56,7 @@ connector "cat-facts" (http-source) created
 
 Once created, list the connectors and view their current status:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio cloud connector list
  NAME       TYPE         VERSION  CDK  STATUS
  cat-facts  http-source  0.1.0    V3   Running
@@ -69,8 +66,7 @@ $ fluvio cloud connector list
 
 Debug connector behavior by accessing the logs:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio cloud connector logs cat-facts
 connector-startup infinyon/http-source@0.1.0
 2023-03-25T03:41:29.570294Z  INFO surf::middleware::logger::native: sending request
@@ -100,8 +96,7 @@ Connector runs with process id: 15
 
 The HTTP connector should now be storing data in the specified topic:
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio topic list
   NAME            TYPE      PARTITIONS  REPLICAS  RETENTION TIME  COMPRESSION  STATUS                   REASON
   cat-facts-data  computed  1           1         7days           any          resolution::provisioned
@@ -109,8 +104,7 @@ $ fluvio topic list
 
 Verify by consuming from the topic:
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio consume cat-facts-data -B
 {"fact":"Female felines are \\superfecund","length":31}
 {"fact":"Cats only sweat through their paws and nowhere else on their body","length":65}
@@ -126,16 +120,14 @@ The `--disable-continuous` flag exits the stream after displaying the last recor
 
 To stop the connector, delete it:
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio cloud connector delete cat-facts
 connector "cat-facts" deleted
 ```
 
 This action won’t delete the topic. Delete it separately if needed:
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio topic delete cat-facts
 topic "cat-facts" deleted
 ```

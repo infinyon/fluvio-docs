@@ -45,13 +45,11 @@ The default retention time is `7 days`
 ### Example retention configurations
 * Delete old segments that are `6 hours` old
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio topic create test1 --retention-time "6h"
 ```
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio topic list
  NAME         TYPE      PARTITIONS  REPLICAS  RETENTION TIME  STATUS                   REASON
  test1        computed      1          1            6h        resolution::provisioned
@@ -59,13 +57,11 @@ $ fluvio topic list
 
 * Delete old segments that are a day old
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio topic create test2 --retention-time "1d"
 ```
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio topic list
  NAME         TYPE      PARTITIONS  REPLICAS  RETENTION TIME  STATUS                   REASON
  test2        computed      1          1           1day       resolution::provisioned
@@ -73,13 +69,11 @@ $ fluvio topic list
 
 * A very specific duration that is 1 day, 2 hours, 3 minutes and 4 seconds long
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio topic create test3 --retention-time "1d 2h 3m 4s"
 ```
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio topic list
  NAME         TYPE      PARTITIONS  REPLICAS  RETENTION TIME  STATUS                   REASON
  test3        computed      1          1      1day 2h 3m 4s   resolution::provisioned
@@ -101,15 +95,13 @@ The default segment size is `1 GB`
 ### Example retention configurations
 * 25 MB segment size w/ 7 day retention time
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio topic create test4 --segment-size 25000000
 ```
 
 * 36 GB segment size w/ 12 hr retention time
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio topic create test5 --segment-size "36 GB" --retention-time 12h
 ```
 
@@ -134,8 +126,7 @@ The max partition size must not be less than segment size.
 
 * 10 GB max partition size w/ 1 GB segment size (only 10 segments are allowed at any time)
 
-%copy first-line%
-```bash
+```bash copy="fl"
 fluvio topic create test6 --max-partition-size '10 GB' --segment-size '1 GB'
 ```
 
