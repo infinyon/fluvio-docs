@@ -10,8 +10,7 @@ To diagnose abnormal behavior, a good first step is to run `fluvio cluster check
 
 If everything is configured properly, you should see a result like this:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio cluster check
 Running pre-startup checks...
      ✅ Kubernetes config is loadable
@@ -31,13 +30,13 @@ next: run `fluvio cluster start`
 To discover errors, you should examine logs from the following components:
 
 ### SC
-%copy first-line%
-```bash
+
+```bash copy="fl"
 kubectl logs -l app=fluvio-sc
 ```
 ### SPU
-%copy first-line%
-```bash
+
+```bash copy="fl"
 kubectl logs -l app=spu
 ```
 

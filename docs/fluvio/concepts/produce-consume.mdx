@@ -61,8 +61,7 @@ $ echo "Two" | fluvio produce hello-topic
 ```
 Ok, now let's read the topic from the beginning on behalf of consumer `c1`:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio consume hello-topic -c c1 -Bd
 Consuming records from 'hello-topic' starting from the beginning of log
 One
@@ -70,8 +69,7 @@ Two
 ```
 From now we can see our `c1` consumer in the consumers list:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio consumer list
   CONSUMER  TOPIC        PARTITION  OFFSET  LAST SEEN
   c1        hello-topic  0          1       4m 14s
@@ -80,14 +78,12 @@ The offset here denotes the last seen offset for the given consumer in the given
 
 Let's add another record to the topic:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ echo "Three" | fluvio produce hello-topic
 ```
 and read the topic again from the beginning for the same consumer:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio consume hello-topic -c c1 -Bd
 Consuming records from 'hello-topic' starting from the beginning of log
 Three
@@ -95,8 +91,7 @@ Three
 we get only one "unseen" record which is correct.
 Now if you try another consumer `c2`, you get all the records:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio consume hello-topic -c c2 -Bd
 Consuming records from 'hello-topic' starting from the beginning of log
 One
@@ -106,8 +101,7 @@ Three
 
 The consumer list now shows us two consumers:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio consumer list
   CONSUMER  TOPIC        PARTITION  OFFSET  LAST SEEN
   c1        hello-topic  0          2       3m 51s
@@ -116,8 +110,7 @@ $ fluvio consumer list
 
 We can delete them now:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio consumer delete c1
 consumer "c1" on topic "hello-topic" and partition "0" deleted
 $ fluvio consumer delete c2

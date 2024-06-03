@@ -246,8 +246,7 @@ $ fluvio produce server-logs -f server.log
 
 Let's double check it's all there.
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio consume server-logs -B -d
 {"level":"info","message":"Server listening on 0.0.0.0:8000"}
 {"level":"info","message":"Accepted incoming connection"}
@@ -266,8 +265,7 @@ $ fluvio consume server-logs -B -d
 
 The SmartModule can be loaded to local Fluvio Cluster or [InfinyOn Cloud], as determined by the [`current profile`]. In this example, the profile points to InfinyOn Cloud.
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ smdk load
 Loading package at: ~/smdk/json-filter
 Found SmartModule package: json-filter
@@ -278,8 +276,7 @@ Creating SmartModule: json-filter
 
 Rust `fluvio smartmodule list` to ensure your SmartModule has been uploaded:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio smartmodule list
   SMARTMODULE                   SIZE
   john/json-filter@0.1.0        140.1 KB
@@ -287,8 +284,7 @@ $ fluvio smartmodule list
 
 SmartModules that have been uploaded on the cluster can be used by other areas of the system (consumers, producers, connectors, etc):
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio consume server-logs -dB --smartmodule=john/json-filter@0.1.0
 Consuming records from the beginning of topic 'server-logs'
 {"level":"info","message":"Server listening on 0.0.0.0:8000"}
@@ -305,8 +301,7 @@ Congratulations! :tada: Eveything worked as expected!
 
 It turns out this SmartModule was requested by other data streaming teams in the organization, so we've decided to [publish] it on [SmartModule Hub].
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ smdk publish
 Creating package john/json-filter@0.1.0
 .. fill out info in hub/package-meta.yaml
@@ -316,8 +311,7 @@ Package uploaded!
 
 Let's double check that the SmartModule is available for download:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio hub list
   SMARTMODULE                 Visibility
   john/json-filter@0.1.0      private

@@ -13,8 +13,7 @@ SmartModules are the basic building blocks for transformations in Fluvio, allowi
 
 ## See list of available SmartModules
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio hub sm list
   SMARTMODULE                              Visibility
   infinyon-labs/array-map-json@0.1.0       public
@@ -34,8 +33,7 @@ $ fluvio hub sm list
 SmartModules must be downloaded before they can be used. Afterwards, downloaded SmartModules are available for your Producers and Consumers.
 
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio hub sm download infinyon/regex-filter@0.1.0
 downloading infinyon/regex-filter@0.1.0 to infinyon-regex-filter-0.1.0.ipkg
 ... downloading complete
@@ -50,8 +48,7 @@ You can specify a SmartModule to use with `fluvio produce` and `fluvio consume`
 
 This consumer is using the SmartModule we just downloaded with `--smartmodule`, and is also configuring it with `--params`/`-e`.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio consume --smartmodule infinyon/regex-filter@0.1.0 --params regex='[Cc]at' cat-facts
 ```
 
@@ -60,8 +57,7 @@ You can configure SmartModules with multiple parameters by passing multiple `--p
 
 e.g.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio produce --smartmodule example/my-smartmodule@0.1.0 -e name=example -e point_made=true
 ```
 </Idea>
@@ -85,15 +81,13 @@ transforms:
       regex: "[Cc]at"
 ```
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio consume --transforms-file ./my-transforms.yaml my-topic
 ```
 
 ## See list of Downloaded SmartModules
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio sm list
   SMARTMODULE                  SIZE
   infinyon/jolt@0.3.0          611.5 KB
@@ -105,8 +99,7 @@ $ fluvio sm list
 
 ## Delete SmartModules
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio sm delete infinyon/json-sql@0.2.1
 smartmodule "infinyon/json-sql@0.2.1" deleted
 ```
@@ -147,8 +140,7 @@ transforms:
 
 Everything is in the config file. You create a connector as usual.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio cloud connector create --config connector-example.yaml
 ```
 
@@ -176,8 +168,7 @@ webhook:
 
 Just like Connectors, everything is in the config file. You create a webhook as usual.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 fluvio cloud webhook create --config example-webhook.yaml
 ```
 

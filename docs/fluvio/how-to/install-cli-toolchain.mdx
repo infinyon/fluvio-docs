@@ -13,8 +13,7 @@ The `fvm` CLI is the official package manager for Fluvio, managing various `fluv
 
 The following command will install `fvm` and `fluvio` and other binaries in the development kit.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
 ```
 
@@ -22,8 +21,7 @@ The installation script prints a command that adds the the `fluvio` binaries to 
 
 On macOS, run this command and then close and reopen your terminal.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ echo 'export PATH="${HOME}/.fvm/bin:${HOME}/.fluvio/bin:${PATH}"' >> ~/.zshrc
 ```
 
@@ -40,8 +38,7 @@ If you have an existing `fluvio` installation (version `0.10.15` or older), you 
 #### Option 1: Delete the fluvio directory
 This will clear out your existing settings.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ rm -ri $HOME/.fluvio
 rm -ri $HOME/.fluvio
 examine files in directory $HOME/.fluvio? y
@@ -70,8 +67,7 @@ done: Now using fluvio version 0.10.16
 
 Running `fvm current` should display the most recent version of `fluvio` toolchain installed. (The most recent version is `0.10.16` for the purposes of this tutorial)
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fvm current
 0.10.16 (stable)
 ```
@@ -94,8 +90,7 @@ The `stable` channel is installed by default. It is the most recent supported re
 
 The following commands are equivalent for installing or updating the `stable` release channel.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fvm install
 $ fvm install stable
 ```
@@ -108,8 +103,7 @@ This channel consists of most recent updates that have not yet been released, wh
 
 The `latest` channel is not intended for typical usage.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fvm install latest
 info: Downloading (1/5): fluvio@0.11.0-dev-1+bf4e86674ce546d6b853adbf36a97e8e3344bd17
 info: Downloading (2/5): fluvio-run@0.11.0-dev-1+bf4e86674ce546d6b853adbf36a97e8e3344bd17
@@ -139,8 +133,7 @@ done: Now using fluvio version 0.10.16
 
 The `fvm show` command will list out the installed channels and their corresponding version. The row with the checkmark (`✓`) is the current active channel.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fvm show
     CHANNEL  VERSION
  ✓  0.10.16  0.10.16
@@ -154,8 +147,7 @@ If you are on another channel, you can change between them by running `fvm switc
 
 For typical usage of InfinyOn Cloud, we suggest using `stable`.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fvm switch stable
 
 done: Now using Fluvio version stable
@@ -163,8 +155,7 @@ done: Now using Fluvio version stable
 
 And we verify with `fvm show` that we are now back on the `stable` release channel.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fvm show
     CHANNEL  VERSION
  ✓  stable   0.10.16

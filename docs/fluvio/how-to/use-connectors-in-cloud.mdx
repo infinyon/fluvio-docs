@@ -50,8 +50,7 @@ In this config, we are creating a connector named `cat-facts`. It will request d
 
 You can create a connector by using `fluvio cloud connector create` with the example connector.
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio cloud connector create --config catfacts-basic-connector.yml
 connector "cat-facts" (http-source) created
 ```
@@ -59,8 +58,7 @@ connector "cat-facts" (http-source) created
 
 After the connector is created, you can list the connectors you've created, and view their current status.
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio cloud connector list
  NAME       TYPE         VERSION  CDK  STATUS
  cat-facts  http-source  0.1.0    V3   Running
@@ -70,8 +68,7 @@ $ fluvio cloud connector list
 
 If there is a need to debug the behavior of a connector, the logs are available by running `fluvio cloud connector logs cat-facts`
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio cloud connector logs cat-facts
 connector-startup infinyon/http-source@0.1.0
 2023-03-25T03:41:29.570294Z  INFO surf::middleware::logger::native: sending request
@@ -101,8 +98,7 @@ Connector runs with process id: 15
 
 The HTTP connector should be receiving data and storing it in a topic with the name we specified.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio topic list
   NAME            TYPE      PARTITIONS  REPLICAS  RETENTION TIME  COMPRESSION  STATUS                   REASON
   cat-facts-data  computed  1           1         7days           any          resolution::provisioned
@@ -128,16 +124,14 @@ $ fluvio consume cat-facts-data -B
 
 When you want to stop the connector, you can delete it with `fluvio cloud connector cat-facts`
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio cloud connector delete cat-facts
 connector "cat-facts" deleted
 ```
 
 Deleting your connector will not delete the topic used by the connector. If you want to delete the topic, you can run `fluvio topic delete cat-facts`
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio topic delete cat-facts
 topic "cat-facts" deleted
 ```
