@@ -91,7 +91,7 @@ const config: Config = {
     },
     navbar: {
       logo: {
-        alt: "Fluvio Logo",
+        alt: "InfinyOn Logo",
         src: "img/infinyon-with-text.svg",
         srcDark: "img/infinyon-with-text-white.svg",
       },
@@ -107,6 +107,12 @@ const config: Config = {
           position: 'left',
           docId: 'sdf/index',
           label: 'SDF',
+        },
+        {
+          type: 'doc',
+          position: 'left',
+          docId: 'apis/index',
+          label: 'APIs',
         },
         {
           href: FLUVIO_REPOSITORY_URL,
