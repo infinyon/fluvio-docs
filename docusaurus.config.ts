@@ -105,7 +105,7 @@ const config: Config = {
         {
           type: 'doc',
           position: 'left',
-          docId: 'sdf/index',
+          docId: 'sdf/quickstart',
           label: 'SDF',
         },
         {

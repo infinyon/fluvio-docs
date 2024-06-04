@@ -19,6 +19,16 @@ code, code * {
   font-weight: 400 !important;
 }
 
+.docimg {
+    display: block;
+    margin: 10px auto;
+}
+
+p {
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
 /* You can override the default Infima variables here. */
 :root {
   /* Fluvio Color Palette */

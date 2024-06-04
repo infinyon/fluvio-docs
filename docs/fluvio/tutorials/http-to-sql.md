@@ -12,7 +12,8 @@ This guide expects you to already have the Fluvio CLI installed, and InfinyOn Cl
 <img
   src="https://www.fluvio.io/docs/tutorials/images/create-pipeline.png"
   alt="execution flow of InfinyOn pipeline"
-	style={{ margin: 'auto', maxWidth: '400px' }}
+  class="docimg"
+  width="600"
 />
 
 

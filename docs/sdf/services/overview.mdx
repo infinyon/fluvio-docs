@@ -1,6 +1,6 @@
 ---
-sidebar_position: 7
-title: "Services"
+sidebar_position: 1
+title: "Overview"
 description: "Stateful Dataflow Services definition."
 slug: /sdf/services
 ---
@@ -24,7 +24,7 @@ Services are dataflow paths designed to perform one chain of operations in seque
 Inside transforms, the engine sends the output of one operator to the input of the next operator, as defined in the dataflow file.
 
 <img src="/img/docs/sdf/service-archiecture.png" alt="Service Archiecture"
-    style={{ display: 'block', margin: '0 auto' }} width="350" />
+   class="docimg" width="350" />
 
 The only parallelism allowed is through `partitions` as described in the [Partition section](#parallel-processing-with-partitions) below.
 
@@ -212,7 +212,7 @@ Check out the [merge] and [split] sections for additional information.
 Partitions give you the ability to divide the data in sets and process each data set in parallel.
 
 <img src="/img/docs/sdf/service-partitions.png" alt="Service Partitions"
-      style={{ display: 'block', margin: '0 auto' }} width="720px" />
+   class="docimg" width="720px" />
 
 
 Say you have a stream of `sentences` where you want to count the occurrences of each word in all sentences. Partitioning helps to solve this problem by assigning a partition key to each `word` and incremeting each partition independently.
@@ -261,7 +261,7 @@ Check out <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/
 Window processing converts unbounded streams of records into bounded data sets suitable for counting, trend analysis, anomaly detection, data collection for dashboards and tables, materialized views, etc. Under the hood, Fluvio converts records into [Apache Arrow format] for fast and convenient access via third-party libraries such as [Polars].
 
 <img src="/img/docs/sdf/service-window.png" alt="Window Processing"
-      style={{ display: 'block', margin: '0 auto' }} width="740px" />
+  class="docimg" width="740px" />
 
 In this section we'll expand on the previous example by adding a window operator to count the top most used words in span of 20 seconds.
 
