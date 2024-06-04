@@ -92,15 +92,15 @@ const config: Config = {
     navbar: {
       logo: {
         alt: "Fluvio Logo",
-        src: "img/fluvio-with-text.svg",
-        srcDark: "img/fluvio-with-text-white.svg",
+        src: "img/infinyon-with-text.svg",
+        srcDark: "img/infinyon-with-text-white.svg",
       },
       items: [
         {
           type: 'doc',
           position: 'left',
           docId: 'fluvio/quickstart',
-          label: 'Docs',
+          label: 'Fluvio',
         },
         {
           type: 'doc',
