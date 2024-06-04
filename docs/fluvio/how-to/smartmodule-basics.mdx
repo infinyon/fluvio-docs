@@ -66,7 +66,7 @@ The `--transforms-file` flag are for more complex transformations defined in a Y
 
 Example `transforms.yaml` with multiple transformations. Order matters here, so `infinyon/jolt@0.3.0` is first and `infinyon/regex-filter@0.1.0` is second.
 
-%copy%
+
 ```yaml
 transforms:
   - uses: infinyon/jolt@0.3.0
@@ -108,7 +108,7 @@ smartmodule "infinyon/json-sql@0.2.1" deleted
 
 You can define transforms when you create connectors with `transforms`
 
-%copy%
+
 ```yaml title="connector-example.yaml"
 apiVersion: 0.1.0
 meta:
@@ -146,7 +146,7 @@ $ fluvio cloud connector create --config connector-example.yaml
 
 ## Use SmartModule with Webhook
 
-%copy%
+
 ```yaml title="example-webhook.yaml"
 meta:
   name: my-webhook

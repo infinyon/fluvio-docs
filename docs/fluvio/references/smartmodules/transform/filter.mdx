@@ -18,8 +18,8 @@ In this example, we're going to filter records based on the contents of their JS
 
 Run `smdk generate` with the name of the filter and choose the  "filter" options:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk generate json-filter
 project-group => 'john'
 Generating new SmartModule project: json-filter
@@ -86,8 +86,8 @@ platform for inspection.
 
 Let's look at the starter code that we got when we created our Filter template.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ cd json-filter && cat ./src/lib.rs
 ```
 
@@ -160,7 +160,7 @@ In other words, we actually want to keep the records that are "more important" o
 "greater than" `LogLevel::Debug`. Since we have implemented `Ord` for `LogLevel`, this
 will be a piece of cake! Let's look at all the code for the finished filter.
 
-%copy%
+
 ```rust
 use fluvio_smartmodule::{smartmodule, SmartModuleRecord, Result};
 
@@ -191,8 +191,8 @@ fn filter(record: &SmartModuleRecord) -> Result<bool> {
 
 Let's make sure our code compiles. If eveything works as expected, there is a `.wasm` file generated in the target directory.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk build
 ...
 Compiling json-filter v0.1.0 (~/smdk/json-filter)
@@ -207,8 +207,8 @@ Now that we've written our filter, let's test using the command line.
 
 Test `info` log:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk test --text='{"level":"info","message":"Server listening on 0.0.0.0:8000"}'
 loading module at: ~/smdk/json-filter/target/wasm32-unknown-unknown/release-lto/json_filter.wasm
 1 records outputed
@@ -217,8 +217,8 @@ loading module at: ~/smdk/json-filter/target/wasm32-unknown-unknown/release-lto/
 
 Test `debug` log:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk test --text='{"level":"debug","message":"Deserializing request from client"}'
 loading module at: ~/smdk/json-filter/target/wasm32-unknown-unknown/release-lto/json_filter.wasm
 0 records outputed
@@ -231,16 +231,16 @@ Good news! :tada: it works as expected!
 
 Let's create a new topic to produce our source data:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic create server-logs
 topic "server-logs" created
 ```
 
 Load `server.log` file to `server-logs` topic:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio produce server-logs -f server.log
 ```
 

@@ -35,8 +35,8 @@ Let's dive in and see how to this up in Fluvio.
 
 Run `smdk generate` with the name of the filter and choose the  "filter" options:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk generate array-map
 Generating new SmartModule project: array-map
 project-group => 'john'
@@ -61,8 +61,8 @@ Ignoring: /var/folders/5q/jwc86771549058kmbkbqjcdc0000gn/T/.tmp4imt4g/cargo-gene
 
 The code in this generated project takes JSON arrays as input records and returns the _elements_ of those arrays as output records. Let's take a look at the full source, then we'll cover it piece by piece. Let's look at `src/lib.rs`:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ cd array-map && cat src/lib.rs
 ```
 
@@ -101,8 +101,8 @@ Let's take this for a test drive and see it in action.
 
 Let's make sure our code compiles. If eveything works as expected, there is a `.wasm` file generated in the target directory.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk build
 ...
 Compiling array-map v0.1.0 (~/smdk/array-map)
@@ -115,8 +115,8 @@ Your SmartModule WASM binary is now ready for use.
 
 Let's test our work using the command line `test` facility.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk test --text='["a", "b", "c"]'
 loading module at: ~/smdk/array-map/target/wasm32-unknown-unknown/release-lto/array_map.wasm
 3 records outputed
@@ -132,16 +132,16 @@ Great, everything works as expected. Let's test on cluster.
 
 Let's create a new Fluvio topic to produce the sample records we want to consume with our SmartModule:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic create array-map
 topic "array-map" created
 ```
 
 Now we can produce the sample data to our topic.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio produce array-map
 > ["a", "b", "c"]
 Ok!
@@ -152,8 +152,8 @@ Ok!
 
 Let's double check it's all there.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume array-map -dB
 Consuming records from the beginning of topic 'array-map'
 ["a", "b", "c"]
@@ -164,7 +164,7 @@ Consuming records from the beginning of topic 'array-map'
 
 The SmartModule can be loaded to local Fluvio Cluster or [InfinyOn Cloud], as determined by the [`current profile`]. In this example, the profile points to InfinyOn Cloud.
 
-%copy first-line%
+
 ```bash
 $ smdk load
 Found SmartModule package: array-map
@@ -175,8 +175,8 @@ Creating SmartModule: array-map
 
 Rust `fluvio smartmodule list` to ensure your SmartModule has been uploaded:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio smartmodule list
   SMARTMODULE                   SIZE
   john/array-map@0.1.0          157.8 KB
@@ -184,8 +184,8 @@ $ fluvio smartmodule list
 
 SmartModules that have been uploaded on the cluster can be used by other areas of the system (consumers, producers, connectors, etc):
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume array-map -dB --smartmodule=john/array-map@0.1.0
 Consuming records from the beginning of topic 'array-map'
 "a"
@@ -203,8 +203,8 @@ Congratulations! :tada: Eveything worked as expected!
 
 It turns out this SmartModule was requested by other data streaming teams in the organization, so we've decided to [publish] it on [SmartModule Hub].
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk publish
 Creating package john/array-map@0.1.0
 .. fill out info in hub/package-meta.yaml
@@ -214,8 +214,8 @@ Package uploaded!
 
 Let's double check that the SmartModule is available for download:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio hub list
   SMARTMODULE                 Visibility
   john/array-map@0.1.0        private

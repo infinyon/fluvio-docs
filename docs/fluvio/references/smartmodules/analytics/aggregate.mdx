@@ -26,8 +26,8 @@ Let's dive in and see how to this up in Fluvio.
 
 Run `smdk generate` with the name of the aggregate and choose the  "aggregate" options:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk generate example-aggregate
 project-group => 'john'
 fluvio-smartmodule-cargo-dependency => '"0.3.0"'
@@ -51,8 +51,8 @@ Ignoring: /var/folders/5q/jwc86771549058kmbkbqjcdc0000gn/T/.tmp0ZJHbN/cargo-gene
 
 Let's take a look at the starter code from the template, located in `src/lib.rs`:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ cd example-aggregate && cat ./src/lib.rs
 ```
 
@@ -97,8 +97,8 @@ return the new value, we convert the sum to a String and return it, using `.into
 
 Let's make sure our code compiles. If eveything works as expected, there is a `.wasm` file generated in the target directory.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk build
 ...
 Compiling example-aggregate v0.1.0 (~/smdk/example-aggregate)
@@ -111,8 +111,8 @@ Your SmartModule WASM binary is now ready for use.
 
 Let's create a new Fluvio topic to produce the sample records we want to consume with our SmartModule:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic create aggregate-ints
 topic "aggregate-ints" created
 ```
@@ -120,8 +120,8 @@ topic "aggregate-ints" created
 Next, we produce some data to the topic. Remember, our goal here is to sum up
 integers in a stream, so we'll produce some sample input integers that we can read using the aggregator.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio produce aggregate-ints
 > 1
 Ok!
@@ -139,8 +139,8 @@ Ok!
 
 Let's double check it's all there.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume aggregate-ints -dB
 Consuming records from the beginning of topic 'aggregate-ints'
 1
@@ -155,8 +155,8 @@ Consuming records from the beginning of topic 'aggregate-ints'
 
 The SmartModule can be loaded to local Fluvio Cluster or [InfinyOn Cloud], as determined by the [`current profile`]. In this example, the profile points to InfinyOn Cloud.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk load
 Loading package at: ~/smdk/example-aggregate
 Found SmartModule package: example-aggregate
@@ -165,8 +165,8 @@ Trying connection to fluvio router.infinyon.cloud:9003
 Creating SmartModule: example-aggregate
 ```
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio smartmodule list
   SMARTMODULE                   SIZE
   john/example-aggregate@0.1.0   91.5 KB
@@ -179,8 +179,8 @@ SmartModules that have been uploaded on the cluster can be used by other areas o
 
 The default inial value for aggregagates is an "empty record", let's see it in action:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume aggregate-ints -dB --smartmodule=john/example-aggregate@0.1.0
 Consuming records from the beginning of topic 'aggregate-ints'
 1
@@ -195,8 +195,8 @@ Consuming records from the beginning of topic 'aggregate-ints'
 
 If we want to specify an initial value other than "empty record", we can use the `--aggregate-initial` flag in the Fluvio CLI to specify a value, let's use `100`:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume aggregate-ints -dB --aggregate-initial="100" --smartmodule=john/example-aggregate@0.1.0
 101
 102
@@ -213,8 +213,8 @@ Congratulations! :tada: Eveything worked as expected!
 
 Let's [publish] this SmartModule to [SmartModule Hub] to make accessible to others.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk publish
 Creating package john/example-aggregate@0.1.0
 .. fill out info in hub/package-meta.yaml
@@ -224,8 +224,8 @@ Package uploaded!
 
 Let's double check that the SmartModule is available for download:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio hub list
   SMARTMODULE                    Visibility
   john/example-aggregate@0.1.0   private

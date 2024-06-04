@@ -94,7 +94,7 @@ to send metrics from Fluvio Records to the Graphite instance.
 
 Make sure the Connector Development Kit is setup in your system by issuing the following command in your terminal.
 
-%copy%
+
 ```bash
 cdk
 ```
@@ -103,7 +103,7 @@ cdk
 
 Create a YAML file with the name `weather-monitor-config.yaml` and specify connector settings:
 
-%copy%
+
 ```yaml
 apiVersion: 0.1.0
 meta:
@@ -128,7 +128,7 @@ cdk deploy start --config weather-monitor-config.yaml
 
 Then produce records as usual:
 
-%copy%
+
 ```bash
 echo 120 | fluvio produce weather-ca-sandiego
 ```
@@ -138,7 +138,7 @@ echo 120 | fluvio produce weather-ca-sandiego
 
 Use Graphite's REST API to check on the stored data.
 
-%copy%
+
 ```bash
 curl -o ./data.json http://localhost:12345/render\?target\=weather.temperature.ca.sandiego\&format\=json\&noNullPoints
 ```

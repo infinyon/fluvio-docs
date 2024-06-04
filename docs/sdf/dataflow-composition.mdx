@@ -122,7 +122,7 @@ Let's start with an example. Create a package that split sentences into words an
 
 Create a fresh project directory `split-sentence` with two subdirectories: `packages` and `sentence`:
 
-%copy%
+
 ```bash
 $ mkdir -p split-sentence/packages/sentence
 $ cd split-sentence/packages/sentence
@@ -130,7 +130,7 @@ $ cd split-sentence/packages/sentence
 
 Inside the `sentence` directory and create the `sdf-package.yaml` and add the following content:
 
-%copy%
+
 ```yaml
 #sdf-package.yanl
 apiVersion: 0.4.0
@@ -166,8 +166,8 @@ dev:
 
 Use SDF generate command to build the project:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ sdf generate
 ```
 
@@ -178,7 +178,7 @@ The generator created several directories and files that we'll edit next.
 
 First, let's update the first function, `sentence-to-words`. Open `rust/sentence-to-words/src/lib.rs` and update the function body with the following code:
 
-%copy%
+
 ```rust
 pub(crate) fn sentence_to_words(sentence: String) -> Result<Vec<String>, String> {
     Ok(sentence.split_whitespace().map(String::from).collect())
@@ -187,7 +187,7 @@ pub(crate) fn sentence_to_words(sentence: String) -> Result<Vec<String>, String>
 
 Next update `augment_count`. Open `rust/augment-count/src/lib.rs` and replace the function body:
 
-%copy%
+
 ```rust
 pub(crate) fn augment_count(word: String) -> Result<String, String> {
     Ok(format!("{}({})", word, word.chars().count()))
@@ -196,7 +196,7 @@ pub(crate) fn augment_count(word: String) -> Result<String, String> {
 
 Let's add some tests as well:
 
-%copy%
+
 ```rust
 #[cfg(test)]
 mod test {
@@ -218,22 +218,22 @@ We've implemented both functions; it's time to compile and test our work.
 
 To build the package, run:
 
-%copy%
+
 ```bash
 $ sdf build
 ```
 
 Use `sdf test` interactive shell to test the code:
 
-%copy%
+
 ```bash
 $ sdf test
 ```
 
 In the test shell, you can view the functions available for testing:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 >> show functions
 sentence-to-words
 augment-count
@@ -241,8 +241,8 @@ augment-count
 
 Let's test `sentence-to-words` first:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 >> test function sentence-to-words --input "Hello World"
 Hello
 World
@@ -250,15 +250,15 @@ World
 
 Next, test `augment-count`:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 >> test function augment-count --input "Hello"
 Hello(5)
 ```
 
 You may also test the `rust` code via Cargo:
 
-%copy%
+
 ```bash
 $ cd rust
 $ cargo test
@@ -350,14 +350,14 @@ We'll import the package built in the [previous](#build-and-test-a-package) sect
 
 Ceate a dataflow file in the directory `split-sentence` directory:
 
-%copy%
+
 ```bash
 $ cd split-sentence
 ```
 
 Create the `dataflow.yaml` and add the following content:
 
-%copy%
+
 ```yaml
 #dataflow.yanl
 apiVersion: 0.4.0
@@ -414,7 +414,7 @@ dev:
 
 Use `sdf` command line tool to run the dataflow:
 
-%copy%
+
 ```bash
 $ sdf run --dev
 ```
@@ -426,7 +426,7 @@ Use `--dev` to ask the engine to change the path to the local package. Without t
 
 1. Produce sentences to in `sentence` topic:
 
-%copy%
+
 ```bash
 $ fluvio produce sentence
 ```
@@ -438,7 +438,7 @@ Hi there
 
 Consume from `words` to retrieve the result:
 
-%copy%
+
 ```bash
 $ fluvio consume words -Bd
 ```
@@ -456,8 +456,8 @@ The dataflow collects runtime metrics that you can inspect in the runtime termin
 
 Check the `sentence-to-words` counters:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 >> show state sentence-words/sentence-to-words/metrics --table
  Key    Window  succeeded  failed
  stats  *       2          0
@@ -465,8 +465,8 @@ Check the `sentence-to-words` counters:
 
 Check the `augment-count` counters:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 >> show state sentence-words/augment-count/metrics --table
  Key    Window  succeeded  failed
  stats  *       4          0

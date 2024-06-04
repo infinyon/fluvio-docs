@@ -24,8 +24,8 @@ set to start a Fluvio cluster.
 
 **Example usage**
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio cluster check
 Running pre-startup checks...
      ✅ Kubernetes config is loadable
@@ -55,8 +55,8 @@ as plain processes on your local machine.
 
 To start a cluster on Minikube:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio cluster start
 📝 Running pre-flight checks
      ✅ Kubernetes config is loadable
@@ -74,8 +74,8 @@ $ fluvio cluster start
 
 To start a cluster locally (as processes on your machine):
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio cluster start --local
 📝 Running pre-flight checks
      ✅ Supported helm version is installed
@@ -98,15 +98,15 @@ Deletes a Fluvio cluster and all data associated with it.
 
 To uninstall Fluvio from Kubernetes (e.g. Minikube):
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio cluster delete
 ```
 
 To uninstall Fluvio from your local machine:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio cluster delete --local
 ```
 
@@ -118,8 +118,8 @@ to see whether they are still online, and which addresses they live at.
 
 **Example usage**
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio cluster spu list
  ID    NAME             STATUS  TYPE      RACK  PUBLIC          PRIVATE
  5001  custom-spu-5001  Online  "custom"   -    localhost:9010  localhost:9011

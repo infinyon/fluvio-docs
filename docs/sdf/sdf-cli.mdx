@@ -27,8 +27,8 @@ Stateful Dataflows (sdf) CLI is a binary, shipped with fluvio, that helps develo
 
 Download [fluvio version manager (fvm)], the package manager for fluvio and sdf:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
 ```
 
@@ -36,8 +36,8 @@ This command will download the Fluvio Version Manager (fvm), Fluvio CLI (fluvio)
 
 Install the preview release:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fvm install sdf-preview6
 ```
 
@@ -76,8 +76,8 @@ Usage: sdf setup
 
 Run `sdf setup` to configure your local environment.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ sdf setup
 ```
 
@@ -97,8 +97,8 @@ Usage: sdf generate
 
 SDF generate requires a `data-pipeline.yaml` the current directory:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ sdf generate
 ```
 
@@ -120,8 +120,8 @@ Usage: sdf build
 
 The command builds the Rust project and generates all WASM Components.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ sdf build
 ```
 
@@ -166,8 +166,8 @@ This command is used to clean-up the project directory and start again.
 
 Let's say we made major changes to the `data-pipeline.yaml` file and the previous version is no longer relevant. We can use `clean` to remove the project and start over:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ sdf clean
 ```
 
@@ -206,8 +206,8 @@ The following code splits sentences into words and has a `println` statement:
 
 For the sentence with `This is a test`, the output will be:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ sdf log
 2024-01-06T02:08:09.735861+00:00 split-sentence INFO ["This", "is", "a", "test"]
 ```
@@ -228,7 +228,7 @@ Usage: sdf version
 
 Find out what version you are running:
 
-%copy first-line%
+
 ```bash
 $ sdf version
 ```
@@ -256,8 +256,8 @@ Use `--ui` to view a graphical represetation of the project in a web browser. Th
 
 Navigate to the project directory, ensure it's built, and `run` to start the project in interactive mode:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ sdf run --ui
 Please visit http://127.0.0.1:8000 to use SDF Studio
 ...
@@ -302,8 +302,8 @@ Options:
 
 For example, to show all state objects:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 >> show state
  Namespace                                     Keys  Type
  word-processing-window/count-per-word/state   22    u32
@@ -314,8 +314,8 @@ The states are organized by namespace where the first keyword is the service nam
 
 To further inspect the objects, use the `show state` command with the name of the namespace:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 >> show state word-processing-window/count-per-word/state
  Key       Value  Window
  book      1      2023-12-28T00:32:00Z:2023-12-28T00:32:20Z
@@ -330,8 +330,8 @@ You also have the option to filter the state by key `(--key)`, or a regex `(--fi
 
 Exit interactive mode:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 >> exit
 bye!
 ```

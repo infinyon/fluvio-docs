@@ -22,7 +22,7 @@ sdf run -e VAR1=value1 -e VAR2=value2
 Once the environment variables are defined thru CLI, they are available in every operator user code.  In the Rust code, you can access the environment variables using the[`std::env`](https://doc.rust-lang.org/std/env/index.html) module.
 
 Follow code snippet illustration filter that reject a word startes with prefix defined in environment variable.
-%copy%
+
 ```yaml
 - operator: filter-map
   run: |
@@ -38,7 +38,7 @@ Follow code snippet illustration filter that reject a word startes with prefix d
 
 They are also useful for passing configuration information such as API keys.  For example, following show how to encode bearer token in environment variable and access it in the operator code.
 
-%copy%
+
 ```yaml
 - operator: map
   adaptors:

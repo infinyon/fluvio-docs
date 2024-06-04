@@ -13,7 +13,7 @@ Webhooks are special connectors with an associated external url. Users can send 
 
 Copy this example Webhook config file and save it as `example-webhook.yaml`
 
-%copy%
+
 ```yaml title="example-webhook.yaml"
 meta:
   name: my-webhook
@@ -27,8 +27,7 @@ webhook:
 
 Create the webhook using the example config file
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio cloud webhook create --config example-webhook.yaml
 ```
 
@@ -40,8 +39,7 @@ Webhook "my-webhook" created with url: https://infinyon.cloud/webhooks/v1/[rando
 
 If you need this url again, you can run this command to list your webhooks, and their urls.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio cloud webhook list
 ```
 
@@ -59,16 +57,14 @@ For this section, it is recommended to open second terminal in view watch data a
 
 Run this command to create a consumer to our topic in the second terminal.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio consume my-webhook-topic
 ```
 </Idea>
 
 We'll be sending json data `{"key": "value"}` to our webhook using `curl`. Replace the url so `[random string]` matches your unique url. Keep this command close because we'll refer to this example curl command later.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ curl -v -X POST https://infinyon.cloud/webhooks/v1/[random string] -H "Content-Type: application/json" -d '{"key": "value"}'
 ```
 
@@ -83,7 +79,7 @@ We don't need the headers. Just the data we sent. We can update the output so it
 
 Modify the `outputParts` value from our webhook config `example-webhook.yaml` to the value `body`
 
-%copy%
+
 
 ```yaml title="example-webhook.yaml"
 meta:
@@ -98,8 +94,8 @@ webhook:
 
 Run this command to update your webhook.
 
-%copy first-line%
-```shell
+
+```shell copy="fl"
 $ fluvio cloud webhook update -c example-webhook.yaml
 Webhook "my-webhook" updated
 ```

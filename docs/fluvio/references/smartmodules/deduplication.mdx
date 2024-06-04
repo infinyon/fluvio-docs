@@ -20,7 +20,7 @@ The deduplication function is deterministic and survives restarts. During restar
 
 Example configuration on topic:
 
-%copy%
+
 ```yaml
 # topic.yaml
 version: 0.1.0
@@ -36,23 +36,23 @@ deduplication:
 ```
 A topic can be created using this config file like so:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic create -c topic.yaml
 ```
 
 After creating the topic, it can be tested like so:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio produce topic-with-dedup --key-separator :
 1:2
 1:2
 2:5
 ```
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume -B topic-with-dedup
 2
 5

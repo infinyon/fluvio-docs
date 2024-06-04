@@ -33,14 +33,14 @@ We'll create a dataflow that reads `person` records from the `user`topic and spl
 
 Create a directory `split-test`:
 
-%copy%
+
 ```bash
 $ mkdir split-test; cd split-test
 ```
 
 Add the following `dataflow.yaml` file:
 
-%copy%
+
 ```yaml
 # dataflow.yaml
 apiVersion: 0.4.0
@@ -103,7 +103,7 @@ In this example, we used the `filter` operator as the target schema matches the 
 
 Run dataflow:
 
-%copy%
+
 ```bash
 $ sdf run
 ```
@@ -115,12 +115,12 @@ Add `--ui` if you want to see the graphical representation of the dataflow.
 
 Produce to `user`:
 
-%copy%
+
 ```bash
 $ fluvio produce user
 ```
 
-%copy%
+
 ```bash
 {"name":"Andrew","age":16}
 {"name":"Jackson","age":17}
@@ -131,7 +131,7 @@ $ fluvio produce user
 
 Consume from `child`:
 
-%copy%
+
 ```bash
 $ fluvio consume child -Bd
 ```
@@ -144,7 +144,7 @@ $ fluvio consume child -Bd
 
 Consume from `adult`:
 
-%copy%
+
 ```bash
 $ fluvio consume adult -Bd
 ```

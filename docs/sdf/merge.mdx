@@ -33,14 +33,14 @@ We'll create a dataflow that reads records from the `child` and `adult` topics a
 
 Create a directory `merge-test`:
 
-%copy%
+
 ```bash
 $ mkdir merge-test; cd merge-test
 ```
 
 Add the following `dataflow.yaml` file:
 
-%copy%
+
 ```yaml
 # dataflow.yaml
 apiVersion: 0.4.0
@@ -90,7 +90,7 @@ services:
 
 In this example, we don't use any operators as the target schema matches the source. If there is a mismatch, use `map` and update the record accordingly.
 
-%copy%
+
 ```bash
 $ sdf run
 ```
@@ -102,12 +102,12 @@ Add `--ui` if you want to see the graphical representation of the dataflow.
 
 Produce to `adult`:
 
-%copy%
+
 ```bash
 $ fluvio produce adult
 ```
 
-%copy%
+
 ```bash
 {"name":"Randy","age":32}
 {"name":"Alice","age":28}
@@ -115,7 +115,7 @@ $ fluvio produce adult
 
 Produce to `child`:
 
-%copy%
+
 ```bash
 $ fluvio produce child
 ```
@@ -128,7 +128,7 @@ $ fluvio produce child
 
 Consume from `people`:
 
-%copy%
+
 ```bash
 $ fluvio consume people -Bd
 ```

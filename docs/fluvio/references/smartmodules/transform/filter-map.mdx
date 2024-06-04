@@ -42,8 +42,8 @@ The output records in this stream should look like this:
 
 Run `smdk generate` with the name of the filter and choose the  "filter" options:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk generate filter-map
 project-group => 'john'
 fluvio-smartmodule-cargo-dependency => '"0.3.0"'
@@ -69,14 +69,14 @@ The generator created a sample code for us, let's go ahead and update it.
 
 We'll want to `cd` into the project directory for the rest of the commands to work:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ cd filter-map
 ```
 
 Now, let's jump right into the code. Copy and paste the following block into the `src/lib.rs` file in the new SmartModule project:
 
-%copy%
+
 ```rust
 use fluvio_smartmodule::{smartmodule, SmartModuleRecord, RecordData, Result};
 use serde::{Deserialize, Serialize};
@@ -133,8 +133,8 @@ Next, we check what type of event we received. If it's an `order_ready` event, w
 
 Let's make sure our code compiles. If eveything works as expected, there is a `.wasm` file generated in the target directory.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk build
 ...
 Compiling filter-map v0.1.0 (~/smdk/filter-map)
@@ -149,8 +149,8 @@ Let's test our work using the command line `test` facility.
 
 Test `filter` component to ensure non-mathing records are eliminated:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk test --text='{"type":"account_created","account_id":"1","username":"bill9876","preferred_name":"Bill","phone_number":"1-800-234-5678"}'
 loading module at: ~/smdk/filter-map/target/wasm32-unknown-unknown/release-lto/filter_map.wasm
 0 records outputed
@@ -158,8 +158,8 @@ loading module at: ~/smdk/filter-map/target/wasm32-unknown-unknown/release-lto/f
 
 Test `map` part to ensure matching records are transformed:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk test --text='{"type":"order_ready","account_id":"1","sms_number":"1-800-234-5678","sms_name":"Bill"}'
 loading module at: ~/smdk/filter-map/target/wasm32-unknown-unknown/release-lto/filter_map.wasm
 1 records outputed
@@ -170,8 +170,8 @@ loading module at: ~/smdk/filter-map/target/wasm32-unknown-unknown/release-lto/f
 
 Let's create a new Fluvio topic to produce the sample records we want to consume with our SmartModule:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic create filter-map
 topic "filter-map" created
 ```
@@ -179,7 +179,7 @@ topic "filter-map" created
 Now, let's put our sample data into a file and produce it to our topic.
 Create `groceries.txt` with the following contents:
 
-%copy%
+
 ```bash
 {"type":"account_created","account_id":"1","username":"bill9876","preferred_name":"Bill","phone_number":"1-800-234-5678"}
 {"type":"order_ready","account_id":"1","sms_number":"1-800-234-5678","sms_name":"Bill"}
@@ -189,15 +189,15 @@ Create `groceries.txt` with the following contents:
 
 Now we can produce the sample data to our topic.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio produce filter-map -f ./groceries.txt
 ```
 
 Let's double check it's all there.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume filter-map -dB
 Consuming records from the beginning of topic 'filter-map'
 {"type":"account_created","account_id":"1","username":"bill9876","preferred_name":"Bill","phone_number":"1-800-234-5678"}
@@ -210,8 +210,8 @@ Consuming records from the beginning of topic 'filter-map'
 
 The SmartModule can be loaded to local Fluvio Cluster or [InfinyOn Cloud], as determined by the [`current profile`]. In this example, the profile points to InfinyOn Cloud.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk load
 Loading package at: ~/smdk/filter-map
 Found SmartModule package: filter-map
@@ -222,8 +222,8 @@ Creating SmartModule: filter-map
 
 Rust `fluvio smartmodule list` to ensure your SmartModule has been uploaded:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio smartmodule list
   SMARTMODULE                   SIZE
   john/filter-map@0.1.0         166.6 KB
@@ -231,8 +231,8 @@ $ fluvio smartmodule list
 
 SmartModules that have been uploaded on the cluster can be used by other areas of the system (consumers, producers, connectors, etc):
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume filter-map -dB --smartmodule=john/filter-map@0.1.0
 Consuming records from the beginning of topic 'filter-map'
 {"message":"Hello Bill, your groceries have been collected and are ready to pick up!","number":"1-800-234-5678"}
@@ -245,8 +245,8 @@ Congratulations! :tada: Eveything worked as expected!
 
 Let's [publish] this SmartModule to [SmartModule Hub] to make accessible to others.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk publish
 Creating package john/filter-map@0.1.0
 .. fill out info in hub/package-meta.yaml
@@ -256,8 +256,8 @@ Package uploaded!
 
 Let's double check that the SmartModule is available for download:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio hub list
   SMARTMODULE                 Visibility
   john/filter-map@0.1.0        private

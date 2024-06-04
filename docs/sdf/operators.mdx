@@ -60,7 +60,7 @@ While in most cases, one operator's output becomes the next operator's input; th
 
 The following example defines a `filter` that drops all sentences without a question mark:
 
-%copy%
+
 ```yaml
 - operator: filter
   run: |
@@ -81,7 +81,7 @@ The `filter-map` operator combines a filter and a map operation; it takes a reco
 
 The following example defines a `filter-map` that transforms sentences longer than ten characters to uppercase and drops all others:
 
-%copy%
+
 ```yaml
 - operator: filter-map
   run: |
@@ -103,7 +103,7 @@ The `flat-map` operator takes an aggregate record and returns an array of record
 
 The following example defines a `flat-map` that splits sentences into words:
 
-%copy%
+
 ```yaml
 - operator: flat-map
   run: |
@@ -138,7 +138,7 @@ Check out <a href="https://github.com/infinyon/stateful-dataflows-examples/blob/
 
 Assuming a user_event record has a `timestamp` field, the following example shows how to update the timestamp from the record value:
 
-%copy%
+
 ```yaml
 - operator: assign-timestamp
   run: |

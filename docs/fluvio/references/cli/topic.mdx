@@ -16,8 +16,8 @@ This command is used to create new Fluvio topics.
 
 **Example usage**
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic create greeting
 topic "greeting" created
 ```
@@ -35,8 +35,8 @@ Check [the docs for more info about data retention]
 
 In this example, the last segment of 500k will be deleted after 30 days.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic create my-topic --retention-time '30 days' --segment-size 500000
 topic "my-topic" created
 ```
@@ -58,8 +58,8 @@ possible values:
 
 **Example usage**
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic create my-topic --compression-type gzip
 topic "my-topic" created
 ```
@@ -115,8 +115,8 @@ is replicated.
 
 **Example usage**
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic list
  NAME      TYPE      PARTITIONS  REPLICAS  IGNORE-RACK  STATUS                   REASON
  greeting  computed      1          1                   resolution::provisioned
@@ -130,8 +130,8 @@ This command prints more detailed information about a specific topic.
 
 **Example usage**
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic describe greeting
  Name                    :  greeting
  Type                    :  computed
@@ -152,8 +152,8 @@ This data may not be recovered, so use this with care.
 
 **Example usage**
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic delete greeting
 topic "greeting" deleted
 ```

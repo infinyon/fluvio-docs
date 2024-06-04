@@ -13,8 +13,8 @@ Connector Hub is a public repository for connectors. You can publish your connec
 
 Use `cdk publish` to publish your connector to the Hub. If run without arguments, it will pack everything needed into a package and push the package to the Hub.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ cdk publish
 ```
 
@@ -25,8 +25,8 @@ The connector is now available for download from the Hub.
 
 Run `cdk hub list` to list connectors in the Hub.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ cdk hub list
   CONNECTOR                          Visibility
   infinyon-labs/graphite-sink@0.1.2  public
@@ -48,22 +48,22 @@ You will see all `public` connectors and your own `private` connectors.
 You can download and run any connector from the Hub. In this example, we'll create new directory to download and run `acme/my-connector0.1.0` connector:
 
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ mkdir test-conn; cd test-conn
 ```
 
 Download the connector:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ cdk hub download acme/my-connector0.1.0
 ```
 
 Use connector `.ipkg` package file and run it with the `--ipkg` option:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ cdk deploy start --ipkg acme/my-connector0.1.0.ipkg --config ../sample-config.yaml
 ```
 

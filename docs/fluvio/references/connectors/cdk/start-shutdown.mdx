@@ -11,8 +11,8 @@ slug: /connectors/cdk/start-shutdown
 
 [Testing] your connector runs the process in the foreground. Use `cdk deploy start` to run your connector in the background:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ cdk deploy start --config sample-config.yaml
 Log file: /private/tmp/my-connector/my-connector.log
 Connector runs with process id: 88589
@@ -22,8 +22,8 @@ Connector runs with process id: 88589
 
 CDK offers a convenience function to list running connectors:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ cdk deploy list
  NAME                            STATUS
  my-my-connector-test-connector  Running
@@ -35,8 +35,8 @@ You can use the connector name to shut it down.
 
 Stop a running your connector with `cdk deploy shutdown`
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ cdk deploy shutdown --name my-my-connector-test-connector
 Shutting down connector: my-my-connector-test-connector
 pid: 56421

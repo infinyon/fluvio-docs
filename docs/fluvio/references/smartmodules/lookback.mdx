@@ -85,8 +85,8 @@ transforms:
 #### Test with Fluvio Cli
 First, let's generate a new SmartModule using SMDK tool:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk generate
 Using hub https://hub-dev.infinyon.cloud
 🤷   Project Name: filter-with-lookback
@@ -105,16 +105,16 @@ Then, put the code snippet from above into `src/lib.rs` file.
 
 Now we are ready to build and load SmartModule to the cluster:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk build
 $ smdk load
 ```
 
 Let's produce 3 records into our topic:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio produce test_topic
 > 1
 Ok!
@@ -126,8 +126,8 @@ Ok!
 
 In another terminal, run Fluvio Consumer with `transforms.yaml` file from the example above. It will use our SmartModule with configured `lookback`:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume test_topic  --transforms-file transforms.yaml
 ```
 
@@ -142,15 +142,15 @@ By `--record "N"` we specify records that will exist before the SmartModule star
 
 The following commands will pass records "2" and "3" to `look_back` and record "4" to `filter` function:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk test --text 4 --lookback-last 1 --record 2 --record 3
 4
 ```
 The output result is 4. But if we run:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ smdk test --text 1 --lookback-last 1 --record 2 --record 3
 ```
 the record will be filtered out as expected.

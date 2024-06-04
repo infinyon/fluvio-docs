@@ -35,8 +35,8 @@ We will cover:
 
 Download and install the CLI by running:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
 ```
 
@@ -46,29 +46,29 @@ You will need to add these directories to your shell's `PATH` environment variab
 
 ### Bash PATH Setup
 
-%copy first-line%
-```shell
+
+```shell copy="fl"
 $ echo 'export PATH="${HOME}/.fvm/bin:${HOME}/.fluvio/bin:${PATH}"' >> ~/.bashrc
 ```
 
 ### ZSH PATH Setup
 
-%copy first-line%
-```shell
+
+```shell copy="fl"
 $ echo 'export PATH="${HOME}/.fvm/bin:${HOME}/.fluvio/bin:${PATH}"' >> ~/.zshrc
 ```
 
 ### Fish PATH Setup
 
-%copy first-line%
-```shell
+
+```shell copy="fl"
 $ fish_add_path ~/.fluvio/bin
 ```
 
 Example output
 
-%copy first-line%
-```shell
+
+```shell copy="fl"
 $ curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
 
 ☁️  Downloading fluvio version manager, fvm
@@ -94,8 +94,8 @@ fluvio:       echo 'export PATH="${HOME}/.fvm/bin:${HOME}/.fluvio/bin:${PATH}"' 
 
 ## Start a cluster
 
-%copy first-line%
-```shell
+
+```shell copy="fl"
 $ fluvio cluster start
 ```
 
@@ -103,8 +103,8 @@ $ fluvio cluster start
 
 Topics store and send data streams. Create one with:
 
-%copy first-line%
-```shell
+
+```shell copy="fl"
 $ fluvio topic create quickstart-topic
 ```
 
@@ -112,8 +112,8 @@ $ fluvio topic create quickstart-topic
 
 Send data to your topic with:
 
-%copy first-line%
-```shell
+
+```shell copy="fl"
 $ fluvio produce quickstart-topic
 > hello world!
 Ok!
@@ -121,7 +121,7 @@ Ok!
 
 Exit the prompt with `Ctrl+C`. You can also send files or stream output:
 
-%copy%
+
 ```shell
 fluvio produce -f ./path/to/file.txt
 echo "hello world!" | fluvio produce quickstart-topic
@@ -131,8 +131,8 @@ echo "hello world!" | fluvio produce quickstart-topic
 
 Read data from your topic with:
 
-%copy first-line%
-```shell
+
+```shell copy="fl"
 $ fluvio consume quickstart-topic -B -d
 ```
 
@@ -146,7 +146,7 @@ SmartModules are user-defined functions that process data streams.
 
 Use the SmartModules Development Kit (smdk) binary to create your SmartModule project:
 
-%copy%
+
 ```bash
 smdk generate
 cd quickstart
@@ -154,7 +154,7 @@ cd quickstart
 
 A filter SmartModule might look like this:
 
-%copy%
+
 ```rust
 use fluvio_smartmodule::{smartmodule, Result, Record};
 
@@ -167,7 +167,7 @@ pub fn filter(record: &Record) -> Result<bool> {
 
 Build and test it with:
 
-%copy%
+
 ```shell
 smdk build
 smdk test --text "cats"
@@ -189,7 +189,7 @@ fluvio smartmodule list
 
 Create a topic and use SmartModules with producers and consumers:
 
-%copy%
+
 ```shell
 fluvio topic create fruits
 fluvio consume fruits --smartmodule=quickstart

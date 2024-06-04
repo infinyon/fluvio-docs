@@ -25,8 +25,8 @@ We can use the `--from-beginning` (`-B`) flag in order to read everything from t
 beginning. Here we'll also use the `--disable-continuous` (`-d`) flag in order to exit
 after all the records have been read:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume my-topic -B -d
 This is my first record ever
 This is my second record ever
@@ -44,8 +44,8 @@ the keys of key/value records, see the next example!
 If we want to see both the keys _and_ values of the records in the topic, you can use
 the `--key-value` flag:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume my-topic -dB --key-value
 [null] This is my first record ever
 [null] This is my second record ever
@@ -74,23 +74,23 @@ it to test out yourself.
 Once you have compiled your SmartModule Filter and have a `.wasm` file for it, you
 can apply it by sending the binary to the cluster when you start your CLI consumer:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume my-topic -B --smartmodule-path="fluvio_wasm_filter.wasm"
 ```
 
 Alternatively, to avoid sending the SmartModule binary to the cluster with each
 `fluvio consume` session, you can have the cluster store it for you:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio smartmodule create --wasm-file="fluvio_wasm_filter.wasm" my_filter
 ```
 
 Then you can apply the SmartModule by name:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume my-topic -B --smartmodule="my_filter"
 ```
 
@@ -105,8 +105,8 @@ Start out by creating a new topic with multiple partitions using [`fluvio topic 
 
 [`fluvio topic create`]:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio topic create consume-multi -p 3
 ```
 
@@ -129,8 +129,8 @@ nine
 
 Then, produce the test data to the topic.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio produce "consume-multi" -f records.txt
 ```
 
@@ -139,8 +139,8 @@ among our partitions using [`fluvio partition list`].
 
 [`fluvio partition list`]:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio partition list
  TOPIC          PARTITION  LEADER  REPLICAS  RESOLUTION  HW  LEO  LSR  FOLLOWER OFFSETS
  consume-multi  0          5001    []        Online      3   3    0    []
@@ -153,8 +153,8 @@ sent to each partition. Let's look at how to consume from each partition.
 
 To consume from a specific partition, use the `--partition (-p)` flag on `fluvio consume`.
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume "consume-multi" -B --partition 0
 one
 four
@@ -163,7 +163,7 @@ seven
 
 To consume from partition 1:
 
-%copy first-line%
+
 ```bash
 $ fluvio consume "consume-multi" -B --partition 1
 two
@@ -173,8 +173,8 @@ eight
 
 And from partition 2:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume "consume-multi" -B --partition 2
 three
 six
@@ -186,8 +186,8 @@ nine
 At times, it is useful to see all records from all partitions from a single consumer.
 Using the example above:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio partition list
  TOPIC          PARTITION  LEADER  REPLICAS  RESOLUTION  HW  LEO  LSR  FOLLOWER OFFSETS
  consume-multi  0          5001    []        Online      3   3    0    []
@@ -197,8 +197,8 @@ $ fluvio partition list
 
 Each partition has 3 records. Now let's consume from all partitions:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume "consume-multi" -B -A
 one
 four
@@ -223,8 +223,8 @@ The format string will replace placeholders such as `{{key}}`, `{{value}}`, `{{p
 with the actual contents for each record. One possible use for this is formatting each record
 as a CSV row:
 
-%copy first-line%
-```bash
+
+```bash copy="fl"
 $ fluvio consume my-topic -B --format="{{time}},{{partition}},{{offset}},{{key}},{{value}}"
 2022-05-04T15:35:49.244Z,0,0,null,This is my first record ever
 2022-05-04T15:35:49.244Z,0,1,null,This is my second record ever

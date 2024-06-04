@@ -24,8 +24,7 @@ You need an InfinyOn Cloud account to:
 
 Use the following curl commad to download fluvio CLI:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
 ```
 
@@ -39,8 +38,7 @@ Pick a region to create a cluster from the InfinyOn Cloud UI.
 
 You can also use fluvio cli:
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio cloud cluster create
 ```
 
@@ -54,8 +52,7 @@ You log in with Oauth2 or email/password:
 
 ##### OAuth2
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio cloud login --use-oauth2
 A web browser has been opened at https://<OAUTH2_SERVER_DOMAIN>/activate?user_code=<CODE>.
 Please proceed with authentication.
@@ -63,8 +60,7 @@ Please proceed with authentication.
 
 ##### Email and password
 
-%copy first-line%
-```bash
+```bash copy="fl"
 $ fluvio cloud login
 InfinyOn Cloud email: example@infinyon.com
 Password: <hidden>

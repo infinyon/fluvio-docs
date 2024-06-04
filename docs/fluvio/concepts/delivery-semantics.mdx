@@ -14,7 +14,7 @@ a different trade-off between reliability and performance. There are two deliver
 
 Regardless of `delivery_semantic`, Fluvio batches outgoing records so it is necessary to flush the producer once all records have been sent to ensure proper delivery.
 
-%copy%
+
 ```rust
 let fluvio = Fluvio::connect().await?;
 let config = TopicProducerConfigBuilder::default()
@@ -28,7 +28,7 @@ producer.flush().await?;
 The mechanism for accessing response metadata for produced records is also the same for both `at-most-once` and `at-least-once` delivery semantics.
 
 
-%copy%
+
 ```rust
 let output = producer.send("Hello", "Fluvio!").await?;
 // Provides response metadata for records such as offset.
@@ -51,7 +51,7 @@ guarantees that the message was delivered.
 semantic is used unless the user explicitly waits for the response, as shown in the following snippet:
 <!-- TODO the content contained at this link is in contradiction with the content here -->
 
-%copy%
+
 ```rust
 let fluvio = Fluvio::connect().await?;
 let config = TopicProducerConfigBuilder::default()
@@ -79,7 +79,7 @@ There are three main parameters that can be configured for `at-least-once` seman
 
 Example:
 
-%copy%
+
 ```rust
 let policy = RetryPolicy {
     max_retries: 5,

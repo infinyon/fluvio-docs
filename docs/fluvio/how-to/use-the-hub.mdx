@@ -11,8 +11,7 @@ The InfinyOn Hub serves as a centralized repository for InfinyOn SmartConnectors
 
 Listing SmartModules will display the SmartModules available to your cluster.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio hub sm list
   SMARTMODULE                              Visibility
   infinyon-labs/array-map-json@0.1.0       public
@@ -28,8 +27,8 @@ $ fluvio hub sm list
 ```
 
 Listing Connectors will display the connector packages you can download locally.
-%copy first-line%
-```shell
+
+```shell copy="fl"
 $ fluvio hub conn list
   CONNECTOR                          Visibility
   infinyon-labs/graphite-sink@0.1.2  public
@@ -48,8 +47,7 @@ $ fluvio hub conn list
 
 Downloading a SmartModule is done with respect to your cluster. SmartModules need to be downloaded before they are used in transformations.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio hub sm download infinyon/jolt@0.3.0
 downloading infinyon/jolt@0.3.0 to infinyon-jolt-0.3.0.ipkg
 ... downloading complete
@@ -60,8 +58,7 @@ trying connection to fluvio router.infinyon.cloud:9003
 
 Running `fluvio hub conn download` will download the package containing source code of the Connector.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio hub conn download infinyon/http-source@0.2.5
 downloading infinyon/http-source@0.2.5 to infinyon-http-source-0.2.5.ipkg
 ... downloading complete
