@@ -57,7 +57,7 @@ In this example, we used `increment` to add one to the previous value.
 
 ## Table States
 
-The table state has a partition `key` and a value of `arrow-row` type. The arrow type may look familiar, as it is a mapping of the [arrow dataframe type]. These dataframes are portable with several full features libraries such as [Polars]. Fluvio uses [adapters] to map dataframes with with a these libraries.
+The table state has a partition `key` and a value of `arrow-row` type. The arrow type may look familiar, as it is a mapping of the [arrow dataframe type]. These dataframes are portable with several full features libraries such as [Polars]. Fluvio uses adapters to map dataframes with with a these libraries.
 
 ```yaml
 transforms:
@@ -180,5 +180,4 @@ The `car-color-state` is now usable in any of the steps of the `cars-prediction-
 
 [arrow dataframe type]: https://docs.rs/arrow/latest/arrow/
 [Polars]: https://pola.rs/
-[adapters]: /sdf/adapters
 [window operations]: /sdf/operators#window-operators
