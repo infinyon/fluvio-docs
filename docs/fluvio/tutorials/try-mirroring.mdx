@@ -1,10 +1,10 @@
 ---
 sidebar_position: 7
 title: "Try Mirroring"
-description: "Try Mirroring with a Kubernetes and local cluster"
+description: "Try Mirroring on Docker"
 ---
 
-This tutorial is a demonstration of mirroring locally with two clusters in the same machine. Then, it requires a local cluster for the Remote and a Kubernetes cluster for the Home.
+This tutorial is a demonstration of mirroring locally with two clusters on docker.
 
 ## Home and Remote
 
@@ -14,34 +14,117 @@ To undestand mirroring, we need to undestand what is a Home and a Remote cluster
 - Remote cluster is the source cluster that will send data.
 
 
-## Kubernetes Cluster as Home
+## Dockerfile and Docker-compose
 
-Let's start with installing and configuring the home cluster.
+Copy the docker-compose.yaml and Dockerfile to a directory.
+
+docker-compose.yaml:
+
+```yaml
+version: "3"
+services:
+  ## Home Cluster
+  sc-home:
+    image: infinyon/fluvio:stable
+    container_name: sc-home
+    hostname: sc-home
+    ports:
+      - "9103:9003"
+    environment:
+      - RUST_LOG=info
+    command: "./fluvio-run sc --local /fluvio/metadata"
+    volumes:
+      - ./home/fluvio-metadata:/fluvio/metadata
+  sc-home-setup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sc-home-setup
+    environment:
+      - RUST_LOG=info
+    entrypoint: >
+      /bin/sh -c "
+      fluvio profile add docker sc-home:9003 docker;
+      fluvio cluster spu register --id 5001 -p spu-home:9010 --private-server spu-home:9011;
+      exit 0;
+      "
+    depends_on:
+      - sc-home
+  spu-home:
+    image: infinyon/fluvio:stable
+    container_name: spu-home
+    hostname: spu-home
+    volumes:
+      - ./home/fluvio-data:/fluvio/data
+    environment:
+      - RUST_LOG=info
+    ports:
+      - "9110:9010"
+      - "9111:9011"
+    command: "./fluvio-run spu -i 5001 -p spu-home:9010 -v spu-home:9011 --sc-addr sc-home:9004 --log-base-dir /fluvio/data"
+    depends_on:
+      - sc-home
+  ## Remote Cluster        
+  sc-remote:
+    image: infinyon/fluvio:stable
+    container_name: sc-remote
+    hostname: sc-remote
+    ports:
+      - "9203:9003"
+    environment:
+      - RUST_LOG=info
+    command: "./fluvio-run sc --local /fluvio/metadata"
+    volumes:
+      - ./remote/fluvio-metadata:/fluvio/metadata
+  sc-remote-setup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sc-remote-setup
+    environment:
+      - RUST_LOG=info
+    entrypoint: >
+      /bin/sh -c "
+      fluvio profile add docker sc-remote:9003 docker;
+      fluvio cluster spu register --id 5001 -p 0.0.0.0:9210 --private-server spu-remote:9011;
+      exit 0;
+      "
+    depends_on:
+      - sc-remote
+  spu-remote:
+    image: infinyon/fluvio:stable
+    container_name: spu-remote
+    hostname: spu-remote
+    volumes:
+      - ./remote/fluvio-data:/fluvio/data
+    environment:
+      - RUST_LOG=info
+    ports:
+      - "9210:9010"
+      - "9211:9011"
+    command: "./fluvio-run spu -i 5001 -p spu-remote:9010 -v spu-remote:9011 --sc-addr sc-remote:9004 --log-base-dir /fluvio/data"
+    depends_on:
+      - sc-remote
+```
 
 
-## Install Home Cluster on Local Machine
+Dockerfile:
 
-Installing the home cluster on Linux or Mac requires Kubernetes. Use the following instructions to set up Kubernetes on your local machine.
+```dockerfile
+FROM ubuntu:20.04
 
-* [Install Rancher Desktop for Mac](https://fluvio.io/docs/get-started/mac/#install-rancher-desktop)
-* [Install k3d, kubectl and helm for Linux](https://fluvio.io/docs/get-started/linux/#installing-kubernetes-cluster)
+RUN apt-get update
+RUN apt-get install -y curl unzip
+RUN curl -fsS https://hub.infinyon.cloud/install/install.sh?ctx=dc | bash
 
-<Idea>
-  Install _Kubernetes_, then use the instructions below to install the experimental _fluvio binaries_.
-</Idea>
-
-
-### Create a new directory
-
-Create a clean directory for the configuration and metadata files:
-
-
-```bash
-mkdir -p local/projects/mirror; cd local/projects/mirror
+ENV PATH "$PATH:/root/.fluvio/bin"
+ENV PATH "$PATH:/root/.fvm/bin"
 ```
 
 
 ### Download `fluvio` binary
+
+Make sure that you have fluvio binary out from the docker too.
 
 Use `curl` to download and install Fluvio:
 
@@ -50,65 +133,34 @@ Use `curl` to download and install Fluvio:
 curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
 ```
 
-Make sure to add `.fluvio/bin` to the `$PATH`as specified in the installation script.
+Also, make sure to add `.fluvio/bin` to the `$PATH`as specified in the installation script.
 
 
-### Start home cluster
-
-Use the fluvio binary to start the cluster:
+### Start Docker Containers
 
 
 ```bash
-fluvio cluster start --k8
+docker-compose up -d
+```
+
+To have access these cluster out of docker, create a profile for the local and remote cluster:
+```bash
+fluvio profile add docker-remote 127.0.0.1:9203 docker
+fluvio profile add docker-home 127.0.0.1:9103 docker
 ```
 
 Check the result with:
-
 
 ```bash
 fluvio cluster status
 ```
 
-### Register Edge clusters
+### Register Remote clusters on the Home
 
-Use the `remote` CLI to register the edge clusters (edge1) with the upstream cluster:
-
-```bash
-fluvio remote register edge1
-```
-
-### Create the mirror topic
-
-Mirror topics on the upstream clusters has multiple partitions, where each partition has a `1-to-1` relationship with the edge cluster.
-
-Create a partition assignment file to define the edge devices:
-
+Use the `remote` CLI to register the remote clusters with the home cluster:
 
 ```bash
-echo '[
-    "edge1"
-]' > assignment_file.json
-```
-
-Apply the configuration file to create the topic:
-
-
-```bash
-fluvio topic create edge-topic --mirror-apply assignment_file.json
-```
-
-List partitions to check the assignment:
-
-
-```bash
-fluvio partition list
-```
-
-It should display all partitions:
-
-```bash
-  TOPIC       PARTITION  LEADER  MIRROR        REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
-  edge-topic  0          5001    edge1           []        Online      0 B   0   0    0    0                 []
+fluvio remote register docker-remote
 ```
 
 List remote clusters to check their status:
@@ -121,33 +173,66 @@ fluvio remote list
 It should show the following:
 
 ```bash
-  RemoteCluster Status  Last Seen
-  edge1         Waiting -
+  REMOTE         STATUS   LAST SEEN 
+  docker-remote  Waiting  -         
 ```
 
-### Generate Metadata for Edge Clusters
 
-Each edge cluster requires a unique metadata file that gives the edge cluster the information to connect to the upstream cluster and the topic/mirror where the data is synchronized.
+### Create the mirror topic
 
-Generate a metadata file for edge1:
+Mirror topics on the home clusters has multiple partitions, where each partition has a `1-to-1` relationship with the remote cluster.
 
-```bash
-fluvio remote export edge1 --file edge1.json
-```
-
-# Local Cluster as Home
-
-First we will start the cluster:
+Create a partition assignment file to define the remote devices:
 
 
 ```bash
-fluvio cluster start
+echo '["docker-remote"]' > devices.json
+```
+
+Apply the configuration file to create the topic:
+
+
+```bash
+fluvio topic create mirror-topic --mirror-apply devices.json
+```
+
+List partitions to check the assignment:
+
+
+```bash
+fluvio partition list
+```
+
+It should display the partition that we created:
+
+```bash
+  TOPIC         PARTITION  LEADER  MIRROR        REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
+  mirror-topic  0          5001    docker-remote []        Online      0 B   0   0    0    0                 []
+```
+
+### Generate Metadata for Remote Clusters
+
+Each remote cluster requires a unique metadata file that gives the remote cluster the information to connect to the home cluster and the topic/mirror where the data is synchronized.
+
+Generate a metadata file for the remote:
+
+```bash
+fluvio remote export docker-remote --file docker-remote.json --public-endpoint sc-home:9003
+```
+
+# Connect to the Home Cluster from the Remote
+
+First, switch to the remote cluster:
+
+
+```bash
+fluvio profile switch docker-remote 
 ```
 
 Then, we'll use the metadata file to connect to home:
 
 ```bash
-fluvio home connect --file edge1.json
+fluvio home connect --file docker-remote.json
 ```
 
 Let's check the partitions:
@@ -157,27 +242,41 @@ Let's check the partitions:
 fluvio partition list
 ```
 
-The edge device should show the following partition::
+The remote device should show the following partition::
 
 ```bash
-  TOPIC       PARTITION  LEADER  MIRROR                         REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
-  edge-topic  0          5001    home_name:0:public_endpoint    []        Online      0 B   11  11   11   0                 []
+  TOPIC       PARTITION  LEADER  MIRROR                     REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
+  mirror-topic  0          5001  home:5001:spu-home:9010    []        Online      0 B   0   0    0    0                 []
 ```
 
+
+Also, check the home status with:
+
+
+```bash
+fluvio home status
+```
+
+It should show the following:
+
+```bash
+  HOME  ROUTE         STATUS  LAST SEEN 
+  home  sc-home:9003  Online  1s        
+```
 
 ---
 
 ## Producing and Consuming on Mirroring
 
-Let's produce on the Local cluster and consume from the Kubernetes cluster.
+Let's produce on the remote and consume from the home cluster.
 
-### Produce to edge cluster
+### Produce to remote cluster
 
-Produce on the local cluster:
+Produce on the remote:
 
 
 ```bash
-fluvio produce edge-topic
+fluvio produce mirror-topic
 ```
 
 ```bash
@@ -188,19 +287,19 @@ Ok!
 ```
 
 
-### Switch to Kubernetes Cluster
+### Switch to Home Cluster
 
 ```bash
-fluvio profile switch <KUBERNETES_PROFILE>
+fluvio profile switch docker-home
 ```
 
 
-### Consume from upstream
+### Consume from Home cluster 
 
-Consume on the `upstream` terminal:
+Consume on the `home` terminal:
 
 ```bash
-fluvio consume edge-topic --mirror edge1 -B
+fluvio consume mirror-topic --mirror docker-remote -B
 ```
 
 ```bash
@@ -213,9 +312,9 @@ B
 
 #### Related
 * [IoT Mirroring - Cloud]
-* [IoT Mirroring -  Raspberry Pi to a Local Cluster]
+* [IoT Mirroring -  Raspberry Pi to a remote]
 * [Discord]
 
 [Discord]: https://discord.com/invite/bBG2dTz
 [IoT Mirroring - Cloud]: /docs/tutorials/iot-mirroring-cloud.mdx
-[IoT Mirroring -  Raspberry Pi to a Local Cluster]: /docs/tutorials/iot-mirroring-local.mdx
+[IoT Mirroring -  Raspberry Pi to a remote]: /docs/tutorials/iot-mirroring-local.mdx
