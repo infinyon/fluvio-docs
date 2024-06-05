@@ -158,8 +158,12 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} InfinyOn, Inc. All rights reserved.`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      additionalLanguages: [
+        'bash',
+        'rust',
+        'toml',
+        'yaml'
+      ],
     },
   } satisfies Preset.ThemeConfig,
   themes: [
