@@ -25,83 +25,62 @@ version: "3"
 services:
   ## Home Cluster
   sc-home:
-    image: infinyon/fluvio:stable
-    container_name: sc-home
-    hostname: sc-home
-    ports:
-      - "9103:9003"
-    environment:
-      - RUST_LOG=info
-    command: "./fluvio-run sc --local /fluvio/metadata"
-    volumes:
-      - ./home/fluvio-metadata:/fluvio/metadata
-  sc-home-setup:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: sc-home-setup
+    container_name: sc-home
     environment:
       - RUST_LOG=info
     entrypoint: >
       /bin/sh -c "
-      fluvio profile add docker sc-home:9003 docker;
-      fluvio cluster spu register --id 5001 -p spu-home:9010 --private-server spu-home:9011;
-      exit 0;
+      fluvio profile add docker 0.0.0.0:9003 docker;
+      bash -c 'sleep 5 ; fluvio cluster spu register --id 5001 -p spu-home:9010 --private-server spu-home:9011' &
+      ./fluvio-run sc --local /fluvio/metadata
       "
-    depends_on:
-      - sc-home
+    volumes:
+      - ./home/fluvio-metadata:/fluvio/metadata
+      - ./shared:/shared
   spu-home:
-    image: infinyon/fluvio:stable
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: spu-home
     hostname: spu-home
     volumes:
       - ./home/fluvio-data:/fluvio/data
     environment:
       - RUST_LOG=info
-    ports:
-      - "9110:9010"
-      - "9111:9011"
     command: "./fluvio-run spu -i 5001 -p spu-home:9010 -v spu-home:9011 --sc-addr sc-home:9004 --log-base-dir /fluvio/data"
     depends_on:
       - sc-home
   ## Remote Cluster        
   sc-remote:
-    image: infinyon/fluvio:stable
-    container_name: sc-remote
-    hostname: sc-remote
-    ports:
-      - "9203:9003"
-    environment:
-      - RUST_LOG=info
-    command: "./fluvio-run sc --local /fluvio/metadata"
-    volumes:
-      - ./remote/fluvio-metadata:/fluvio/metadata
-  sc-remote-setup:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: sc-remote-setup
+    container_name: sc-remote
+    hostname: sc-remote
     environment:
       - RUST_LOG=info
     entrypoint: >
       /bin/sh -c "
-      fluvio profile add docker sc-remote:9003 docker;
-      fluvio cluster spu register --id 5001 -p 0.0.0.0:9210 --private-server spu-remote:9011;
-      exit 0;
+      fluvio profile add docker 0.0.0.0:9003 docker;
+      bash -c 'sleep 5 ; fluvio cluster spu register --id 5001 -p spu-remote:9010 --private-server spu-remote:9011' &
+      ./fluvio-run sc --local /fluvio/metadata
       "
-    depends_on:
-      - sc-remote
+    volumes:
+      - ./remote/fluvio-metadata:/fluvio/metadata
+      - ./shared:/shared
   spu-remote:
-    image: infinyon/fluvio:stable
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: spu-remote
     hostname: spu-remote
     volumes:
       - ./remote/fluvio-data:/fluvio/data
     environment:
       - RUST_LOG=info
-    ports:
-      - "9210:9010"
-      - "9211:9011"
     command: "./fluvio-run spu -i 5001 -p spu-remote:9010 -v spu-remote:9011 --sc-addr sc-remote:9004 --log-base-dir /fluvio/data"
     depends_on:
       - sc-remote
@@ -111,51 +90,29 @@ services:
 Dockerfile:
 
 ```dockerfile
-FROM ubuntu:20.04
+FROM infinyon/fluvio:latest
 
-RUN apt-get update
-RUN apt-get install -y curl unzip
-RUN curl -fsS https://hub.infinyon.cloud/install/install.sh?ctx=dc | bash
+RUN apk update
+RUN apk add curl unzip bash
+RUN curl -fsS https://hub.infinyon.cloud/install/install.sh?ctx=dc | VERSION='latest' bash
 
-ENV PATH "$PATH:/root/.fluvio/bin"
-ENV PATH "$PATH:/root/.fvm/bin"
+RUN mv /root/.fluvio/bin/fluvio /usr/local/bin/fluvio
 ```
 
 
-### Download `fluvio` binary
-
-Make sure that you have fluvio binary out from the docker too.
-
-Use `curl` to download and install Fluvio:
-
-
-```bash
-curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
-```
-
-Also, make sure to add `.fluvio/bin` to the `$PATH`as specified in the installation script.
-
-
-### Start Docker Containers
-
+Start Docker Containers with:
 
 ```bash
 docker-compose up -d
 ```
 
-To have access these cluster out of docker, create a profile for the local and remote cluster:
-```bash
-fluvio profile add docker-remote 127.0.0.1:9203 docker
-fluvio profile add docker-home 127.0.0.1:9103 docker
-```
-
-Check the result with:
-
-```bash
-fluvio cluster status
-```
-
 ### Register Remote clusters on the Home
+
+First, enter into the home cluster shell:
+
+```bash
+docker exec -it sc-home /bin/sh
+```
 
 Use the `remote` CLI to register the remote clusters with the home cluster:
 
@@ -217,22 +174,22 @@ Each remote cluster requires a unique metadata file that gives the remote cluste
 Generate a metadata file for the remote:
 
 ```bash
-fluvio remote export docker-remote --file docker-remote.json --public-endpoint sc-home:9003
+fluvio remote export docker-remote --file /shared/docker-remote.json --public-endpoint sc-home:9003
 ```
 
 # Connect to the Home Cluster from the Remote
 
-First, switch to the remote cluster:
+Now, connect to the remote shell in another terminal:
 
 
 ```bash
-fluvio profile switch docker-remote 
+docker exec -it sc-remote /bin/sh
 ```
 
 Then, we'll use the metadata file to connect to home:
 
 ```bash
-fluvio home connect --file docker-remote.json
+fluvio home connect --file /shared/docker-remote.json
 ```
 
 Let's check the partitions:
@@ -272,7 +229,7 @@ Let's produce on the remote and consume from the home cluster.
 
 ### Produce to remote cluster
 
-Produce on the remote:
+On remote shell, produce with:
 
 
 ```bash
@@ -287,16 +244,9 @@ Ok!
 ```
 
 
-### Switch to Home Cluster
-
-```bash
-fluvio profile switch docker-home
-```
-
-
 ### Consume from Home cluster 
 
-Consume on the `home` terminal:
+On home shell, consume with:
 
 ```bash
 fluvio consume mirror-topic --mirror docker-remote -B
@@ -316,5 +266,5 @@ B
 * [Discord]
 
 [Discord]: https://discord.com/invite/bBG2dTz
-[IoT Mirroring - Cloud]: /docs/tutorials/iot-mirroring-cloud.mdx
-[IoT Mirroring -  Raspberry Pi to a remote]: /docs/tutorials/iot-mirroring-local.mdx
+[IoT Mirroring - Cloud]: /fluvio/tutorials/iot-mirroring-cloud.mdx
+[IoT Mirroring -  Raspberry Pi to a remote]: /fluvio/tutorials/iot-mirroring-local.mdx
