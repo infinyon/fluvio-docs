@@ -13,6 +13,8 @@ Profile details are stored in the Fluvio configuration file at `~/.fluvio/config
 
 ### `fluvio profile current`
 
+Prints out the name of the active Fluvio profile.
+
 ```bash
 Print the name of the current context
 
@@ -21,10 +23,6 @@ Usage: fluvio profile current
 Options:
   -h, --help  Print help
 ```
-
-Prints out the name of the active Fluvio profile.
-
-[`fluvio topic create greeting`]:
 
 **Example usage**
 
@@ -46,7 +44,7 @@ Deletes only cluster connection information from your profile.
 
 This will not delete a cluster. See [`fluvio cluster delete`] for more info.
 
-[`fluvio cluster delete`]:
+[`fluvio cluster delete`]: /cli/cluster#fluvio-cluster-delete
 
 **Example usage**
 
@@ -73,10 +71,75 @@ $ fluvio profile list
 
 ### `fluvio profile rename`
 
+```bash
+Rename a profile
+
+Usage: fluvio profile rename <FROM> <TO>
+
+Arguments:
+  <FROM>  The name of the profile to rename
+  <TO>    The new name to give the profile
+
+Options:
+  -h, --help  Print help
+```
+
 ### `fluvio profile switch`
+
+```bash
+Switch to the named profile
+
+Usage: fluvio profile switch <profile name>
+
+Arguments:
+  <profile name>
+
+Options:
+  -h, --help  Print help
+```
 
 ### `fluvio profile sync`
 
+```bash
+Sync a profile from a cluster
+
+fluvio profile sync <COMMAND>
+
+Commands:
+  k8     Sync a profile from a Kubernetes cluster
+  local  Sync a profile from a local cluster
+
+Options:
+  -h, --help  Print help
+```
+
 ### `fluvio profile export`
 
+```bash
+Export a profile for use in other applications
+
+Usage: fluvio profile export [OPTIONS] [PROFILE_NAME]
+
+Arguments:
+  [PROFILE_NAME]
+
+Options:
+  -O, --output <type>  [default: json] [possible values: table, yaml, json]
+  -h, --help           Print help
+```
+
 ### `fluvio profile add`
+
+```bash
+Manually add a profile (advanced)
+
+Usage: fluvio profile add <PROFILE_NAME> <CLUSTER_ADDRESS> [INSTALLATION_TYPE]
+
+Arguments:
+  <PROFILE_NAME>       Name of profile to add
+  <CLUSTER_ADDRESS>    address of cluster, e.g. 127.0.0.1:9003
+  [INSTALLATION_TYPE]  Installation type of cluster, e.g. local, local-k8, k8
+
+Options:
+  -h, --help  Print help
+```
