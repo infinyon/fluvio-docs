@@ -23,7 +23,8 @@ function maybeStringifyChildren(children: ReactNode): ReactNode {
 
 export default function CodeBlock({
   children: rawChildren,
-  metastring
+  metastring,
+  ...props
 }: Props): JSX.Element {
   // The Prism theme on SSR is always the default theme but the site theme can
   // be in a different mode. React hydration doesn't update DOM styles that come
@@ -35,7 +36,7 @@ export default function CodeBlock({
   const CodeBlockComp =
     typeof children === 'string' ? StringContent : ElementContent;
   return (
-    <CodeBlockComp key={String(isBrowser)} copyBehavior={copy}>
+    <CodeBlockComp key={String(isBrowser)} copyBehavior={copy} {...props}>
       {children as string}
     </CodeBlockComp>
   );
