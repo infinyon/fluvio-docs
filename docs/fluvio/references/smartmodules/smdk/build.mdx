@@ -1,0 +1,65 @@
+---
+sidebar_position: 3
+title: "Build & Test"
+description: "Use your SmartModule in a development environment"
+slug: /smartmodules/smdk/build
+---
+
+This section covers building and testing SmartModules locally, and the [next section] describes how to load them on the Cluster for live traffic testing.
+
+
+### Build - Operation
+
+Navigate to `my-filter` project directory and run `build`:
+
+```bash copy="fl"
+$ smdk build
+...
+Compiling my-filter v0.1.0 (~/smdk/my-filter)
+Finished release-lto [optimized] target(s) in 12.65s
+```
+
+The build process generated an binary optimized for WebAssembly. We are now ready to test it.
+
+### Test - Operation
+
+When testing a SmartModule you can provide the test input via direct `text`, specifying a `file`,
+or reading from the `stdin`.
+
+Let's perform the matching test for our `my-filter` that looks for letter `a`:
+
+```bash copy="fl"
+$ smdk test --text cat
+loading module at: ~/smdk/my-filter/target/wasm32-unknown-unknown/release-lto/my_filter.wasm
+1 records outputed
+cat
+```
+
+Next, a non-matching test, reading the input from the `stdin`:
+
+```bash copy="fl"
+$ echo -n dog | smdk test --stdin
+loading module at: ~/smdk/my-filter/target/wasm32-unknown-unknown/release-lto/my_filter.wasm
+0 records outputed
+```
+
+Checkout the `smdk test -h` for additional parameters.
+
+Checkout the [next section] on how upload the SmartModule to your local cluster or [InfinyOn Cloud] for live traffic testing.
+
+### Steps
+
+1. [Generate a SmartModule]
+2. **[Build and Test]**
+3. [Load to your Cluster]
+4. [Publish to SmartModule Hub]
+
+[next section]: /smartmodules/smdk/load
+[Load to your Cluster]: /smartmodules/smdk/load
+[Publish to SmartModule Hub]: /smartmodules/smdk/publish
+[InfinyOn Cloud]: https://infinyon.cloud
+
+[Generate a SmartModule]: /smartmodules/smdk/generate
+[Build and Test]: /smartmodules/smdk/build
+[Load to your Cluster]: /smartmodules/smdk/load
+[Publish to SmartModule Hub]: /smartmodules/smdk/publish
