@@ -1,0 +1,8 @@
+{
+  "position": 6,
+  "label": "Hub",
+  "collapsible": true,
+  "link": {
+    "type": "generated-index"
+  }
+}
