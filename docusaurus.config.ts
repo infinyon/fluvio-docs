@@ -113,6 +113,10 @@ const config: Config = {
           label: 'APIs',
         },
         {
+          type: 'custom-GitHubStars',
+          position: "right",
+        },
+        {
           href: FLUVIO_REPOSITORY_URL,
           label: "GitHub",
           position: "right",
