@@ -18,7 +18,7 @@ To undestand mirroring, we need to undestand what is a Home and a Remote cluster
 
 ### Create a Cloud account
 
-Using your web browser, navigate to [https://dev.infinyon.cloud/signup](https://dev.infinyon.cloud/signup), where this experimental feature is available.
+Using your web browser, navigate to [https://infinyon.cloud/signup](https://infinyon.cloud/signup), where this experimental feature is available.
 
 After the account is created, you will be placed in the Dashboard. You may choose to create a cluster in the GUI. In this tutorial, we'll create a cluster using the CLI later.
 
@@ -36,18 +36,18 @@ Make sure to add `.fluvio/bin` to the `$PATH`as specified in the installation sc
 
 ### Login to InfinyOn Cloud
 
-Login to InfinyOn Cloud (dev):
+Login to InfinyOn Cloud:
 
 
 ```bash
-fluvio cloud login --remote=https://dev.infinyon.cloud --use-oauth2
+fluvio cloud login --use-oauth2
 ```
 
 Leave out `--use-oauth2` if you prefer username/password method.
 
 ### Provision a new Cluster
 
-Let's provision a new cluster in AWS `eu-central` using the experimental fluvio version:
+Let's provision a new cloud cluster
 
 
 ```bash
@@ -153,7 +153,7 @@ The remote device should show the following partition::
 
 ```bash
   TOPIC         PARTITION  LEADER  MIRROR                                                                 REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
-  mirror-topic  0          5001    c7f891c9-f1f9-4d28-b181-9777d8d07731:0:router.dev.infinyon.cloud:9005  []        Online      0 B   0   0    0    0                 []
+  mirror-topic  0          5001    c7f891c9-f1f9-4d28-b181-9777d8d07731:0:router.infinyon.cloud:9005  []        Online      0 B   0   0    0    0                 []
 ```
 
 
@@ -168,7 +168,7 @@ It should show the following:
 
 ```bash
   HOME                                  ROUTE                           STATUS  LAST SEEN
-  c7f891c9-f1f9-4d28-b181-9777d8d07731  router.dev.infinyon.cloud:9003  Online  1s
+  c7f891c9-f1f9-4d28-b181-9777d8d07731  router.infinyon.cloud:9003  Online  1s
 ```
 
 ---
