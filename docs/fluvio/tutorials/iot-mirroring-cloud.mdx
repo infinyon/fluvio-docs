@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 9
 title: "IoT Mirroring - Cloud"
 description: "Reliable IoT monitoring from movable Edges sensors with poor connections to Cloud."
 slug: /tutorials/iot-mirroring-cloud
@@ -48,7 +48,7 @@ Mirroring is an experimental feature using a development cluster. Please get in 
 
 ### Create a Cloud account
 
-Using your web browser, navigate to [https://dev.infinyon.cloud/signup](https://dev.infinyon.cloud/signup), where this experimental feature is available.
+Using your web browser, navigate to [https://infinyon.cloud/signup](https://infinyon.cloud/signup), where this experimental feature is available.
 
 After the account is created, you will be placed in the Dashboard. You may choose to create a cluster in the GUI. In this tutorial, we'll create a cluster using the CLI later.
 
@@ -66,11 +66,11 @@ Make sure to add `.fluvio/bin` to the `$PATH`as specified in the installation sc
 
 ### Login to InfinyOn Cloud
 
-Login to InfinyOn Cloud (dev):
+Login to InfinyOn Cloud:
 
 
 ```bash
-fluvio cloud login --remote=https://dev.infinyon.cloud --use-oauth2
+fluvio cloud login --use-oauth2
 ```
 
 Leave out `--use-oauth2` if you prefer username/password method.
@@ -78,7 +78,7 @@ Leave out `--use-oauth2` if you prefer username/password method.
 
 ### Provision a new Cluster
 
-Let's provision a new cluster in AWS `eu-central` using the experimental fluvio version:
+Let's provision a new cloud cluster:
 
 
 ```bash
@@ -399,10 +399,12 @@ Join us on [Discord] if you have questions, or would like to suggest new improve
 
 #### Related
 * [Try Mirroring]
+* [Try Mirroring - Cloud]
 * [IoT Mirroring -  Raspberry Pi to a Local Cluster]
 * [Discord]
 
 
 [Try Mirroring]: /fluvio/tutorials/try-mirroring.mdx
+[Try Mirroring - Cloud]: /fluvio/tutorials/try-mirroring-cloud.mdx
 [IoT Mirroring -  Raspberry Pi to a Local Cluster]: /fluvio/tutorials/iot-mirroring-local.mdx
 [Discord]: https://discord.com/invite/bBG2dTz
