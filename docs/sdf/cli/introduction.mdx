@@ -1,0 +1,63 @@
+---
+sidebar_position: 1
+title: "Introduction"
+description: "Stateful Dataflows Command Line Interface."
+slug: /sdf/cli
+---
+
+# SDF - Command Line Interface
+
+Stateful Dataflows (sdf) CLI is a binary, shipped with fluvio, that helps developers build, test, and deploy stateful dataflows. The first version works with Rust, and upcoming versions will enable Python and Javascript.
+
+**Commands**
+
+* [sdf setup](#sdf-setup)
+* [sdf generate](#sdf-generate)
+* [sdf build](#sdf-build)
+* [sdf update](#sdf-update)
+* [sdf clean](#sdf-clean)
+* [sdf log](#sdf-log)
+* [sdf version](#sdf-version)
+* [sdf run](#sdf-run)
+  * [>> show state](#-show-state)
+  * [>> exit](#-exit)
+
+
+### Download FVM and Install SDF
+
+Download [fluvio version manager (fvm)], the package manager for fluvio and sdf:
+
+
+```bash copy="fl"
+$ curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
+```
+
+This command will download the Fluvio Version Manager (fvm), Fluvio CLI (fluvio) and config files into `$HOME/.fluvio`, with the executables in `$HOME/.fluvio/bin`. To complete the installation, you will need to add the executables to your shell `$PATH`.
+
+Install the preview release:
+
+
+```bash copy="fl"
+$ fvm install sdf-preview6
+```
+
+SDF has the following comamand hierarchy:
+
+```bash copy="fl"
+$ sdf -h
+Stateful Dataflow Command Line Interface
+
+Usage: sdf <COMMAND>
+
+Commands:
+  clean     Clean generated artifacts such as state and internal objects
+  build     Build package (requires: sdf-package.yaml)
+  generate  Generate package (requires: sdf-package.yaml)
+  update    Update package (requires: sdf-package.yaml)
+  run       Run dataflow  (requires: dataflow.yaml)
+  setup     Setup pre-requisites for Stateful Dataflows
+  test      Test command shell (requires sdf-package.yaml)
+  version   Prints binary version
+  log       Print dataflow logs
+  help      Print this message or the help of the given subcommand(s)
+```
