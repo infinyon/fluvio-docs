@@ -1,8 +1,5 @@
 {
   "position": 2,
   "label": "Fluvio CLI",
-  "collapsible": true,
-  "link": {
-    "type": "generated-index"
-  }
+  "collapsible": true
 }

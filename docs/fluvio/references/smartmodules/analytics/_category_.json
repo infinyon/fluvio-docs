@@ -1,8 +1,5 @@
 {
   "position": 6,
   "label": "Analytics",
-  "collapsible": true,
-  "link": {
-    "type": "generated-index"
-  }
+  "collapsible": true
 }

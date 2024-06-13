@@ -1,8 +1,5 @@
 {
   "position": 4,
   "label": "Connectors",
-  "collapsible": true,
-  "link": {
-    "type": "generated-index"
-  }
+  "collapsible": true
 }

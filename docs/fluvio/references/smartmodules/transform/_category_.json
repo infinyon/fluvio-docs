@@ -1,8 +1,5 @@
 {
   "position": 5,
   "label": "Transform",
-  "collapsible": true,
-  "link": {
-    "type": "generated-index"
-  }
+  "collapsible": true
 }

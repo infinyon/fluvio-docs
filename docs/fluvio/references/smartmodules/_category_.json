@@ -1,8 +1,5 @@
 {
   "position": 5,
   "label": "SmartModules",
-  "collapsible": true,
-  "link": {
-    "type": "generated-index"
-  }
+  "collapsible": true
 }

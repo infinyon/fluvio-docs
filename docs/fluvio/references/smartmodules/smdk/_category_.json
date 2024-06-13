@@ -1,8 +1,5 @@
 {
   "position": 7,
   "label": "SMDK",
-  "collapsible": true,
-  "link": {
-    "type": "generated-index"
-  }
+  "collapsible": true
 }
