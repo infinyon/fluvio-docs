@@ -103,7 +103,7 @@ records from the different partitions in a topic by using the `--partition (-p)`
 
 Start out by creating a new topic with multiple partitions using [`fluvio topic create`].
 
-[`fluvio topic create`]: ]: /docs/fluvio/cli/#fluvio-topic-create
+[`fluvio topic create`]: /docs/fluvio/cli/topic#fluvio-topic-create
 
 
 ```bash copy="fl"
@@ -211,8 +211,9 @@ eight
 nine
 ```
 
--> Note: There is no order guarantee between partitions.
-
+<Alert>
+  There is no order guarantee between partitions.
+</Alert>
 
 ### Print consumed records with custom formatting
 
