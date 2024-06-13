@@ -1,7 +1,7 @@
 ---
 sidebar_position: 11
 title: "Data Consistency"
-slug: /concepts/data-consistency
+slug: /fluvio/concepts/data-consistency
 ---
 
 Data in this context is a set of records that producers send to the partition leader. The leader is responsible for receiving
@@ -15,7 +15,7 @@ After a record gets accepted by the leader, it can be in one of two states: COMM
 that all followers have acknowledged the record.
 If there are no followers in the partition, the state is always COMMITTED once
 a record gets acknowledged. Records are UNCOMMITTED in all other cases.
-See more details about [Synchronization Algorithm](/concepts/architecture/replica-election#synchronization-algorithm).
+See more details about [Synchronization Algorithm](/docs/fluvio/concepts/architecture/replica-election#synchronization-algorithm).
 
 Neither the leader nor the follower waits for **data persistence** (fsync) before sending an acknowledgment of the record. It means that
 **uncommitted** records may be lost if Leader crashes.

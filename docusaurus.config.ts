@@ -70,7 +70,6 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl: "https://github.com/infinyon/fluvio-docs/tree/main",
-          routeBasePath: '/', // Set this value to '/'.
         },
         theme: {
           customCss: "./src/css/custom.css",

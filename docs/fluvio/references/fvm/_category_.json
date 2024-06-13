@@ -1,8 +1,5 @@
 {
   "position": 3,
   "label": "Fluvio Version Manager",
-  "collapsible": true,
-  "link": {
-    "type": "generated-index"
-  }
+  "collapsible": true
 }
