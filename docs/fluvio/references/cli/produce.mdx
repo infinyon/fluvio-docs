@@ -73,7 +73,7 @@ Below is an example of how to apply a [Map] type SmartModule to transform each r
 a stream. [This particular SmartModule] can be used to capitalize every letter in a
 string.
 
-[Map]: /smartmodules/transform/map
+[Map]: /docs/fluvio/smartmodules/transform/map
 [This particular SmartModule]:https://github.com/infinyon/fluvio/tree/fdcfce51067a44c06a91bc8e4aab518f0a193145/smartmodule/examples/map
 
 To use the SmartModule, compile it and provide the `.wasm` file to the producer:
@@ -106,7 +106,7 @@ a multi-partition topic, then sending some key/value records.
 
 First, we'll use [`fluvio topic create`] to create a topic called `multi-keys` with 5 partitions:
 
-[`fluvio topic create`]: /cli/topic#fluvio-topic-create
+[`fluvio topic create`]: ]: /docs/fluvio/cli/#fluvio-topic-create
 
 
 ```bash copy="fl"
@@ -144,7 +144,7 @@ generated 2 events, and `tabitha` generated 3 events. When we look at the partit
 we should see the records distributed in groups of 5, 2, and 3. We can use the
 [`fluvio partition list`] command to view the distribution of records in our partitions:
 
-[`fluvio partition list`]: /cli/partition#fluvio-partition-list
+[`fluvio partition list`]: /docs/fluvio/cli/partition#fluvio-partition-list
 
 
 
@@ -164,7 +164,7 @@ were distributed in groups of 5, 3, and 2. Let's dig a little further, we know t
 `rafael` was the key used by the group of 5 records, so we should be able to see those
 records by using [`fluvio consume`] to consume from partition 3.
 
-[`fluvio consume`]: /cli/consume#fluvio-consume
+[`fluvio consume`]: /docs/fluvio/cli/consume#fluvio-consume
 
 
 
@@ -195,7 +195,7 @@ Let's produce some data to our topic. We'll use the same data from [Example 3],
 but this time we won't tell the Producer to interpret our input as key-value records
 (we'll do this by omitting the `--key-separator` flag).
 
-[Example 3]: /cli/produce#produce-keyvalue-records-to-multiple-partitions
+[Example 3]: /docs/fluvio/cli/produce#produce-keyvalue-records-to-multiple-partitions
 
 ```bash
 # Put the following records into a text file using your favorite editor
@@ -248,7 +248,7 @@ Let's try to use `gzip` algorithm in the CLI.
 
 First, we'll use [`fluvio topic create`] to create a topic called `compressed` and other topic called `uncompressed`:
 
-[`fluvio topic create`]: /cli/topic#fluvio-topic-create
+[`fluvio topic create`]: ]: /docs/fluvio/cli/#fluvio-topic-create
 
 
 ```bash copy="fl"
@@ -303,4 +303,4 @@ Notice how the SIZE field tell us that the `compressed` topic is using less disk
 
 Also note that, [`consuming`] from topics is done at the same way for both compressed and uncompressed data.
 
-[`consuming`]: /cli/consume
+[`consuming`]: /docs/fluvio/cli/consume
