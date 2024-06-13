@@ -170,7 +170,7 @@ The following alert is displayed in Slack:
 ```
 That's all folks!
 
-### References
+### Reference
 
 * [Webhook Basics]
 * [Webhook Configuration File]

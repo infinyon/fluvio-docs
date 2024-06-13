@@ -79,7 +79,7 @@ Records produced:
 $ fluvio consume hackernews -T 10
 ```
 
-### References
+### Reference
 
 * [How to Stream and Transform Data from Hacker News RSS Feed (YouTube Video)]
 * [labs-rss-json-sm](https://github.com/infinyon/labs-rss-json-sm)
