@@ -1,8 +1,4 @@
 {
   "position": 5,
-  "label": "Inbound Connectors",
-  "collapsible": true,
-  "link": {
-    "type": "generated-index"
-  }
+  "label": "Inbound Connectors"
 }
