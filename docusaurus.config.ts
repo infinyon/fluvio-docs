@@ -102,6 +102,12 @@ const config: Config = {
         {
           type: 'doc',
           position: 'left',
+          docId: 'fvm/quickstart',
+          label: 'FVM',
+        },
+        {
+          type: 'doc',
+          position: 'left',
           docId: 'sdf/quickstart',
           label: 'SDF',
         },
