@@ -1,0 +1,114 @@
+---
+sidebar_position: 9
+title: "sdf run"
+description: "Run the project and open the command line in interactive mode"
+slug: /sdf/cli/run
+---
+
+# The `sdf run` command
+
+Run the project and open the command line in interactive mode with `sdf run`:
+
+```bash
+$ sdf run -h
+Run Stateful Dataflow
+
+Usage: sdf run [OPTIONS]
+
+Options:
+      --ui           start the workflow viewer ui [env: UI=]
+  -p, --port <PORT>  port for web server to listen on [env: PORT=] [default: 8000]
+```
+
+Use `--ui` to view a graphical represetation of the project in a web browser. The default port is `8000`, and you may change it with the `--port` flag.
+
+
+##### Example
+
+Navigate to the project directory, ensure it's built, and `run` to start the project in interactive mode:
+
+
+```bash copy="fl"
+$ sdf run --ui
+Please visit http://127.0.0.1:8000 to use SDF Studio
+...
+```
+
+### Interactive Mode
+
+SDF `run` opens the command line in interactive mode:
+
+```bash
+>> -h
+SDF - Stateful Dataflow CLI
+
+Usage: <COMMAND>
+
+Commands:
+  show  Show or List states. Use `show state --help` for more info
+  exit  Stop interactive session
+```
+
+### `>> show state`
+
+Use `show state` to peak into the internal state objects managed by the system:
+
+Command line syntax for `show state`:
+
+```bash
+>> show state -h
+List all states or show state for given key
+
+Usage: show state [OPTIONS] [NAMESPACE]
+
+Arguments:
+  [NAMESPACE]  namespace of state
+
+Options:
+      --key <KEY>        key of state
+      --filter <FILTER>  filter regex
+```
+
+##### Example
+
+For example, to show all state objects:
+
+```bash copy="fl"
+>> show state
+ Namespace                                     Keys  Type
+ word-processing-window/count-per-word/state   22    u32
+ word-processing-window/sentence/topic.offset  1     offset
+```
+
+The states are organized by namespace where the first keyword is the service name `word-processing-window`, followed by the function name `count-per-word` or topic `sentence`. The `state` is the temporary result computed by the window function, whereas `topic.offset` is the offset of the last record read from the `sentence` topic.
+
+To further inspect the objects, use the `show state` command with the name of the namespace:
+
+
+```bash copy="fl"
+>> show state word-processing-window/count-per-word/state
+ Key       Value  Window
+ book      1      2023-12-28T00:32:00Z:2023-12-28T00:32:20Z
+ but       1      2023-12-28T00:32:00Z:2023-12-28T00:32:20Z
+...
+```
+
+You also have the option to filter the state by key `(--key)`, or a regex `(--filter)` operation.
+
+
+### `>> exit`
+
+Exit interactive mode:
+
+
+```bash copy="fl"
+>> exit
+bye!
+```
+
+### Reference
+
+* [dataflow.yaml]
+
+[Fluvio Version Manager (fvm)]: /docs/fluvio/#install-fluvio
+[dataflow.yaml]: /docs/sdf/dataflow-yaml

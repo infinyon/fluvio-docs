@@ -334,7 +334,7 @@ With the Outbound SQL Connector, we utilized SmartModules in two different ways.
 * [SmartModules with `smdk`](https://www.fluvio.io/docs/tutorials/smartmodule-development/)
 * [Creating a Data Pipeline](https://www.fluvio.io/docs/tutorials/data-pipeline/)
 
-## References
+## Reference
 
 * [Fluvio CLI Produce](https://www.fluvio.io/cli/commands/produce/)
 * [Fluvio CLI Consume](https://www.fluvio.io/cli/commands/consume/)

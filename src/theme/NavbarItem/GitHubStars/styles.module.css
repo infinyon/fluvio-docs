@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     list-style-type: none;
+    margin-right: 1rem;
 }
 
 .githubStars a {
