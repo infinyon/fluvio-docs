@@ -1,0 +1,64 @@
+---
+sidebar_position: 1
+title: "fvm install"
+description: "Installing different Fluvio versions"
+slug: /fvm/cli/install
+---
+
+# The `fvm install` command
+
+By default `fvm` is installed along with the `stable` Fluvio release which is
+included as part of the `stable` channel.
+
+Before sweitching between versions, you need to install the version you want to switch to. You can install a `channel` or a specific version using `fvm install`.
+
+```shell
+fvm install <channel | version>
+```
+
+## Supported release channels
+
+There are 3 channels for users to use.
+
+### Stable
+This is the most recent release, and the default channel installed.
+
+To switch to the `stable` channel:
+
+
+```shell copy="fl"
+$ fvm switch stable
+```
+
+### Latest
+This is the most recent commit to the `master` branch
+
+To switch to the `latest` channel:
+
+
+```shell copy="fl"
+$ fvm switch latest
+```
+
+The first time you switch to this channel, the binary will be downloaded.
+
+### Version
+This is a specific version.
+
+To switch to a version channel, you need to create it first.
+
+At this step the binary will get downloaded.
+
+
+```shell copy="fl"
+$ fvm install X.Y.Z
+```
+
+Then you can switch to the version channel
+
+
+```shell copy="fl"
+$ fvm switch X.Y.Z
+```
+
+Where `X.Y.Z` is the version of a release you want to switch to (e.g. `0.9.18`)
