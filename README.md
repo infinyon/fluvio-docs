@@ -1,41 +1,42 @@
-# Website
+<div align="center">
+  <h1>InfinyOn Documentation</h1>
+  <a href="https://fluvio.io" target="_blank">
+    <strong>Omni-docs for InfinyOn Solutions</strong>
+  </a>
+</div>
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+## Contributing
+
+### Prerequisites
+
+- NodeJS (v20.11.1 or higher)
 
 ### Installation
 
-```
-$ yarn
-```
-
-### Local Development
-
-```
-$ yarn start
+```bash
+$ npm install
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+### Development
 
-### Build
+Use `npm start` command to run the development server.
 
-```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
+```bash
+$ npm start
 ```
 
-Not using SSH:
+> [!NOTE]
+> The Search support is not available when running for development, if you want
+> to test the search functionality, you need to run the build and serve the
+> build directory.
 
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
+**Build Test**
+
+Build the solution for publishing and then serve bundle files using a static server.
+
+```bash
+$ npm run build && npm run serve
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+The `build` command generates static content into the `build` directory and
+can be served using any static contents hosting service.
