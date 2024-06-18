@@ -1,0 +1,149 @@
+---
+sidebar_position: 11
+title: "Custom Clients with Docker"
+description: "A guide to run InfinyOn Cloud client in Docker environment"
+slug: /fluvio/tutorials/custom-clients-with-docker
+---
+
+In this guide, you'll learn how to package your custom app with a Fluvio client into a Docker image, and how to run a container with `docker` CLI.
+
+We assume you are connected to a cluster with the CLI. If this is not the case, please [login to Cloud] before continuing.
+
+### Example custom Fluvio client
+
+To help illustrate the basic development workflow for all services using a Fluvio client, we'll create this sample Rust service.
+
+Run these commands to initialize the project
+
+
+```shell
+$ cargo new fluvio-rust-client
+$ cd fluvio-rust-client
+$ cargo add async-std --features attributes
+$ cargo add chrono fluvio
+```
+
+Copy this code into `src/main.rs`
+
+
+```rust
+use async_std::stream::StreamExt;
+use chrono::Local;
+use fluvio::metadata::topic::TopicSpec;
+use fluvio::{Fluvio, RecordKey};
+
+const TOPIC_NAME: &str = "hello-rust";
+const PARTITION_NUM: u32 = 0;
+const PARTITIONS: u32 = 1;
+const REPLICAS: u32 = 1;
+
+/// This is an example of a basic Fluvio workflow in Rust
+///
+/// 1. Establish a connection to the Fluvio cluster
+/// 2. Create a topic to store data in
+/// 3. Create a producer and send some bytes
+/// 4. Create a consumer, and stream the data back
+#[async_std::main]
+async fn main() {
+    // Connect to Fluvio cluster
+    let fluvio = Fluvio::connect().await.unwrap();
+
+    // Create a topic
+    let admin = fluvio.admin().await;
+    let topic_spec = TopicSpec::new_computed(PARTITIONS, REPLICAS, None);
+    let _topic_create = admin
+        .create(TOPIC_NAME.to_string(), false, topic_spec)
+        .await;
+
+    // Create a record
+    let record = format!("Hello World! - Time is {}", Local::now().to_rfc2822());
+
+    // Produce to a topic
+    let producer = fluvio::producer(TOPIC_NAME).await.unwrap();
+    producer.send(RecordKey::NULL, record).await.unwrap();
+    // Fluvio batches outgoing records by default, so flush producer to ensure all records are sent
+    producer.flush().await.unwrap();
+
+    // Consume last record from topic
+    let consumer = fluvio::consumer(TOPIC_NAME, PARTITION_NUM).await.unwrap();
+    let mut stream = consumer.stream(fluvio::Offset::from_end(1)).await.unwrap();
+    if let Some(Ok(record)) = stream.next().await {
+        let string = String::from_utf8_lossy(record.value());
+        println!("{}", string);
+    }
+}
+```
+
+### Example Dockerfile
+
+Save the following `Dockerfile`. This Dockerfile adds our workflow an starts it with `cargo run`, which will always build the code before it starts.
+
+
+```bash
+FROM rust:1.73.0
+
+# Run as the `fluvio` user instead of root
+ENV USER=fluvio
+RUN useradd --create-home "$USER"
+USER $USER
+WORKDIR /home/fluvio
+
+# Copy your Rust project and run it
+COPY --chown=$USER:$USER Cargo.toml .
+COPY --chown=$USER:$USER src ./src
+CMD /usr/local/cargo/bin/cargo run
+```
+
+## Running docker image
+
+The fluvio clients search for connection information from a config file located at `$HOME/.fluvio/config`.
+
+### Run with `docker run`
+
+In this example, we build our docker image with `docker build` then start a container from the image with `docker run`. We volume mount our host's config file to the container when we start.
+
+
+```shell
+$ docker build -t fluvio-client-example .
+$ docker run -v $HOME/.fluvio/config:/home/fluvio/.fluvio/config --init --rm fluvio-client-example
+```
+
+Afer running you'll see the following output:
+
+```bash
+Running `target/debug/fluvio-rust-client`
+Hello World! - Time is Tue, 10 Oct 2023 21:09:05 +0000
+```
+
+The same event has been published to the topic:
+
+
+```bash
+$ fluvio consume -Bd hello-rust
+Consuming records from 'hello-rust' starting from the beginning of log
+Hello World! - Time is Tue, 10 Oct 2023 21:09:05 +0000
+```
+
+
+### Run with `docker compose` (alternative)
+
+Copy this yaml file and save it as `docker-compose.yaml`
+
+
+```yaml
+# docker-compose.yaml
+version: "3"
+services:
+  example:
+    build: .
+    volumes:
+      - $HOME/.fluvio/config:/home/fluvio/.fluvio/config:ro
+```
+
+In this example, we build our docker image with `docker compose build` then start a container from the image with `docker compose up`. We volume mount our host's config file to the container when we start.
+
+
+```shell
+$ docker compose build
+$ docker compose up
+```

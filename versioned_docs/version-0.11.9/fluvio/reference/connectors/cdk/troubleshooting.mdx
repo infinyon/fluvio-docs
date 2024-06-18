@@ -1,0 +1,47 @@
+---
+sidebar_position: 5
+title: "Troubleshooting"
+description: "Starting and stopping a Connector"
+slug: /fluvio/connectors/cdk/troubleshooting
+---
+
+> This section assumes `my-connector` project has been [generated](/docs/fluvio/connectors/cdk/generate).
+
+After you [start your connectors], you can view their logs for troubleshooting:
+
+### Log
+
+To display the logs, you'll need the connector name:
+
+
+```bash copy="fl"
+$ cdk deploy log --name my-my-connector-test-connector
+Starting my-connector source connector with CustomConfig { foo: "bar" }
+```
+
+#### Changing the Log Level
+
+By default connectors will use the `info` logging level, you can change the log level by using the `deploy` command argument `--log-level`.
+
+```bash
+cdk deploy start --config sample-config.yaml --log-level debug
+```
+
+The log levels are:
+- `error`
+- `warn`
+- `info`
+- `debug`
+- `trace`
+
+In the [next section](/docs/fluvio/connectors/cdk/secrets) we'll take a look at how to use secrets.
+
+### Steps
+
+1. [Generate a Connector](/docs/fluvio/connectors/cdk/generate)
+2. [Build and Test](/docs/fluvio/connectors/cdk/build)
+3. [Start and Shutdown](/docs/fluvio/connectors/cdk/start-shutdown)
+4. **[Troubleshooting](/docs/fluvio/connectors/cdk/troubleshooting)**
+5. [Secrets](/docs/fluvio/connectors/cdk/secrets)
+6. [Publish to Connector Hub](/docs/fluvio/connectors/cdk/publish)
+7. [Use Examples in Github](/docs/fluvio/connectors/cdk/github-examples)
