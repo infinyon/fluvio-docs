@@ -102,14 +102,14 @@ const config: Config = {
         {
           type: 'doc',
           position: 'left',
-          docId: 'fvm/quickstart',
-          label: 'FVM',
+          docId: 'sdf/quickstart',
+          label: 'SDF',
         },
         {
           type: 'doc',
           position: 'left',
-          docId: 'sdf/quickstart',
-          label: 'SDF',
+          docId: 'connectors/introduction',
+          label: 'Connectors',
         },
         {
           type: 'doc',
