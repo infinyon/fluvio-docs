@@ -108,6 +108,12 @@ const config: Config = {
         {
           type: 'doc',
           position: 'left',
+          docId: 'connectors/introduction',
+          label: 'Connectors',
+        },
+        {
+          type: 'doc',
+          position: 'left',
           docId: 'apis/index',
           label: 'APIs',
         },
