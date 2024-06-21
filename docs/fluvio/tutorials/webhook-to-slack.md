@@ -182,7 +182,7 @@ That's all folks!
 [webhook]: /docs/fluvio/how-to/use-webhooks
 [Webhook Basics]: /docs/fluvio/how-to/use-webhooks
 [Webhook Configuration File]: /docs/tutorials/webhook-to-slack#create-webhook-configuration-file
-[http-sink]: /docs/connectors/outbound/http
+[http-sink]: /docs/connectors/reference/outbound/http
 [labs-json-formatter-sm]: https://github.com/infinyon/labs-json-formatter-sm
 [JSON formatter SmartModule]: https://github.com/infinyon/labs-json-formatter-sm
 [fluvio-jolt]: https://github.com/infinyon/fluvio-jolt
