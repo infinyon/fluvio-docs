@@ -1,8 +1,7 @@
 ---
 sidebar_position: 1
 title: "Filter"
-description: "The simplest type of SmartModule is a filter, which can examine each record in a stream and decide whether to accept or reject it. "
-slug: /fluvio/smartmodules/transform/filter
+description: "The simplest type of SmartModule is a filter, which can examine each record in a stream and decide whether to accept or reject it."
 ---
 
 The simplest type of SmartModule is a filter, which can examine each record in a stream and decide whether to accept or reject it. All accepted records are delivered down the pipeline, and rejected records are discarded. SmartModule applied in consumers or sink connectors filter records after they are stored in a topic, and will not impact persistence - it simply means that records filtered out are not delivered to the consumer. However, SmartModule filters applied to source connectors discard packets before they are stored in the topic and should be used with care.
