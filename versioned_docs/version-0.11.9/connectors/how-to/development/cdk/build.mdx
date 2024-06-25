@@ -1,0 +1,67 @@
+---
+sidebar_position: 3
+title: "Build & Test"
+description: "Building and testing a Connector"
+---
+
+> This section assumes `my-connector` project has been [generated](/docs/connectors/how-to/development/cdk/generate).
+
+### Build Connector
+
+Inside the `my-connector` project directory run `build`:
+
+
+```bash copy="fl"
+$ cdk build
+...
+Compiling my-connector v0.1.0 (~/cdk/my-connector)
+ Finished release [optimized] target(s) in 1m 12s
+```
+
+The build process generated a binary for your custom connector. We are now ready to test it.
+
+### Test Connector
+
+Staring an connector instance for testing requires a configuration file:
+
+* `--config <PATH>` is a path to the configuration file in YAML format. The project automatically generated a sample config `sample-config.yaml` that we can use as a starting point.
+
+Use `cdk test` to start the instance:
+
+
+```bash copy="fl"
+$ cdk test --config sample-config.yaml
+    Finished release [optimized] target(s) in 0.16s
+Connector runs with process id: 80380
+Starting my-connector source connector with CustomConfig { foo: "bar" }
+```
+
+Connector output will be redirected to the current terminal output. To stop running Connector in test mode, press Ctrl+C.
+
+#### Test Result
+
+The connector produces `Hello, Fluvio` to the topic `test-my-connector-topic`. Let's check it out:
+
+
+```bash copy="fl"
+$ fluvio consume test-my-connector-topic -B
+Hello, Fluvio - 1
+Hello, Fluvio - 2
+Hello, Fluvio - 3
+Hello, Fluvio - 4
+...
+```
+
+Checkout the [next section] for instructions on how to run the connector in the background.
+
+### Steps
+
+1. [Generate a Connector](/docs/connectors/how-to/development/cdk/generate)
+2. **[Build and Test](/docs/connectors/how-to/development/cdk/build)**
+3. [Start and Shutdown](/docs/connectors/how-to/development/cdk/start-shutdown)
+4. [Troubleshooting](/docs/connectors/how-to/development/cdk/troubleshooting)
+5. [Secrets](/docs/connectors/how-to/development/cdk/secrets)
+6. [Publish to Connector Hub](/docs/connectors/how-to/development/cdk/publish)
+7. [Use Examples in Github](/docs/connectors/how-to/development/cdk/github-examples)
+
+[next section]: /docs/connectors/how-to/development/cdk/start-shutdown

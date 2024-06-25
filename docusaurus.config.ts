@@ -121,6 +121,11 @@ const config: Config = {
           type: 'custom-GitHubStars',
           position: "right",
         },
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
+          dropdownActiveClassDisabled: true,
+        },
       ],
     },
     footer: {
