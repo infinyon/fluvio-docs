@@ -2,12 +2,11 @@
 sidebar_position: 14
 title: "Polars"
 description: Stateful Dataflows Polars Integration
-slug: /sdf/polars
 ---
 
 The [polars](https://pola.rs) are built-in adaptors that can be used to perform data manipulation and transformation on dataframes.  Polars adaptor is enabled for operators that can access dataframe states and you don't need to add any flag in your operator definition.
 
-The polars [rust api](https://docs.rs/polars/0.36.2/polars/index.html) can be used when dataframe state is available.  For example, following snippet show performing polar operator on state that return dataframe.  Please refer to states [states](/docs/sdf/states) section for more details.
+The polars [rust api](https://docs.rs/polars/0.36.2/polars/index.html) can be used when dataframe state is available.  For example, following snippet show performing polar operator on state that return dataframe.  Please refer to states [states](/docs/sdf/services/states) section for more details.
 
 In here, `count_per_word` is a state that returns a [dataframe](https://docs.rs/polars/latest/polars/frame/struct.DataFrame.html) and assign to variable `df`.  Then any dataframe operation can be performed on `df` variable.
 

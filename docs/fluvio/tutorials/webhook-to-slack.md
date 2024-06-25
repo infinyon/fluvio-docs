@@ -2,7 +2,6 @@
 sidebar_position: 2
 title: "Webhook to Slack"
 description: "Event data pipeline that recevies events from an InfinyOn Cloud Webhook and sends an alert to Slack"
-slug: /tutorials/webhook-to-slack
 ---
 
 This guide shows an end-to-end event pipeline that reads an event from a webhook, generates a formatted string, and publishes the result to Slack. While this is a simple example, it has many event notification use cases, such as:
@@ -181,12 +180,12 @@ That's all folks!
 
 [webhook]: /docs/fluvio/how-to/use-webhooks
 [Webhook Basics]: /docs/fluvio/how-to/use-webhooks
-[Webhook Configuration File]: /docs/tutorials/webhook-to-slack#create-webhook-configuration-file
+[Webhook Configuration File]: /docs/fluvio/tutorials/webhook-to-slack#create-webhook-configuration-file
 [http-sink]: /docs/connectors/reference/outbound/http
 [labs-json-formatter-sm]: https://github.com/infinyon/labs-json-formatter-sm
 [JSON formatter SmartModule]: https://github.com/infinyon/labs-json-formatter-sm
 [fluvio-jolt]: https://github.com/infinyon/fluvio-jolt
-[Fluvio CLI]: /docs/fluvio/#install-fluvio
+[Fluvio CLI]: /docs/fluvio/quickstart#install-fluvio
 [InfinyOn Cloud]: https://infinyon.cloud/signup
 [Access Tokens]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 [Slack Webhooks]: https://api.slack.com/messaging/webhooks

@@ -1,7 +1,6 @@
 ---
 sidebar_position: 13
 title: "Transformations"
-slug: /fluvio/concepts/transformations
 ---
 
 In Fluvio, the data transformation is done using [SmartModules] - user-defined functions compiled to WebAssembly (WASM). A group of SmartModules forms a transformation chain - sequential invocations of each SmartModule according to the order defined upon creation. The output of the first invocation becomes the input of the second, the output of the second becomes the input of the third, and so on.

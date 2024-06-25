@@ -1,7 +1,6 @@
 ---
 sidebar_position: 6
 title: "Replica Election"
-slug: /fluvio/concepts/architecture/replica-election
 ---
 
 [Replica Assignment] _assigns_ SPUs to a replica set and [Replica Election] _coordinates_ their roles. The election algorithm manages replica sets in an attempt to designate one active leader at all times. SPUs have a powerful <ins>multi-threaded engine</ins> that can process a large number of leaders and followers at the same time.

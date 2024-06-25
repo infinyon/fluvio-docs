@@ -2,7 +2,6 @@
 sidebar_position: 1
 title: "Hackernews Reader"
 description: "Data pipeline that periodically reads articles from Hackernews and publishes them on a topic."
-slug: /tutorials/hackernews-reader
 ---
 
 Hackernews Reader helps you build an XML reader that ingests hackernews articles, converts them to `json`, divides them into records, and publishes each record to a topic. This guide uses the following connector:
@@ -87,7 +86,7 @@ $ fluvio consume hackernews -T 10
 
 
 ---
-[Fluvio CLI]: /docs/fluvio/#install-fluvio
+[Fluvio CLI]: /docs/fluvio/quickstart#install-fluvio
 [InfinyOn Cloud]: https://infinyon.cloud/signup
 [http-source]: https://github.com/infinyon/http-source-connector
 [rss-json]: https://github.com/infinyon/labs-rss-json-sm
