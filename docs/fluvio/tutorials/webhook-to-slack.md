@@ -180,12 +180,12 @@ That's all folks!
 
 [webhook]: /docs/fluvio/how-to/use-webhooks
 [Webhook Basics]: /docs/fluvio/how-to/use-webhooks
-[Webhook Configuration File]: /docs/tutorials/webhook-to-slack#create-webhook-configuration-file
+[Webhook Configuration File]: /docs/fluvio/tutorials/webhook-to-slack#create-webhook-configuration-file
 [http-sink]: /docs/connectors/reference/outbound/http
 [labs-json-formatter-sm]: https://github.com/infinyon/labs-json-formatter-sm
 [JSON formatter SmartModule]: https://github.com/infinyon/labs-json-formatter-sm
 [fluvio-jolt]: https://github.com/infinyon/fluvio-jolt
-[Fluvio CLI]: /docs/fluvio/#install-fluvio
+[Fluvio CLI]: /docs/fluvio/quickstart#install-fluvio
 [InfinyOn Cloud]: https://infinyon.cloud/signup
 [Access Tokens]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 [Slack Webhooks]: https://api.slack.com/messaging/webhooks
