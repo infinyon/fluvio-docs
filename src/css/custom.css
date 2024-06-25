@@ -29,6 +29,11 @@ p {
     padding-bottom: 5px;
 }
 
+.menu__link--sublist-caret:after {
+    min-width: .6rem !important;
+    width: .6rem !important;
+}
+
 /* You can override the default Infima variables here. */
 :root {
   /* Fluvio Color Palette */
