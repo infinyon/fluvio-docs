@@ -102,13 +102,19 @@ const config: Config = {
         {
           type: 'doc',
           position: 'left',
+          docId: 'cloud/quickstart',
+          label: 'Cloud',
+        },
+        {
+          type: 'doc',
+          position: 'left',
           docId: 'sdf/quickstart',
           label: 'SDF',
         },
         {
           type: 'doc',
           position: 'left',
-          docId: 'connectors/introduction',
+          docId: 'connectors/quickstart',
           label: 'Connectors',
         },
         {
@@ -118,13 +124,14 @@ const config: Config = {
           label: 'APIs',
         },
         {
-          type: 'custom-GitHubStars',
-          position: "right",
+          type: 'doc',
+          position: 'right',
+          docId: 'news/index',
+          label: 'News',
         },
         {
-          type: 'docsVersionDropdown',
-          position: 'right',
-          dropdownActiveClassDisabled: true,
+          type: 'custom-GitHubStars',
+          position: "right",
         },
       ],
     },
