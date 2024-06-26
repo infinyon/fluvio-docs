@@ -1,0 +1,21 @@
+.discordLogo {
+    align-items: center;
+    display: flex;
+    height: 2rem;
+    justify-content: center;
+    list-style-type: none;
+    margin-right: 1rem;
+    padding: 0.5rem;
+    width: 2rem;
+}
+
+.discordLogo:hover {
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.discordLogo figure {
+    display: flex;
+}

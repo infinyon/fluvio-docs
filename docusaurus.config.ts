@@ -130,6 +130,10 @@ const config: Config = {
           label: 'News',
         },
         {
+          type: 'custom-Discord',
+          position: "right",
+        },
+        {
           type: 'custom-GitHubStars',
           position: "right",
         },
