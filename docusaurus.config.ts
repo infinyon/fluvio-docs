@@ -88,8 +88,8 @@ const config: Config = {
     image: "img/docusaurus-social-card.jpg",
     docs: {
       sidebar: {
-         autoCollapseCategories: true,
-      }
+        autoCollapseCategories: true,
+      },
     },
     navbar: {
       logo: {
@@ -101,52 +101,51 @@ const config: Config = {
       },
       items: [
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'fluvio/quickstart',
-          label: 'Fluvio',
+          type: "doc",
+          position: "left",
+          docId: "fluvio/quickstart",
+          label: "Fluvio",
         },
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'cloud/quickstart',
-          label: 'Cloud',
+          type: "doc",
+          position: "left",
+          docId: "cloud/quickstart",
+          label: "Cloud",
         },
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'sdf/quickstart',
-          label: 'SDF',
+          type: "doc",
+          position: "left",
+          docId: "sdf/quickstart",
+          label: "SDF",
         },
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'connectors/quickstart',
-          label: 'Connectors',
+          type: "doc",
+          position: "left",
+          docId: "connectors/quickstart",
+          label: "Connectors",
         },
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'apis/index',
-          label: 'APIs',
+          type: "doc",
+          position: "left",
+          docId: "apis/index",
+          label: "APIs",
         },
         {
-          type: 'doc',
-          position: 'right',
-          docId: 'news/index',
-          label: 'News',
+          position: "right",
+          to: "news",
+          label: "News",
         },
         {
-          position: 'right',
-          label: 'FAQs',
-          to: 'faqs'
+          position: "right",
+          label: "FAQs",
+          to: "faqs",
         },
         {
-          type: 'custom-Discord',
+          type: "custom-Discord",
           position: "right",
         },
         {
-          type: 'custom-GitHubStars',
+          type: "custom-GitHubStars",
           position: "right",
         },
       ],
@@ -188,14 +187,7 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} InfinyOn, Inc. All rights reserved.`,
     },
     prism: {
-      additionalLanguages: [
-        'bash',
-        'java',
-        'python',
-        'rust',
-        'toml',
-        'yaml'
-      ],
+      additionalLanguages: ["bash", "java", "python", "rust", "toml", "yaml"],
     },
   } satisfies Preset.ThemeConfig,
   themes: [
@@ -210,7 +202,7 @@ const config: Config = {
         // ```
         // language: ["en", "zh"],
         // ```
-        docsRouteBasePath: '/'
+        docsRouteBasePath: "/",
       },
     ],
   ],
