@@ -1,0 +1,51 @@
+<FAQBox title="How do you make pancakes? 🥞">
+  #### The art of pancake making is a delicate one.
+
+  First, you need to mix the flour, eggs, and milk together. Then, you need to heat up a pan and pour the mixture in. Cook until golden brown on both sides. Serve with your favorite toppings and enjoy!
+
+  #### But how do you do it in Rust?
+
+  Memory safe pancakes are the best kind of pancakes! Here's how you can make them in Rust:
+
+  ```rust
+    fn make_pancakes() {
+        let flour = 1;
+        let eggs = 2;
+        let milk = 1;
+        let pan = Pan::new();
+
+        let mixture = mix(flour, eggs, milk);
+        pan.heat_up();
+        pan.pour(mixture);
+        pan.cook();
+        pan.flip();
+        pan.cook();
+        pan.serve();
+    }
+    ```
+</FAQBox>
+
+<FAQBox title="Can you make pancakes in Golang?">
+  Making pancakes in Golang is a bit trickier than in Rust, but it's definitely possible! Here's how you can make pancakes in Golang:
+
+  ```go
+    package main
+
+    import "fmt"
+
+    func main() {
+        flour := 1
+        eggs := 2
+        milk := 1
+        pan := NewPan()
+
+        mixture := mix(flour, eggs, milk)
+        pan.HeatUp()
+        pan.Pour(mixture)
+        pan.Cook()
+        pan.Flip()
+        pan.Cook()
+        pan.Serve()
+    }
+  ```
+</FAQBox>

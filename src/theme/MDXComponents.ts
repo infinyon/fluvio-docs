@@ -2,6 +2,7 @@ import MDXComponents from '@theme-original/MDXComponents';
 
 import Alert from '../components/Alert';
 import Caution from '../components/Caution';
+import FAQBox from '../components/FAQBox';
 import Idea from '../components/Idea';
 
 export default {
@@ -9,5 +10,6 @@ export default {
   ...MDXComponents,
   Alert,
   Caution,
+  FAQBox,
   Idea,
 };

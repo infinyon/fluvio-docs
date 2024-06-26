@@ -130,6 +130,11 @@ const config: Config = {
           label: 'News',
         },
         {
+          position: 'right',
+          label: 'FAQs',
+          to: 'faqs'
+        },
+        {
           type: 'custom-Discord',
           position: "right",
         },

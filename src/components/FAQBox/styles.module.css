@@ -1,0 +1,24 @@
+.content {
+  overflow: hidden;
+  transition: height .4s ease-in-out;
+  width: 100%;
+}
+
+.header {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.header h3 {
+    margin: 0;
+}
+
+.faqBox {
+    border-radius: .6rem;
+    border: 1px solid #e1e4e8;
+    display: block;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
