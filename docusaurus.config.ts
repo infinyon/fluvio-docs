@@ -1,4 +1,7 @@
 import type { Config } from "@docusaurus/types";
+
+import tailwindPlugin from "./plugins/tailwind-plugin.cjs";
+
 import type * as Preset from "@docusaurus/preset-classic";
 
 const FLUVIO_REPOSITORY_URL = "https://github.com/InfinyOn/fluvio";
@@ -60,7 +63,9 @@ const config: Config = {
       },
     },
   ],
-
+  plugins: [
+    tailwindPlugin,
+  ],
   presets: [
     [
       "classic",

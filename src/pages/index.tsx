@@ -18,7 +18,7 @@ function HomepageHeader() {
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
+            className="bg-red-500 text-blue-600"
             to="/docs/fluvio/quickstart">
             Fluvio Tutorial
           </Link>
