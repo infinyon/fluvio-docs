@@ -92,11 +92,6 @@ const config: Config = {
       }
     },
     navbar: {
-      logo: {
-        alt: "InfinyOn Logo",
-        src: "img/infinyon-with-text.svg",
-        srcDark: "img/infinyon-with-text-white.svg",
-      },
       items: [
         {
           type: 'doc',
