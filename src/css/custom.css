@@ -38,6 +38,10 @@ p {
     width: .6rem !important;
 }
 
+.navbar__brand {
+    display: none;
+}
+
 /* You can override the default Infima variables here. */
 :root {
   /* Fluvio Color Palette */
