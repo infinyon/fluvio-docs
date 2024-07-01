@@ -42,6 +42,18 @@ p {
     height: 40px;
 }
 
+.navbar__link {
+    @apply text-sm px-2;
+}
+
+.navbar__link--active {
+    @apply underline;
+}
+
+.navbar__link--active:hover {
+    @apply underline;
+}
+
 @media (max-width: 996px) {
     .navbar__items.navbar__items--right li.custom-button {
         display: none !important;
