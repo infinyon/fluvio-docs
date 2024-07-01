@@ -96,7 +96,8 @@ const config: Config = {
         alt: "InfinyOn Logo",
         src: "img/fluvio-community-alt-dark.png",
         srcDark: "img/fluvio-community-alt-dark.png",
-        height: '100px',
+        height: '40px',
+        width: '80px',
       },
       items: [
         {

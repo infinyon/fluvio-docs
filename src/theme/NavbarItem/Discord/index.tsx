@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 
 export default function Discord(): JSX.Element {
   return (
-    <li className={styles.discordLogo}>
+    <li className={`${styles.discordLogo} custom-button`}>
         <a href="https://discordapp.com/invite/bBG2dTz" target="_blank">
           <figure>
             <svg
