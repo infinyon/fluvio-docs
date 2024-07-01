@@ -10,7 +10,7 @@ import NavbarMobileSidebar from '@theme/Navbar/MobileSidebar';
 import type {Props} from '@theme/Navbar/Layout';
 
 import styles from './styles.module.css';
-import Header from '@site/src/components/Header';
+import Header from '@site/src/components/Layout/Header';
 
 function NavbarBackdrop(props: ComponentProps<'div'>) {
   return (

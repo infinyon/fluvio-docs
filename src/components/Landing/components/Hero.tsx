@@ -2,7 +2,7 @@ export function Hero(): JSX.Element {
   return (
     <div className="py-12">
       <div className="p-6">
-        <p className="text-2xl text-center py-6">
+        <p className="text-center py-6">
           Fluvio is a lean and mean distributed streaming engine to build edge
           to core event streaming data flows.
           <br />
