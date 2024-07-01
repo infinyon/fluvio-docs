@@ -42,6 +42,12 @@ p {
     height: 40px;
 }
 
+@media (max-width: 996px) {
+    .navbar__items.navbar__items--right li.custom-button {
+        display: none !important;
+    }
+}
+
 /* You can override the default Infima variables here. */
 :root {
   /* Fluvio Color Palette */
