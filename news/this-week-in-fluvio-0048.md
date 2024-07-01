@@ -19,7 +19,7 @@ BANNER
 
 * [Fluvio v0.10.0](https://github.com/infinyon/fluvio/releases/tag/v0.10.0)
   * [`smdk` - SmartModule Development Kit CLI](https://www.fluvio.io/smartmodules/smdk/overview/)
-* [SQL outbound connector](/connectors/outbound/sql)
+* [SQL outbound connector](/docs/connectors/catalog/outbound/sql)
 
 ### Deprecations
 The `fluvio connector` CLI and Fluvio's management of connectors has been removed in this release.
@@ -43,12 +43,12 @@ The SmartModule Development kit reduces the number of steps required to get star
 [SmartModule Development Kit docs](/smartmodules/smdk/overview)
 
 ### SmartModule chaining preview
-This release has a preview for SmartModule chaining. This functionality is offered with our [SQL outbound Cloud connector](/connectors/outbound/sql).
+This release has a preview for SmartModule chaining. This functionality is offered with our [SQL outbound Cloud connector](/docs/connectors/catalog/outbound/sql).
 
 To see it in action, you can follow the following tutorials:
 
-* [HTTP to SQL tutorial](/docs/tutorials/data-pipeline)
-* [MQTT to SQL tutorial](/docs/tutorials/mqtt-to-sql)
+* [HTTP to SQL tutorial](/docs/fluvio/tutorials/http-to-sql)
+* [MQTT to SQL tutorial](/docs/fluvio/tutorials/mqtt-to-sql)
 
 
 ## InfinyOn Cloud updates

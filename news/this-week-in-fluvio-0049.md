@@ -18,27 +18,27 @@ BANNER
 ## New release
 
 * [Fluvio v0.10.1](https://github.com/infinyon/fluvio/releases/tag/v0.10.1)
-* [Kafka outbound connector v0.3.1](/connectors/outbound/kafka)
+* [Kafka outbound connector v0.3.1](/docs/connectors/catalog/outbound/kafka)
 
 ## New features
 
-* [Chaining support](/docs/concepts/transformations-chain)
+* [Chaining support](/docs/connectors/smartmodules/core-concepts#chaining-with-cli)
   * Producer: ([#2753](https://github.com/infinyon/fluvio/pull/2753))
   * Consumer: ([#2759](https://github.com/infinyon/fluvio/pull/2759))
   * SMDK: ([#2784](https://github.com/infinyon/fluvio/pull/2784))
   * Fluvio CLI:  ([#2812](https://github.com/infinyon/fluvio/pull/2812))
 
-SmartModule transformation chaining was [introduced in the last release](/news/this-week-in-fluvio-0048#smartmodule-chaining-preview) as a preview with our [SQL outbound connector](/connectors/outbound/sql).
+SmartModule transformation chaining was [introduced in the last release](/news/this-week-in-fluvio-0048#smartmodule-chaining-preview) as a preview with our [SQL outbound connector](/docs/connectors/catalog/outbound/sql).
 
 In this release, support is now available to the Rust client, `fluvio` and `smdk` CLI, and connectors wit the keyword `transforms`.
 
 To get familiar, check out the example configs from our tutorials.
 
-* [HTTP to SQL tutorial](/docs/tutorials/data-pipeline)
-* [MQTT to SQL tutorial](/docs/tutorials/mqtt-to-sql)
+* [HTTP to SQL tutorial](/docs/fluvio/tutorials/http-to-sql)
+* [MQTT to SQL tutorial](/docs/fluvio/tutorials/mqtt-to-sql)
 
 
-* Kafka outbound connector now supports SSL - For more info check out the [Kafka outbound connector docs](/connectors/outbound/kafka)
+* Kafka outbound connector now supports SSL - For more info check out the [Kafka outbound connector docs](/docs/connectors/catalog/outbound/kafka)
 
 ## Bug fixes
 
@@ -46,7 +46,7 @@ To get familiar, check out the example configs from our tutorials.
 
 ## Developer experience improvements
 * Make behavior with producing records from file consistent between `fluvio` and `smdk` - ([#2756](https://github.com/infinyon/fluvio/pull/2756))
-* [New docs for our Certified SmartModule: Jolt](/smartmodules/certified/jolt)
+* [New docs for our Certified SmartModule: Jolt](/docs/fluvio/quickstart#using-the-jolt-smartmodule-to-turn-json-records-into-sentences)
 
 ## Open positions
 * [Head of Product Management](https://www.infinyon.com/careers/head-of-product-management) [Remote - Global]

@@ -41,7 +41,7 @@ The InfinyOn team spent the week in NYC for an in-person meetup to plan for the 
 
 For some of us, this was the first time meeting face-to-face. This was the first time we were all in the same room [since our last event last year](this-week-in-fluvio-0010.md)!
 
-<img src="/news/images/0047/team-photo-at-google.jpg" style="width:600px" alt="A group photo of the InfinyOn team standing in from of the entrance of the NYC Google office at Pier 57"/>
+<img src="/news/images/0047/team-photo-at-google.jpg" style={{ width: '600px' }} alt="A group photo of the InfinyOn team standing in from of the entrance of the NYC Google office at Pier 57"/>
 
 We're not yet ready to talk about it, but we are looking forward to the reveal of this collaboration. Stay tuned!
 

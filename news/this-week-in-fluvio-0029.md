@@ -28,9 +28,9 @@ Thanks again for those who showed up and an extra thanks to those who participat
 ## Recent events
 Fluvio just reached [1000 stars on Github](https://github.com/infinyon/fluvio/stargazers)!
 
-Thanks to everyone in the community who were generous enough to  <img src="/news/images/0029/1k-star-button-unclicked.png" style="width:156px; display: inline-block" alt="Unclicked Github Star button"/>
+Thanks to everyone in the community who were generous enough to  <img src="/news/images/0029/1k-star-button-unclicked.png" style={{ width: '156px', display: 'inline-block' }} alt="Unclicked Github Star button"/>
 
-And turn it into this: <img src="/news/images/0029/1k-star-button-clicked.png" style="width:175px; display: inline-block"  alt="Clicked Github Star button"/>
+And turn it into this: <img src="/news/images/0029/1k-star-button-clicked.png" style={{ width: '175px', display: 'inline-block' }}  alt="Clicked Github Star button"/>
 
 We really appreciate the support!
 
