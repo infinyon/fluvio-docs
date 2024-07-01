@@ -92,6 +92,12 @@ const config: Config = {
       }
     },
     navbar: {
+      logo: {
+        alt: "InfinyOn Logo",
+        src: "img/fluvio-community-alt-dark.png",
+        srcDark: "img/fluvio-community-alt-dark.png",
+        height: '100px',
+      },
       items: [
         {
           type: 'doc',

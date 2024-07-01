@@ -5,6 +5,7 @@ import { Hero } from './components/Hero';
 import { WhyFluvio } from './components/WhyFluvio';
 import { Contribute } from './components/Contribute';
 import { Projects } from './components/Projects';
+import { GitHubInsights } from './components/GitHubInsights';
 
 export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
@@ -18,6 +19,7 @@ export default function Home(): JSX.Element {
         <WhyFluvio />
         <Contribute />
         <Projects />
+        <GitHubInsights />
       </main>
     </Layout>
   );

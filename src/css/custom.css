@@ -38,8 +38,8 @@ p {
     width: .6rem !important;
 }
 
-.navbar__brand {
-    display: none;
+.navbar__logo {
+    height: 40px;
 }
 
 /* You can override the default Infima variables here. */
