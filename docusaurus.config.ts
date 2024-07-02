@@ -142,12 +142,6 @@ const config: Config = {
           label: "APIs",
         },
         {
-          type: 'docsVersionDropdown',
-          position: 'right',
-          dropdownItemsAfter: [{to: '/versions', label: 'All versions'}],
-          dropdownActiveClassDisabled: true,
-        },
-        {
           position: "right",
           to: "news",
           label: "News",
