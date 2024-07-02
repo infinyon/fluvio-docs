@@ -82,7 +82,7 @@ const config: Config = {
           path: 'news',
           routeBasePath: 'news',
           showReadingTime: true,
-          blogSidebarTitle: 'TWIF Archive',
+          blogSidebarTitle: 'This Week in Fluvio',
           blogSidebarCount: 'ALL',
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',

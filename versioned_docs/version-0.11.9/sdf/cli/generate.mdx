@@ -1,0 +1,27 @@
+---
+sidebar_position: 3
+title: "sdf generate"
+description: "Generate sdf projects from data-pipeline.yaml"
+---
+
+# The `sdf generate` command
+
+Command line syntax for `sdf generate`:
+
+```bash
+$ sdf generate -h
+Generate sdf projects from data-pipeline.yaml
+
+Usage: sdf generate
+```
+
+##### Example
+
+SDF generate requires a `data-pipeline.yaml` the current directory:
+
+
+```bash copy="fl"
+$ sdf generate
+```
+
+The command parses the file and creates a Rust project in a subdirectory called `project`. For additional information, check out [Data Pipeline File].

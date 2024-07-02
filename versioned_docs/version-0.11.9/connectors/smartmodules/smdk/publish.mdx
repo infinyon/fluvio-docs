@@ -1,0 +1,54 @@
+---
+sidebar_position: 5
+title: "Publish to Hub"
+description: "Publish your SmartModule to the Hub so others can use it"
+---
+
+SMDK publish give developers the ability to publish their own SmartModules to the [Hub].
+
+This section assumes that `my-filter` project has been [built].
+
+### Publish - Operation
+
+From your `my-filter` directory and use the `publish` command:
+
+```bash copy="fl"
+$ smdk publish
+
+Creating package john/my-filter@0.1.0
+.. fill out info in hub/package-meta.yaml
+Package hub/my-filter-0.1.0.ipkg created
+Package uploaded!
+```
+
+#### Inspect Result
+
+Ensure that your SmartModule has been uploaded to the [Hub]:
+
+```bash copy="fl"
+$ fluvio hub smartmodule list
+
+  SMARTMODULE                 Visibility
+  john/my-filter@0.1.0        private
+  ...
+```
+
+The SmartMoudule is now available for [download] by anyone with access to the `[Hub]`.
+
+Congratulations :tada:!  You are now ready to build, test, and publish your own SmartModules.
+
+### Steps
+
+1. [Generate a SmartModule]
+2. [Build and Test]
+3. [Load to your Cluster]
+4. **[Publish to SmartModule Hub]**
+
+[Load to your Cluster]: /docs/connectors/smartmodules/smdk/load
+[Publish to SmartModule Hub]: /docs/connectors/smartmodules/smdk/publish
+[Generate a SmartModule]: /docs/connectors/smartmodules/smdk/generate
+[Build and Test]: /docs/connectors/smartmodules/smdk/build
+[Load to your Cluster]: /docs/connectors/how-to/development/smdk
+[Publish to SmartModule Hub]: /docs/connectors/smartmodules/smdk/publish
+[SmartModule types]: /docs/connectors/smartmodules/transformations/filter
+[built]: /docs/connectors/smartmodules/smdk/build
