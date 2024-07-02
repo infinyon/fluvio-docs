@@ -70,6 +70,18 @@ p {
     margin: 10px auto;
 }
 
+.menu__list-item {
+    @apply !mt-0 !mr-0.5;
+}
+
+.menu__link {
+    @apply text-sm py-1 text-gray-600;
+}
+
+.menu__link:hover {
+    @apply !bg-gray-200 !text-gray-800;
+}
+
 .menu__link--sublist-caret:after {
     min-width: .6rem !important;
     width: .6rem !important;
@@ -89,6 +101,10 @@ p {
 
 .navbar__link--active:hover {
     @apply underline;
+}
+
+.theme-doc-version-badge {
+    @apply mb-4;
 }
 
 @media (max-width: 996px) {
