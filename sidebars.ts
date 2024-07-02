@@ -173,24 +173,6 @@ const sidebars: SidebarsConfig = {
       name: "Documentation",
       href: "https://infinyon.github.io/fluvio-client-node/",
     }),
-    makeApiClientSection({
-      name: "Java SDK (Experimental)",
-      icon: "/img/docs/sdk/java.svg",
-    }),
-    {
-      type: "doc",
-      id: "apis/java/index",
-      label: "Installation",
-    },
-    {
-      type: "doc",
-      id: "apis/java/example",
-      label: "Examples",
-    },
-    makeApiClientLink({
-      name: "Documentation",
-      href: "https://infinyon.github.io/fluvio-client-java/com/infinyon/fluvio/package-summary.html",
-    }),
   ],
 };
 

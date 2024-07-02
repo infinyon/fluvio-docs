@@ -18,7 +18,6 @@ export default function Home(): JSX.Element {
         <Hero />
         <WhyFluvio />
         <Contribute />
-        <Projects />
         <GitHubInsights />
       </main>
     </Layout>

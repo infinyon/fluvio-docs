@@ -7,7 +7,7 @@ export function Contribute(): JSX.Element {
   return (
     <section className="flex flex-col justify-center items-center p-6">
       <h3 className="text-2xl font-bold">Contribute</h3>
-      <p className="text-center">
+      <p className="text-center w-8/12">
         Fluvio is an open-source project and we welcome contributions from the
         anyone who is willing to participate.
         <br />
