@@ -18,7 +18,7 @@ BANNER
 ## New release
 
 * [Fluvio v0.10.0](https://github.com/infinyon/fluvio/releases/tag/v0.10.0)
-  * [`smdk` - SmartModule Development Kit CLI](https://www.fluvio.io/smartmodules/smdk/overview/)
+  * [`smdk` - SmartModule Development Kit CLI](/docs/connectors/smartmodules/smdk/introduction)
 * [SQL outbound connector](/docs/connectors/catalog/outbound/sql)
 
 ### Deprecations
@@ -40,7 +40,7 @@ You can still use local connectors with your local Fluvio cluster. For more abou
 ### SmartModule Development Kit
 The SmartModule Development kit reduces the number of steps required to get started with developing new custom SmartModules using the `smdk` CLI.
 
-[SmartModule Development Kit docs](/smartmodules/smdk/overview)
+[SmartModule Development Kit docs](/docs/connectors/smartmodules/smdk/introduction)
 
 ### SmartModule chaining preview
 This release has a preview for SmartModule chaining. This functionality is offered with our [SQL outbound Cloud connector](/docs/connectors/catalog/outbound/sql).
@@ -60,19 +60,19 @@ Here's a quick preview
 
 <img src="/news/images/0048/cloud-dashboard-screenshot.png" alt="A cropped screenshot of the new InfinyOn Cloud web UI"/>
 
-Check out the [New UI tutorial](/docs/tutorials/cloud-setup) for more information.
+Check out the [New UI tutorial](/docs/cloud/how-to/use-infinyon-cloud) for more information.
 
 ### Cloud connectors
 Management of connectors is now exclusive to InfinyOn Cloud. You can create connectors in InfinyOn with the `fluvio cloud connector` CLI.
 
-Check out the [Cloud connectors docs](/connectors/cloud-connectors) for more info
+Check out the [Cloud connectors docs](/docs/connectors/quickstart) for more info
 
 ### SmartModule Hub
 SmartModule Hub is a new service for offering public SmartModules. This removes the requirement of installing a SmartModule development environment in order to take advantage of SmartModules. You can download SmartModules from the Hub directly to your cluster to use.
 
 For developers, you can use `smdk` to publish SmartModules to the Hub to share publicly.
 
-Check out the [SmartModule Hub docs](/smartmodules/hub/overview) for more info
+Check out the [SmartModule Hub docs](/docs/cloud/hub/overview) for more info
 
 
 ## Recent events

@@ -25,7 +25,7 @@ BANNER
   * Previously, Fluvio supported only a time-based retention policy for data in a topic. For some workloads, it was inconvenient as it was needed to consider the incoming data pace to properly calculate retention time to fit the
   data into the available storage size. With this new feature, you can tell Fluvio what is the maximum size of the
   partition you want, and it will control it for you. Check out the details in
-  [Data Retention](/docs/operations/retention#max-partition-size).
+  [Data Retention](/docs/fluvio/concepts/operations/data-retention#max-partition-size).
 * Export cluster profile to a file ([#2327](https://github.com/infinyon/fluvio/issues/2327))
   * Can be used to initialize the connection to a Fluvio cluster via client APIs.
 

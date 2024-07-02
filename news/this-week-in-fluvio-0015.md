@@ -52,7 +52,7 @@ This feature was teased [last week], but now it is ready to be tried out.
 
 Check out the new [Connector Developer guide] for more information about how to create your own connectors.
 
-[Connector Developer guide]: /connectors/cdk
+[Connector Developer guide]: /docs/connectors/local/cdk/introduction
 
 ### FilterMap SmartModule
 
