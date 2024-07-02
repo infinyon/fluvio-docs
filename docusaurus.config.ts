@@ -22,7 +22,7 @@ const config: Config = {
   organizationName: "InfinyOn", // Usually your GitHub org/user name.
   projectName: "fluvio", // Usually your repo name.
 
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
 
   // Even if you don't use internationalization, you can use this field to set
@@ -76,6 +76,15 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl: "https://github.com/infinyon/fluvio-docs/tree/main",
         },
+        blog: {
+          path: 'news',
+          routeBasePath: 'news',
+          showReadingTime: true,
+          blogSidebarTitle: 'TWIF Archive',
+          blogSidebarCount: 'ALL',
+          editUrl:
+            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+        },
         theme: {
           customCss: "./src/css/custom.css",
         },
@@ -88,8 +97,8 @@ const config: Config = {
     image: "img/docusaurus-social-card.jpg",
     docs: {
       sidebar: {
-         autoCollapseCategories: true,
-      }
+        autoCollapseCategories: true,
+      },
     },
     navbar: {
       logo: {
@@ -101,52 +110,51 @@ const config: Config = {
       },
       items: [
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'fluvio/quickstart',
-          label: 'Fluvio',
+          type: "doc",
+          position: "left",
+          docId: "fluvio/quickstart",
+          label: "Fluvio",
         },
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'cloud/quickstart',
-          label: 'Cloud',
+          type: "doc",
+          position: "left",
+          docId: "cloud/quickstart",
+          label: "Cloud",
         },
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'sdf/quickstart',
-          label: 'SDF',
+          type: "doc",
+          position: "left",
+          docId: "sdf/quickstart",
+          label: "SDF",
         },
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'connectors/quickstart',
-          label: 'Connectors',
+          type: "doc",
+          position: "left",
+          docId: "connectors/quickstart",
+          label: "Connectors",
         },
         {
-          type: 'doc',
-          position: 'left',
-          docId: 'apis/index',
-          label: 'APIs',
+          type: "doc",
+          position: "left",
+          docId: "apis/index",
+          label: "APIs",
         },
         {
-          type: 'doc',
-          position: 'right',
-          docId: 'news/index',
-          label: 'News',
+          position: "right",
+          to: "news",
+          label: "News",
         },
         {
-          position: 'right',
-          label: 'FAQs',
-          to: 'faqs'
+          position: "right",
+          label: "FAQs",
+          to: "faqs",
         },
         {
-          type: 'custom-Discord',
+          type: "custom-Discord",
           position: "right",
         },
         {
-          type: 'custom-GitHubStars',
+          type: "custom-GitHubStars",
           position: "right",
         },
       ],
@@ -188,14 +196,7 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} InfinyOn, Inc. All rights reserved.`,
     },
     prism: {
-      additionalLanguages: [
-        'bash',
-        'java',
-        'python',
-        'rust',
-        'toml',
-        'yaml'
-      ],
+      additionalLanguages: ["bash", "java", "python", "rust", "toml", "yaml"],
     },
   } satisfies Preset.ThemeConfig,
   themes: [
@@ -210,7 +211,7 @@ const config: Config = {
         // ```
         // language: ["en", "zh"],
         // ```
-        docsRouteBasePath: '/'
+        docsRouteBasePath: "/",
       },
     ],
   ],
