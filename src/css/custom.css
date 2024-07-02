@@ -38,7 +38,7 @@ p {
 }
 
 .btn.btn-primary {
-    @apply bg-blue-700;
+    @apply bg-blue-700 text-white;
 }
 
 .btn.btn-primary:hover {
@@ -46,7 +46,7 @@ p {
 }
 
 .btn.btn-secondary {
-    @apply bg-purple-700;
+    @apply bg-purple-700 text-white;
 }
 
 .btn.btn-secondary:hover {
