@@ -6,6 +6,8 @@ import type * as Preset from "@docusaurus/preset-classic";
 
 const FLUVIO_REPOSITORY_URL = "https://github.com/InfinyOn/fluvio";
 
+const STABLE_VERSION = "0.11.9";
+
 const config: Config = {
   title: "Fluvio",
   tagline: "The programmable data streaming platform",
@@ -138,6 +140,12 @@ const config: Config = {
           position: "left",
           docId: "apis/index",
           label: "APIs",
+        },
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
+          dropdownItemsAfter: [{to: '/versions', label: 'All versions'}],
+          dropdownActiveClassDisabled: true,
         },
         {
           position: "right",
