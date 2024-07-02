@@ -42,7 +42,7 @@ p {
 }
 
 .btn.btn-primary:hover {
-    @apply bg-blue-700/50;
+    @apply bg-blue-700/80;
 }
 
 .btn.btn-secondary {
@@ -50,7 +50,7 @@ p {
 }
 
 .btn.btn-secondary:hover {
-    @apply bg-purple-700/50;
+    @apply bg-purple-700/80;
 }
 
 .btn.btn-outline {
