@@ -41,8 +41,12 @@ p {
     @apply bg-blue-700 text-white;
 }
 
+.btn-thin {
+    @apply py-2 text-sm;
+}
+
 .btn.btn-primary:hover {
-    @apply bg-blue-700/80;
+    @apply bg-blue-800;
 }
 
 .btn.btn-secondary {
@@ -50,7 +54,7 @@ p {
 }
 
 .btn.btn-secondary:hover {
-    @apply bg-purple-700/80;
+    @apply bg-purple-800;
 }
 
 .btn.btn-outline {
