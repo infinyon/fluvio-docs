@@ -7,7 +7,7 @@ export default function Header() {
         <img src="/img/infinyon-with-text.svg" className='dark:hidden' height={24} />
         <img src="/img/infinyon-with-text-white.svg" className='hidden dark:inline-block' height={24} />
       </a>
-      <a className='bg-purple-700 hover:bg-purple-800 text-white rounded-md border-0 px-4 py-2 text-md hover:text-white' target='_blank' href='https://infinyon.cloud/ui'>
+      <a className="btn btn-secondary" target='_blank' href='https://infinyon.cloud/ui'>
         Login to InfinyOn Cloud
       </a>
     </header >

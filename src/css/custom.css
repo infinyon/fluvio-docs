@@ -23,14 +23,47 @@ code, code * {
   font-weight: 400 !important;
 }
 
-.docimg {
-    display: block;
-    margin: 10px auto;
-}
-
 p {
     padding-top: 10px;
     padding-bottom: 5px;
+}
+
+.btn {
+    @apply flex text-black dark:text-white px-4 py-2 rounded-md;
+    @apply transition-colors;
+}
+
+.btn:hover {
+    @apply no-underline;
+}
+
+.btn.btn-primary {
+    @apply bg-blue-700;
+}
+
+.btn.btn-primary:hover {
+    @apply bg-blue-700/50;
+}
+
+.btn.btn-secondary {
+    @apply bg-purple-700;
+}
+
+.btn.btn-secondary:hover {
+    @apply bg-purple-700/50;
+}
+
+.btn.btn-outline {
+    @apply bg-transparent;
+}
+
+.btn.btn-outline:hover {
+    @apply underline;
+}
+
+.docimg {
+    display: block;
+    margin: 10px auto;
 }
 
 .menu__link--sublist-caret:after {

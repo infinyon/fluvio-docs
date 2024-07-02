@@ -16,11 +16,11 @@ export function Hero(): JSX.Element {
         <div className="flex flex-col md:flex-row justify-center items-center mx-auto space-y-6 md:space-y-0 md:space-x-6">
           <a
             href="/docs/fluvio/overview#installing-the-cli"
-            className="bg-blue-700 text-white px-4 py-2 rounded-md"
+            className="btn btn-primary"
           >
             Run on InfinyOn Cloud
           </a>
-          <a className="flex text-black dark:text-white px-4 py-2 rounded-md" href="/docs/fluvio/quickstart#install-fluvio">
+          <a className="btn btn-outline" href="/docs/fluvio/quickstart#install-fluvio">
             Get Started Local
             <figure className="ml-2 flex justify-center items-center m-0 rotate-90">
               <ArrowUp className="h-4 w-4" />
