@@ -84,6 +84,7 @@ const config: Config = {
           showReadingTime: true,
           blogSidebarTitle: 'TWIF Archive',
           blogSidebarCount: 'ALL',
+          postsPerPage: 1,
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
