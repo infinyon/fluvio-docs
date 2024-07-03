@@ -34,7 +34,7 @@ export function Contribute(): JSX.Element {
           title="Chat with us on Discord"
           description="Join our Discord server to chat with the Fluvio community"
           cta="Join Discord Server"
-          ctaUrl="https://github.com/orgs/infinyon/discussions/new/choose"
+          ctaUrl="https://discordapp.com/invite/bBG2dTz"
         />
       </dl>
     </section>
