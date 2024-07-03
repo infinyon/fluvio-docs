@@ -8,22 +8,16 @@ export function ContributeCard(props: {
   ctaUrl: string;
 }): JSX.Element {
   return (
-    <article className="flex rounded-lg overflow-hidden w-full md:w-1/3 max-w-[360px]">
-      <div className="flex justify-center items-start p-2">
-        <figure className="text-white flex justify-center items-center bg-purple-600 m-0 overflow-hidden rounded-md h-[42px] w-[42px]">
+    <article className="relative pl-16">
+      <dt className="text-base font-semibold leading-7 text-gray-900">
+        <div className="text-white p-2 absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
           {props.icon}
-        </figure >
-      </div >
-      <div className="p-4">
-        <span className="text-lg font-bold">{props.title}</span>
-        <p className="text-left text-gray-600 dark:text-gray-400 m-0 pb-6">{props.description}</p>
-        <a className="flex text-black dark:text-white py-2 rounded-md text-sm" href={props.ctaUrl} target="_blank">
-          {props.cta}
-          <figure className="ml-2 flex justify-center items-center m-0">
-            <ArrowSquareOut className="h-4 w-4" />
-          </figure>
-        </a>
-      </div >
-    </article  >
+        </div>
+        {props.title}
+      </dt>
+      <dd className="m-0 mt-2 text-base leading-7 text-gray-600">
+        {props.description}
+      </dd>
+    </article>
   );
 }

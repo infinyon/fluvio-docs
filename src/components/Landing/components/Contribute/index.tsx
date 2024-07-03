@@ -1,19 +1,13 @@
 import { ContributeCard } from "./ContributeCard";
 import Bug from "./icons/Bug";
+import Discord from "./icons/Discord";
 import Feature from "./icons/Feature";
 import Question from "./icons/Question";
 
 export function Contribute(): JSX.Element {
   return (
-    <section className="flex flex-col justify-center items-center p-6">
-      <h3 className="text-2xl font-bold">Contribute</h3>
-      <p className="text-center w-8/12">
-        Fluvio is an open-source project and we welcome contributions from the
-        anyone who is willing to participate.
-        <br />
-        We appreciate your help!
-      </p >
-      <div className="flex flex-col md:flex-row justify-center space-y-8 md:space-y-0 md:space-x-8 items-center p-4">
+    <section className="mx-auto mt-24 max-w-7xl px-6 sm:mt-56 lg:px-8">
+      <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
         <ContributeCard
           icon={<Feature />}
           title="Request a feature"
@@ -35,7 +29,14 @@ export function Contribute(): JSX.Element {
           cta="Go to Discussions"
           ctaUrl="https://github.com/orgs/infinyon/discussions/new/choose"
         />
-      </div >
+        <ContributeCard
+          icon={<Discord />}
+          title="Chat with us on Discord"
+          description="Join our Discord server to chat with the Fluvio community"
+          cta="Go to Discussions"
+          ctaUrl="https://github.com/orgs/infinyon/discussions/new/choose"
+        />
+      </dl>
     </section>
   );
 }
