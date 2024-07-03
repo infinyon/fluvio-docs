@@ -6,7 +6,7 @@ import Question from "./icons/Question";
 
 export function Contribute(): JSX.Element {
   return (
-    <section className="mx-auto mt-24 max-w-7xl px-6 sm:mt-56 lg:px-8">
+    <section className="py-16 mx-auto w-8/12">
       <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
         <ContributeCard
           icon={<Feature />}
@@ -33,7 +33,7 @@ export function Contribute(): JSX.Element {
           icon={<Discord />}
           title="Chat with us on Discord"
           description="Join our Discord server to chat with the Fluvio community"
-          cta="Go to Discussions"
+          cta="Join Discord Server"
           ctaUrl="https://github.com/orgs/infinyon/discussions/new/choose"
         />
       </dl>

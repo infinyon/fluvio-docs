@@ -15,10 +15,10 @@ export function Hero(): JSX.Element {
       <article className="py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-gray-200">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl text-gray-900 dark:text-gray-100">
               The backbone of user facing analytics
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
+            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
               Fluvio is a lean and mean distributed streaming engine to build edge to core event streaming data flows,
               indispensable for operational analytics and real-time AI/ML
             </p>
