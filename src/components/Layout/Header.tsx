@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Header() {
   return (
-    <header style={{ borderBottom: '1px solid #ddd' }} className="py-2 dark:!border-transparent flex justify-between items-center px-4">
+    <header style={{ borderBottom: '1px solid #ddd' }} className="py-2 bg-gray-50 dark:bg-zinc-800 dark:!border-transparent flex justify-between items-center px-4">
       <a className='h-full flex flex-col justify-center items-center' href='https://infinyon.com' target='_blank'>
         <img src="/img/infinyon-with-text.svg" className='dark:hidden' height={24} />
         <img src="/img/infinyon-with-text-white.svg" className='hidden dark:inline-block' height={24} />
