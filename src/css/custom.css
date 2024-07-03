@@ -78,8 +78,16 @@ p {
     @apply text-sm py-1 text-gray-600;
 }
 
+html[data-theme="dark"] .menu__link {
+    @apply !text-gray-200;
+}
+
 .menu__link:hover {
     @apply !bg-gray-200 !text-gray-800;
+}
+
+html[data-theme="dark"] .menu__link:hover {
+    @apply !text-gray-200 !bg-zinc-800;
 }
 
 .menu__link--sublist-caret:after {
