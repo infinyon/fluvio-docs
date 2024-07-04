@@ -27,7 +27,7 @@ Fluvio is stored in `$HOME/.fluvio`, with the executable binaries stored in
 
 Example:
 
-```bash
+```bash copy="fl"
 $ curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
 
 ☁️  Downloading fluvio version manager, fvm
@@ -61,7 +61,7 @@ Head over to the [InfinyOn Cloud sign-up page][inf-cloud-sign-up] and create an 
 
 **Login to InfinyOn Cloud using OAuth**
 
-```bash
+```bash copy="fl"
 $ fluvio cloud login --use-oauth2
 A web browser has been opened at https://infinyon-cloud.us.auth0.com/activate?user_code=GLMC-QDDJ.
 Please proceed with authentication.
@@ -69,7 +69,7 @@ Please proceed with authentication.
 
 **Login with your Username/Password**
 
-```bash
+```bash copy="fl"
 $ fluvio cloud login
 InfinyOn Cloud email: john@example.com
 Password:
@@ -79,7 +79,7 @@ Password:
 
 Start cluster on InfinyOn Cloud:
 
-```bash
+```bash copy="fl"
 $ fluvio cloud cluster create
 ```
 
@@ -89,7 +89,7 @@ Topics are used to store data and send data streams.
 
 You can create a topic with the following command:
 
-```bash
+```bash copy="fl"
 $ fluvio topic create quickstart-topic
 ```
 
@@ -101,7 +101,7 @@ You can send data (aka _produce_) to your topic.
 
 Let’s try to produce text to your topic interactively:
 
-```bash
+```bash copy="fl"
 $ fluvio produce quickstart-topic
 > hello world!
 Ok!
@@ -117,7 +117,7 @@ You can read data (aka _consume_) from your topic.
 
 This command will create a consumer that listens to your topic for new records and then prints it to the screen:
 
-```bash
+```bash copy="fl"
 $ fluvio consume quickstart-topic
 Consuming records from the end of topic 'quickstart-topic'. This will wait for new records
 ```
@@ -126,7 +126,7 @@ To see this in action, open another terminal and produce new data.
 
 To see previously sent data, you can add an option to your consume command to request a starting offset with the `-B <offset>` flag.
 
-```bash
+```bash copy="fl"
 $ fluvio consume quickstart-topic -B -d
 hello world!
 ```
@@ -157,13 +157,13 @@ http:
 
 To start a connector in InfinyOn Cloud, use the following command:
 
-```bash
+```bash copy="fl"
 $ fluvio cloud connector create -c quotes-source-connector.yml
 ```
 
 Use the following command to see the connector status.
 
-```bash
+```bash copy="fl"
 $ fluvio cloud connector list
  NAME                 TYPE               VERSION  CDK  STATUS   LOG-LEVEL
  http-quotes          http-source        0.2.6    V3   Running  info
@@ -171,7 +171,7 @@ $ fluvio cloud connector list
 
 We can monitor new data in the connector’s topic with fluvio consume quotes
 
-```bash
+```bash copy="fl"
 $ fluvio consume quotes
 Consuming records from 'quotes'
 {"quote":"We cannot solve our problems with the same thinking we used when we created them.","by":"Albert Einstein"}
@@ -182,7 +182,7 @@ Consuming records from 'quotes'
 
 You may delete your cloud connector with the following command:
 
-```bash
+```bash copy="fl"
 fluvio cloud connector delete http-quotes
 ```
 
@@ -194,7 +194,7 @@ SmartModules are user-defined functions compiled into WebAssembly and applied to
 
 InfinyOn Hub has a growing library of SmartModules available for download:
 
-```bash
+```bash copy="fl"
 $ fluvio hub smartmodule list
   SMARTMODULE                              Visibility
   infinyon-labs/array-map-json@0.1.0       public
@@ -214,15 +214,15 @@ $ fluvio hub smartmodule list
 
 Let’s download the Smartmodule to our cluster:
 
-```bash
+```bash copy="fl"
 $ fluvio hub smartmodule download infinyon/jolt@0.3.0
 ... cluster smartmodule install complete
 ```
 
 Check the cluster to ensure it has been successfully downloaded:
 
-```bash
-$  fluvio smartmodule list
+```bash copy="fl"
+$ fluvio smartmodule list
   SMARTMODULE          SIZE
   infinyon/jolt@0.3.0  611.5 KB
 ```
@@ -247,7 +247,7 @@ Jolt is a complex Smartmodule that allows you to perform multiple types of JSON 
 
 #### Test the SmartModule
 
-```bash
+```bash copy="fl"
 $  fluvio consume quotes --transforms-file tranforms.yaml -T=2
 Consuming records from 'quotes' starting 2 from the end of log
 "The greatest glory in living lies not in never falling, but in rising every time we fall."
@@ -289,7 +289,7 @@ $ fluvio cloud connector create -c string-quotes-source-connector.yml
 
 Use the following command to see the connector status.
 
-```bash
+```bash copy="fl"
 $ fluvio cloud connector list
  NAME                 TYPE               VERSION  CDK  STATUS   LOG-LEVEL
  string-quotes        http-source        0.2.5    V3   Running  info
@@ -298,7 +298,7 @@ $ fluvio cloud connector list
 
 Let’s take a look at string-quotes
 
-```bash
+```bash copy="fl"
 $ fluvio consume string-quotes
 Consuming records from 'string-quotes'
 "It's not whether you get knocked down, it's whether you get up."
