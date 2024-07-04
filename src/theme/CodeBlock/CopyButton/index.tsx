@@ -37,7 +37,13 @@ export function parseCodeBlockCopy(metastring?: string): CopyBehavior {
 function textWithCopyBehavior(text: string, cb: CopyBehavior): string {
   switch(cb) {
     case CopyBehavior.FirstLine:
-      return text.split('\n')[0];
+      const final = text.split('\n')[0];
+
+      if (final.startsWith('$')) {
+        return final.slice(1).trim();
+      }
+
+      return final;
     default:
       return text;
   }
