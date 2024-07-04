@@ -22,12 +22,12 @@ export default function Header() {
           height={24}
         />
       </a>
-      <div>
+      <div className="hidden md:inline-block">
         <span className="text-sm">
           Fluvio <strong>v0.11.9</strong> has been released!{" "}
           Update using{" "}<code>fvm update</code>!
         </span>
-      </div>
+      </div >
       <a
         className="btn btn-secondary btn-thin"
         target="_blank"
