@@ -139,7 +139,7 @@ const config: Config = {
         {
           type: "doc",
           position: "left",
-          docId: "apis/index",
+          docId: "apis/quickstart",
           label: "APIs",
         },
         {
