@@ -90,6 +90,7 @@ html[data-theme="dark"] .menu__link:hover {
     @apply !text-gray-200 !bg-zinc-800;
 }
 
+.clean-btn.menu__caret:before,
 .menu__link--sublist-caret:after {
     min-width: .6rem !important;
     width: .6rem !important;
