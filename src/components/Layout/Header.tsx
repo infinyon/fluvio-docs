@@ -12,12 +12,12 @@ export default function Header() {
         target="_blank"
       >
         <img
-          src="/img/infinyon-with-text.svg"
+          src="/img/infinyon-gradient.png"
           className="dark:hidden"
           height={24}
         />
         <img
-          src="/img/infinyon-with-text-white.svg"
+          src="/img/infinyon-white.png"
           className="hidden dark:inline-block"
           height={24}
         />
