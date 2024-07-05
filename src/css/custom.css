@@ -116,6 +116,10 @@ html[data-theme="dark"] .menu__link:hover {
     @apply mb-4;
 }
 
+.idea-container * {
+    @apply m-0 p-0;
+}
+
 @media (max-width: 996px) {
     .navbar__items.navbar__items--right li.custom-button {
         display: none !important;
