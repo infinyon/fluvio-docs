@@ -1,9 +1,9 @@
 import MDXComponents from '@theme-original/MDXComponents';
 
-import Alert from '../components/Alert';
-import Caution from '../components/Caution';
+import Alert from '../components/Quote/Alert';
+import Caution from '../components/Quote/Caution';
 import FAQBox from '../components/FAQBox';
-import Idea from '../components/Idea';
+import Idea from '../components/Quote/Idea';
 
 export default {
   // Re-use the default mapping
