@@ -1,0 +1,51 @@
+---
+sidebar_position: 5
+title: "Configuration Defaults"
+---
+
+## Overview
+
+When a Fluvio Cluster is created without extra params, either in Kuberentes
+or locally certain assumptions on limitations are made.
+
+This document outlines the default configurations for a Fluvio Cluster.
+
+## Default Configurations
+
+### SPU Group
+
+| Resource | Default Value |
+|-|-|
+| Number of replicas | `1` |
+| Minimum ID in Group | `0` |
+| Store Size | `10 GB` |
+
+### SPUs
+
+| Resource | Default Value |
+|-|-|
+| SPU ID | `0` |
+| SPU Type | Managed |
+| Public Endpoint's IP Address | `localhost:30004`
+| Public Endpoint Encryption | `PLAINTEXT` |
+| Private Endpoint's IP Address | `fluvio-spg-main.default.svc.cluster.local:9006`
+| Private Endpoint Encryption | `PLAINTEXT` |
+
+<Alert>
+  By default SPU communication have no encryption enabled.<br />
+  It is recommended to enable encryption for production clusters.
+</Alert>
+
+### Topic
+
+| Resource | Default Value |
+|-|-|
+| Compression Type | Not specified. |
+| Partitions | `1` |
+| Replicas | `1` |
+
+### Partition
+
+| Resource | Default Value |
+|-|-|
+| Replicas | `0`
