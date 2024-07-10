@@ -1,0 +1,51 @@
+---
+sidebar_position: 3
+title: "Types"
+description: "Stateful Dataflows type definitions"
+---
+
+The types define the schema of the object used in the dataflow. The primitive types are as follows:
+
+```bash
+ null
+ bool
+ u8 | u16 | u32 | u64
+ i8 | i16 | i32 | i64
+ f32 | f64
+ string
+ enum
+ key-value
+ list
+ object
+```
+
+These primitives allow you to create custom types. For example, you may define `user`, `job`, and `roles`  as follows:
+
+```yaml
+types:
+  user:
+    type: object
+    properties:
+      name:
+        type: string
+      age:
+        type: u8
+  job:
+    type: object
+    properties:
+      name:
+        type: string
+      role:
+        type: string
+  roles:
+    type: list
+    items:
+      type: key-value
+      properties:
+        key:
+          type: string
+        value:
+          type: u32
+```
+
+Types define the data formats for topics, states, and smartmodules.

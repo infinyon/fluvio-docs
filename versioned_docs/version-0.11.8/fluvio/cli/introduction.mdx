@@ -1,0 +1,40 @@
+---
+sidebar_position: 1
+title: "Overview"
+description: "Fluvio CLI is an all-in-one tool for installing and managing Fluvio, as well as for producing and consuming data on the command-line"
+---
+
+# The `fluvio` CLI
+
+The Fluvio CLI is an all-in-one tool for managing Fluvio, as well as for producing and consuming data on the command-line.
+
+<Alert title="Installation">
+  If Fluvio is not installed yet, you can install it by following the instructions in the [installation guide](/).
+</Alert>
+
+## Commands to Know
+
+Let's have a look at some common commands you'll want to know when starting
+out with Fluvio.
+
+#### Setting up a cluster
+
+- [Create your own Fluvio cluster with `fluvio cluster start`](/docs/fluvio/cli/fluvio/cluster#fluvio-cluster-start)
+
+#### Sending and Receiving data from Fluvio
+
+- [Create a topic with `fluvio topic create`](/docs/fluvio/cli/fluvio/topic)
+- [Produce data to a topic with `fluvio produce`](/docs/fluvio/cli/fluvio/produce)
+- [Consume data from a topic with `fluvio consume`](/docs/fluvio/cli/fluvio/consume#fluvio-consume)
+
+#### Enriching data with SmartModules
+
+- [Overview for SmartModules](/docs/connectors/smartmodules/introduction)
+- [Write a custom filtering SmartModule](/docs/connectors/smartmodules/transformations/filter)
+- [Consume enriched data using SmartModules](/docs/fluvio/cli/fluvio/consume#consume-using-a-smartmodule)
+
+#### Viewing the status of the cluster
+
+- [See all of your topics with `fluvio topic list`](/docs/fluvio/cli/fluvio/topic#fluvio-topic-list)
+- [See your partitions and data replication with `fluvio partition list`](/docs/fluvio/cli/fluvio/partition#fluvio-partition-list)
+- [See the status of the SPUs in your cluster with `fluvio cluster spu list`](/docs/fluvio/cli/fluvio/cluster#fluvio-cluster-spu-list)

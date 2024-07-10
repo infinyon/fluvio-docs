@@ -82,6 +82,9 @@ const config: Config = {
               label: 'Latest',
               path: 'latest'
             },
+            [STABLE_VERSION]: {
+              label: `Stable (${STABLE_VERSION})`,
+            }
           },
         },
         blog: {
