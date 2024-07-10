@@ -115,10 +115,11 @@ const config: Config = {
     navbar: {
       logo: {
         alt: "InfinyOn Logo",
-        src: "img/fluvio-community-alt-dark.png",
-        srcDark: "img/fluvio-community-alt-dark.png",
-        height: '40px',
-        width: '80px',
+        src: "img/fluvio-community-purple.png",
+        srcDark: "img/fluvio-community-blue.png",
+        style: {
+          padding: '10px 0',
+        }
       },
       items: [
         {
