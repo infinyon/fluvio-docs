@@ -180,15 +180,16 @@ const config: Config = {
       links: [
         {
           title: "Fluvio",
-          items: [],
+          items: [
+            {
+              label: "Docs",
+              href: "/docs",
+            },
+          ],
         },
         {
           title: "Community",
           items: [
-            {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/fluvio",
-            },
             {
               label: "Discord",
               href: "https://discordapp.com/invite/bBG2dTz",
