@@ -1,10 +1,10 @@
 import ComponentTypes from '@theme-original/NavbarItem/ComponentTypes';
 
 import Discord from './Discord';
-import GitHubStars from './GitHubStars';
+import GitHub from './GitHub';
 
 export default {
   ...ComponentTypes,
   'custom-Discord': Discord,
-  'custom-GitHubStars': GitHubStars,
+  'custom-GitHub': GitHub,
 };

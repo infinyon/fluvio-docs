@@ -171,7 +171,7 @@ const config: Config = {
           position: "right",
         },
         {
-          type: "custom-GitHubStars",
+          type: "custom-GitHub",
           position: "right",
         },
       ],
