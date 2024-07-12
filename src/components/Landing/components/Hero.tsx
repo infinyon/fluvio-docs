@@ -39,6 +39,14 @@ export function Hero(): JSX.Element {
             </div>
           </div>
         </div>
+        <div className="p-12">
+          <div className="bg-indigo-100 dark:bg-indigo-800 border-2 border-solid border-indigo-600 mx-auto rounded-md flex justify-center items-center p-4 w-11/12 md:w-[400px]">
+            <a className="flex flex-col md:flex-row items-center hover:no-underline" href="https://gitHub.com/infinyon/fluvio/" target="_blank">
+              <span className="mr-2 mb-2 md:mb-0 dark:text-white">Give us a start on GitHub!</span>
+              <img src="https://img.shields.io/github/stars/infinyon/fluvio?style=social" alt="GitHub stars"/>
+            </a>
+          </div>
+        </div>
       </article>
       <figure
         className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
