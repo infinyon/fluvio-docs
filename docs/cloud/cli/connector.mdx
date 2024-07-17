@@ -1,0 +1,230 @@
+---
+title: connector
+weight: 101
+description: "CLI commands for connector operations."
+---
+
+The `fluvio cloud connector` subcommands are used to manage Connectors in InfinyOn Cloud.
+
+```bash
+$ fluvio cloud connector -h
+```
+
+```
+fluvio-cloud-connector
+View Fluvio Connector information
+USAGE:
+    fluvio-cloud connector <SUBCOMMAND>
+OPTIONS:
+    -h, --help    Print help information
+SUBCOMMANDS:
+    config    Show the connector configuration details
+    create    Create a new Connector
+    delete    Delete a Connector
+    help      Print this message or the help of the given subcommand(s)
+    list      List all Connectors
+    logs      View connector logs
+    update    Update and restart a Connector
+```
+
+-> For more info about using connectors, see the [Connectors page](https://www.fluvio.io/connectors/). The available connector types are listed under the *Inbound* and *Outbound* sections.
+
+---
+
+## `fluvio cloud connector create`
+
+This command is used to provision a new connector.
+
+```bash
+$ fluvio cloud connector create -h
+```
+
+```
+fluvio cloud connector create
+Create a new Connector
+
+Usage: fluvio cloud connector create [OPTIONS] --config <CONFIG>
+
+Options:
+      --config <CONFIG>        Path to config file
+      --log-level <LOG_LEVEL>  Sets the log level, one of (error, warn, info, debug, trace)
+  -c, --cluster <CLUSTER>      Name of cluster
+  -h, --help                   Print help
+```
+
+To create a connector, you need to create a YAML-based connector config file.
+
+For more about the connector config file, see the [Cloud connectors page](https://www.fluvio.io/connectors/cloud-connectors/).
+
+When running `fluvio cloud connector create`, pass the path to this file using the `--config`
+option.
+
+Example usage:
+
+```bash
+$ fluvio cloud connector create --config=./cats.yaml
+connector "cat-facts" (http-source) created
+```
+
+---
+
+## `fluvio cloud connector config`
+
+Command to show the configuration file used to create this connector.
+
+```bash
+$ fluvio cloud connector config -h
+```
+
+```
+fluvio-cloud-connector-config
+Show the connector configuration details
+USAGE:
+    fluvio-cloud connector config [OPTIONS] <NAME>
+ARGS:
+    <NAME>    Name of connector
+OPTIONS:
+    -c, --cluster <CLUSTER>  Name of cluster
+    -h, --help               Print help information
+```
+
+Example usage:
+
+%copy%
+```yaml
+apiVersion: 0.1.0
+meta:
+ version: 0.2.5
+ name: cat-facts
+ type: http-source
+ topic: cat-facts
+http:
+ endpoint: "https://catfact.ninja/fact"
+ interval: 10s
+```
+
+---
+
+## `fluvio cloud connector list`
+
+This command show you all the existing Connectors in your cluster.
+
+```bash
+$ fluvio cloud connector list -h
+```
+
+```
+fluvio-cloud-connector-list
+List all Connectors
+USAGE:
+    fluvio-cloud connector list [OPTIONS]
+OPTIONS:
+    -c, --cluster <CLUSTER>  Name of cluster
+```
+
+---
+
+## `fluvio cloud connector update`
+
+Command to update and restart an existing connector.
+
+```bash
+$ fluvio cloud connector update -h
+```
+
+```
+fluvio cloud connector update
+Update and restart a Connector
+
+Usage: fluvio-cloud connector update [OPTIONS] --config <CONFIG>
+
+Options:
+  -c, --config <CONFIG>        Name of connector
+      --cluster <CLUSTER>      Name of cluster
+      --log-level <LOG_LEVEL>  Sets the log level [default: LogLevel::default()]
+```
+
+Example usage:
+
+```bash
+$ fluvio cloud connector update --config=./cats.yaml
+connector "cat-facts" (http-source) updated
+```
+
+---
+
+## `fluvio cloud connector logs`
+
+Command to view the logs written by the connector.
+
+```bash
+$  fluvio cloud connector logs -h
+```
+
+```
+fluvio-cloud-connector-logs
+View connector logs
+USAGE:
+    fluvio-cloud connector logs [OPTIONS] <NAME>
+ARGS:
+    <NAME>    Name of connector
+OPTIONS:
+    -c, --cluster <CLUSTER>  Name of cluster
+```
+
+Example usage:
+
+```bash
+$ fluvio cloud connector logs cat-facts
+2022-10-21T14:55:13.508989Z  INFO http_source: Starting HTTP source connector connector_version="0.4.1" git_hash="0ad913c5ceb732881fd753874e5082777bbed91e"
+2022-10-21T14:55:13.509096Z  INFO http_source: interval=10s method=GET topic=cat-facts output_parts=body output_type=text endpoint=https://catfact.ninja/fact
+2022-10-21T14:55:13.510284Z  INFO fluvio::config::tls: Using verified TLS with certificates from paths domain="broad-union-b685e7fda03fefb3d5221d0a3b9c64c7.c.infinyon.cloud"
+2022-10-21T14:55:13.515459Z  INFO fluvio::fluvio: Connecting to Fluvio cluster fluvio_crate_version="0.14.0" fluvio_git_hash="e96d8e2738ee39ddbb64fea37134f119f97e25bf"
+2022-10-21T14:55:13.574584Z  INFO connect: fluvio::sockets: connect to socket add=fluvio-sc-public:9003
+...
+```
+
+### Configure Logging Levels
+
+By default connectors will log using the `info` level.
+You can configure the log level for connectors running in the cloud using
+the `--log-level` option.
+
+The `--log-level` option is available for both, `fluvio cloud connector <create | update>`.
+
+Any of the following levels can be used:
+
+- `error`
+- `warn`
+- `info`
+- `debug`
+- `trace`
+
+---
+
+## `fluvio cloud connector delete`
+
+This command deletes an existing Connector.
+
+```bash
+$ fluvio cloud connector delete -h
+```
+
+```
+fluvio-cloud-connector-delete
+Delete a Connector
+USAGE:
+    fluvio-cloud connector delete [OPTIONS] <name>...
+ARGS:
+    <name>...    One or more name(s) of the connector(s) to be deleted
+OPTIONS:
+    -c, --cluster <CLUSTER>  Name of cluster
+```
+
+Example usage:
+
+```bash
+$ fluvio cloud connector delete cat-facts
+connector "cat-facts" deleted
+```
+
