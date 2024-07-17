@@ -4,54 +4,73 @@ wrapperClassName: faqs-page
 hide_table_of_contents: true
 ---
 
-<FAQBox title="How do you make pancakes? 🥞">
-  #### The art of pancake making is a delicate one.
-
-  First, you need to mix the flour, eggs, and milk together. Then, you need to heat up a pan and pour the mixture in. Cook until golden brown on both sides. Serve with your favorite toppings and enjoy!
-
-  #### But how do you do it in Rust?
-
-  Memory safe pancakes are the best kind of pancakes! Here's how you can make them in Rust:
-
-  ```rust
-    fn make_pancakes() {
-        let flour = 1;
-        let eggs = 2;
-        let milk = 1;
-        let pan = Pan::new();
-
-        let mixture = mix(flour, eggs, milk);
-        pan.heat_up();
-        pan.pour(mixture);
-        pan.cook();
-        pan.flip();
-        pan.cook();
-        pan.serve();
-    }
-    ```
+<FAQBox title="What is Fluvio?">
+  Fluvio is a lean distributed streaming engine built by the team at InfinyOn.
+  Fluvio is designed, architected, and built from the ground up to be edge
+  ready, cloud native, secure, memory safe, high performance, scalable and
+  reliable.
 </FAQBox>
 
-<FAQBox title="Can you make pancakes in Golang?">
-  Making pancakes in Golang is a bit trickier than in Rust, but it's definitely possible! Here's how you can make pancakes in Golang:
+<FAQBox title="Who is Fluvio for?">
+  Fluvio is for developers who build data flows to power intelligent
+  applications. Fluvio provides developers with APIs and SDKs to create data
+  integrations to collect and distribute data, primitives to process,
+  transform, and enrich data including deduplication, enrichment with 3rd party
+  API callouts, as well as stateful aggregations into materialized views.
+</FAQBox>
 
-  ```go
-    package main
+<FAQBox title="In what use cases and scenarios does Fluvio make developer workflows effective?">
+  Software and data engineers use Fluvio as the distributed streaming engine to
+  serve as the core message queue or service bus to create a variety of use
+  case patterns in operational analytics, user facing analytics, real-time
+  insights, anomaly detection and more.
+</FAQBox>
 
-    import "fmt"
+<FAQBox title="How is this different from ETL/ELT/Batch processing tools?">
+  Fluvio is a distributed streaming engine that processes records in real-time
+  as they arrive.
 
-    func main() {
-        flour := 1
-        eggs := 2
-        milk := 1
-        pan := NewPan()
+  Unlike ETL/ELT batch processing, which handles large volumes of static data
+  at fixed intervals, Fluvio enables continuous data processing. While both
+  approaches can apply similar business logic, batch processing excels at
+  descriptive historical analysis on regular schedules. In contrast, streaming
+  is essential for event-driven architectures and operational systems requiring
+  immediate data processing.
 
-        mixture := mix(flour, eggs, milk)
-        pan.HeatUp()
-        pan.Pour(mixture)
-        pan.Cook()
-        pan.Flip()
-        pan.Cook()
-        pan.Serve()
-    }
-  ```
+  This makes Fluvio ideal for applications in telemetry, monitoring,
+  operational analytics, and intelligent distributed applications like edge AI
+  ro real-time AI, where real-time event processing is crucial.
+</FAQBox>
+
+<FAQBox title="How does Fluvio differ from other streaming platforms?">
+  Fluvio distinguishes itself as a comprehensive, ground-up streaming platform,
+  diverging from traditional solutions that cobble together multiple tools and
+  libraries.
+
+  Upcoming streaming platforms often focus on optimizing existing
+  components—such as enhancing storage speed, file formats, metadata usage, and
+  infrastructure management—Fluvio takes a fundamentally different approach.
+
+  Built from scratch using Rust, it leverages cutting-edge advances in
+  hardware, kernel technology, and compiler design to ensure superior
+  performance, memory safety, and resource efficiency.
+
+  Fluvio includes a full suite of CLI tools, APIs, and SDKs, to give developers
+  the control and the flexibility to create modular, end-to-end data flows.
+
+  Fluvio uses WebAssembly for data processing packages to implement nimble,
+  secure, and flexible components. This cohesive design offers developers a
+  unified paradigm for building streaming applications, eliminating the
+  complexity and integration challenges associated with piecing together
+  disparate tools and libraries.
+</FAQBox>
+
+<FAQBox title="What are the core components of Fluvio?">
+  The ecosystem of tools to build with Fluvio are:
+
+  Fluvio Core - Distributed streaming engine or runtime. 37 MB Single binary
+  package. Download with a script. Cloud native deployed in Kubernetes pods on
+  InfinyOn Cloud.
+
+  Fluvio Clients - Rust Client, Python Client, Node Client and some.
 </FAQBox>
