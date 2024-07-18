@@ -131,7 +131,7 @@ const config: Config = {
         {
           type: "doc",
           position: "left",
-          docId: "cloud/quickstart",
+          docId: "cloud/overview",
           label: "Cloud",
         },
         {

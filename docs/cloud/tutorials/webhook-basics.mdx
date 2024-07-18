@@ -1,0 +1,153 @@
+---
+title: "Webhook Basics"
+description: "A short tutorial for using Webhooks"
+sidebar_position: 20
+---
+
+This tutorial assumes that `fluvio` is installed, and logged-in to InfinyOn Cloud. Follow the [Quick Start](../../../fluvio/quickstart) to get set up.
+
+Webhooks are special connectors with an associated external url. Users can send data to their topics via a `HTTP POST` request.
+
+## Webhook Configuration
+
+The webhook configuration file has the following structure:
+
+```yaml
+meta:
+  name: my-webhook        # required
+  topic: my-webhook       # required
+  logLevel: debug         # default: info, options: [trace, debug, info, warn, error]
+  secrets:
+    - name: my-key
+  producer:
+    linger: 100ms
+    batch-size: 1mb
+    compression: snappy    # default: none, options: [none, gzip, snappy, lz4, zstd]
+webhook:
+  outputParts: full        # default: body, options: [full, body]
+  outputType: json         # default: text, options: [text, json]
+  outputUri: full          # default: none, options: [full, none, path, query]
+transforms:
+  - uses: infinyon/jolt@0.4.1
+    with:
+      key: ${{ secrets.my_key }}
+```
+
+The minimum configuration has needs the top 2 requred fields: `name` and `topic`. The `name` is the name of the webhook, and the `topic` is the topic that the webhook will publish to.
+
+
+## Create a simple Webhook
+
+Let's create an example configuration file
+
+```yaml
+# example-webhook.yaml
+meta:
+  name: my-webhook
+  topic: my-webhook-topic
+```
+
+Add a webhook to InfinyOn Cloud
+
+```shell copy="fl"
+$ fluvio cloud webhook create --config example-webhook.yaml
+```
+
+Your output should look similar to this. We'll cover sending data to this url.
+
+```
+Webhook "my-webhook" created with url: https://infinyon.cloud/webhooks/v1/[random string]
+```
+
+If you need this url again, you can run this command to list your webhooks, and their urls.
+
+```shell copy="fl"
+$ fluvio cloud webhook list
+```
+
+Example output
+
+```
+ NAME        TOPIC             URL
+ my-webhook  my-webhook-topic  https://infinyon.cloud/webhooks/v1/[random string]
+```
+
+### Send data to webhook
+
+We'll be sending json data `{"key": "value"}` to our webhook using `curl`. Replace the url so `[random string]` matches your unique url. Keep this command close because we'll refer to this example curl command later.
+
+```shell copy="fl"
+$ curl -v -X POST -d 'Hello World!' https://infinyon.cloud/webhooks/v1/[uri-key]
+```
+
+In another terminal, star a consumer that reads form the beginning:
+
+```shell copy="fl"
+$ fluvio consume my-webhook-topic -B
+```
+
+We should see the folloing output:
+
+```bash
+Hello World!
+```
+
+## Create a JSON Webhook and embed HTTP parts
+
+Next we'll send json records, but before we do that we'll modify `outputParts`, `outputType`, and `outputUri` in the  `example-webhook.yaml` configuration file:
+
+```yaml
+# example-webhook.yaml
+meta:
+  name: my-webhook
+  topic: my-webhook-topic
+
+webhook:
+  outputParts: full
+  outputType: json
+  outputUri: full
+```
+
+Run this command to update your webhook.
+
+```shell
+$ fluvio cloud webhook update --config example-webhook.yaml
+Webhook "my-webhook" updated
+```
+
+Let's restart the consumer to a JSON formatter:
+
+```shell
+$ fluvio consume my-webhook-topic -O json
+```
+
+Run another curl with a `json` payload:
+
+```bash
+$ curl -v -X POST -H "Content-Type: application/json" -d '{"key": "value"}' https://infinyon.cloud/webhooks/v1/[uri-key]
+```
+
+The consumer should now show the following output:
+
+```json
+{
+  "body": {
+    "key": "value"
+  },
+  "headers": {
+    "accept": "*/*",
+    "accept-encoding": "gzip, br",
+    "content-length": "16",
+    "content-type": "application/json",
+    "host": "infinyon.cloud",
+    "user-agent": "curl/7.87.0",
+    "x-forwarded-for": "..."
+  },
+  "path": "",
+  "query": ""
+}
+```
+
+## Conclusion
+
+You now know how to create and configure the output of Webhooks. Check out the [Webhook Config](../how-to/webhook-config) reference to see how to configure other transformations.
