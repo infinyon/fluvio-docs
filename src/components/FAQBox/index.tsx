@@ -11,7 +11,7 @@ export default function FAQBox({ children, title }) {
       <dt>
         <button
           type="button"
-          className="cursor-pointer flex w-full items-start justify-between text-left text-gray-900 bg-transparent border-0"
+          className="cursor-pointer flex w-full items-start justify-between text-left text-gray-900 dark:text-gray-50 bg-transparent border-0"
           aria-controls="faq-0"
           aria-expanded="false"
           onClick={() => setIsOpen(!isOpen)}
@@ -24,7 +24,7 @@ export default function FAQBox({ children, title }) {
       </dt>
       {isOpen && (
         <dd className="mt-2 pr-12" id="faq-0">
-          <p className="text-base leading-7 text-gray-600">{children}</p>
+          <p className="text-base leading-7 text-gray-600 dark:text-gray-100">{children}</p>
         </dd>
       )}
     </div>
@@ -38,6 +38,7 @@ function Plus() {
       width="21"
       height="21"
       viewBox="0 0 256 256"
+      fill="currentColor"
     >
       <path d="M224 128a8 8 0 01-8 8h-80v80a8 8 0 01-16 0v-80H40a8 8 0 010-16h80V40a8 8 0 0116 0v80h80a8 8 0 018 8z"></path>
     </svg>
@@ -51,6 +52,7 @@ function Minus() {
       width="21"
       height="21"
       viewBox="0 0 256 256"
+      fill="currentColor"
     >
       <path d="M224 128a8 8 0 01-8 8H40a8 8 0 010-16h176a8 8 0 018 8z"></path>
     </svg>
