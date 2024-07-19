@@ -115,8 +115,8 @@ const config: Config = {
     navbar: {
       logo: {
         alt: "InfinyOn Logo",
-        src: "img/fluvio-community-purple.png",
-        srcDark: "img/fluvio-community-blue.png",
+        src: "img/infinyon-gradient.png",
+        srcDark: "img/infinyon-white.png",
         style: {
           padding: '10px 0',
         }
@@ -162,11 +162,6 @@ const config: Config = {
           label: "News",
         },
         {
-          position: "right",
-          label: "FAQs",
-          to: "faqs",
-        },
-        {
           type: "custom-Discord",
           position: "right",
         },
@@ -186,6 +181,14 @@ const config: Config = {
               label: "Docs",
               href: "/docs",
             },
+            {
+              label: "FAQs",
+              href: "/faqs",
+            },
+            {
+              label: "News",
+              href: "/news",
+            },
           ],
         },
         {
@@ -199,11 +202,6 @@ const config: Config = {
               label: "Twitter",
               href: "https://twitter.com/infinyon",
             },
-          ],
-        },
-        {
-          title: "More",
-          items: [
             {
               label: "GitHub",
               href: FLUVIO_REPOSITORY_URL,
