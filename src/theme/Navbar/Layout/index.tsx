@@ -10,7 +10,6 @@ import NavbarMobileSidebar from '@theme/Navbar/MobileSidebar';
 import type {Props} from '@theme/Navbar/Layout';
 
 import styles from './styles.module.css';
-import Header from '@site/src/components/Layout/Header';
 
 function NavbarBackdrop(props: ComponentProps<'div'>) {
   return (
@@ -27,10 +26,9 @@ export default function NavbarLayout({children}: Props): JSX.Element {
     navbar: {hideOnScroll, style},
   } = useThemeConfig();
   const mobileSidebar = useNavbarMobileSidebar();
-  const {navbarRef, isNavbarVisible} = useHideableNavbar(hideOnScroll);
+  const { navbarRef, isNavbarVisible } = useHideableNavbar(hideOnScroll);
+
   return (
-    <>
-    <Header />
     <nav
       ref={navbarRef}
       aria-label={translate({
@@ -55,6 +53,5 @@ export default function NavbarLayout({children}: Props): JSX.Element {
       <NavbarBackdrop onClick={mobileSidebar.toggle} />
       <NavbarMobileSidebar />
     </nav>
-    </>
   );
 }
