@@ -120,12 +120,6 @@ html[data-theme="dark"] .menu__link:hover {
     @apply m-0 p-0;
 }
 
-@media (max-width: 1120px) {
-    .navbar__logo {
-        display: none !important;
-    }
-}
-
 @media (max-width: 996px) {
     .navbar__items.navbar__items--right li.custom-button {
         display: none !important;
