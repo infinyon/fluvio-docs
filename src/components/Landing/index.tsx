@@ -1,9 +1,9 @@
 import Layout from '@theme/Layout';
 
 import { Hero } from './components/Hero';
-import { WhyFluvio } from './components/WhyFluvio';
 import { Contribute } from './components/Contribute';
 import { GitHubInsights } from './components/GitHubInsights';
+import { Products } from './components/Products';
 
 export default function Home(): JSX.Element {
   return (
@@ -13,7 +13,7 @@ export default function Home(): JSX.Element {
     >
       <main>
         <Hero />
-        <WhyFluvio />
+        <Products />
         <Contribute />
         <GitHubInsights />
       </main>
