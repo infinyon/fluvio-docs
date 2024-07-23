@@ -123,6 +123,7 @@ html[data-theme="dark"] .menu__link:hover {
 .home-products-btn {
     @apply cursor-pointer px-4 py-2 text-sm font-semibold rounded bg-slate-900 text-slate-50;
     @apply hover:text-slate-50 hover:cursor-pointer hover:bg-slate-700 hover:no-underline;
+    @apply dark:bg-slate-700 dark:text-slate-50;
 }
 
 @media (max-width: 996px) {
