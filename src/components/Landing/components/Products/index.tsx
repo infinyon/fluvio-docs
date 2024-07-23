@@ -6,14 +6,12 @@ export function Products(): JSX.Element {
       <Card imgSrc="/img/landing/fluvio-diagram.png" imgAlt="Fluvio Diagram">
         <h2>Transform, Enrich & Materialize</h2>
         <p>
-          lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          Stream data from any source to any destination with Fluvio. Fluvio
+          allows you to transform, enrich, and materialize data in real-time.
         </p>
         <div className="space-x-2">
-          <button>Read Fluvio Docs</button>
-          <button>Read Fluvio Docs</button>
+          <a className="home-products-btn" href="/docs/fluvio/quickstart">Go to Fluvio</a>
+          <a className="home-products-btn" href="/docs/cloud/overview">Go to Cloud</a>
         </div>
       </Card>
       <Card
@@ -23,22 +21,18 @@ export function Products(): JSX.Element {
       >
         <h2>Integrate with any Data Source</h2>
         <p>
-          lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          Fluvio Connectors allow you to integrate with any data source. Fluvio
+          Connectors are easy to use and can be deployed in minutes.
         </p>
-        <button>Read Connectors Docs</button>
+        <a className="home-products-btn" href="/connectors/quickstart">Go to Connectors</a>
       </Card>
       <Card imgSrc="/img/landing/fluvio-apis.png" imgAlt="Fluvio APIs">
         <h2>Run Everywhere</h2>
         <p>
-          lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          Fluvio APIs allow you to run Fluvio on any platform. Fluvio APIs are
+          published as packages/crates for Rust, Python, and JavaScript.
         </p>
-        <button>Read APIs Docs</button>
+        <a className="home-products-btn" href="/docs/apis/quickstart">Go to APIs</a>
       </Card>
     </section>
   );
