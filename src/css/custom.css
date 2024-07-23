@@ -120,6 +120,11 @@ html[data-theme="dark"] .menu__link:hover {
     @apply m-0 p-0;
 }
 
+.home-products-btn {
+    @apply cursor-pointer px-4 py-2 text-sm font-semibold rounded bg-slate-900 text-slate-50;
+    @apply hover:text-slate-50 hover:cursor-pointer hover:bg-slate-700 hover:no-underline;
+}
+
 @media (max-width: 996px) {
     .navbar__items.navbar__items--right li.custom-button {
         display: none !important;
