@@ -6,7 +6,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 
 const FLUVIO_REPOSITORY_URL = "https://github.com/InfinyOn/fluvio";
 
-const STABLE_VERSION = "0.11.9";
+const STABLE_VERSION = "0.11.10";
 
 const config: Config = {
   title: "Fluvio",
@@ -82,9 +82,9 @@ const config: Config = {
               label: 'Latest',
               path: 'latest'
             },
-            // [STABLE_VERSION]: {
-            //   label: `Stable (${STABLE_VERSION})`,
-            // }
+            [STABLE_VERSION]: {
+              label: `Stable (${STABLE_VERSION})`,
+            }
           },
         },
         blog: {
