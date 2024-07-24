@@ -63,7 +63,7 @@ We love our open source community contributors. Here are some issues that you co
 - [Remove localhost from fluvio in favor of 127.0.0.1](https://github.com/infinyon/fluvio/issues/3866)
 
 ## New blog post
-We are building a series on Stateful Data Flow primitives. This is the introduction post: [The absolute beginners guide to dataflow primitives](https://infinyon.com/blog/2024/04/dataflow-primitives-intro/)
+- [How to send data reliably from IOT edge devices using Fluvio Mirroring](https://infinyon.com/blog/2024/07/use-mirroring-iot/)
 
 ---
 
