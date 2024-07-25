@@ -40,3 +40,14 @@ $ npm run build && npm run serve
 
 The `build` command generates static content into the `build` directory and
 can be served using any static contents hosting service.
+
+## Release and Publish
+
+In order to release a version and publish it you need to run:
+
+```bash
+./bin/release
+```
+
+This will tag current version, push the tag to the repository, which triggers a
+Release process and a Publish process.
