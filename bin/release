@@ -9,8 +9,10 @@ trim() {
 
 TAGNAME=$(date '+%Y-%m-%d');
 VERSION=$(trim $(git tag | grep -o "$TAGNAME" | wc -l));
-FULLTAG="$TAGNAME-$VERSION"
+FULLTAG="v$TAGNAME-$VERSION"
 
 echo "Bumping version to $FULLTAG"
 
 git tag -a "$FULLTAG" -m "chore(bump): release $FULLTAG"
+
+git push origin "$FULLTAG"
