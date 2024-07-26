@@ -137,6 +137,12 @@ const config: Config = {
         {
           type: "doc",
           position: "left",
+          docId: "sdf/quickstart",
+          label: "SDF",
+        },
+        {
+          type: "doc",
+          position: "left",
           docId: "connectors/quickstart",
           label: "Connectors",
         },
