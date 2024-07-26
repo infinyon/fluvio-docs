@@ -11,7 +11,7 @@ export function Products(): JSX.Element {
         </p>
         <div className="space-x-2">
           <a className="home-products-btn" href="/docs/fluvio/quickstart">Go to Fluvio</a>
-          <a className="home-products-btn" href="https://infinyon.cloud/ui">Go to Cloud</a>
+          <a className="home-products-btn" href="/docs/cloud/overview">Go to Cloud</a>
         </div>
       </Card>
       <Card
