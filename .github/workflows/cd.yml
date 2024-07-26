@@ -1,0 +1,51 @@
+name: Continuous Delivery
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+    # branches-ignore:
+    #   - '**'
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  release:
+    name: Release
+    uses: ./.github/workflows/release.yml
+    permissions:
+      contents: write
+      deployments: write
+      id-token: write
+
+  deploy:
+    name: Deploy
+    needs: release
+    uses: ./.github/workflows/deploy.yml
+    permissions:
+      contents: write
+      deployments: write
+      id-token: write
+    secrets:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    with:
+      project_name: fluvio-docs-nightly
+
+  deploy_tmp:
+    name: Deploy Temporal Site
+    needs: release
+    uses: ./.github/workflows/deploy.yml
+    permissions:
+      contents: write
+      deployments: write
+      id-token: write
+    secrets:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.TMP_CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.TMP_CLOUDFLARE_API_TOKEN }}
+    with:
+      project_name: fluvio-docs
