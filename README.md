@@ -51,3 +51,14 @@ In order to release a version and publish it you need to run:
 
 This will tag current version, push the tag to the repository, which triggers a
 Release process and a Publish process.
+
+### Environments
+
+Theres two environments for the documentation:
+
+1. `Production`: The production environment is the default environment, it
+   contains the latest stable version of the documentation. This environment is
+   released when tagging a version.
+
+2. `Nightly`: The nightly environment is the development environment, it
+   contains the latest changes merged into the `main` branch.
