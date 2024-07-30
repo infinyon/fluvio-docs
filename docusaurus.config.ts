@@ -91,6 +91,8 @@ const config: Config = {
           path: 'news',
           routeBasePath: 'news',
           showReadingTime: true,
+          showLastUpdateTime: true,
+          showLastUpdateAuthor: true,
           blogSidebarTitle: 'This Week in Fluvio',
           blogSidebarCount: 'ALL',
           postsPerPage: 1,
