@@ -77,15 +77,15 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl: "https://github.com/infinyon/fluvio-docs/tree/main",
-          // versions: {
-          //   current: {
-          //     label: 'Latest',
-          //     path: 'latest'
-          //   },
-          //   [STABLE_VERSION]: {
-          //     label: `Stable (${STABLE_VERSION})`,
-          //   }
-          // },
+          versions: {
+            current: {
+              label: 'latest',
+              path: 'latest'
+            },
+            [STABLE_VERSION]: {
+              label: `${STABLE_VERSION} (stable)`,
+            }
+          },
         },
         blog: {
           path: 'news',
