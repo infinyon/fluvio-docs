@@ -30,7 +30,7 @@ This is what the generated rust code for the connector looks like
 
 inline-embed file="embeds/cdk/my-connector-code.md"
 
-If you're interested in learning more, here are [the docs to CDK](connectors/cdk/overview.md)
+If you're interested in learning more, here are [the docs to CDK](/docs/connectors/local/cdk/introduction)
 
 We are excited to see what you are going to build with the CDK!
 

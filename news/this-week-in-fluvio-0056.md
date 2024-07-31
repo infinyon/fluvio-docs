@@ -17,7 +17,7 @@ We are testing timestamp access and manipulation in the transformation smart mod
 
 Our biggest update that is in the works is an engine that powers unbounded stateful processing in our platform.
 
-This is a big step towards our vision for a composable unified stateful stream processing platform. 
+This is a big step towards our vision for a composable unified stateful stream processing platform.
 
 ## Developer experience improvements
 We have been working on running our coure stream processor at the edge to support ARM based sensors with limited memory and we brought back the raspberry pi out of our shelves and working on a demo.
@@ -32,7 +32,7 @@ We are hiring!
 * [OLAP for Event Streaming with MotherDuck Connector]('https://infinyon.com/blog/2023/07/infinyon-motherduck/')
 
 ## New video
-* [Collecting Hackernews RSS Feeds using InfinyOn Cloud]('https://youtu.be/fVzLoaIHQfM')
+* [Collecting Hackernews RSS Feeds using InfinyOn Cloud]('https://www.youtube.com/@InfinyOn')
 
 That's all folks. until next week.
 

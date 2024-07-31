@@ -1,5 +1,18 @@
 ---
 sidebar_position: 30
 title: "smdk"
-description: "Fluvio CLI is an all-in-one tool for installing and managing Fluvio, as well as for producing and consuming data on the command-line"
+description: "smdk is a tool for developing Fluvio connectors"
 ---
+
+
+`smdk` a fluvio connector development kit cli utility to help you quickly create, test, and publish connectors.
+
+The commands for smdk are:
+
+- `smdk generate` - Create a new smartmodule project template
+- `smdk build` - Build the smartmodule in the current dir
+- `smdk test` - run a smartmodule with test inputs
+- `smdk load` - load a connector into the current fluvio cluster
+- `smdk publish` - publish a smartmodule to the InfinyOn Hub. A cloud account is required for this.
+
+See [Build your own smartmodules](../how-to/smartmodule-for-dev) for and introduction to developing smartmodules.

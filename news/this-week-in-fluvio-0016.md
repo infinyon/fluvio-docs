@@ -12,7 +12,7 @@ BANNER
 ## New Release - Fluvio v0.9.14
 
 ### Connector logs
-Logs from [connectors](/connectors) are now accessible from the CLI
+Logs from [connectors](/docs/connectors/quickstart) are now accessible from the CLI
 
 %copy first-line%
 ```shell

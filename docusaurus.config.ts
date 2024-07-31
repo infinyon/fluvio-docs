@@ -79,11 +79,11 @@ const config: Config = {
           editUrl: "https://github.com/infinyon/fluvio-docs/tree/main",
           versions: {
             current: {
-              label: 'Latest',
+              label: 'latest',
               path: 'latest'
             },
             [STABLE_VERSION]: {
-              label: `Stable (${STABLE_VERSION})`,
+              label: `${STABLE_VERSION} (stable)`,
             }
           },
         },
@@ -91,6 +91,8 @@ const config: Config = {
           path: 'news',
           routeBasePath: 'news',
           showReadingTime: true,
+          showLastUpdateTime: true,
+          showLastUpdateAuthor: true,
           blogSidebarTitle: 'This Week in Fluvio',
           blogSidebarCount: 'ALL',
           postsPerPage: 1,
@@ -173,7 +175,7 @@ const config: Config = {
           items: [
             {
               label: "Docs",
-              href: "/docs",
+              href: "/docs/fluvio/quickstart",
             },
             {
               label: "FAQs",
@@ -200,6 +202,10 @@ const config: Config = {
               label: "GitHub",
               href: FLUVIO_REPOSITORY_URL,
             },
+            {
+              label: "YouTube",
+              href: 'https://www.youtube.com/@InfinyOn/videos'
+            }
           ],
         },
       ],
