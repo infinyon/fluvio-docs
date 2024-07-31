@@ -27,10 +27,10 @@ We are hiring!
 * [Sr. Rust Cloud Software Engineer](https://infinyon.com/careers/cloud-engineer-senior-level/)
 
 ## New blog post
-* [Upsert on SQL Sink Connector]('https://infinyon.com/blog/2023/07/sql-upsert/')
+* [Upsert on SQL Sink Connector]('/docs/connectors/catalog/outbound/sql#upsert-usage-example')
 
 ## New video
-* [Collecting Hackernews RSS Feeds using InfinyOn Cloud]('https://youtu.be/fVzLoaIHQfM')
+* [Collecting Hackernews RSS Feeds using InfinyOn Cloud]('https://www.youtube.com/@InfinyOn')
 
 That's all folks. until next week.
 

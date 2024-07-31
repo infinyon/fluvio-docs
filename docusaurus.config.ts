@@ -202,6 +202,10 @@ const config: Config = {
               label: "GitHub",
               href: FLUVIO_REPOSITORY_URL,
             },
+            {
+              label: "YouTube",
+              href: 'https://www.youtube.com/@InfinyOn/videos'
+            }
           ],
         },
       ],
