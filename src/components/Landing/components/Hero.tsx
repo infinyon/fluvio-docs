@@ -19,7 +19,7 @@ export function Hero(): JSX.Element {
               <div className="flex justify-between space-x-6">
                 <a
                   className="p-2 rounded hover:bg-purple-200 dark:hover:bg-purple-800 hover:text-purple-800 transition-colors delay-75 flex flex-col justify-center items-center text-sm font-semibold leading-6 text-gray-900 dark:text-gray-200 dark:hover:text-gray-200"
-                  href="https://infinyon.cloud/ui"
+                  href="/docs/cloud/overview"
                 >
                   <Cloud className="w-6 h-6" />
                   Cloud
