@@ -67,6 +67,16 @@ const config: Config = {
   ],
   plugins: [
     tailwindPlugin,
+    // SDF Documentation
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "sdf",
+        path: "sdf",
+        routeBasePath: "sdf",
+        sidebarPath: "./sidebarsSdf.ts",
+      },
+    ],
   ],
   presets: [
     [
@@ -79,25 +89,25 @@ const config: Config = {
           editUrl: "https://github.com/infinyon/fluvio-docs/tree/main",
           versions: {
             current: {
-              label: 'latest',
-              path: 'latest'
+              label: "latest",
+              path: "latest",
             },
             [STABLE_VERSION]: {
               label: `${STABLE_VERSION} (stable)`,
-            }
+            },
           },
         },
         blog: {
-          path: 'news',
-          routeBasePath: 'news',
+          path: "news",
+          routeBasePath: "news",
           showReadingTime: true,
           showLastUpdateTime: true,
           showLastUpdateAuthor: true,
-          blogSidebarTitle: 'This Week in Fluvio',
-          blogSidebarCount: 'ALL',
+          blogSidebarTitle: "This Week in Fluvio",
+          blogSidebarCount: "ALL",
           postsPerPage: 1,
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
         },
         theme: {
           customCss: "./src/css/custom.css",
@@ -120,8 +130,8 @@ const config: Config = {
         src: "img/infinyon-gradient.png",
         srcDark: "img/infinyon-white.png",
         style: {
-          padding: '10px 0',
-        }
+          padding: "10px 0",
+        },
       },
       items: [
         {
@@ -149,8 +159,8 @@ const config: Config = {
           label: "APIs",
         },
         {
-          type: 'docsVersionDropdown',
-          position: 'right',
+          type: "docsVersionDropdown",
+          position: "right",
         },
         {
           position: "right",
@@ -204,8 +214,8 @@ const config: Config = {
             },
             {
               label: "YouTube",
-              href: 'https://www.youtube.com/@InfinyOn/videos'
-            }
+              href: "https://www.youtube.com/@InfinyOn/videos",
+            },
           ],
         },
       ],
