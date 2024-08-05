@@ -159,15 +159,20 @@ const config: Config = {
           label: "APIs",
         },
         {
-          type: "docsVersionDropdown",
-          position: "right",
-          docsPluginId: "default",
+          position: "left",
+          label: "SDF",
+          to: '/sdf',
         },
         {
           type: "docsVersionDropdown",
           position: "right",
-          docsPluginId: "sdf",
+          docsPluginId: "default",
         },
+        // {
+        //   type: "docsVersionDropdown",
+        //   position: "right",
+        //   docsPluginId: "sdf",
+        // },
         {
           position: "right",
           to: "news",
