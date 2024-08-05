@@ -161,6 +161,12 @@ const config: Config = {
         {
           type: "docsVersionDropdown",
           position: "right",
+          docsPluginId: "default",
+        },
+        {
+          type: "docsVersionDropdown",
+          position: "right",
+          docsPluginId: "sdf",
         },
         {
           position: "right",
