@@ -27,7 +27,7 @@ Each of these types are defined in detail below.
 
 The service composition is a directed acyclic graph (DAG) of services that can be chained sequentially or in parallel. In an event-driven system such as fluvio, all operations are triggered by events that flow through topics. The services are chained in parallel when they read from the topic or in sequence when the output of one service is the input of another. A service may define a sequence of operators, where each operator has an independent state machine.
 
-<img src="/docs/images/stateful-dataflows/parallel-sequence.png" alt="Service Chaining"
+<img src="/img/sdf/parallel-sequence.png" alt="Service Chaining"
   style={{ display: 'block', margin:'0 auto' }} width="800" />
 
 In this example, Service-X and Service-Y form a parallel chain, whereas Service-Y and Service-Z form a sequential chain.

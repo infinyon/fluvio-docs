@@ -18,7 +18,7 @@ This [SDF] release includes several new features and improvements. The main feat
 
 As an example, we'll create a dataflow that splits sentences into words, and counts the number of characters in each word.
 
-<img src="/docs/images/stateful-dataflows/_release-app.jpg" alt="Preview Example"
+<img src="/img/sdf/_release-app.jpg" alt="Preview Example"
   style={{ display: 'block', margin: '0 auto', border: 'solid #ddd' }} width="700" />
 
 The dataflow reads from `sentences` topic and writes to `words` topics.  This example is available for download in [github].
@@ -139,7 +139,6 @@ The generator created several directories and files that we'll edit next.
 
 First let's update the first function `sentence-to-words`. Open `rust/sentence-to-words/src/lib.rs` and update the function body with the following code:
 
-%copy%
 ```rust
 fn sentence_to_words(sentence: String) -> Result<Vec<String>, String> {
     Ok(sentence.split_whitespace().map(String::from).collect())
@@ -231,7 +230,6 @@ We are building a dataflow that reads words from `sentences` topic, and publishe
 
 Navigate to the base project directory.
 
-%copy%
 ```bash
 $ cd ../../
 ```
