@@ -1,0 +1,43 @@
+---
+description: SDF Generate Command
+sidebar_position: 30
+---
+
+# `sdf generate`
+
+The `sdf generate` uses an `sdf-package.yaml` file to generate a project for your custom implementation.
+Checkout [sdf-package.yaml] for additional information.
+
+### `sdf generate` command
+
+The `generate` command has the following hierarchy:
+
+```bash copy="fl"
+$ sdf generate -h
+Generate package (requires: sdf-package.yaml)
+
+Usage: sdf generate [OPTIONS]
+
+Options:
+      --dev   set runtime to use dev mode [env: DEV=]
+```
+
+Where:
+* `--dev` development profile to be used for generating code
+
+
+#### Examples
+
+##### sdf generate
+
+Navigate to the directory with `sdf-package.yaml` file, and run the command:
+
+```bash copy="fl"
+$ sdf generate
+Succesfully generated project
+```
+
+The commands creates directories for all objects in your package file. Checkout the [composition section] for additional information.
+
+[sdf-package.yaml]: /sdf/sdf-package-yaml
+[composition section]: /sdf/dataflow-composition

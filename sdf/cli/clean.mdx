@@ -1,0 +1,48 @@
+---
+title: sdf clean
+menu: "> sdf clean"
+description: SDF Clean
+weight: 69
+---
+
+# `sdf clean`
+
+The `sdf clean` removes all compiled and runtime artifacts for a package or a dataflow --stored in the `.sdf` directory.
+
+### `sdf clean` command
+
+The `clean` command has the following hierarchy:
+
+```bash
+$ sdf clean -h
+Clean generated artifacts such as state and internal objects
+
+Usage: sdf clean [OPTIONS]
+
+Options:
+  -f, --force  Remove all object, including topics
+```
+
+Where:
+* `--force` removes the objects generated inside fluvio, including topics.
+
+#### Examples
+
+##### sdf clean
+
+The default clean command is silent:
+
+```bash copy="fl"
+$ sdf clean
+```
+
+#### sdf clean --force
+
+The command lists the topics it deletes:
+
+```bash copy="fl"
+$ sdf clean --force
+deleted topic: sedans
+deleted topic: trucks
+deleted topic: licenses
+```
