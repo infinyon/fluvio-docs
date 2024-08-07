@@ -20,22 +20,19 @@ jobs:
       deployments: write
       id-token: write
 
-  # Needs Tokens checks:
-  # Ref: https://github.com/infinyon/fluvio-docs/actions/runs/10117625792/job/27982994143#step:6:1
-  #
-  # deploy:
-  #   name: Deploy
-  #   needs: release
-  #   uses: ./.github/workflows/deploy.yml
-  #   permissions:
-  #     contents: write
-  #     deployments: write
-  #     id-token: write
-  #   secrets:
-  #     CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-  #     CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-  #   with:
-  #     project_name: fluvio-docs-nightly
+  deploy:
+    name: Deploy
+    needs: release
+    uses: ./.github/workflows/deploy.yml
+    permissions:
+      contents: write
+      deployments: write
+      id-token: write
+    secrets:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    with:
+      project_name: fluvio-docs-nightly
 
   deploy_tmp:
     name: Deploy Temporal Site

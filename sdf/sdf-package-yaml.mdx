@@ -1,0 +1,103 @@
+---
+title: sdf-package.yaml
+description: Package file definition and examples.
+sidebar_position: 60
+---
+
+# Package File (`sdf-package.yaml`)
+
+Packages enable you to organize your code into logical units and reuse them across dataflows. A package may define `functions,` `types,` and `states` built and tested independently and imported in [dataflows].
+
+Package files do not have code, but rather API definitions that are used to generate code. The [sdf] CLI `generate` command uses the API definitions to generate the code. Afte running the code generator, use your favorite editor to build and test the package.
+
+## `sdf-package.yaml` file
+
+The package file is defined in YAML and has the following hierarchy:
+
+```yaml title="sdf-package.yaml"
+apiVersion: <version>
+
+meta:
+  name: <package-name>
+  version: <package-version>
+  namespace: <package-namespace>
+
+imports:
+  - pkg: <package-namespace>/<package-name>@<package-version>
+    types:
+      - name: <type-name>
+    functions:
+      - name: <function-name>
+    states:
+      - name: <state-name>
+
+types:
+  <type-name>: <type-props>
+
+states:
+  <state-name>: <state-props>
+
+functions:
+  <function-name>:
+    operator: <operator-type>
+    states:
+      - name: <state-name>
+    inputs:
+      - name: <input-name>
+        type: <input-type>
+    output:
+      type: <output-type>
+
+dev:
+  converter: <converter-props>
+  imports:
+    - pkg:  <package-namespace>/<package-name>@<package-version>
+      path: <relative-path>
+
+```
+
+The sections are as follows:
+* **apiVersion** - defines engine version of the package file.
+* **meta** - defines the name, version, and namespace of the package.
+* **imports** - imports other packages' types, states, functions (optional)
+* **types** - definess the type definitions (optional).
+* **states** - definess the state definitions (optional).
+* **functions** - definess the function names, operators, states, the input and output parameters (optional).
+* **dev** - defines the substitutions to be used during development and test (optional).
+
+
+## Generate, Build and Test a Package
+
+The [sdf] command line tool offers commands to build and test a package file.
+
+Navigate to the directory with the `sdf-package.yaml` and perform the following commands:
+
+1. Generate the build environment:
+
+```bash
+$ sdf generate
+```
+
+Add your code in the `rust` directory.
+
+
+2. Build the package:
+
+```bash
+$ sdf build
+```
+
+3. Test the package
+
+```bash
+$ sdf test
+```
+
+After you've built and tested the packages, you can import the components in a dataflow file to create the data pipeline.
+
+### References
+
+* Check out the examples in <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-composed" target="_blank">github</a> on how to build and use packages in dataflows.
+
+[sdf]: /sdf
+[dataflows]: /sdf/dataflow-yaml

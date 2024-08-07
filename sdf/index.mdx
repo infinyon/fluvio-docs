@@ -1,0 +1,63 @@
+---
+title: "Stateful Dataflows Overview"
+description: Stateful Dataflows are data pipelines that integrate fluvio event streaming with stateful processing to automate real-time data analytics at scale.
+sidebar_position: 10
+---
+
+Stateful Dataflows, the embodiment of versatility in data pipelines, seamlessly integrate fluvio event streaming with stateful processing, sparking innovation among data engineers. These pipelines, built-in Rust and powered by WebAssembly, are small, fast, and incredibly versatile. They empower engineers to write custom logic snippets that compile to WebAssembly and inject them into the pipeline for in-line processing. This custom logic can perform various tasks, from data transformations and error correction to malicious payload detection and complex stateful processing.
+
+The following example is a dataflow that performs various operations on data from sensors camera sensors at different locations.
+
+<img src="/img/sdf/sample-dataflow.jpg" alt="Sample Dataflow" style={{ display: 'block', margin: '0 auto'}} width="900" />
+
+To run this dataflow, follow the instructions in <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-inline/car-processing" target="_blank">github</a>.
+
+
+#### Stateful Dataflows vs. Big Data Stream Processing
+
+Unlike traditional big data frameworks built in Java, like Kafka, Flink, KStream, and Spark, where each component is independently managed, scaled, and built into dataflows through external Microservices, InfinyOn Stateful Dataflows introduces a unique paradigm. This paradigm empowers users to quickly develop and test individual services in their favorite programming language. It seamlessly integrates them into scalable end-to-end dataflows, streamlining the entire data processing workflow.
+
+
+#### Stateful Dataflows vs. Legacy Solutions
+
+Automating data operations within legacy technology stacks, spanning message brokers, databases, microservices, and batch jobs, typically demands months of setup and years of experimentation before yielding positive outcomes. InfinyOn Stateful Dataflows frees you from infrastructure intricacies and lets you focus on your core business logic instead.
+
+
+#### Who is this for?
+
+This platform is tailored for developers creating event-driven applications with continuous enrichment. The product streamlines the composition of dataflows with external sources such as databases, AI/ML models, and Redis caches, producing powerful results for analytics, application, and operational dashboards.
+
+
+#### How are Stateful Dataflows different from Fluvio?
+
+Stateful Dataflows are an extension of Fluvio, leveraging the Fluvio infrastructure for communication and persistence. Fluvio is responsible for connectors, data streaming, and persistence, whereas dataflows handle data routing, transformations, and stateful processing.
+
+
+#### How do I integrate this into my existing data architecture?
+
+Fluvio connectors serve as the interface to external ingress and egress services. Fluvio publishes a growing library of connectors, such as HTTP, Kafka, NATs, SQL, S3, etc. Connectors are easy to build, test, deploy, and share with the community.
+
+#### How do I get started?
+
+Provisioning and operating a Stateful Dataflow requires the following system components:
+
+1. [Fluvio Cluster] to connect the dataflows with data streaming.
+
+2. [Dataflow File] to define the schema, composition, services, and operations.
+
+3. [SDF (Stateful Dataflows) CLI] to build, test, and deploy the dataflows.
+
+The Stateful Dataflows can be built, tested, and run locally during preview releases. As we approach general availability, they can also be deployed in your InfinyOn Cloud cluster. In addition, the dataflows may be published to Hub and shared with others with one click and installation.
+
+
+## Next Steps
+
+In the [next section], we'll walk through the steps to get started with Stateful Dataflows.
+
+[Let's Get Started].
+
+[Dataflow File]: /sdf/dataflow-yaml
+[Fluvio Cluster]: /sdf/getting-started#installing-fluvio--start-a-cluster
+[SDF (Stateful Dataflows) CLI]: /sdf/
+[next section]: /sdf/getting-started
+[Let's Get Started]: /sdf/getting-started

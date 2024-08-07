@@ -1,0 +1,297 @@
+---
+title: dataflow.yaml
+description: Stateful Dataflow file definition and examples.
+sidebar_position: 50
+---
+
+The `dataflow.yaml` file defines the end-to-end composition <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph" target="_blank">DAG</a> of the data-streaming application. At its core, the file defines sources, schemas, services, and destinations. Each service represents a flow that has one or more sources, one or more operators, and one or more destinations.
+
+A dataflow is divided into two areas: [metadata definitions](#metadata-definitions) and [service composition](#service-composition-dag).
+
+
+## Metadata Definitions
+
+Metadata definitions help the engine provision the runtime environment for the service composition and execution. The metadata definitions are as follows:
+
+* [apiVersion](#apiversion)
+* [meta](#meta)
+* [imports](#imports)
+* [config](#config)
+* [types](#types)
+* [topics](#topics)
+
+Each of these types are defined in detail below.
+
+
+### Service Composition (DAG)
+
+The service composition is a directed acyclic graph (DAG) of services that can be chained sequentially or in parallel. In an event-driven system such as fluvio, all operations are triggered by events that flow through topics. The services are chained in parallel when they read from the topic or in sequence when the output of one service is the input of another. A service may define a sequence of operators, where each operator has an independent state machine.
+
+<img src="/img/sdf/parallel-sequence.png" alt="Service Chaining"
+  style={{ display: 'block', margin:'0 auto' }} width="800" />
+
+In this example, Service-X and Service-Y form a parallel chain, whereas Service-Y and Service-Z form a sequential chain.
+
+The [Services Section] defines the different types of services the engine supports.
+
+
+## `dataflow.yaml` file
+
+The dataflow file is defined in YAML and has the following hierarchy:
+
+```yaml
+apiVersion: <version>
+
+meta:
+  name: <dataflow-name>
+  version: <dataflow-version>
+  namespace: <dataflow-namespace>
+
+imports:
+  - pkg: <package-namespace>/<package-name>@<package-version>
+    types:
+      - name: <type-name>
+    functions:
+      - name: <function-name>
+    states:
+      - name: <state-name>
+
+config:
+  converter: <converter-props>
+  consumer: <consumer-props>
+
+types:
+  <type-name>: <type-props>
+
+topics:
+  <topic-name>: <topic-props>
+
+services:
+  <service-name>:
+    sources:
+      -type: <topic-props>
+
+    states:
+      <state-name>: <state-props>
+
+    transforms:
+      - operator: <operator-props>
+
+    window:
+      <window-props>
+
+    partition:
+      <partition-props>
+
+    sinks:
+      - type: <topic-props>
+```
+
+Where:
+* **apiVersion** - defines engine version of the dataflow file.
+* **meta** - defines the name, version, and namespace of the dataflow.
+* **imports** - defines the external packages (optional).
+* **config** - defines global configutions (optional) - [defaults: converter: raw, default_starting_offset: end(0)].
+* **types** - definess the type definitions (optional).
+* **topics** - defines the topics used in the datataflow.
+* **service/sources** - defines the sources this service reads from.
+* **service/states** - defines the state used in the service (optional).
+* **service/transforms** - defines the chain of transformations (optional).
+* **service/window** - defines a window processing service (optional).
+* **service/partition** - defines data partitioning (optional).
+* **service/sinks** - defines the target output for the service (optional).
+
+
+## Dataflow Operations
+
+The dataflow file can compose multiple operations such as:
+
+* **routing** with split and merge
+* **shaping** with transforms operators
+* **state processing** with state operators
+* **window aggregates** with window operators
+
+This section describes how to compose a dataflow file to accomplish the desired use case.
+
+
+### `apiVersion`
+
+The `apiVersion` informs the engine about the runtime version it must use to execute a particular dataflow.
+
+```yaml
+apiVersion: <version>
+```
+
+Where:
+
+  - **apiVersion** - is the semantic version number (0.4.0)
+
+
+### `meta`
+
+Meta, short for metadata, holds the stateful dataflow properties, such as name & version.
+
+```yaml
+meta:
+  name: <dataflow-name>
+  version: <dataflow-version>
+  namespace: <dataflow-namespace>
+```
+
+Where:
+
+* **name** - is the name of the dataflow.
+* **version** - the version number of the dataflow (semver).
+* **namespace** - the namespace this dataflow belongs to.
+
+The tuple `namespace:name` becomes the [WASM Component Model] package name.
+
+### `imports`
+
+The `imports` section is used to import external packages into a dataflow. A package may define one or more types, functions, and states. A dataflow can import from as many packages as needed.
+
+```yaml
+imports:
+  - pkg: <package-namespace>/<package-name>@<package-version>
+    types:
+      - name: <type-name>
+    functions:
+      - name: <function-name>
+    states:
+      - name: <state-name>
+```
+
+Where:
+
+* **pkg** - is the unique identifired of the package
+* **types** - the list of types referenced by name.
+* **functions** - the list of functions referenced by name.
+* **states** - the list of states referenced by name.
+
+
+### `config`
+
+Config, short for configurations, defines the configuration parameters applied to the entire dataflow.
+
+```yaml
+config:
+  converter: raw, json
+  consumer:
+    default_starting_offset:
+      value: u64
+      position: beginning, end
+```
+
+Where:
+
+* **converter** - define the default serializaiton/deserialization for reading and writing events. Supported formats are: `raw` and `json`. The converter configuration can be overwritten by the topic configuration.
+
+* **consumer** - define the default consumer configuration. Supported properties are:
+  * `default_starting_offset` - define the default starting offset for the consumer. The consumer can read from `beginning` or `end` with an offset `value`. User `0` if you want to read the first or last item.
+
+For example, if the dataflow configuration is as follows:
+
+```yaml
+config:
+  converter: json
+  consumer:
+    default_starting_offset:
+      value: 0
+      position: end
+```
+
+All consumers start reading from the end of the datastream and parse the records from json.All producers write their records to the datastream in json.
+
+##### Defaults
+
+The `config` field is optional, and by default the system will read records from the `end` and decode records as `raw`.
+
+
+### `topics`
+
+Dataflows use topics for internal and external communications. During the Dataflow initialization, the engine links to existing issues or creates newly defined topics before it starts the services.
+
+The topics have a definition section that defines their schema and a provisioning section inside the [service](#services).
+
+The topic definition can have one or more topics:
+
+```yaml
+topics:
+  <topic-name>:
+    schema:
+      key:
+        type: <type-name>
+        converter: <converter-name>
+      value:
+        type: <type-name>
+        converter: <converter-name>
+```
+
+Where:
+
+* **topic-name** - is the name of the topic.
+* **key** - is the schema definition for the record key (optional).
+  * **type** - is the schema type for the key.
+  * **converter** - is the converter to deserialize the key (optional - defaults to the converter in the configuration section).
+* **value** - is the schema definition for the record value
+  * **type** - is the schema type for the value.
+  * **converter** - is the converter to deserialize the key (optional - defaults to the converter in the configuration section).
+
+
+##### Example
+
+The following example shows a couple topic definitions:
+
+```yaml
+topics:
+  cars:
+    schema:
+      value:
+        type: Car
+        converter: json
+  car-events:
+    schema:
+      key:
+        type: CarLicense
+      value:
+        type: CarEvent
+```
+
+The [Services] describes how to provision topics inside services.
+
+
+### `types`
+
+Dataflows use types to define the schema of the objects in topics, states, and functions. Check out the [Types] section for the list of supported types.
+
+
+### `services`
+
+Services define the dataflow composition and the business logic. Check out the [Services] section for details.
+
+
+## Run a Dataflow
+
+The [sdf] command line tool offers commands to run a dataflow file.
+
+Navigate to the directory with the `dataflow.yaml` and perform the following commands:
+
+```bash
+$ sdf run
+```
+
+The engine builds the dataflow and starts the services. If you encouter errors, make the necessary changes and run again.
+
+
+### References
+* [Services]
+* [Types]
+* [Operators]
+* [SDF]
+
+
+[WASM Component Model]: https://component-model.bytecodealliance.org/
+[Services]: /sdf/services
+[Types]: /sdf/types
+[Operators]: /sdf/operators
+[SDF]: /sdf
