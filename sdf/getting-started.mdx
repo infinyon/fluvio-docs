@@ -28,7 +28,8 @@ The dataflow reads from `sentences` topic and writes to `words` topics.  This ex
 
 Building a Stateful Dataflow requires the following software:
 
-* Rust **Rust 1.72** or beyond - [Install Rust]
+* Rust **1.80** or beyond - [Install Rust]
+* `wasm32-wasip1` Rust target installed. Typically, installed with: `rustup target add wasm32-wasip1`
 
 
 ## Installing Fluvio & Start a Cluster
@@ -62,10 +63,17 @@ Your Fluvio cluster is ready for use.
 
 ## Install and Setup SDF
 
-SDF is in preview and it requires the following image:
+SDF is in beta and it requires the following image:
 
 ```bash
-fvm install sdf-preview13
+fvm install sdf-beta1
+```
+
+You can validate prerequisites with:
+
+```bash
+sdf setup
+All pre-requisites are installed!
 ```
 
 Your SDF environment is ready to go.
@@ -93,7 +101,7 @@ $ cd split-sentence/packages/sentence
 Inside the `sentence` directory and create an file called `sdf-package.yaml` and add the following content:
 
 ```yaml title="sdf-package.yaml"
-apiVersion: 0.4.0
+apiVersion: 0.5.0
 
 meta:
   name: sentence-pkg
@@ -140,7 +148,7 @@ The generator created several directories and files that we'll edit next.
 First let's update the first function `sentence-to-words`. Open `rust/sentence-to-words/src/lib.rs` and update the function body with the following code:
 
 ```rust
-fn sentence_to_words(sentence: String) -> Result<Vec<String>, String> {
+fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
     Ok(sentence.split_whitespace().map(String::from).collect())
 }
 ```
@@ -148,7 +156,7 @@ fn sentence_to_words(sentence: String) -> Result<Vec<String>, String> {
 Next update `augment_count`. Open `rust/augment-count/src/lib.rs` and replace the function body:
 
 ```rust
-fn augment_count(word: String) -> Result<String, String> {
+fn augment_count(word: String) -> Result<String> {
     Ok(format!("{}({})", word, word.chars().count()))
 }
 ```
@@ -197,7 +205,7 @@ augment-count
 Let's test `sentence-to-words` first:
 
 ```bash copy="fl"
->> test function sentence-to-words --input "Hello World"
+>> test function sentence-to-words --value "Hello World"
 Hello
 World
 ```
@@ -205,7 +213,7 @@ World
 Next, test `augment-count`:
 
 ```bash
->> test function augment-count --input "Hello"
+>> test function augment-count --value "Hello"
 Hello(5)
 ```
 
@@ -215,8 +223,6 @@ You may also test the `rust` code via Cargo:
 cd rust/augment-count
 cargo test
 ```
-
-**Tips**: If you get an error, you may need to use `cargo component build` to compile, then `cargo test` to run the tests.
 
 The tests passed, and package now is ready to use in the dataflow file.
 
@@ -237,7 +243,7 @@ $ cd ../../
 Create a file called `dataflow.yaml` and copy/paste the following content:
 
 ```yaml
-apiVersion: 0.4.0
+apiVersion: 0.5.0
 
 meta:
   name: split-sentence
@@ -299,7 +305,7 @@ The imported functions are then referenced them by name in the `transforms` sect
 Let's run the project:
 
 ```bash copy="fl"
-$ sdf run --ui
+$ sdf run --ui --ephemeral
 Please visit http://127.0.0.1:8000 to view your workflow visualization
 
 >>
@@ -351,7 +357,7 @@ SDF also exposes execution metrics. To view the metrics, run:
 Let's pick a metric:
 
 ```bash copy="fl"
->> show state  sentence-words/augment-count/metrics --table
+>> show state  sentence-words/augment-count/metrics
  Key    Window  succeeded  failed
  stats  *       4          0
 ```
