@@ -1,9 +1,10 @@
 ---
 title: Worker Management
-description: SDF Worker
+description: Worker Management
 sidebar_position: 120
 ---
 
+Worker is a process that runs the dataflow.  Work can run anywhere as long as it has access to the Fluvio cluster.
 SDF Dataflow can run in in-process (ephemeral) or dedicated daemon known as worker.  With the worker, dataflow does not stop, it will run ccontinously until it is stopped or replaced.
 With in-process, dataflow runs in the same process as the CLI.  This is useful for testing local package.  Most typical use case is to run the dataflow in the worker.
 
@@ -90,8 +91,9 @@ To register the remote worker, workflow is as follows:
 $> sdf worker register <name> <worker-id>
 ```
 
-Example:
-````bash
+Example, registering the remote worker with name `edge2` and worker id `edg2-worker-id`.
+
+```bash
 $> sdf worker register edge2 edg2-worker-id
 Worker `edge2` is registered for cluster: `local`
 ```
@@ -99,32 +101,58 @@ Worker `edge2` is registered for cluster: `local`
 To discover all workers in the cluster, you can use option `-all` flag.
 
 ```bash
-$> sdf worker list -alll
+$> sdf worker list -all
     NAME  TYPE    CLUSTER  WORKER ID                            
  *  main  Host    local    7fd7eda3-2738-41ef-8edc-9f04e500b919
     N/A   Remote  local    edg2-worker-id
 ```
 
+To unregister the worker, you can use `unregister` command:
 
+```bash
+$> sdf worker unregister edge2
+```
+
+To manage remote worker, you can use any devops tool to manage the worker such as 
+- Kubernetes
+- Docker
+- Systemd
+- Terraform
+- Ansible
+- Or any other tool that can manage the server process.
+
+It just need to start worker using following command:
+
+```bash
+$> sdf worker launch --base-dir <dir> --worker-id <worker-id>
+```
+
+where `base-dir` and `worker-id` are optional parameters.  If you don't specify `base-dir`, it will use the default directory: `/sdf`.
+If you don't specify `worker-id`, it will generate unique id for you.
 
 
 
 ## Using worker in InfinyOn Cloud
 
-InfinyOn cloud automatically provisions the worker for you and it is most easiet way to run the dataflow.  You can still provision your own worker if you want to run the dataflow in your own environment or deploy to edge devices.
+With InfinyOn Cloud, there is no need to manage the worker.  It provisions the worker for you.  It also sync profile when cluster is created.
 
 For example, creating cloud cluster will automatically provision and create SDF worker profile.
 
 ```bash
 $> fluvio cloud login --use-oauth2
-fluvio cloud cluster create
+$> fluvio cloud cluster create
 Creating cluster...
 Done!
 Downloading cluster config
-Registered sdf worker: test2
-Switched to new profile: test2
+Registered sdf worker: jellyfish
+Switched to new profile: jellyfish
+```
+## Switching Worker
 
-InfinyOn Cloud automatically provisions the worker for you.  You can run the dataflow in the worker by specifying the `--worker` flag.
+With many worker, you can switch between them using `sdf worker switch` command.
 
 ```bash
+$> sdf worker switch <worker-name>
+```
 
+This assumes worker-name is already created. 
