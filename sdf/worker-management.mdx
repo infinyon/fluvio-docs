@@ -1,0 +1,130 @@
+---
+title: Worker Management
+description: SDF Worker
+sidebar_position: 120
+---
+
+SDF Dataflow can run in in-process (ephemeral) or dedicated daemon known as worker.  With the worker, dataflow does not stop, it will run ccontinously until it is stopped or replaced.
+With in-process, dataflow runs in the same process as the CLI.  This is useful for testing local package.  Most typical use case is to run the dataflow in the worker.
+
+Once worker is provisioned, it needs to be added to worker profile so SDF CLI can target it.  Worker profile is a mandatory for running the dataflow unless using ``-ephemeral` flag.
+You can switch between different workers by changing the worker profile.  Each worker profile is associated with a fluvio profile.   When you change fluvio cluster, SDF will load the worker profile associated with the fluvio profile. 
+Once you have selected the worker, same worker will be used for all dataflow operation until you selecte different worker.
+
+If there is no worker selected, following error message will be displayed:
+
+```bash
+$> sdf run
+Error: No workers. run `sdf worker create` to create one.
+$> 
+```
+
+## Types of Worker
+
+There are two types of worker: "Host" and "Remote".  Host worker runs as server process on your machine.  SDF will run the worker process in the background.  The "Host" means user alwasy can see and terminat the process locally.
+Use Host worker when you want to run the dataflow in your local machine with minimal setup as typical in development environment.  It is typical to run "Host" worker with your local fluivio cluster.
+As with development environment, you are responsible for creating and managing the worker.  
+
+Each worker can support many dataflow as long as the worker has enough resources.
+
+### Host worker
+
+To create host worker, you can use the following command:
+
+```bash
+$> sdf worker create <name>
+```
+
+The name can be anything as long as it is unique for your machine since profile are not shared across different machines.
+Once you have created the worker, You can list them:
+
+```bash
+$> sdf worker create main
+Worker `main` created for cluster: `local`
+$> sdf worker list
+    NAME  TYPE  CLUSTER  WORKER ID                            
+ *  main  Host  local    7fd7eda3-2738-41ef-8edc-9f04e500b919
+```
+
+The worker id is internal unique identifier for current fluvio cluster.   There can be many workers associated with the same fluvio cluster.  The `*` indicates the current selected worker.
+
+SDF only support running a single HOST worker for each machine.  If you try to create another worker, you will get an error message.
+
+```bash
+$ sdf worker create main2
+$ Starting worker: main2
+There is already a host worker with pid 20686 running.  Please terminate it first
+```
+
+To shutdown worker which will terminate all running dataflow, 
+```bash
+$> sdf worker shutdown main
+sdf worker shutdown main
+Shutting down pid: 20688
+Shutting down pid: 20686
+Host worker: main has been shutdown
+```
+
+Even though host worker is shutdown and removed from the profile, the dataflow files and state are still persisted.  
+You can restart the worker and the dataflow will resume.
+
+For example, if you have dataflow `fraud-detector` and `car-processor` running in the worker and you shut down the worker, the dataflow process will be terminated.   But you can resume by recreating the HOST worker.
+
+```bash
+$> sdf worker create main
+```
+
+The local worker store the dataflow state in the local file system.  The dataflow state is stored in the `~/.sdf/<cluster>/worker/<dataflow>`.
+Sor for `local` cluster, files will be stored in `~/.sdf/local/worker/dataflows`.
+
+### Remote Worker
+
+Remote worker is a managed worker run in dedicated server.  It is typically used in production environment.  The cloud worker is type of remote worker.  
+Remote worker is register and unregisterd.  When you register the worker, it will be added to the profile.  When you unregister, it will be removed from the profile.
+
+To register the remote worker, workflow is as follows:
+1. Start worker in the remote server or find the worker id of already running worker.
+2. Register the worker with the name in your machine.
+
+```bash
+$> sdf worker register <name> <worker-id>
+```
+
+Example:
+````bash
+$> sdf worker register edge2 edg2-worker-id
+Worker `edge2` is registered for cluster: `local`
+```
+
+To discover all workers in the cluster, you can use option `-all` flag.
+
+```bash
+$> sdf worker list -alll
+    NAME  TYPE    CLUSTER  WORKER ID                            
+ *  main  Host    local    7fd7eda3-2738-41ef-8edc-9f04e500b919
+    N/A   Remote  local    edg2-worker-id
+```
+
+
+
+
+
+## Using worker in InfinyOn Cloud
+
+InfinyOn cloud automatically provisions the worker for you and it is most easiet way to run the dataflow.  You can still provision your own worker if you want to run the dataflow in your own environment or deploy to edge devices.
+
+For example, creating cloud cluster will automatically provision and create SDF worker profile.
+
+```bash
+$> fluvio cloud login --use-oauth2
+fluvio cloud cluster create
+Creating cluster...
+Done!
+Downloading cluster config
+Registered sdf worker: test2
+Switched to new profile: test2
+
+InfinyOn Cloud automatically provisions the worker for you.  You can run the dataflow in the worker by specifying the `--worker` flag.
+
+```bash
+
