@@ -1,0 +1,25 @@
+name: Continuous Delivery (nightly.fluvio.io)
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy
+    needs: release
+    uses: ./.github/workflows/deploy.yml
+    permissions:
+      contents: write
+      deployments: write
+      id-token: write
+    secrets:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    with:
+      project_name: fluvio-docs-nightly
