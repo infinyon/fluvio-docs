@@ -1,4 +1,4 @@
-name: Continuous Delivery
+name: Continuous Delivery (fluvio.io)
 
 on:
   push:
@@ -32,18 +32,4 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     with:
-      project_name: fluvio-docs-nightly
-
-  deploy_tmp:
-    name: Deploy Temporal Site
-    needs: release
-    uses: ./.github/workflows/deploy.yml
-    permissions:
-      contents: write
-      deployments: write
-      id-token: write
-    secrets:
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.TMP_CLOUDFLARE_ACCOUNT_ID }}
-      CLOUDFLARE_API_TOKEN: ${{ secrets.TMP_CLOUDFLARE_API_TOKEN }}
-    with:
-      project_name: fluvio-docs
+      project_name: fluvio-docs-prod
