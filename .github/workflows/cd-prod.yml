@@ -14,7 +14,7 @@ concurrency:
 jobs:
   release:
     name: Release
-    uses: ./.github/workflows/release.yml
+    uses: ./.github/workflows/release-prod.yml
     permissions:
       contents: write
       deployments: write

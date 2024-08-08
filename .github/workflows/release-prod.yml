@@ -1,4 +1,4 @@
-name: Release
+name: Release (Production)
 
 on:
   workflow_call:

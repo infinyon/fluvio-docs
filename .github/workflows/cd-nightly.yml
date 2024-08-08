@@ -10,9 +10,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  pre_release:
+    name: Pre-Release
+    uses: ./.github/workflows/release-nightly.yml
+    permissions:
+      contents: write
+      deployments: write
+      id-token: write
+
   deploy:
     name: Deploy
-    needs: release
+    needs: pre_release
     uses: ./.github/workflows/deploy.yml
     permissions:
       contents: write
