@@ -87,12 +87,10 @@ Arguments:
 Options:
       --key <KEY>        key of state
       --filter <FILTER>  filter regex
-      --table
 ```
 
 Where:
 * `--key` and `--filter` refines the result.
-* `--table` formats the output.
 
 #### Examples
 
@@ -126,16 +124,6 @@ Show the detailed information:
 
 ```bash copy="fl"
 >> show state filter-service/filter-questions/metrics
- Key    Window  Value
- stats  *       {succeeded:2,failed:0,}
-```
-
-#### Format the result
-
-Some states can be displayed in table format:
-
-```bash copy="fl"
->> show state filter-service/filter-questions/metrics --table
  Key    Window  succeeded  failed
  stats  *       2          0
 ```

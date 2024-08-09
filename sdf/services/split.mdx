@@ -38,7 +38,7 @@ Add the following `dataflow.yaml` file:
 
 ```yaml
 # dataflow.yaml
-apiVersion: 0.4.0
+apiVersion: 0.5.0
 
 meta:
   name: split
@@ -81,7 +81,7 @@ services:
         transforms:
           - operator: filter
             run: |
-              fn is_child(person: Person) -> Result<bool, String> {
+              fn is_child(person: Person) -> Result<bool> {
                   Ok(person.age < 18)
               }
       - type: topic
@@ -89,7 +89,7 @@ services:
         transforms:
           - operator: filter
             run: |
-              fn is_adult(person: Person) -> Result<bool, String> {
+              fn is_adult(person: Person) -> Result<bool> {
                   Ok(person.age >= 18)
               }
 ```
