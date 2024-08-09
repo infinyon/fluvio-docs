@@ -12,8 +12,6 @@ on:
         required: true
       CLOUDFLARE_API_TOKEN:
         required: true
-      GOOGLE_TRACKING_ID:
-        required: true
 
 jobs:
   deploy:
@@ -34,7 +32,6 @@ jobs:
 
       - name: Build for Production
         env:
-          GOOGLE_TRACKING_ID: ${{ secrets.GOOGLE_TRACKING_ID }}
           NODE_ENV: production
         run: npm run build
 
