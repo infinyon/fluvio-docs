@@ -78,6 +78,9 @@ $> sdf worker create main
 The local worker store the dataflow state in the local file system.  The dataflow state is stored in the `~/.sdf/<cluster>/worker/<dataflow>`.
 Sor for `local` cluster, files will be stored in `~/.sdf/local/worker/dataflows`.
 
+if you have delete the fluvio cluster, worker need to be manually shutdown and created again.  This limitation will be removed in the future release
+
+
 ### Remote Worker
 
 Remote worker is a managed worker run in dedicated server.  It is typically used in production environment.  The cloud worker is type of remote worker.  
