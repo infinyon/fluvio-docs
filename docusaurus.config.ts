@@ -6,7 +6,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 
 const FLUVIO_REPOSITORY_URL = "https://github.com/InfinyOn/fluvio";
 
-const STABLE_VERSION = "0.11.10";
+const STABLE_VERSION = "0.11.11";
 
 const config: Config = {
   title: "Fluvio",
@@ -143,6 +143,11 @@ const config: Config = {
           label: "Fluvio",
         },
         {
+          position: "left",
+          label: "SDF",
+          to: '/sdf',
+        },
+        {
           type: "doc",
           position: "left",
           docId: "cloud/overview",
@@ -159,11 +164,6 @@ const config: Config = {
           position: "left",
           docId: "apis/quickstart",
           label: "APIs",
-        },
-        {
-          position: "left",
-          label: "SDF",
-          to: '/sdf',
         },
         {
           type: "docsVersionDropdown",
