@@ -78,9 +78,9 @@ const config: Config = {
       },
     ],
     [
-      '@docusaurus/plugin-google-gtag',
+      "@docusaurus/plugin-google-gtag",
       {
-        trackingID: 'G-R7V7KJ5G2Z',
+        trackingID: "G-R7V7KJ5G2Z",
         anonymizeIP: true,
       },
     ],
@@ -152,7 +152,7 @@ const config: Config = {
         {
           position: "left",
           label: "SDF",
-          to: '/sdf',
+          to: "/sdf",
         },
         {
           type: "doc",
