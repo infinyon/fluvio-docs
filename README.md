@@ -41,6 +41,18 @@ $ npm run build && npm run serve
 The `build` command generates static content into the `build` directory and
 can be served using any static contents hosting service.
 
+### Create Versions
+
+Theres 2 sets of docs available in this repo that are versioned:
+
+- `fluvio`: The main documentation for Fluvio, which lives on `docs` dir
+- `sdf`: The documentation for SDF, which lives on `sdf` dir
+
+Doc | Version Command
+--- | ---
+`fluvio` | `npm run docusaurus docs:version <VERSION>`
+`sdf` | `npm run docusaurus docs:version:sdf <VERSION>`
+
 ## Release and Publish
 
 In order to release a version and publish it you need to run:
