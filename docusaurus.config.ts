@@ -80,7 +80,7 @@ const config: Config = {
     [
       '@docusaurus/plugin-google-gtag',
       {
-        trackingID: 'G-999X9XX9XX',
+        trackingID: process.env.GOOGLE_TRACKING_ID,
         anonymizeIP: true,
       },
     ],
