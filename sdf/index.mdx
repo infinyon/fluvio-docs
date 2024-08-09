@@ -6,17 +6,13 @@ sidebar_position: 10
 
 Stateful Dataflows is the embodiment of versatility in data pipelines. A utility that helps developers build, troubleshoot, and run full-featured event-driven pipelines (dataflows), SDF sparks innovation among data engineers. By leveraging [fluvio], SDF seemlessly integrates event streaming with stateful processing. Built in Rust and powered by WebAssembly, SDF dataflows are small, fast, and incredibly versatile. They empower engineers to write custom logic snippets that compile to WebAssembly and inject them into the dataflow for in-line processing. This custom logic can perform various tasks, from data transformations and error correction to malicious payload detection and complex stateful processing.
 
-The following example is a dataflow that performs various operations on data from traffic sensors at different locations.
-
 <img src="/img/sdf/sample-dataflow.jpg" alt="Sample Dataflow" style={{ display: 'block', margin: '0 auto'}} width="900" />
 
-To run this dataflow, follow the instructions in <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-inline/car-processing" target="_blank">github</a>.
-
+An example dataflow that performs various operations on data from traffic sensors. Try out the tutorial on <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-inline/car-processing" target="_blank">github</a>.
 
 #### Stateful Dataflows vs. Big Data Stream Processing
 
-Unlike traditional big data frameworks built in Java, like Kafka, Flink, KStream, and Spark, where each component is independently managed, scaled, and built into dataflows through external microservices, InfinyOn Stateful Dataflows introduces a unique paradigm. This paradigm empowers users to quickly develop and test individual services in their favorite programming language. It seamlessly integrates them into scalable end-to-end dataflows, streamlining the entire data processing workflow.
-
+Traditional Big Data processing frameworks like Kafka, Flink, KStream, and Spark construct data pipelines by deploying and scaling microservices externally from their streaming platform of choice. SDF introduces a more powerful paradigm by providing a solution for building fully-integrated yet scalable dataflows, streamlining the entire data processing workflow. Additionally, becuase these frameworks are built with Java, any user-defined functions must be written in Java as well. SDF empowers users to quickly develop and test individual services in their favorite programming language.
 
 #### Stateful Dataflows vs. Legacy Solutions
 
