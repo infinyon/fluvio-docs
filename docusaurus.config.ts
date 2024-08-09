@@ -14,7 +14,7 @@ const config: Config = {
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
-  url: "https://.pages.dev",
+  url: "https://fluvio.io",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
@@ -75,6 +75,13 @@ const config: Config = {
         path: "sdf",
         routeBasePath: "sdf",
         sidebarPath: "./sidebarsSdf.ts",
+      },
+    ],
+    [
+      '@docusaurus/plugin-google-gtag',
+      {
+        trackingID: 'G-999X9XX9XX',
+        anonymizeIP: true,
       },
     ],
   ],
