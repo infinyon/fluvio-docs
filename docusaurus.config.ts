@@ -258,6 +258,7 @@ const config: Config = {
         hashed: true,
         docsRouteBasePath: "/",
         indexPages: true,
+        blogDir: "news"
       },
     ],
   ],
