@@ -4,14 +4,55 @@ title: "Introduction"
 description: "SmartModules are powerful components that enhance the functionality and flexibility of the Fluvio platform"
 ---
 
-SmartModules are powerful components that enhance the functionality and flexibility of the Fluvio platform. They are programmable data streaming functions that serve as intelligent building blocks which enable users to create complex workflows and automate tasks with ease.
+SmartModules are powerful components that enhance the functionality and flexibility of the Fluvio platform. They are programmable data streaming functions that serve as intelligent building blocks which enable users to apply tranformations. By leveraging smartmodules, users can automate repetitive tasks, orchestrate data flows, and enable advanced functionalities without requiring deep technical knowledge or extensive coding.
 
-Think of SmartModules as specialized tools that can be combined and configured to perform specific actions or processes. They are designed to simplify and streamline various tasks, allowing users to achieve their objectives efficiently and reliably.
+By utilizing WebAssembly, SmartModules provide a secure and isolated environment for executing custom code. This ensures that the modules run safely within the Fluvio ecosystem, preventing potential security risks or conflicts with the underlying system.
 
----
+The beauty of SmartModules lies in their flexibility and adaptability. Users can configure them to suit their specific needs by adjusting parameters and settings. Producers and consumers can use SmartModules in order to shape data on both the client-side or server-side. This empowers individuals to tailor the behavior of the modules to match their unique requirements, all without writing complex code or dealing with intricate technical details.
 
-See the `Transform` and `Analytics` section for more info about the available SmartModule functions.
+If you are interested in building your own SmartModules, checkout the [`smdk`]. InfinyOn offers a series of general purpose SmartModules. Checkout [the Hub] to see  what is available.
 
-If you are interested in building your own SmartModules, [`smdk`] will support your development
+### Using a SmartModules
 
-With an InfinyOn Cloud account, you can access pre-built `Certified` SmartModules via [Hub]. These are maintained by InfinyOn for general use.
+Smartmodules in are define in transformation files in yaml format. For example, the following yaml file performs a `jolt` tranformation on a json object to rename `animal.fact` to `fact` and pass along `length`.
+
+```yaml
+transforms:
+ - uses: infinyon/jolt@x.y.z
+   with:
+     spec:
+       - operation: shift
+         spec:
+           fact: "animal.fact"
+           length: "length"
+```
+
+### Chaining SmartModules
+
+You can define a SmartModule chain to use with `fluvio` or `smdk` with a yaml file.
+
+```yaml
+transforms:
+ - uses: infinyon/jolt@x.y.z
+   with:
+     spec:
+       - operation: shift
+         spec:
+           fact: "animal.fact"
+           length: "length"
+ - uses: infinyon/regex-filter@x.y.z
+   with:
+     regex: "[Cc]at"
+```
+
+You can pass this file to the CLI with the `--transforms-file` option.
+
+
+### Cloud Pipelines with SmartModule Chaining
+
+Examples on how to use SmartModules in a pipeline:
+* [Build HTTP to SQL Pipeline]
+* [Build MQTT to SQL Pipeline]
+
+[Build HTTP to SQL Pipeline]: /docs/latest/fluvio/tutorials/http-to-sql
+[Build MQTT to SQL Pipeline]: /docs/latest/fluvio/tutorials/mqtt-to-sql

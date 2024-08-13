@@ -163,10 +163,15 @@ const config: Config = {
         {
           type: "doc",
           position: "left",
-          docId: "connectors/quickstart",
+          docId: "connectors/overview",
           label: "Connectors",
         },
         {
+          type: "doc",
+          position: "left",
+          docId: "hub/overview",
+          label: "The Hub",
+        },        {
           type: "doc",
           position: "left",
           docId: "apis/quickstart",

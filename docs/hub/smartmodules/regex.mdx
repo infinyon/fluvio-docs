@@ -1,0 +1,49 @@
+---
+sidebar_position: 1
+title: "Regex"
+description: "Applies Regex transformations to records in a data stream."
+---
+
+This is a [filter-type] SmartModule that tests the input record against a provided regular expression. The record is returned if there is a match.
+
+### Usage example
+
+To demonstrate how to use the [Regex] cerfied SmartModule with the [SMDK] tool. 
+
+:::info
+All smartmodule versions are marked with `x.y.z`. To find the latest version, run:
+*  `fluvio hub smartmodule list`
+:::
+
+First, we need to download it to our cluster:
+
+```bash copy="fl"
+$ fluvio hub download infinyon/regex-filter@x.y.z
+```
+
+Second, we create a file `transform.yaml` defining our regular expression:
+
+```bash
+# transform.yaml
+transforms:
+- uses: infinyon/regex-filter@x.y.z
+  with:
+    regex: "[Cc]at" 
+```
+
+Let's use `smdk test` to see it in action:
+
+
+```bash copy="fl"
+$ smdk test --text '{"fact": "Cats have supersonic hearing"}' --transforms-file ./transform.yaml
+{"fact": "Cats have supersonic hearing"}
+```
+
+```bash copy="fl"
+$ smdk test --text '{"fact": "Dogs have sweat glands at the bottom of their paws"}' --transforms-file ./transform.yaml
+[No output returned]
+```
+
+[filter-type]: /docs/latest/connectors/smartmodules/operators/filter
+[Regex]: /docs/latest/hub/smartmodules/regex
+[SMDK]: /docs/latest/fluvio/cli/smdk

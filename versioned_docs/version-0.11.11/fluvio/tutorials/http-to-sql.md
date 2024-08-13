@@ -53,7 +53,7 @@ meta:
  name: cat-facts
  type: http-source
  topic: cat-facts
- create-topic: true
+ 
 http:
  endpoint: "https://catfact.ninja/fact"
  interval: 10s
@@ -91,7 +91,7 @@ Consuming records starting 4 from the end of topic 'cat-facts-data'
 ```
 
 #### Inbound Connector with JSON to JSON transformation before writing to topic
-All Inbound Connectors support [transformations](https://www.fluvio.io/docs/concepts/transformations-chain/) which are applied before the data is sent to the topic.
+All Inbound Connectors support [transformations](/docs/latest/fluvio/concepts/transformations) which are applied before the data is sent to the topic.
 We can extend our config file to add an additional JSON to JSON transformation to records.
 
 ```yaml title="catfacts-basic-connector-with-transform.yml"
@@ -341,6 +341,6 @@ With the Outbound SQL Connector, we utilized SmartModules in two different ways.
 * [Fluvio CLI profile](https://www.fluvio.io/cli/client/profile/)
 * [SmartModule](https://www.fluvio.io/smartmodules/)
 * [SmartModule Rust API](https://docs.rs/fluvio-smartmodule/latest/fluvio_smartmodule/)
-* [Transformations](https://www.fluvio.io/docs/concepts/transformations-chain/)
+* [Transformations](/docs/latest/fluvio/concepts/transformations)
 
 [docs]: /
