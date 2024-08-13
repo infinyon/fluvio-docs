@@ -4,19 +4,15 @@ description: Stateful Dataflows are data pipelines that integrate fluvio event s
 sidebar_position: 10
 ---
 
-Stateful Dataflows, the embodiment of versatility in data pipelines, seamlessly integrate fluvio event streaming with stateful processing, sparking innovation among data engineers. These pipelines, built-in Rust and powered by WebAssembly, are small, fast, and incredibly versatile. They empower engineers to write custom logic snippets that compile to WebAssembly and inject them into the pipeline for in-line processing. This custom logic can perform various tasks, from data transformations and error correction to malicious payload detection and complex stateful processing.
-
-The following example is a dataflow that performs various operations on data from sensors camera sensors at different locations.
+Stateful Dataflows is the embodiment of versatility in data pipelines. A utility that helps developers build, troubleshoot, and run full-featured event-driven pipelines (dataflows), SDF sparks innovation among data engineers. By leveraging [fluvio], SDF seemlessly integrates event streaming with stateful processing. Built in Rust and powered by WebAssembly, SDF dataflows are small, fast, and incredibly versatile. They empower engineers to write custom logic snippets that compile to WebAssembly and inject them into the dataflow for in-line processing. This custom logic can perform various tasks, from data transformations and error correction to malicious payload detection and complex stateful processing.
 
 <img src="/img/sdf/sample-dataflow.jpg" alt="Sample Dataflow" style={{ display: 'block', margin: '0 auto'}} width="900" />
 
-To run this dataflow, follow the instructions in <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-inline/car-processing" target="_blank">github</a>.
-
+An example dataflow that performs various operations on data from traffic sensors. Try out the tutorial on <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-inline/car-processing" target="_blank">github</a>.
 
 #### Stateful Dataflows vs. Big Data Stream Processing
 
-Unlike traditional big data frameworks built in Java, like Kafka, Flink, KStream, and Spark, where each component is independently managed, scaled, and built into dataflows through external Microservices, InfinyOn Stateful Dataflows introduces a unique paradigm. This paradigm empowers users to quickly develop and test individual services in their favorite programming language. It seamlessly integrates them into scalable end-to-end dataflows, streamlining the entire data processing workflow.
-
+Traditional Big Data processing frameworks like Kafka, Flink, KStream, and Spark force users to deploy and scale microservices externally from their streaming platform of choice. SDF introduces a more powerful paradigm by providing a solution for building fully-integrated yet scalable dataflows, streamlining the entire data processing workflow. Traditional frameworks are also built with Java, so any user-defined functions must be written in Java as well. Conversely, SDF empowers users to quickly develop and test individual services in their favorite programming language.
 
 #### Stateful Dataflows vs. Legacy Solutions
 
@@ -25,7 +21,7 @@ Automating data operations within legacy technology stacks, spanning message bro
 
 #### Who is this for?
 
-This platform is tailored for developers creating event-driven applications with continuous enrichment. The product streamlines the composition of dataflows with external sources such as databases, AI/ML models, and Redis caches, producing powerful results for analytics, application, and operational dashboards.
+This platform is tailored for developers creating event-driven applications with continuous enrichment. The product streamlines the composition of dataflows with external sources such as databases, AI/ML models, and Redis caches, producing powerful results for analytics, applications, and operational dashboards.
 
 
 #### How are Stateful Dataflows different from Fluvio?
@@ -35,19 +31,19 @@ Stateful Dataflows are an extension of Fluvio, leveraging the Fluvio infrastruct
 
 #### How do I integrate this into my existing data architecture?
 
-Fluvio connectors serve as the interface to external ingress and egress services. Fluvio publishes a growing library of connectors, such as HTTP, Kafka, NATs, SQL, S3, etc. Connectors are easy to build, test, deploy, and share with the community.
+Fluvio [connectors] serve as the interface to external ingress and egress services. Fluvio publishes a growing library of connectors, such as HTTP, Kafka, NATs, SQL, S3, etc. Connectors are easy to build, test, deploy, and share with the community.
 
 #### How do I get started?
 
 Provisioning and operating a Stateful Dataflow requires the following system components:
 
-1. [Fluvio Cluster] to connect the dataflows with data streaming.
+1. [Fluvio Cluster] to enable dataflows to consume and produce streaming data.
 
 2. [Dataflow File] to define the schema, composition, services, and operations.
 
 3. [SDF (Stateful Dataflows) CLI] to build, test, and deploy the dataflows.
 
-The Stateful Dataflows can be built, tested, and run locally during preview releases. As we approach general availability, they can also be deployed in your InfinyOn Cloud cluster. In addition, the dataflows may be published to Hub and shared with others with one click and installation.
+The Stateful Dataflows can be built, tested, and run locally during preview releases. As we approach general availability, they can also be deployed in your InfinyOn Cloud cluster. In addition, the dataflows may be published to [Hub] and shared with others with one click and installation.
 
 
 ## Next Steps
@@ -61,3 +57,6 @@ In the [next section], we'll walk through the steps to get started with Stateful
 [SDF (Stateful Dataflows) CLI]: /sdf/
 [next section]: /sdf/getting-started
 [Let's Get Started]: /sdf/getting-started
+[connectors]: /docs/connectors/quickstart
+[Hub]: /docs/cloud/tutorials/hub-basics
+[fluvio]: /docs/fluvio/quickstart
