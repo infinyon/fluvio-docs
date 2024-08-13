@@ -24,7 +24,7 @@ export function Products(): JSX.Element {
           Fluvio Connectors allow you to integrate with any data source. Fluvio
           Connectors are easy to use and can be deployed in minutes.
         </p>
-        <a className="home-products-btn" href="/docs/connectors/quickstart">Go to Connectors</a>
+        <a className="home-products-btn" href="/docs/connectors/overview">Go to Connectors</a>
       </Card>
       <Card imgSrc="/img/landing/fluvio-apis.png" imgAlt="Fluvio APIs">
         <h2>Run Everywhere</h2>

@@ -33,7 +33,7 @@ meta:
  type: mqtt-source
  topic: mqtt-topic
  direction: source
- create-topic: true
+ 
 mqtt:
  url: "mqtt://test.mosquitto.org/"
  topic: "ag-mqtt-topic"
@@ -98,7 +98,7 @@ meta:
  type: sql-sink
  version: 0.2.5
  topic: mqtt-topic
- create-topic: true
+ 
 sql:
  url: "postgres://user:password@db.postgreshost.example/dbname"
 transforms:
@@ -165,7 +165,7 @@ meta:
  type: sql-sink
  version: 0.2.5
  topic: mqtt-topic
- create-topic: true
+ 
 sql:
  url: "postgres://user:password@db.postgreshost.example/dbname"
  rust_log: "sql_sink=INFO,sqlx=WARN"
@@ -200,7 +200,7 @@ transforms:
              required: true
 ```
 
-Start SQL connector with JSON [transformation](https://www.fluvio.io/docs/concepts/transformations-chain/)
+Start SQL connector with JSON [transformation](/docs/latest/fluvio/concepts/transformations)
 
 
 ```bash
@@ -346,7 +346,7 @@ Then we enrich the payload by adding the `.device.type` key with the value mobil
 
 ## Move transformation to MQTT Connector
 
-* [Transformations](https://www.fluvio.io/docs/concepts/transformations-chain/) in the `transforms` section of SQL Connector config are deliberately decoupled from connectors.
+* [Transformations](/docs/latest/fluvio/concepts/transformations) in the `transforms` section of SQL Connector config are deliberately decoupled from connectors.
 We can move a SmartModule from an Inbound to an Outbound connector and accomplish the same result.
 The decision depends on the shape of the data you want to store in a topic.
 For Inbound connectors, the data is transformed before sending to Fluvio topic, while for Outbound, it happens after the data is sent to Fluvio topic
@@ -366,7 +366,7 @@ meta:
  type: mqtt-source
  topic: mqtt-topic
  direction: source
- create-topic: true
+ 
 mqtt:
  url: "mqtt://test.mosquitto.org/"
  topic: "ag-mqtt-topic"
@@ -400,7 +400,7 @@ meta:
  type: sql-sink
  version: 0.2.5
  topic: mqtt-topic
- create-topic: true
+ 
 sql:
  url: "postgres://user:password@db.postgreshost.example/dbname"
 

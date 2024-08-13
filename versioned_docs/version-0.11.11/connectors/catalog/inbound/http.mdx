@@ -54,7 +54,7 @@ meta:
   name: cat-facts
   type: http-source
   topic: cat-facts
-  create-topic: true
+  
   secrets:
     - name: AUTHORIZATION_TOKEN
 http:
@@ -84,7 +84,7 @@ meta:
   name: cat-facts
   type: http-source
   topic: cat-facts
-  create-topic: true
+  
   secrets:
     - name: MY_SECRET_URL
     - name: MY_AUTHORIZATION_HEADER
@@ -99,7 +99,7 @@ http:
 
 
 ### Transformations
-Fluvio HTTP Source Connector supports [Transformations](https://www.fluvio.io/docs/concepts/transformations-chain/). Records can be modified before sending to Fluvio topic.
+Fluvio HTTP Source Connector supports [Transformations](/docs/latest/fluvio/concepts/transformations). Records can be modified before sending to Fluvio topic.
 
 The previous example can be extended to add extra transformations to outgoing records:
 ```yaml title="config-example.yaml"
@@ -109,7 +109,7 @@ meta:
   name: cat-facts
   type: http-source
   topic: cat-facts
-  create-topic: true
+  
 http:
   endpoint: "https://catfact.ninja/fact"
   interval: 10s

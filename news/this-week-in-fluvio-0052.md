@@ -63,7 +63,7 @@ meta:
   name: my-connector
   type: package-name
   topic: a-topic
-  create-topic: true
+  
 <CUSTOM>:  # named section for custom config parameters, usually a short name like "http", or "mqtt"
   param_client_id: 
     secret:

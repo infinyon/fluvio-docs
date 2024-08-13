@@ -60,7 +60,7 @@ meta:
   name: my-mqtt-connector
   type: mqtt-source
   topic: mqtt-topic
-  create-topic: true
+  
 mqtt:
   url: "mqtt://test.mosquitto.org/"
   topic: "mqtt-to-fluvio"
@@ -103,7 +103,7 @@ The produced record in Fluvio topic will be:
 }
 ```
 ### Transformations
-Fluvio MQTT Source Connector supports [Transformations](https://www.fluvio.io/docs/concepts/transformations-chain/). Records can be modified before sending to Fluvio topic.
+Fluvio MQTT Source Connector supports [Transformations](/docs/latest/fluvio/concepts/transformations). Records can be modified before sending to Fluvio topic.
 
 The previous example can be extended to add extra transformations to outgoing records:
 ```yaml
@@ -114,7 +114,7 @@ meta:
   name: my-mqtt-connector
   type: mqtt-source
   topic: mqtt-topic
-  create-topic: true
+  
 mqtt:
   url: "mqtt://test.mosquitto.org/"
   topic: "mqtt-to-fluvio"

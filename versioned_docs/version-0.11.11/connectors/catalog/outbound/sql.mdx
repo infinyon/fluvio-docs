@@ -53,7 +53,7 @@ meta:
   name: my-sql-connector
   type: sql-sink
   topic: sql-topic
-  create-topic: true
+  
   secrets:
     - name: DB_USERNAME
     - name: DB_PASSWORD
@@ -108,7 +108,7 @@ meta:
   name: json-sql-connector
   type: sql-sink
   topic: sql-topic
-  create-topic: true
+  
   secrets:
     - name: DATABASE_URL
 sql:
@@ -146,7 +146,7 @@ cdk deploy shutdown --name json-sql-connector
 ```
 After you run the connector you will see records in your database table.
 
-See more in our [Build MQTT to SQL Pipeline](https://www.fluvio.io/docs/tutorials/mqtt-to-sql/) and [Build HTTP to SQL Pipeline](https://www.fluvio.io/docs/tutorials/data-pipeline/) tutorials.
+See more in our [Build MQTT to SQL Pipeline] and [Build HTTP to SQL Pipeline] tutorials.
 
 ## Upsert Usage Example
 
@@ -168,7 +168,7 @@ meta:
   name: json-sql-connector
   type: sql-sink
   topic: sql-topic
-  create-topic: true
+  
   secrets:
     - name: DATABASE_URL
 sql:
@@ -197,3 +197,7 @@ transforms:
 
 See more about upsert in [our blog](/docs/connectors/catalog/outbound/sql#upsert-usage-example).
 Note: the blog doesn't use `json-sql` smartmodule and has hardcoded records for demonstration. `sql-connector` is intended to be used with `json-sql`.
+
+[Build HTTP to SQL Pipeline]: /docs/latest/fluvio/tutorials/http-to-sql
+[Build MQTT to SQL Pipeline]: /docs/latest/fluvio/tutorials/mqtt-to-sql
+[Fluvio SQL Model]: https://github.com/infinyon/fluvio-connectors/blob/main/rust-connectors/models/fluvio-model-sql

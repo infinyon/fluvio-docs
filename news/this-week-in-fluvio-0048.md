@@ -65,7 +65,7 @@ Check out the [New UI tutorial](/docs/cloud/how-to/use-infinyon-cloud) for more 
 ### Cloud connectors
 Management of connectors is now exclusive to InfinyOn Cloud. You can create connectors in InfinyOn with the `fluvio cloud connector` CLI.
 
-Check out the [Cloud connectors docs](/docs/connectors/quickstart) for more info
+Check out the [Cloud connectors docs](/docs/connectors/overview) for more info
 
 ### SmartModule Hub
 SmartModule Hub is a new service for offering public SmartModules. This removes the requirement of installing a SmartModule development environment in order to take advantage of SmartModules. You can download SmartModules from the Hub directly to your cluster to use.

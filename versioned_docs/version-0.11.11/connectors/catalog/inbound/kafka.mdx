@@ -25,7 +25,7 @@ meta:
   name: my-kafka-connector
   type: kafka-source
   topic: kafka-topic
-  create-topic: true
+  
 kafka:
   url: "localhost:9092"
   topic: fluvio-topic
@@ -41,4 +41,4 @@ $ cdk deploy -p kafka-source start --config crates/kafka-source/sample-config.ya
 ```
 
 ## Transformations
-Fluvio Kafka Connectors support [Transformations](https://www.fluvio.io/docs/concepts/transformations-chain/).
+Fluvio Kafka Connectors support [Transformations](/docs/latest/fluvio/concepts/transformations).
