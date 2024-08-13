@@ -4,7 +4,7 @@ title: "Build & Test"
 description: "Building and testing a Connector"
 ---
 
-> This section assumes `my-connector` project has been [generated](/docs/connectors/local/cdk/generate).
+> This section assumes `my-connector` project has been [generated].
 
 ### Build Connector
 
@@ -14,8 +14,6 @@ Inside the `my-connector` project directory run `build`:
 ```bash copy="fl"
 $ cdk build
 ...
-Compiling my-connector v0.1.0 (~/cdk/my-connector)
- Finished release [optimized] target(s) in 1m 12s
 ```
 
 The build process generated a binary for your custom connector. We are now ready to test it.
@@ -52,16 +50,6 @@ Hello, Fluvio - 4
 ...
 ```
 
-Checkout the [next section] for instructions on how to run the connector in the background.
+Checkout the next section, for instructions on how to run the connector in the background.
 
-### Steps
-
-1. [Generate a Connector](/docs/connectors/local/cdk/generate)
-2. **[Build and Test](/docs/connectors/local/cdk/build)**
-3. [Start and Shutdown](/docs/connectors/local/cdk/start-shutdown)
-4. [Troubleshooting](/docs/connectors/local/cdk/secrets)
-5. [Secrets](/docs/connectors/local/cdk/secrets)
-6. [Publish to Connector Hub](/docs/connectors/local/cdk/publish)
-7. [Use Examples in Github](/docs/connectors/local/cdk/github-examples)
-
-[next section]: /docs/connectors/local/cdk/start-shutdown
+[generated]:connectors/local/develop/generate.mdx

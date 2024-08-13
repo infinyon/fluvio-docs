@@ -15,5 +15,33 @@ Inbound and outbound connectors fundamentally work in the same way. The only dif
   style={{ justify: 'center', maxWidth: '600px' }}
 />
 
-* Learn more about the connector's 4 steps of transformation in [core concepts](/docs/connectors/local/introduction)
-* For the development of your own connectors, continue on to the [Connector Development Kit docs](/docs/connectors/local/cdk-dev/introduction)
+
+- **Protocol**: Parses data according to the wire format of the connected data platform.
+- **Extract**: Extracts raw data from the protocol format and packages it neatly into data structures
+  that may be used by subsequent stages or be produced directly to a topic.
+- **Filter** (optional): A user-provided SmartModule that may determine whether a given record
+  should be discarded before sending it over the network to Fluvio, saving bandwidth.
+- **Shape** (optional): A user-provided SmartModule that may take the extracted data structures and
+  transform them in to an application-specific format.
+
+
+### Protocol Tranformations
+
+The **Protocol** and **Extract** stages are built directly into the connector. They offer basic access to your data through the various protocols your data sources use. In the **Extract** stage, your data is structured from whatever protocol it is sourced from.
+
+
+### User-Defined Tranformations
+
+The onnectors allow you to apply your custom tranformations for post-processing (inbound) or pre-processing (outbound)the data from or to an exernal entity. You can chain muliple **Filter** and **Shape** operations as needed.
+
+The user define transformation is powered by WebAssembly (also called wasm) via [SmartModules]. Use the instructions in the [SmartModules] page to learn how to apply a tranformation or create a new one.
+
+
+### Next Steps
+
+* [Connector Catalog](hub/connectors/index.md)
+* [Deploy a connector locally](connectors/local/introduction.mdx)
+* [Deploy a connector in the cloud](connectors/cloud/introduction.mdx)
+* [Build a new connector](connectors/local/develop/introduction.mdx)
+* [Run Pre-built Connectors](hub/overview.mdx)
+* [Apply transformations](connectors/smartmodules/introduction.mdx)
