@@ -1,0 +1,53 @@
+---
+sidebar_position: 1
+title: "Run a Connector from the Hub"
+description: "Run a Connector from the Hub"
+---
+
+# Run Connectors Published on the Hub
+
+You can download and locally run any published connector from the Hub. Or with the [InfinyOn Cloud],
+you can run a connector in the cloud just by supplying a config file.
+
+## Download from Hub & Run Locally
+
+In this example, we'll create new directory to download and run the `acme/my-connector0.1.0` connector locally:
+
+
+```bash copy="fl"
+$ mkdir test-conn; cd test-conn
+```
+
+Download the connector:
+
+
+```bash copy="fl"
+$ cdk hub download acme/my-connector0.1.0
+```
+
+Use connector `.ipkg` package file and run it with the `--ipkg` option:
+
+
+```bash copy="fl"
+$ cdk deploy start --ipkg acme/my-connector0.1.0.ipkg --config ../sample-config.yaml
+```
+
+This command assumes that the sample config is in the parent directory.
+
+See the command reference for [`cdk`]
+
+## Run an Official Connector in the InfinyOn Cloud
+
+With only the config file, a published connector can be run directly in the [InfinyOn Cloud].
+Check the [connector documentation] to ensure the [configuration file] is correct. The configs
+are the same between a local instance and the cloud.
+
+`fluvio cloud connector create -c sample-config.yaml`
+
+See the command reference for [`fluvio cloud connector`]
+
+[InfinyOn Cloud]:cloud/overview.mdx
+[`cdk`]:fluvio/cli/cdk.mdx
+[connector documentation]:hub/connectors/index.md
+[configuration file]:connectors/configure.mdx
+[`fluvio cloud connector`]:cloud/cli/connector.mdx
