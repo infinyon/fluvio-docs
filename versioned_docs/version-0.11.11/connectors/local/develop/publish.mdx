@@ -41,37 +41,5 @@ $ cdk hub list
 
 You will see all `public` connectors and your own `private` connectors.
 
-
-### Download from Hub & Run
-
-You can download and run any connector from the Hub. In this example, we'll create new directory to download and run `acme/my-connector0.1.0` connector:
-
-
-
-```bash copy="fl"
-$ mkdir test-conn; cd test-conn
-```
-
-Download the connector:
-
-
-```bash copy="fl"
-$ cdk hub download acme/my-connector0.1.0
-```
-
-Use connector `.ipkg` package file and run it with the `--ipkg` option:
-
-
-```bash copy="fl"
-$ cdk deploy start --ipkg acme/my-connector0.1.0.ipkg --config ../sample-config.yaml
-```
-
-This command assumes that the sample config is in the parent directory.
-
-
-#### Run an Official Connector
-
-You can use the same step-by-step to download and run an official connecgtor. Check the connector documetation to ensure the configuration file is correct.
-
 [generated]:connectors/local/develop/generate.mdx
 
