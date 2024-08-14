@@ -31,3 +31,11 @@ jobs:
         env:
           NODE_ENV: production
         run: npm run build
+
+      # trial use, continue on error for now
+      - name: Check internal links
+        uses: untitaker/hyperlink@0.1.32
+        with:
+          args: ./build
+        continue-on-error: true
+
