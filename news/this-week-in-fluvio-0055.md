@@ -6,7 +6,7 @@ weight: 20
 Fluvio is a distributed, programmable streaming platform written in Rust.
 
 ---
-Fluvio 0.10.13 was released on 14th July 2023! we are back on time for this week in Fluvio - 55.
+**Fluvio 0.10.13** was released on 14th July 2023! we are back on time for this week in Fluvio - 55.
 
 ## Latest release
 * We are almost there with the deduplication functionality on stream. We just completed implementing time bound look back and topic based deduplication interface.
@@ -21,13 +21,8 @@ We are wrapping up the docs to publish the graphite connector in the [InfinyOn L
 * We are also testing out inbound webhook implementation to capture data into topics and conceptualizing what an oputbound webhook gateway might look liketo read from streaming topics.
 * Finally, we have made progress on shaping and prototyping stateful materialized views on stream! This is one of the most asked functionality and we are working with select partners to test out the functionality in their context.
 
-
-## Open positions
-We are hiring!
-* [Sr. Rust Cloud Software Engineer](https://infinyon.com/careers/cloud-engineer-senior-level/)
-
 ## New blog post
-* [Upsert on SQL Sink Connector]('/docs/connectors/catalog/outbound/sql#upsert-usage-example')
+* [Upsert on SQL Sink Connector]
 
 ## New video
 * [Collecting Hackernews RSS Feeds using InfinyOn Cloud]('https://www.youtube.com/@InfinyOn')
@@ -44,3 +39,5 @@ For the full list of changes this week, be sure to check out [our CHANGELOG].
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+
+[Upsert on SQL Sink Connector]: ../docs/hub/connectors/outbound/sql#upsert-usage-example
