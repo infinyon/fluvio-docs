@@ -30,16 +30,15 @@ We had 4 conversations with lead data engineers and architects to discuss their 
 
 That's all folks. until next week.
 
+[changelog is available here]: https://github.com/infinyon/fluvio/blob/v0.10.14/CHANGELOG.md
+
+[Deduplicate data streaming events with SQL Upsert]: ../docs/hub/connectors/outbound/sql#upsert-usage-example
+[Collecting Hackernews RSS Feeds using InfinyOn Cloud]: https://www.youtube.com/@InfinyOn
 ---
 
 Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
-
-[changelog is available here]: https://github.com/infinyon/fluvio/blob/v0.10.14/CHANGELOG.md
-
-[Deduplicate data streaming events with SQL Upsert]: ../docs/hub/connectors/outbound/sql#upsert-usage-example
-[Collecting Hackernews RSS Feeds using InfinyOn Cloud]: https://www.youtube.com/@InfinyOn
 
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
