@@ -1,0 +1,26 @@
+---
+description: SDF Log Command
+sidebar_position: 90
+---
+
+# `sdf log`
+
+The `sdf logs` prints the logs of dataflow operators on ephemeral workers.
+
+### `sdf logs` command
+
+The `logs` command has the following hierarchy:
+
+```bash copy="fl"
+$ sdf logs -h
+Print dataflow logs
+
+Usage: sdf log [OPTIONS]
+
+Options:
+  -f, --follow  Specify if the logs should be streamed
+  -h, --help    Print help
+```
+
+Where:
+* `--follow` causes the command to not stop when end of file is reached, but rather to wait for additional data to be appended to the log file  
