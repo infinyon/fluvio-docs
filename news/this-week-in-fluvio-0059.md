@@ -9,7 +9,7 @@ Fluvio is a distributed, programmable streaming platform written in Rust.
 
 We have moved away from a weekly updates. Fluvio open source project has grown significantly in terms of code and components. Our release cadence is divided into Fluvio Core, InfinyOn Cloud, Clients and SDKs. Moving forward our goal is to update the community with the relevant releases.
 
-Today is such an occassion.
+Today is such an occasion.
 
 We released Fluvio 0.11.5 this week.
 
@@ -18,12 +18,12 @@ We are pleased share that Fluvio **v0.11.5** is now available!
 
 Thank you to new contributors to the fluvio project:
 
-- [k0i](https://github.com/k0i)
-- [AF](https://github.com/jdafont)
-- [ODudek](https://github.com/ODudek)
-- [shylock](https://github.com/Shylock-Hg)
-- [fraidev](https://github.com/fraidev)
-- [Urbit-pilled](https://github.com/urbit-pilled)
+- [k0i]
+- [AF]
+- [ODudek]
+- [shylock]
+- [fraidev]
+- [Urbit-pilled]
 
 To update you can run `fvm update`
 
@@ -60,23 +60,23 @@ We made the self hosted experience easier with the following:
 ## Upcoming features
 InfinyOn Stateful Service Development Kit is 2 releases away from a beta release.
 
-We have released 6 developer preview iterations and shared with 50 to 100 developers. If you'd like access to the private beta, please fill out [this form](https://infinyon.com/request/ss-early-access/).
+We have released 6 developer preview iterations and shared with 50 to 100 developers. If you'd like access to the private beta, please fill out [this form].
 
 ## Bug fixes
 This release includes a number of bug fixes, documentation improvements, and improved error messaging.
 
-See the [CHANGELOG](https://github.com/infinyon/fluvio/blob/v0.11.5/CHANGELOG.md) for details
+See the [CHANGELOG] for details
 
 ## New blog post
-[Marvin Hansen](https://github.com/marvin-hansen) wrote this amazing blog after building with Fluvio. [Real-time Streaming Analytics with Fluvio, DeepCausality, and Rust](https://infinyon.com/blog/2024/02/fluvio-deep-causality-rs/)
+[Marvin Hansen] wrote this amazing blog after building with Fluvio. [Real-time Streaming Analytics with Fluvio, DeepCausality, and Rust]
 
 ## Good First Issues
 
 All the best. Here are some issues that you could contribute to:
 
-- [fvm switch fails on some systems with running local cluster](https://github.com/infinyon/fluvio/issues/3765)
-- [MQTT Connector: Prefix auto generated Client ID to prevent connection drops](https://github.com/infinyon/fluvio/issues/3825)
-- [Add new command fluvio cluster resume](https://github.com/infinyon/fluvio/issues/3810) (intermediate/expert difficulty)
+- [fvm switch fails on some systems with running local cluster]
+- [MQTT Connector: Prefix auto generated Client ID to prevent connection drops]
+- [Add new command fluvio cluster resume](intermediate/expert difficulty)
 
 
 ---
@@ -89,3 +89,21 @@ For the full list of changes this week, be sure to check out [our CHANGELOG].
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+
+[k0i]: https://github.com/k0i
+[AF]: https://github.com/jdafont
+[ODudek]: https://github.com/ODudek
+[shylock]: https://github.com/Shylock-Hg
+[fraidev]: https://github.com/fraidev)
+[Urbit-pilled]: https://github.com/urbit-pilled
+[Marvin Hansen]: https://github.com/marvin-hansen
+
+[this form]: https://infinyon.com/request/ss-early-access/
+
+[CHANGELOG]:https://github.com/infinyon/fluvio/blob/v0.11.5/CHANGELOG.md
+
+[Real-time Streaming Analytics with Fluvio, DeepCausality, and Rust]: https://infinyon.com/blog/2024/02/fluvio-deep-causality-rs/
+
+[fvm switch fails on some systems with running local cluster]: https://github.com/infinyon/fluvio/issues/3765
+[MQTT Connector: Prefix auto generated Client ID to prevent connection drops]: https://github.com/infinyon/fluvio/issues/3825
+[Add new command fluvio cluster resume]: https://github.com/infinyon/fluvio/issues/3810
