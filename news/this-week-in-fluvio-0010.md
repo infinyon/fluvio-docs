@@ -7,16 +7,13 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
-
 ## No new release
 
 We didn't have a new release this week.
 
 Instead the team met up in person for the first time!
 
-<img src="/news/images/0010/team-at-alcatraz.jpg" style={{ width: '600px' }} alt="Team photo at Alcatraz"/>
-
+![Team photo at Alcatraz](images/0010/team-at-alcatraz.jpg)
 > This is us trying to not look overheated after the audio tour at Alactraz.
 
 ## New managed connector
@@ -24,8 +21,6 @@ Instead the team met up in person for the first time!
 We have a new connector for the MQTT protocol available.
 
 #### Example config
-
-%copy%
 
 ```yaml
 # config.yaml
@@ -41,16 +36,11 @@ secrets:
   foo: bar
 ```
 
-
-%copy first-line%
-
-```bash
+```bash copy="fl"
 $ fluvio cluster connector create --config config.yaml
 ```
 
-%copy first-line%
-
-```bash
+```bash copy="fl"
 $ fluvio cluster connector list
 
 -------------
@@ -64,7 +54,7 @@ The `testtopic/fluvio` payload, for example, says "hello world"
 
 %copy first-line%
 
-```bash
+```bash copy="fl"
 $ fluvio consume public-mqtt --tail -d
 Consuming records starting 10 from the end of topic 'public-mqtt'
 {"mqtt_topic":"testtopic/fluvio","payload":[104,101,108,108,111,32,119,111,114,108,100]}
@@ -83,11 +73,11 @@ Consuming records starting 10 from the end of topic 'public-mqtt'
 
 To stop the connector, you need to delete it:
 
-%copy first-line%
-
-```bash
+```bash copy="fl"
 $ fluvio cluster connector delete my-test-mqtt
 ```
+
+See more info about [connectors]
 
 ## Features coming soon
 
@@ -97,8 +87,7 @@ Tables will enable materialized views with your structured JSON/YAML/TOML data. 
 
 This feature is not yet ready to use, but you may notice this command available CLI.
 
-%copy%
-```shell
+```shell copy="fl"
 $ fluvio table
 ```
 
@@ -114,4 +103,4 @@ Until next week!
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
-[connectors]: /docs/connectors/overview
+[connectors]: ../docs/connectors/overview

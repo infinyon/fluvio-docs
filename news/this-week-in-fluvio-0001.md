@@ -8,10 +8,6 @@ Welcome to the very first edition of This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-[Fluvio open source]: https://github.com/infinyon/fluvio
-
-BANNER
-
 ## New Release - Fluvio v0.9.0
 
 Today we're releasing a new "major version" of Fluvio, which includes crate-level
@@ -63,7 +59,7 @@ With 0.9.0, Fluvio now supports any standards compliant Kubernetes distribution.
 - AWS EKS
 
 
-Please see Fluvio's [Kubernetes documentation](/docs/advanced/install) for more information.
+Please see Fluvio's [Kubernetes documentation] for more information.
 
 #### Helm changes
 
@@ -84,10 +80,8 @@ custom WebAssembly modules to perform server-side data processing. Until recentl
 there was no way for user code to return Errors to indicate that something had
 gone wrong while processing records.
 
-Prior to `0.9.0`, [the only type of SmartStream was filters], which looked something
+Prior to `0.9.0`, the only type of SmartStream was filters, which looked something
 like this:
-
-[the only type of SmartStream was filters]: https://www.infinyon.com/blog/2021/06/smartstream-filters/
 
 ```rust
 use fluvio_smartstream::{smartstream, Record};
@@ -152,19 +146,17 @@ most errors up and out using `?`, like we do in the example above.
 
 > *and `Send + Sync + 'static`. We use the [`eyre`] crate to capture returned errors.
 
-[`eyre`]: https://github.com/yaahc/eyre
-
 This SmartStream parses incoming records as integers, then filters out odd numbers.
 When we run a consumer with this SmartStream, we can see the filtered data, and we
 can see the consumer deliver our error to us if we give an input that can't be parsed
 as an integer.
 
-<video controls width="860px" title="Producing integers to the filter-odd topic, followed by the word nine, results in an error">
+<!-- <video controls width="860px" title="Producing integers to the filter-odd topic, followed by the word nine, results in an error">
   <source src="/news/images/0001/filter-odd.mov" />
 </video>
 
 <br/>
-<br/>
+<br/> -->
 
 ### SmartStream Maps
 
@@ -191,7 +183,6 @@ pub fn map(record: &Record) -> Result<(Option<RecordData>, RecordData)> {
 
 > See the [full source code for this example on GitHub]!
 
-[full source code for this example on GitHub]: https://github.com/infinyon/fluvio/tree/d63e3e2569e4d64a098e5c2189ac68e6e9cd2670/crates/fluvio-smartmodule/examples/map_double
 
 In this example, we are reading in Records and first parsing them as UTF-8 strings,
 then parsing those strings as integers. If either of those steps fails,
@@ -204,16 +195,16 @@ Key (optional) and Value for the output record. The `RecordData` type may be con
 any type that has `impl Into<Vec<u8>>`, so you can just use `.into()` for a lot of types
 such as String when you want to return them.
 
-Let's take a look at how this example works!
+<!-- Let's take a look at how this example works!
 
 <video controls width="860px" title="Producing integers to the doubling topic, followed by the word nine, results in an error">
   <source src="/news/images/0001/map-double.mov" />
 </video>
 
 <br />
-<br />
+<br /> -->
 
-As you can see, when we give valid integers, our output comes back transformed as expected -
+When we give valid integers, our output comes back transformed as expected -
 the integers have been doubled. However, if we give invalid input, the Consumer CLI prints
 the error that was returned by the user code, along with diagnostic information such as the
 record's offset.
@@ -221,8 +212,6 @@ record's offset.
 ### Internal improvements
 
 For the full list of updates in this release, [check out our CHANGELOG]. Here are some highlights:
-
-[check out our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 
 #### Improved `install.sh` to work for more targets ([#1269][2])
 
@@ -236,8 +225,7 @@ Our `ConsumerConfig` type is used when constructing consumers programmatically. 
 we used an [owned-builder] pattern (chained by passing `mut self`), which is less flexible than the
 [mutable-builder] pattern (chained by passing `&mut self`) that we have now adopted.
 
-[owned-builder]: https://docs.rs/derive_builder/0.10.2/derive_builder/#owned-aka-consuming
-[mutable-builder]: https://docs.rs/derive_builder/0.10.2/derive_builder/#mutable-aka-non-consuming-recommended
+
 
 #### Improved `#[derive(fluvio_protocol::{Encoder, Decoder})]` for enums ([#1232][4])
 
@@ -247,9 +235,7 @@ but now this works as expected.
 
 ## Conclusion
 
-That's it for this week, we'll be publishing a newsletter once a week from now on, so stay tuned
-for more Fluvio updates! If you have any questions or would like to get involved, feel free to
-[join our Discord channel]!
+That's it for this week, we'll be publishing a newsletter once a week from now on, so stay tuned for more Fluvio updates! If you have any questions or would like to get involved, feel free to [join our Discord channel]!
 
 Until next week!
 

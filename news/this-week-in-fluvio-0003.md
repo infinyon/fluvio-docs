@@ -8,13 +8,13 @@ Welcome to the third edition of This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-[Fluvio open source]: https://github.com/infinyon/fluvio
-
-BANNER
-
 ## New Release - Fluvio v0.9.3
 
 ### SmartStreams Aggregates
+
+:::note
+Aggregates are great, but this is an archival newsletter entry. Today you should look at our new [SDF] functionality instead for a much richer range of data processing and analysis!
+:::
 
 This week's release has one big feature and several quality-of-life user
 experience improvements. The big feature is the arrival of our [SmartStreams Aggregate]
@@ -107,7 +107,9 @@ come say hello!
 
 Until next week!
 
-[SmartStreams Aggregate]: /smartmodules/analytics/aggregate
+[Fluvio open source]: https://github.com/infinyon/fluvio
+[SDF]: ../sdf
+[SmartStreams Aggregate]: https://github.com/infinyon/fluvio/tree/master/smartmodule/examples/aggregate
 [sums]: https://github.com/infinyon/fluvio/blob/d63e3e2569e4d64a098e5c2189ac68e6e9cd2670/crates/fluvio-smartmodule/examples/aggregate-sum/src/lib.rs
 [averages]: https://github.com/infinyon/fluvio/blob/d63e3e2569e4d64a098e5c2189ac68e6e9cd2670/crates/fluvio-smartmodule/examples/aggregate-average/src/lib.rs
 [combining structural key-value data]: https://github.com/infinyon/fluvio/blob/d63e3e2569e4d64a098e5c2189ac68e6e9cd2670/crates/fluvio-smartmodule/examples/aggregate-json/src/lib.rs
