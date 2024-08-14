@@ -74,3 +74,16 @@ Theres two environments for the documentation:
 
 2. `Nightly`: The nightly environment is the development environment, it
    contains the latest changes merged into the `main` branch.
+
+## Dev tooling
+
+If you are analyzing broken links, you can optionally use some external
+link analyzers.  The staps are tasks in the `Justfile`.  This uses
+the just task runner.
+
+On macos: `brew install just`, on debian/ubuntu based linux: `apt install just`
+Other environments https://github.com/casey/just#packages
+
+`just` will list targets,
+
+`just lint` will build the full static site and generate a hyperlink.log file containing broken links.
