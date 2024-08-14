@@ -4,15 +4,15 @@ title: "HTTP to SQL"
 description: "Data pipeline that periodically reads from a websitea and sends the result to a SQL database."
 ---
 
-This guide expects you to already have the Fluvio CLI installed, and InfinyOn Cloud set up. If neither of these is the case, please follow the instructions [here][docs]!
+This guide expects your Fluvio Cluster is already installed. If you need to install it, please follow the instructions [here][installation]!
 
 ## Connector Pipeline
 
 <img
-  src="https://www.fluvio.io/docs/tutorials/images/create-pipeline.png"
+  src="/img/docs/tutorials/create-pipeline.png"
   alt="execution flow of InfinyOn pipeline"
   className="docimg"
-  width="600"
+  width="500"
 />
 
 
@@ -24,12 +24,11 @@ There are two main steps for this tutorial:
   * Basic insert
   * JSON to JSON transformation before insert
 
-We will be looking at the [Inbound HTTP Connector](https://www.fluvio.io/connectors/inbound/http/) setup, and connecting
-to the <a href="https://catfact.ninja" target="_blank" rel="nofollow" > catfact.ninja</a> database to ingest and store JSON data into a topic.
+We will be looking at the [Inbound HTTP Connector] setup, and connecting to the [castfact.ninja] database to ingest and store JSON data into a topic.
 
-The Outbound connector will be using a [PostgreSQL](https://www.postgresql.org/) database. It will listen to the topic for new records and insert them into a table.
+The Outbound connector will be using a [PostgreSQL] database. It will listen to the topic for new records and insert them into a table.
 
-You can use your own PostgreSQL instance, if it can be reached over the internet. But you can still follow along by creating a PostgreSQL database at a hosting service, such as [ElephantSQL](https://www.elephantsql.com/).
+You can use your own PostgreSQL instance, if it can be reached over the internet. But you can still follow along by creating a PostgreSQL database at a hosting service, such as [ElephantSQL].
 
 ## Connectors
 
@@ -38,9 +37,11 @@ Fluvio, or send data from Fluvio to location, Connectors are the way to go. When
 given the information on the interface through the Connector configuration file,
 Fluvio can poll a multitude of input types.
 
-### Connector Config Layout
+### Connector Configuration
 
-A detailed description of the Connector configuration file can be found in the [Connector Config Layout](https://www.fluvio.io/connectors/connector-config/) page.
+A detailed description of the Connector configuration file can be found in the [Connector Configuration] page.
+
+
 ### Inbound Connector
 
 For the HTTP-specific parameters you will need to specify the link it is
@@ -59,9 +60,7 @@ http:
  interval: 10s
 ```
 
-This creates a connector named `cat-facts`, that reads from the website
-`https://catfact.ninja/fact` every 10 seconds, and produces to the topic
-`cat-facts`.
+This creates a connector named `cat-facts`, that reads from the website `https://catfact.ninja/fact` every 10 seconds, and produces to the topic `cat-facts`.
 
 #### Testing the Inbound Connector
 
@@ -91,7 +90,7 @@ Consuming records starting 4 from the end of topic 'cat-facts-data'
 ```
 
 #### Inbound Connector with JSON to JSON transformation before writing to topic
-All Inbound Connectors support [transformations](/docs/latest/fluvio/concepts/transformations) which are applied before the data is sent to the topic.
+All Inbound Connectors support [transformations] which are applied before the data is sent to the topic.
 We can extend our config file to add an additional JSON to JSON transformation to records.
 
 ```yaml title="catfacts-basic-connector-with-transform.yml"
@@ -341,6 +340,13 @@ With the Outbound SQL Connector, we utilized SmartModules in two different ways.
 * [Fluvio CLI profile](https://www.fluvio.io/cli/client/profile/)
 * [SmartModule](https://www.fluvio.io/smartmodules/)
 * [SmartModule Rust API](https://docs.rs/fluvio-smartmodule/latest/fluvio_smartmodule/)
-* [Transformations](/docs/latest/fluvio/concepts/transformations)
+[Transformations]: /docs/latest/fluvio/concepts/transformations
 
-[docs]: /
+
+[Inbound HTTP Connector]: /docs/latest/hub/connectors/inbound/http
+[castfact.ninja]: https://catfact.ninja
+[PostgreSQL]: https://www.postgresql.org/
+[ElephantSQL]: https://www.elephantsql.com/
+[Connector Configuration]: /docs/latest/connectors/configure
+[installation]: /docs/latest/fluvio/quickstart#install-fluvio
+[transformations]: /docs/latest/fluvio/concepts/transformations
