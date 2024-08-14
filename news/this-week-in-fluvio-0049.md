@@ -7,38 +7,30 @@ Fluvio is a distributed, programmable streaming platform written in Rust.
 
 This Week in Fluvio is our weekly newsletter for development updates to [Fluvio open source].
 
-Please subscribe to This Week in Fluvio to receive new posts in your inbox
-SUBSCRIBE_BUTTON
-
-
-BANNER
-
 ---
 
 ## New release
 
 * [Fluvio v0.10.1](https://github.com/infinyon/fluvio/releases/tag/v0.10.1)
-* [Kafka outbound connector v0.3.1](/docs/connectors/catalog/outbound/kafka)
+* [Kafka outbound connector v0.3.1]
 
 ## New features
 
-* [Chaining support](/docs/connectors/smartmodules/core-concepts#chaining-with-cli)
+* [Chaining support](smartmodules/core-concepts#chaining-with-cli)
   * Producer: ([#2753](https://github.com/infinyon/fluvio/pull/2753))
   * Consumer: ([#2759](https://github.com/infinyon/fluvio/pull/2759))
   * SMDK: ([#2784](https://github.com/infinyon/fluvio/pull/2784))
   * Fluvio CLI:  ([#2812](https://github.com/infinyon/fluvio/pull/2812))
 
-SmartModule transformation chaining was [introduced in the last release](/news/this-week-in-fluvio-0048#smartmodule-chaining-preview) as a preview with our [SQL outbound connector](/docs/connectors/catalog/outbound/sql).
+SmartModule transformation chaining was [introduced in the last release](/news/this-week-in-fluvio-0048#smartmodule-chaining-preview) as a preview with our [SQL outbound connector]
 
 In this release, support is now available to the Rust client, `fluvio` and `smdk` CLI, and connectors wit the keyword `transforms`.
 
 To get familiar, check out the example configs from our tutorials.
 
-* [HTTP to SQL tutorial](/docs/fluvio/tutorials/http-to-sql)
-* [MQTT to SQL tutorial](/docs/fluvio/tutorials/mqtt-to-sql)
-
-
-* Kafka outbound connector now supports SSL - For more info check out the [Kafka outbound connector docs](/docs/connectors/catalog/outbound/kafka)
+* [HTTP to SQL tutorial]
+* [MQTT to SQL tutorial]
+* Kafka outbound connector now supports SSL - For more info check out the [Kafka outbound connector docs]
 
 ## Bug fixes
 
@@ -46,14 +38,7 @@ To get familiar, check out the example configs from our tutorials.
 
 ## Developer experience improvements
 * Make behavior with producing records from file consistent between `fluvio` and `smdk` - ([#2756](https://github.com/infinyon/fluvio/pull/2756))
-* [New docs for our Certified SmartModule: Jolt](/docs/fluvio/quickstart#using-the-jolt-smartmodule-to-turn-json-records-into-sentences)
-
-## Open positions
-* [Head of Product Management](https://www.infinyon.com/careers/head-of-product-management) [Remote - Global]
-* [SW Engineer (Cloud services)](https://www.infinyon.com/careers/cloud-engineer-mid-level) [Remote - Global]
-* [Sr. Rust engineer (Infrastructure)](https://www.infinyon.com/careers/infrastructure-engineer-senior-level) [Remote - US]
-* [Developer Advocate](https://www.infinyon.com/careers/developer-advocate-mid-senior-level) [Remote - US timezones +/- 5hr]
-* [Solutions Architect](https://www.infinyon.com/careers/solutions-architect) [Remote - US timezones +/- 5hr]
+* [New docs for our Certified SmartModule: Jolt]
 
 ---
 
@@ -65,3 +50,13 @@ For the full list of changes this week, be sure to check out [our CHANGELOG].
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+
+[Chaining support]:../docs/smartmodules/core-concepts#chaining-with-cli
+
+[HTTP to SQL tutorial]: ../docs/fluvio/tutorials/http-to-sql
+[MQTT to SQL tutorial]: ../docs/fluvio/tutorials/mqtt-to-sql
+
+[Kafka outbound connector v0.3.1]: ../docs/hub/connectors/outbound/kafka
+[SQL outbound connector]: ../docs/hub/connectors/outbound/sql
+[Kafka outbound connector docs]: ../docs/hub/connectors/outbound/kafka
+[New docs for our Certified SmartModule: Jolt]: ../docs/hub/smartmodules/jolt
