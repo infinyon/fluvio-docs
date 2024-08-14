@@ -33,5 +33,15 @@ Inline link style:
 
 ## Doc generation flow
 
-Files in /doc ->  url doc/latest
-On version release, the script copies, /doc -> (copy) -> versioned_docs/version_x.y.z/doc
+Files in `/doc/...` ->  url `localhost:3000/doc/latest/...`
+
+On version release, the release logic copies, `/doc `-> (copy) -> `versioned_docs/version_x.y.z/doc`
+
+Currently with on release the stable (0.11.11) version maps to the following urls
+
+`/versioned_docs/version_0.11.11/doc/fluvio` -> url  `localhost:3000/doc/fluvio`
+
+With future release versions, non-stable versions map to urls as follows:
+
+`/versioned_docs/version_<version>/doc/fluvio` -> url  `localhost:3000/doc/<version>/fluvio`
+

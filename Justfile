@@ -4,6 +4,11 @@ default:
 setup:
 	cargo binstall hyperlink # install bad link checker
 
+# dev service build for quick preview
+start:
+	npm start
+
+# this foldoes a full build w/ search plugin index build
 build: clean
 	npm run build
 
