@@ -1,0 +1,38 @@
+---
+description: SDF Build Command
+sidebar_position: 45
+---
+
+# `sdf build`
+
+The `sdf build` uses a `sdf-package.yaml` file to detect the structure of a project previously generated with [sdf generate] and then build it.
+
+### `sdf build` command
+
+The `build` command has the following hierarchy:
+
+```bash copy="fl"
+$ sdf build -h
+Build package (requires: sdf-package.yaml)
+
+Usage: sdf build [OPTIONS]
+
+Options:
+      --dev   set runtime to use dev mode [env: DEV=]
+  -h, --help  Print help
+```
+
+Where:
+* `--dev` development profile to be used for runtime mode
+
+#### Examples
+
+##### sdf build
+
+In case of success, the build command is silent:
+
+```bash copy="fl"
+$ sdf build
+```
+
+[sdf generate]: /sdf/cli/generate.mdx
