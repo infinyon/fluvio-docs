@@ -1,13 +1,12 @@
 ---
-sidebar_position: 2
-title: "Configuration"
+sidebar_position: 20
+title: "Configuration File"
 description: "Connector Configuration File"
 ---
 
-# Connector Configuration
+# Connector Configuration File
 
-This is the template YAML connector file. To make it useful, it needs to be
-populated. In the next section we will go over the different sections of the connector configuration file.
+This is a template YAML connector file that needs to be populated to be functional. In the next section, we will explore the different sections of the connector configuration file and how to properly configure each one.
 
 ```yaml title="connector.yaml"
 apiVersion: 0.1.0
@@ -18,7 +17,7 @@ meta:
  type:
  topic:
 
- # optional
+ # optional (inbound connectors)
  producer:
    # optional
    linger:
@@ -27,7 +26,7 @@ meta:
    # optional
    compression:
 
- # optional
+ # optional (outbound connectors)
  consumer:
    # optional
    partition:
@@ -43,19 +42,11 @@ transforms:
  - uses: smartmodule_name
    with:
      param_name: param_value
-# Type specific configs
-# key depends on connector
-# <custom_key>:
-#   foo: bar
-#
-# eg.
-# http:
-#   endpoint: https://example.com
 ```
 
 ## Connector `apiVersion` configuration
 
-The `apiVersion` is the version of the connector API that the connector uses to parse the configuration file. The current accepted versions: `0.1.0` and `0.2.0`.
+The `apiVersion` is the version of the connector API that the connector uses to parse the configuration file. The current accepted version is `0.1.0`.
 
 ## Connector `meta` configuration
 
@@ -64,7 +55,7 @@ The `meta` section contains the metadata for the connector:
 * The `name` is the name of the connector. e.g. `my-connector`.
 * The `type` is the type of the connector. e.g. `http-source`, `http-sink`, `mqtt-source`.
   * See the [connectors] section for the full list of connectors supported.
-* The `version` is the version of the connector. e.g. `0.2.0`.
+* The `version` is the version of the connector. e.g. `0.1.0`.
 * The `topic` is the topic that the connector will connect to. e.g. `my-topic`. The topic will be created automatically if it does not exist.
 * The `secrets`(optional) is a list of secrets that the connector will use. This accepts a list of objects with the key `name`.
   * See the [secrets] section for more information.
@@ -78,7 +69,7 @@ apiVersion: 0.1.0
 meta:
  name: my-http-source-connector
  type: http-source
- version: 0.2.0
+ version: x.y.z
  topic: my-topic
  producer:
    linger: 1ms
@@ -97,7 +88,7 @@ apiVersion: 0.1.0
 meta:
  name: my-http-sink-connector
  type: http-sink
- version: 0.1.0
+ version: x.y.z
  topic: my-topic
  consumer:
    max_bytes: 3 MB
@@ -106,6 +97,9 @@ meta:
    - name: MY_SECRET
 ```
 
+:::info
+The `x.y.z` version should be updated with the version of the latest connector in [the Hub].
+:::
 
 ## Connector `transforms` configuration
 
@@ -113,11 +107,17 @@ Connectors support `transforms`. Records can be modified before they are sent to
 
 * `uses` is the reference to the SmartModule used in the transform.
 * `with` is the configuration for the transform
-  * The section is different for each transform
-  * See the [connectors] reference documentation for available configuration options
 
-See the [Transformations](/docs/fluvio/concepts/transformations) section for more information.
 
-[connectors]: /docs/connectors/overview
+### References
 
-See [Tutorials](/docs/fluvio/tutorials/http-to-sql#connector-pipeline) for examples of using transforms.
+The following references will provide additional information for:
+
+* [SmartModules] for additional information on transformations
+* [Tutorials] for end-to-end examples
+
+
+[SmartModules]: smartmodules/introduction.mdx
+[Tutorials]: fluvio/tutorials/index.md
+[connectors]: connectors/overview.mdx
+[the Hub]: hub/connectors/index.md
