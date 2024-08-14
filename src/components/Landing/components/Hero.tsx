@@ -8,10 +8,10 @@ export function Hero(): JSX.Element {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto text-center">
             <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-gray-900 dark:text-gray-100">
-              Lean distributed streaming system powered by Rust & WASM
+            Fluvio + SDF = Lean Distributed Stream Processing
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Maximum efficiency, minimum infrastructure overhead, and intuitive
+               Alternative to Kafka + Flink in one product. Powered by Rust & WASM for maximum efficiency, minimum infrastructure overhead, and intuitive
               developer experience.
             </p>
             <div className="flex items-center justify-center gap-x-6">
