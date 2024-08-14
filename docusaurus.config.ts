@@ -169,13 +169,14 @@ const config: Config = {
         {
           type: "doc",
           position: "left",
-          docId: "hub/overview",
-          label: "The Hub",
-        },        {
+          docId: "smartmodules/introduction",
+          label: "SmartmModules",
+        },
+        {
           type: "doc",
           position: "left",
-          docId: "apis/quickstart",
-          label: "APIs",
+          docId: "hub/overview",
+          label: "Hub",
         },
         {
           type: "docsVersionDropdown",
@@ -187,11 +188,6 @@ const config: Config = {
         //   position: "right",
         //   docsPluginId: "sdf",
         // },
-        {
-          position: "right",
-          to: "news",
-          label: "News",
-        },
         {
           type: "custom-Discord",
           position: "right",
