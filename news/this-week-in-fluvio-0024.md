@@ -7,7 +7,7 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
+---
 
 ## Data Retention
 
@@ -54,17 +54,17 @@ For a given topic with a retention of `7 days` using `1 GB` segments
 The newest segment is left alone and only begins to age once a new segment is being written to.
 
 
-For more detail check out the [docs for more about data retention in Fluvio](/docs/operations/retention)
+For more detail check out the [docs for more about data retention in Fluvio]
 
+[docs for more about data retention in Fluvio]: ../docs/fluvio/concepts/operations/data-retention
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
-For the full list of changes this week, be sure to check out [our CHANGELOG].
-
-Until next week!
+For the full list of changes this week, be sure to check out [our CHANGELOG]. Until next week!
 
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn

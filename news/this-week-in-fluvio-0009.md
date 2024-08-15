@@ -7,8 +7,6 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
-
 ## New Release - Fluvio v0.9.10
 
 ### SmartStreams error handling improvements
@@ -82,8 +80,6 @@ The rest of this post is first look at a connector in action.
 
 We create a new connector, with configurable details stored in a this example config file `config.yaml`.
 
-%copy%
-
 ```yaml
 version: 0.1.0
 name: my-test-connector
@@ -94,16 +90,11 @@ parameters:
   topic: my-test-connector
 ```
 
-
-%copy first-line%
-
-```bash
+```bash  copy="fl"
 $ fluvio cluster connector create --config config.yaml
 ```
 
-%copy first-line%
-
-```bash
+```bash  copy="fl"
 $ fluvio cluster connector list
 
 -------------
@@ -113,9 +104,7 @@ $ fluvio cluster connector list
 
 The test connector produces to a topic `my-test-connector`, where each record says `Hello, Fluvio! - #` where `#` is a number that counts up.
 
-%copy first-line%
-
-```bash
+```bash copy="fl"
 $ fluvio consume my-test-connector --tail -d
 Consuming records starting 10 from the end of topic 'my-test-connector'
 Hello, Fluvio! - 166
@@ -132,9 +121,7 @@ Hello, Fluvio! - 175
 
 To stop the connector, you need to delete it:
 
-%copy first-line%
-
-```bash
+```bash copy="fl"
 $ fluvio cluster connector delete my-test-connector
 ```
 
@@ -144,7 +131,11 @@ If you would like to help us prioritize what connectors to create, or if this so
 
 Communicate with us on [Github Discussions] or join [our Discord channel] and come say hello!
 
+[connectors]: ../docs/connectors/overview
+
 ---
+
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
@@ -154,4 +145,5 @@ Until next week!
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
-[connectors]: /connectors
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn
+

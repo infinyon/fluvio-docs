@@ -8,8 +8,6 @@ Welcome to the sixth edition of This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
-
 ## New Releases - Fluvio v0.9.6 and v9.9.7
 
 ### Custom record formatting for Consumer
@@ -113,10 +111,6 @@ Thanks [`@nellshamrell`] for the project updates shoutout for This Week in Fluvi
 This-Week-in-Rust was a huge inspiration for this newsletter, and we thank you for
 your tireless work assembling great Rust content and for helping us spread the word
 about Fluvio!
-
-<a href="https://youtu.be/OZPXhmy-wVw?t=761">
-<img src="/news/images/0006/rustconf.png" style={{ width: '600px' }} alt="Rustconf 2021 - Screenshot of This week in Rust talk"/>
-</a>
 
 [`@nellshamrell`]: https://github.com/nellshamrell
 

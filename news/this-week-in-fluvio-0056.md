@@ -24,15 +24,11 @@ We have been working on running our coure stream processor at the edge to suppor
 
 We are also working on lean implementations of our runtime and control plane to build the foundations to support issues of data privacy and data sovereignty with hybrid deployment patterns.
 
-## Open positions
-We are hiring!
-* [Sr. Rust Cloud Software Engineer](https://infinyon.com/careers/cloud-engineer-senior-level/)
-
 ## New blog post
-* [OLAP for Event Streaming with MotherDuck Connector]('https://infinyon.com/blog/2023/07/infinyon-motherduck/')
+* [OLAP for Event Streaming with MotherDuck Connector]
 
 ## New video
-* [Collecting Hackernews RSS Feeds using InfinyOn Cloud]('https://www.youtube.com/@InfinyOn')
+* [Collecting Hackernews RSS Feeds using InfinyOn Cloud]
 
 That's all folks. until next week.
 
@@ -46,3 +42,6 @@ For the full list of changes this week, be sure to check out [our CHANGELOG].
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+
+[Collecting Hackernews RSS Feeds using InfinyOn Cloud]: https://www.youtube.com/@InfinyOn
+[OLAP for Event Streaming with MotherDuck Connector]: https://infinyon.com/blog/2023/07/infinyon-motherduck/

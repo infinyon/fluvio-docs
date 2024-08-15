@@ -24,23 +24,17 @@ We are in process of creating an external CLI tool and documenting a migration s
 
 Rust devs can get a sneak peak of this tool in [our Connectors GitHub repo](https://github.com/infinyon/fluvio-connectors/tree/main/rust-connectors/utils/connector-run), which will continue to support your connector config files.
 
+:::note
+This is an archival newsletter entry, for the latest on running connectors see docs on the [cdk] cli
+:::
+
 Please connect with us in [our Discord channel] or you can email us at [team@infinyon.com](mailto:team@infinyon.com) if there are any questions, concerns, comments, etc.
 
 We'll continue to make updates about this matter until resolved.
 
-## Open positions
-* [Head of Product Management](https://www.infinyon.com/careers/head-of-product-management) [Remote - Global]
-* [SW Engineer (Cloud services)](https://www.infinyon.com/careers/cloud-engineer-mid-level) [Remote - Global]
-* [Sr. Rust engineer (Infrastructure)](https://www.infinyon.com/careers/infrastructure-engineer-senior-level) [Remote - US]
-* [Sr. SW engineer (Connectors)](https://www.infinyon.com/careers/connectors-engineer-senior-level) [Remote - Global]
-* [Developer Advocate](https://www.infinyon.com/careers/developer-advocate-mid-senior-level) [Remote - US timezones +/- 5hr]
-* [Solutions Architect](https://www.infinyon.com/careers/solutions-architect) [Remote - US timezones +/- 5hr]
-
-
-
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
@@ -48,3 +42,4 @@ For the full list of changes this week, be sure to check out [our CHANGELOG].
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn

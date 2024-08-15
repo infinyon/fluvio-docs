@@ -8,8 +8,6 @@ Welcome to the fifth edition of This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
-
 ## New Release - Fluvio v0.9.5
 
 ### Bugfix for SmartStream request handler

@@ -7,24 +7,20 @@ Fluvio is a distributed, programmable streaming platform written in Rust.
 
 This Week in Fluvio is our weekly newsletter for development updates to [Fluvio open source].
 
-Please subscribe to This Week in Fluvio to receive new posts in your inbox
-SUBSCRIBE_BUTTON
-
-
-BANNER
-
 ---
 
 ## New release
 
 * [Fluvio v0.10.0](https://github.com/infinyon/fluvio/releases/tag/v0.10.0)
-  * [`smdk` - SmartModule Development Kit CLI](/docs/connectors/smartmodules/smdk/introduction)
-* [SQL outbound connector](/docs/connectors/catalog/outbound/sql)
+* [`smdk` - SmartModule Development Kit CLI]
+* [SQL outbound connector]
 
 ### Deprecations
-The `fluvio connector` CLI and Fluvio's management of connectors has been removed in this release.
+The `fluvio connector` CLI and Fluvio's management of connectors has been
+removed in this release.
 
-You can still use local connectors with your local Fluvio cluster. For more about local connectors see the [local connectors docs](/connectors/)
+You can still use local connectors with your local Fluvio cluster. For more
+about local connectors see the [local connectors docs]
 
 ## New features
 
@@ -40,16 +36,15 @@ You can still use local connectors with your local Fluvio cluster. For more abou
 ### SmartModule Development Kit
 The SmartModule Development kit reduces the number of steps required to get started with developing new custom SmartModules using the `smdk` CLI.
 
-[SmartModule Development Kit docs](/docs/connectors/smartmodules/smdk/introduction)
+[SmartModule Development Kit docs]
 
 ### SmartModule chaining preview
-This release has a preview for SmartModule chaining. This functionality is offered with our [SQL outbound Cloud connector](/docs/connectors/catalog/outbound/sql).
+This release has a preview for SmartModule chaining. This functionality is offered with our Cloud [SQL outbound connector].
 
 To see it in action, you can follow the following tutorials:
 
-* [HTTP to SQL tutorial](/docs/fluvio/tutorials/http-to-sql)
-* [MQTT to SQL tutorial](/docs/fluvio/tutorials/mqtt-to-sql)
-
+* [HTTP to SQL tutorial]
+* [MQTT to SQL tutorial]
 
 ## InfinyOn Cloud updates
 
@@ -58,21 +53,21 @@ A new version of the InfinyOn Cloud platform UI has been released. We've added t
 
 Here's a quick preview
 
-<img src="/news/images/0048/cloud-dashboard-screenshot.png" alt="A cropped screenshot of the new InfinyOn Cloud web UI"/>
+![A cropped screenshot of the new InfinyOn Cloud web UI](images/0048/cloud-dashboard-screenshot.png)
 
-Check out the [New UI tutorial](/docs/cloud/how-to/use-infinyon-cloud) for more information.
+Check out the [New UI tutorial] for more information.
 
 ### Cloud connectors
 Management of connectors is now exclusive to InfinyOn Cloud. You can create connectors in InfinyOn with the `fluvio cloud connector` CLI.
 
-Check out the [Cloud connectors docs](/docs/connectors/overview) for more info
+Check out the Cloud [connectors docs] for more info
 
 ### SmartModule Hub
 SmartModule Hub is a new service for offering public SmartModules. This removes the requirement of installing a SmartModule development environment in order to take advantage of SmartModules. You can download SmartModules from the Hub directly to your cluster to use.
 
 For developers, you can use `smdk` to publish SmartModules to the Hub to share publicly.
 
-Check out the [SmartModule Hub docs](/docs/cloud/hub/overview) for more info
+Check out the [SmartModule Hub docs] for more info
 
 
 ## Recent events
@@ -81,20 +76,23 @@ We launched the new InfinyOn Cloud platform at [KubeCon](https://events.linuxfou
 
 Thanks to those who were in attendance at KubeCon and stopped and said hi to us last week!
 
-<img src="/news/images/0048/infinyon-booth-team.png" alt="A group photo at KubeCon22 with members of the InfinyOn team"/>
+![A group photo at KubeCon22 with members of the InfinyOn team](images/0048/infinyon-booth-team.png)
 
-<img src="/news/images/0048/infinyon-booth-ui.png" alt="A photo of the InfinyOn booth. A screen with the InfinyOn Cloud dashboard displayed in front of an InfinyOn branded purple background"/>
+![A photo of the InfinyOn booth. A screen with the InfinyOn Cloud dashboard displayed in front of an InfinyOn branded purple background](images/0048/infinyon-booth-ui.png)
 
-## Open positions
-* [Head of Product Management](https://www.infinyon.com/careers/head-of-product-management) [Remote - Global]
-* [SW Engineer (Cloud services)](https://www.infinyon.com/careers/cloud-engineer-mid-level) [Remote - Global]
-* [Sr. Rust engineer (Infrastructure)](https://www.infinyon.com/careers/infrastructure-engineer-senior-level) [Remote - US]
-* [Developer Advocate](https://www.infinyon.com/careers/developer-advocate-mid-senior-level) [Remote - US timezones +/- 5hr]
-* [Solutions Architect](https://www.infinyon.com/careers/solutions-architect) [Remote - US timezones +/- 5hr]
+[`smdk` - SmartModule Development Kit CLI]: ../docs/fluvio/cli/smdk
+[SQL outbound connector]: ../docs/hub/connectors/outbound/sql
+[local connectors docs]: ../docs/hub/connectors
+[SmartModule Development Kit docs]: ../docs/fluvio/cli/smdk
+[HTTP to SQL tutorial]: ../docs/fluvio/tutorials/http-to-sql
+[MQTT to SQL tutorial]: ../docs/fluvio/tutorials/mqtt-to-sql
+[New UI tutorial]: ../docs/cloud/overview
+[connectors docs]: ../docs/hub/connectors
+[SmartModule Hub docs]: ../docs/cloud/hub/overview
 
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
@@ -102,3 +100,4 @@ For the full list of changes this week, be sure to check out [our CHANGELOG].
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn

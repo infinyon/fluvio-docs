@@ -7,14 +7,13 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
+---
 
 ## New Release - Fluvio v0.9.14
 
 ### Connector logs
 Logs from [connectors](/docs/connectors/overview) are now accessible from the CLI
 
-%copy first-line%
 ```shell
 fluvio connector logs <connector name>
 ```
@@ -23,7 +22,6 @@ In this example output, we can see some error output from the connector that wou
 
 Example:
 
-%copy first-line%
 ```shell
 $ fluvio connector logs my-test-mqtt -f
 
@@ -79,7 +77,7 @@ SUBCOMMANDS:
 
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
@@ -89,3 +87,4 @@ Until next week!
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn

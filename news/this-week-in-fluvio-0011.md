@@ -7,7 +7,7 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
+---
 
 ## New Release - Fluvio v0.9.11
 
@@ -129,12 +129,13 @@ Consuming records from the end of topic 'array-map-array'. This will wait for ne
 "Cranberry"
 ```
 
-Docs for ArrayMap are [available here](/smartmodules/transform/array-map). For a more hands-on explanation with a real-world example, please read our [blog post](https://infinyon.com/blog/2021/10/smartstream-array-map-reddit/) demonstrating the capabilities of `#[smartstream(array_map)]`.
+Docs for ArrayMap are [available here]. For a more hands-on explanation with a real-world example, please read our [blog post](https://infinyon.com/blog/2021/10/smartstream-array-map-reddit/) demonstrating the capabilities of `#[smartstream(array_map)]`.
 
+[available here]: ../docs/smartmodules/operators/array-map
 
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
@@ -144,4 +145,4 @@ Until next week!
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
-[connectors]: /connectors
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn

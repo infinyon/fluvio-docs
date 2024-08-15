@@ -7,7 +7,7 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
+---
 
 ## New Release - Fluvio v0.9.18
 
@@ -15,7 +15,7 @@ This release was heavily focused on stability improvements
 
 ### Local Connector development fix
 
-Previously, if you were [developing your own connector](/docs/connectors/local/cdk/introduction), creating connectors would fail because during the creation of the connector pod, Kubernetes would always try to pull from Docker Hub.
+Previously, if you were [developing your own connector], creating connectors would fail because during the creation of the connector pod, Kubernetes would always try to pull from Docker Hub.
 
 You can control this behavior in your connector config through the `version` key.
 
@@ -45,6 +45,8 @@ The keys under `parameters` are used as CLI arguments to your connector config.
 Prior to this release, the argument would render as `--some_parameter=foo`.
 
 Now the `some_parameter` key will will render as `--some-parameter=foo`
+
+[developing your own connector]:../docs/connectors/local/develop/introduction
 
 ---
 

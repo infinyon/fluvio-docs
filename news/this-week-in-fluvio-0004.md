@@ -8,10 +8,6 @@ Welcome to the fourth edition of This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-[Fluvio open source]: https://github.com/infinyon/fluvio
-
-BANNER
-
 ## New Release - Fluvio v0.9.4
 
 ### Compression for WASM binaries
@@ -20,12 +16,15 @@ This week we received an excellent contribution from [@tomindisguise] for compre
 WebAssembly binaries before uploading them to Fluvio's Streaming Processing Units (SPUs).
 As some background, one of Fluvio's premiere features is the ability to upload
 user-defined code to perform inline processing on streaming data,
-[a feature we call SmartStreams]. User code must be compiled to WebAssembly and
+[a feature we call SmartStreams].
+
+:::note
+SmartStreams are great, but this is an archival newsletter entry. Today you should look at our new [SDF] functionality instead for a much richer range of data processing and analysis!
+:::
+
+User code must be compiled to WebAssembly and
 uploaded to SPUs upon opening a stream, and this change helps by significantly reducing
 the size of the upload request. Thank you to [@tomindisguise] for the contribution!
-
-[@tomindisguise]: https://github.com/tomindisguise
-[a feature we call SmartStreams]: /docs/connectors/smartmodules/introduction
 
 ### Bugfix for applying SmartStreams while using `--disable-continuous`
 
@@ -63,9 +62,12 @@ come say hello!
 
 Until next week!
 
-[SmartStreams Aggregate]: /docs/smartstreams/aggregate
-[sums]: https://github.com/infinyon/fluvio/blob/master/src/smartstream/examples/aggregate-sum/src/lib.rs
-[averages]: https://github.com/infinyon/fluvio/blob/master/src/smartstream/examples/aggregate-average/src/lib.rs
+
+[Fluvio open source]: https://github.com/infinyon/fluvio
+[SDF]: ../sdf
+[@tomindisguise]: https://github.com/tomindisguise
+[a feature we call SmartStreams]: ../docs/smartmodules/introduction
+
 [combining structural key-value data]: https://github.com/infinyon/fluvio/blob/master/src/smartstream/examples/aggregate-json/src/lib.rs
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [join our Discord channel]: https://discordapp.com/invite/bBG2dTz

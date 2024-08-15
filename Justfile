@@ -31,16 +31,24 @@ linkcheck:
 # more info, but sometimes matches up md sources incorrectly
 lc2:
 	hyperlink \
-		--sources . \
-		./build | tee hyperlink2.log
+		--sources ./docs \
+		./build/docs | tee hyperlink.log
 
-
+# alternate view
+lc3:
+	hyperlink \
+	 	--check-anchors \
+		--sources ./news \
+		./build | tee hyperlink.log
 
 lint: build
 	sleep 1
 	just linkcheck
 
 
-sync-ver:
+resync-ver:
+	rm -rf versioned_docs/version-0.11.11
 	rsync -aurv docs/ versioned_docs/version-0.11.11
 
+sync-ver:
+	rsync -aurv docs/ versioned_docs/version-0.11.11
