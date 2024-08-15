@@ -8,7 +8,7 @@ description: "Install Fluvio Cluster with Docker Compose"
 
 # Docker Compose + Fluvio
 
-You can run Fluvio Clusters in a Docker Compose setup, for a local Proof of Concept or
+You can run Fluvio Clusters in a Docker Compose setup, for a local proof of concept or
 development.
 
 To run a Fluvio Cluster through Docker, you will need to run Fluvio
@@ -16,11 +16,11 @@ components separately, we can use Docker Compose `service`s to achieve this.
 
 ## Services
 
-- `sc`: Streaming Controller
-- `sc-setup`: Post-Initialization Commands
-- `spu`: Streaming Processing Unit
+- sc: Streaming Controller
+- sc-setup: Post-Initialization Commands
+- spu: Streaming Processing Unit
 
-> To learn more about Fluvio architecture, please refer to [Fluvio Documentation][1]
+> To learn more about Fluvio architecture, please refer to [Fluvio Documentation].
 
 ## Running Locally
 
@@ -99,12 +99,12 @@ Run `docker compose up`.
 > Optionally you can run on detached mode `docker compose up -d` so
 > Fluvio runs in the background.
 
-Then use the `fluvio` CLI to connect to the cluster running in Docker, to do
+Then use the Fluvio CLI to connect to the cluster running in Docker, to do
 that you must set the _Fluvio Profile_ to point to Docker's container SC:
 
 > If you dont have the Fluvio CLI installed on your local machine, run the following command
 > `curl -fsS https://hub.infinyon.cloud/install/install.sh | bash`.
-> Refer to [Fluvio CLI Reference][2] for more details.
+> Refer to [Fluvio CLI Reference] for more details.
 
 ```bash
 fluvio profile add docker 127.0.0.1:9103 docker
@@ -133,5 +133,5 @@ docker compose down
 > Remember to run this command in the same directory as the `docker-compose.yml`
 > file.
 
-[1]: https://www.fluvio.io/docs/architecture/overview/
-[2]: https://www.fluvio.io/cli/
+[Fluvio Documentation]: fluvio/concepts/architecture/overview.mdx
+[Fluvio CLI Reference]: fluvio/cli/introduction.mdx
