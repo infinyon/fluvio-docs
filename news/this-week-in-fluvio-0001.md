@@ -151,13 +151,6 @@ When we run a consumer with this SmartStream, we can see the filtered data, and 
 can see the consumer deliver our error to us if we give an input that can't be parsed
 as an integer.
 
-<!-- <video controls width="860px" title="Producing integers to the filter-odd topic, followed by the word nine, results in an error">
-  <source src="/news/images/0001/filter-odd.mov" />
-</video>
-
-<br/>
-<br/> -->
-
 ### SmartStream Maps
 
 Another big feature that we've had in the works for a while is a new type of SmartStream,
