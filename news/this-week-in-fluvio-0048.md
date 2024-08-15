@@ -86,7 +86,7 @@ Thanks to those who were in attendance at KubeCon and stopped and said hi to us 
 [SmartModule Development Kit docs]: ../docs/fluvio/cli/smdk
 [HTTP to SQL tutorial]: ../docs/fluvio/tutorials/http-to-sql
 [MQTT to SQL tutorial]: ../docs/fluvio/tutorials/mqtt-to-sql
-[New UI tutorial]: /docs/cloud/how-to/use-infinyon-cloud
+[New UI tutorial]: ../docs/cloud/overview
 [connectors docs]: ../docs/hub/connectors
 [SmartModule Hub docs]: ../docs/cloud/hub/overview
 
