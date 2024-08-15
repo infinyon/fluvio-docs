@@ -13,22 +13,17 @@ Use `cdk generate` to create a new connector project:
 ```shell
 $ cdk generate
 🤷   Project Name: my-connector
-🔧   Destination: ~/my-connector ...
-🔧   project-name: my-connector ...
-🔧   Generating template ...
-✔ 🤷   Will your Connector be public? · false
 🤷   Please set a group name: acme
-✔ 🤷   Which type of Connector would you like [source/sink]? · source
-Ignoring: /var/folders/r8/4x6_d2rn283946frzd1gc1pr0000gn/T/.tmptToFV3/cargo-generate.toml
-[1/6]   Done: Cargo.toml
-[2/6]   Done: Connector.toml
-[3/6]   Done: sample-config.yaml
-[4/6]   Done: src/config.rs
-[5/6]   Done: src/main.rs
-[6/6]   Done: src
-🔧   Moving generated files into: `~/my-connector`...
-💡   Initializing a fresh Git repository
-✨   Done! New project created ~/my-connector
+🤷   Which type of Connector would you like [source/sink]? · source
+🤷   Will your Connector be public? · false
+[1/8]   Done: .gitignore
+[2/8]   Done: Cargo.toml
+[3/8]   Done: Connector.toml
+[4/8]   Done: README.md
+[5/8]   Done: sample-config.yaml
+[6/8]   Done: src/config.rs
+[7/8]   Done: src/main.rs
+[8/8]   Done: src
 ```
 
 The generator created Rust project ready to compile:
@@ -70,7 +65,7 @@ async fn start(config: CustomConfig, producer: TopicProducer) -> Result<()> {
 }
 ```
 
-Connectors may also have can have configuration parameters as defined in `src/config.rs`:
+Connectors may also have define configuration parameters as shown in `src/config.rs`:
 
 ```rust title="src/config.rs"
 use fluvio_connector_common::connector;
@@ -83,7 +78,7 @@ pub(crate) struct CustomConfig {
 }
 ```
 
- The `Connector.toml` file contains the definition of the Connector parameters required to load the file in the Cluster and publish it to Connector Hub.
+The `Connector.toml` file contains the definition of the Connector parameters required to load the file in the Cluster and publish it to Connector Hub.
 
 ```toml title="Connector.toml"
 [package]
@@ -91,7 +86,7 @@ name = "my-connector"
 group = "acme"
 version = "0.1.0"
 apiVersion = "0.1.0"
-fluvio = "0.21.3"
+fluvio = "0.10.0"
 description = ""
 license = "Apache-2.0"
 visibility = "private"
@@ -114,5 +109,4 @@ type = "string"
 * `direction` is used to declare the direction data flows through the connector, with respect to the Fluvio cluster. An inbound connector uses `source = true`, and and outbound connectdor uses `sink = true`
 * `custom.properties.foo` defines a user configuration key `foo` that can be used in the logic of the connector.
 
-The project is ready to build and test. Checkout the next section for instructions.
-
+The project is ready to build and test.

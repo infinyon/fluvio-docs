@@ -28,12 +28,22 @@ $ cdk deploy list
  my-my-connector-test-connector  Running
 ```
 
-You can use the connector name to shut it down.
+### Test Result
 
-### Connector shutdown
+Consume to check the result:
+
+```bash copy="fl"
+$ fluvio consume test-my-connector-topic -B
+Hello, Fluvio - 1
+Hello, Fluvio - 2
+Hello, Fluvio - 3
+Hello, Fluvio - 4
+...
+```
+
+### Shutdown Connector
 
 Stop a running your connector with `cdk deploy shutdown`
-
 
 ```bash copy="fl"
 $ cdk deploy shutdown --name my-my-connector-test-connector
@@ -43,5 +53,4 @@ pid: 56421
 
 In the next section, we'll take a look at the logs for troubleshooting.
 
-[generated]:connectors/local/develop/generate.mdx
-[InfinyOn Cloud]: https://infinyon.cloud
+[generated]: ./generate.mdx

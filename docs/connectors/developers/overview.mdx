@@ -1,0 +1,79 @@
+---
+sidebar_position: 1
+title: "Overview"
+description: "Fluvio Connectors make the process of importing or exporting data simple"
+---
+
+# Overview - Build Your Own Connector
+
+[Fluvio Connector Development Kit (CDK)] is a command-line tool whose primary goal is to help developers build, test, deploy Connectors, and publish them to the Hub. CDK only supports connectors developed in the Rust programming language. Other languages will be added in future releases.
+
+### Requirements
+
+Install Rust compiler and Cargo.
+
+```bash copy="fl"
+$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+For additional information visit [Install Rust] guide.
+
+Next add the musl toolchain:
+
+```bash copy="fl"
+$ rustup target add x86_64-unknown-linux-musl
+```
+
+Some Linux distributions will also require adding a musl compiler package.
+
+
+### Steps
+
+The CDK command line allows developers to build, test, and publish Connectors to the Hub:
+
+1. [Generate a Connector]
+2. [Build and Test]
+3. [Start and Shutdown]
+4. [Troubleshooting]
+5. [Secrets]
+6. [Publish to Connector Hub]
+
+
+### References
+
+You may use the following github repositories as inspiration
+
+#### Template Connectors
+
+Template for bootstrapping a source repository:
+
+* https://github.com/infinyon/connector-hello-source
+
+#### Official Connectors
+
+Source code repo for the InfinyOn official connectors:
+
+* https://github.com/infinyon/http-source-connector
+* https://github.com/infinyon/http-sink-connector
+* https://github.com/infinyon/kafka-connector
+* https://github.com/infinyon/sql-connector
+* https://github.com/infinyon/mqtt-connector
+* https://github.com/infinyon/graphite-sink-connector
+
+#### Experimental Connectors
+
+These connectors are not guaranteed to work with latest fluvio:
+
+* https://github.com/infinyon/labs-redis-sink-connector
+* https://github.com/infinyon/duckdb-connector
+
+
+
+[Rust Installation Guide]: https://www.rust-lang.org/tools/install
+[Fluvio Connector Development Kit (CDK)]: ../cdk.mdx
+[Generate a Connector]: ./generate.mdx
+[Build and Test]: ./build.mdx
+[Start and Shutdown]: ./start-shutdown.mdx
+[Troubleshooting]: ./troubleshooting.mdx
+[Secrets]: ./secrets.mdx
+[Publish to Connector Hub]: ./publish.mdx

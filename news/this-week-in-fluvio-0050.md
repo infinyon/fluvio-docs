@@ -66,8 +66,6 @@ We are also exploring a developer user experience for our cloud platform. More u
 [Using DuckDB with Fluvio]
 
 
-[the docs to CDK]: ../docs/fluvio/cli/cdk
-[Using DuckDB with Fluvio]: https://infinyon.com/blog/2023/02/duckdb-fluvio/
 
 ---
 
@@ -75,6 +73,8 @@ Get in touch with us on [Github Discussions] or join [our Discord channel] and c
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
+[the docs to CDK]: connectors/cdk.mdx
+[Using DuckDB with Fluvio]: https://infinyon.com/blog/2023/02/duckdb-fluvio/
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
