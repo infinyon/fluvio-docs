@@ -24,7 +24,7 @@ $ mkdir http-source-cloud; cd http-source-cloud
 Create `quotes-config.yml` and paste the following configuration:
 
 ```yaml
-# quotes-config.yml
+# quotes-config.yaml
 apiVersion: 0.1.0
 meta:
   version: 0.3.8
@@ -46,6 +46,8 @@ Use the configuration file and create a new connector:
 $ fluvio cloud connector create -c quotes-config.yaml
 ```
 
+Add `--log-level debug` to increase log level.
+
 To check if the connector is running:
 
 ```bash copy="fl"
@@ -62,6 +64,13 @@ Read from the fluvio topic:
 ```bash copy="fl"
 $ fluvio consume quotes
 ```
+
+Show the logs:
+
+```bash copy="fl"
+$ fluvio cloud connector log http-quotes
+```
+
 
 ## 4. Clean-up
 

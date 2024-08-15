@@ -18,7 +18,7 @@ $ cdk deploy log --name my-my-connector-test-connector
 Starting my-connector source connector with CustomConfig { foo: "bar" }
 ```
 
-#### Changing the Log Level
+### Change the Log Level
 
 By default connectors will use the `info` logging level, you can change the log level by using the `deploy` command argument `--log-level`.
 
@@ -33,6 +33,21 @@ The log levels are:
 - `debug`
 - `trace`
 
+Check the log again:
+
+```bash copy="fl"
+$ cdk deploy log --name my-my-connector-test-connector
+...
+DEBUG run:send_and_receive{self=MultiplexerSocket 9}: fluvio_socket::multiplexing: sending request api=0 correlation_id=285
+```
+
+Shutdown the connector:
+
+```bash copy="fl"
+$ cdk deploy shutdown --name my-my-connector-test-connector
+Shutting down connector: my-my-connector-test-connector
+ ```
+
 In the next section, we'll take a look at how to use secrets.
 
-[generated]:connectors/local/develop/generate.mdx
+[generated]: ./generate.mdx

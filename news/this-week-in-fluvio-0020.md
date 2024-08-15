@@ -263,14 +263,13 @@ Consuming records from the beginning of topic 'cat-facts-random'
 {"fact":"Cats and kittens should be acquired in pairs whenever possible as cat families interact best in pairs.","length":102}
 ```
 
-[cdk]: ../docs/fluvio/cli/cdk
-
 ---
 
 Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
+[cdk]: connectors/cdk.mdx
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
