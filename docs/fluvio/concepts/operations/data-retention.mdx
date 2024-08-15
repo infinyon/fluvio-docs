@@ -37,7 +37,7 @@ ARGS:
 
 ## Retention time
 
-Retention time duration can be provided as a free-form string. Check out the [`humantime` docs](https://docs.rs/humantime/2.1.0/humantime/fn.parse_duration.html) for the supported time suffixes.
+Retention time duration can be provided as a free-form string. Check out the [`humantime` docs] for the supported time suffixes.
 
 The default retention time is `7 days`
 
@@ -86,7 +86,7 @@ If adding a new record to the active segment will would result in exceeding the 
 
 Older segments are still available for consumption until they get pruned when the eviction condition is met.
 
-Segment size can be provided as a free form string. Check out the [`bytesize` docs](https://github.com/hyunsik/bytesize/)
+Segment size can be provided as a free form string. Check out the [`bytesize` docs]
 for the supported size suffixes.
 
 The default segment size is `1 GB`
@@ -114,7 +114,7 @@ If the disk is full before the retention period is triggered, the SPU stops acce
 may be compromised. The max partition size is applied to every partition in a topic. If a topic has 3 partitions
 and `--max-partition-size '10 GB'` is set, Fluvio controls the topic to not exceed 30 GB disk usage for the topic.
 
-Max partition can be provided as a free-form string. Check out the [`bytesize` docs](https://github.com/hyunsik/bytesize/)
+Max partition can be provided as a free-form string. Check out the [`bytesize` docs]
 for the supported size suffixes.
 
 The default max partition size is `100 GB`.
@@ -183,3 +183,6 @@ For a given topic with max partition size is `3 GB` and `1 GB` segments
 | 1                   | 1 GB         |
 | 2                   | 1 GB         |
 | 3                   | 0.1 GB       |
+
+[`humantime` docs]: https://docs.rs/humantime/2.1.0/humantime/fn.parse_duration.html
+[`bytesize` docs]: https://github.com/hyunsik/bytesize/

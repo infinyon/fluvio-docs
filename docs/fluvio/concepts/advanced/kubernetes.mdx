@@ -13,8 +13,6 @@ However, if you want a particular networking configuration, or wish to install m
 
 If you run into any problems along the way, make sure to check out our [troubleshooting] page to find a fix.
 
-[troubleshooting]:
-
 ## Install with the CLI
 
 This command will install Fluvio and it's dependencies in the default namespace. This method works with many but not all kubernetes cluster types and is an opinionated set of configurations for a simple, working fluvio cluster.
@@ -55,7 +53,7 @@ fluvio cluster create spg default
 You can install multiple Fluvio instances on the same Kubernetes cluster by using different namespaces.  In order to do so, you need to specify the namespace when installing Fluvio otherwise Fluvio will install in the default namespace.  The charts are available in the [fluvio repository](https://github.com/infinyon/fluvio) under [`k8-util/helm/`](https://github.com/infinyon/fluvio/tree/master/k8-util/helm).
 
 Other networking configurations besides nodePort configuration are beyond
-the scope of this guide and require modification of the helm chart values. Feel free to ask about other configurations on our [Discord](https://discordapp.com/invite/bBG2dTz) or on the Fluvio repository [discussions(https://github.com/infinyon/fluvio/discussions).]
+the scope of this guide and require modification of the helm chart values. Feel free to ask about other configurations on our [Discord](https://discordapp.com/invite/bBG2dTz) or on the Fluvio repository [discussions].
 
 First, install the `fluvio-sys` chart.  This only has to be done once.
 
@@ -110,3 +108,6 @@ $ fluvio cluster delete --k8 --namespace first
 ```
 
 You can only a delete `fluvio-sys` chart when you have deleted all the Fluvio instances.
+
+[troubleshooting]: fluvio/concepts/operations/troubleshooting.mdx
+[discussions]: https://github.com/infinyon/fluvio/discussions
