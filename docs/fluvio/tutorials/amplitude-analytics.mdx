@@ -7,14 +7,14 @@ description: "Data pipeline that collects events from multiple services and send
 With this guide, you can send events from InfinyOn Cloud to Amplitude. Connecting your services to this pipeline is simpler than microservices running around
 
 To follow along in this guide you need:
-* The [Amplitude API key](https://www.docs.developers.amplitude.com/analytics/find-api-credentials/) from your account.
+* The [Amplitude API key] from your account.
 * [InfinyOn Cloud] cluster and [Fluvio CLI].
 
 ## Setup
 
 ### Create secret
 
-You can follow [Amplitude's instructions for how to collect your api token](https://www.docs.developers.amplitude.com/analytics/find-api-credentials/) so you can create a secret the connector can use when building the json request for Amplitude.
+You can follow [Amplitude's instructions for how to collect your api token] so you can create a secret the connector can use when building the json request for Amplitude.
 
 The Amplitude upload requests requires an api token, and all events for the production environment use the same api token. We'll transform the service event to include this value in the next step.
 
@@ -43,9 +43,9 @@ Example event:
 }
 ```
 
-In this example, each service sends a json object to a topic containing a timestamp for when the event occurred and an [Amplitude event object](https://www.docs.developers.amplitude.com/analytics/apis/http-v2-api/#keys-for-the-event-argument).
+In this example, each service sends a json object to a topic containing a timestamp for when the event occurred and an [Amplitude event object].
 
-Before sending to Amplitude with an HTTP outbound connector, we'll transform the original payload into the [Amplitude upload request json](https://www.docs.developers.amplitude.com/analytics/apis/http-v2-api/#upload-request-body-parameters).
+Before sending to Amplitude with an HTTP outbound connector, we'll transform the original payload into the [Amplitude upload request json].
 
 The transform consists of:
 * Removing the `timestamp` key
@@ -54,11 +54,17 @@ The transform consists of:
 
 Example connector config w/ transforms
 
+:::info
+All versions are marked with `x.y.z`. To find the latest version, run:
+*  `fluvio hub connector list`
+*  `fluvio hub smartmodule list`
+:::
+
 ```yaml
 # amplitude-connector.yaml
 apiVersion: 0.1.0
 meta:
-  version: 0.2.5
+  version: x.y.z
   name: amplitude-connector
   type: http-sink
   topic: service-events
@@ -67,7 +73,7 @@ meta:
 http:
   endpoint: "https://api2.amplitude.com/2/httpapi"
 transforms:
-  - uses: infinyon/jolt@0.3.0
+  - uses: infinyon/jolt@x.y.z
     with:
       spec:
         - operation: remove
@@ -106,5 +112,9 @@ In the Amplitude dashboard, you should be able to verify the test event arrive u
 
 This is the end of the guide. Once you instrument your services, you should be able to quickly send analytics events to Amplitude from InfinyOn Cloud.
 
+[Amplitude API key]: https://www.docs.developers.amplitude.com/analytics/find-api-credentials/
+[Amplitude event object]: https://www.docs.developers.amplitude.com/analytics/apis/http-v2-api/#keys-for-the-event-argument
+[Amplitude upload request json]: https://www.docs.developers.amplitude.com/analytics/apis/http-v2-api/#upload-request-body-parameters
+[Amplitude's instructions for how to collect your api token]: https://www.docs.developers.amplitude.com/analytics/find-api-credentials/
 [InfinyOn Cloud]: https://infinyon.cloud/signup
-[Fluvio CLI]: /docs/fluvio/quickstart#install-fluvio
+[Fluvio CLI]: fluvio/quickstart.mdx#install-fluvio

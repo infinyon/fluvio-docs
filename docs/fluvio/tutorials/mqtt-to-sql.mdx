@@ -7,13 +7,13 @@ description: "Data pipeline that listens for mqtt events, converts them to json,
 At the end of this tutorial, we will see data starting from an MQTT broker and ending in a PostgreSQL table.
 
 We'll use 2 connectors:
-* [Inbound MQTT connector](https://www.fluvio.io/connectors/inbound/mqtt/)
-* [Outbound SQL connector](https://www.fluvio.io/connectors/outbound/sql/)
+* [Inbound MQTT connector]
+* [Outbound SQL connector]
     * There will be an example of combining multiple SmartModules, known as **SmartModule chaining**
 
-The Outbound connector will be using a [PostgreSQL](https://www.postgresql.org/) database. It will listen to the topic for new records and insert them into a table.
+The Outbound connector will be using a [PostgreSQL] database. It will listen to the topic for new records and insert them into a table.
 
-You can use your own PostgreSQL instance, if it can be reached over the internet. But you can still follow along by creating a PostgreSQL database at a hosting service, such as [ElephantSQL](https://www.elephantsql.com/).
+You can use your own PostgreSQL instance, if it can be reached over the internet. But you can still follow along by creating a PostgreSQL database at a hosting service, such as [ElephantSQL].
 
 ## Setup
 ### Start MQTT Connector
@@ -23,12 +23,17 @@ This connector expects to take `json` input from the MQTT broker, from an MQTT t
 
 MQTT connector config: `mqtt.yml`
 
+:::info
+All versions are marked with `x.y.z`. To find the latest version, run:
+*  `fluvio hub connector list`
+*  `fluvio hub smartmodule list`
+:::
 
 ```yaml
 # mqtt.yml
 apiVersion: 0.1.0
 meta:
- version: 0.2.5
+ version: x.y.z
  name: fluvio-mqtt-connector
  type: mqtt-source
  topic: mqtt-topic
@@ -52,7 +57,7 @@ $ fluvio cloud connector create --config mqtt.yml
 
 #### Install `mosquito` - MQTT client
 
-First install [mosquito](https://mosquitto.org/download/) to follow later steps for sending JSON to our test MQTT broker
+First install [mosquito] to follow later steps for sending JSON to our test MQTT broker
 
 -> On MacOS, you can install `mosquitto` with homebrew with the following command: <br/>&nbsp;&nbsp;&nbsp; `brew install mosquitto`
 
@@ -73,14 +78,14 @@ You can start one of both of the following connectors
 
 #### SQL Connector with no transformation
 
-##### Download [`json-sql`](https://www.fluvio.io/smartmodules/certified/json-sql/) SmartModule
+##### Download [json-sql] SmartModule
 
 Example output
 
 
 ```bash
-$ fluvio hub sm download infinyon/json-sql@0.2.1
-downloading infinyon/json-sql@0.2.1 to infinyon-json-sql-0.2.1.ipkg
+$ fluvio hub sm download infinyon/json-sql@x.y.z
+downloading infinyon/json-sql@x.y.z to infinyon-json-sql-x.y.z.ipkg
 ... downloading complete
 ... checking package
 trying connection to fluvio router.dev.infinyon.cloud:9003
@@ -96,13 +101,13 @@ apiVersion: 0.1.0
 meta:
  name: fluvio-sql-connector
  type: sql-sink
- version: 0.2.5
+ version: x.y.z
  topic: mqtt-topic
  
 sql:
  url: "postgres://user:password@db.postgreshost.example/dbname"
 transforms:
- - uses: infinyon/json-sql@0.2.1
+ - uses: infinyon/json-sql@x.y.z
    with:
      invoke: insert
      mapping:
@@ -130,14 +135,14 @@ $ fluvio cloud connector create --config sql.yml
 
 #### Connector with JSON to JSON transformation
 
-Download the [Jolt](https://www.fluvio.io/smartmodules/certified/jolt/) and [Json-Sql](https://www.fluvio.io/smartmodules/certified/json-sql/) SmartModules used by this example connector
+Download the [Jolt] and [Json-Sql] SmartModules used by this example connector
 
 Example output
 
 
 ```bash
-$ fluvio hub sm download infinyon/json-sql@0.2.1
-downloading infinyon/json-sql@0.2.1 to infinyon-json-sql-0.2.1.ipkg
+$ fluvio hub sm download infinyon/json-sql@x.y.z
+downloading infinyon/json-sql@x.y.z to infinyon-json-sql-x.y.z.ipkg
 ... downloading complete
 ... checking package
 trying connection to fluvio router.infinyon.cloud:9003
@@ -146,8 +151,8 @@ trying connection to fluvio router.infinyon.cloud:9003
 
 
 ```bash
-$ fluvio hub sm download infinyon/jolt@0.3.0
-downloading infinyon/jolt@0.3.0 to infinyon-jolt-0.3.0.ipkg
+$ fluvio hub sm download infinyon/jolt@x.y.z
+downloading infinyon/jolt@x.y.z to infinyon-jolt-x.y.z.ipkg
 ... downloading complete
 ... checking package
 trying connection to fluvio router.infinyon.cloud:9003
@@ -163,14 +168,14 @@ apiVersion: 0.1.0
 meta:
  name: fluvio-sql-connector-chain
  type: sql-sink
- version: 0.2.5
+ version: x.y.z
  topic: mqtt-topic
  
 sql:
  url: "postgres://user:password@db.postgreshost.example/dbname"
  rust_log: "sql_sink=INFO,sqlx=WARN"
 transforms:
- - uses: infinyon/jolt@0.3.0
+ - uses: infinyon/jolt@x.y.z
    with:
      spec:
        - operation: shift
@@ -181,7 +186,7 @@ transforms:
          spec:
            device:
              type: "mobile"
- - uses: infinyon/json-sql@0.2.1
+ - uses: infinyon/json-sql@x.y.z
    with:
      invoke: insert
      mapping:
@@ -200,7 +205,7 @@ transforms:
              required: true
 ```
 
-Start SQL connector with JSON [transformation](/docs/latest/fluvio/concepts/transformations)
+Start SQL connector with JSON [transformation]
 
 
 ```bash
@@ -210,7 +215,7 @@ $ fluvio cloud connector create --config sql-chain.yml
 #### Install `pgcli` - PostgreSQL client
 
 Install `pgcli` to follow the later DB validation steps
-[https://www.pgcli.com](https://www.pgcli.com/)
+[https://www.pgcli.com]
 
 <Idea>
   On MacOS, you can install `pgcli` with homebrew with the following command:
@@ -346,7 +351,7 @@ Then we enrich the payload by adding the `.device.type` key with the value mobil
 
 ## Move transformation to MQTT Connector
 
-* [Transformations](/docs/latest/fluvio/concepts/transformations) in the `transforms` section of SQL Connector config are deliberately decoupled from connectors.
+* [Transformations] in the `transforms` section of SQL Connector config are deliberately decoupled from connectors.
 We can move a SmartModule from an Inbound to an Outbound connector and accomplish the same result.
 The decision depends on the shape of the data you want to store in a topic.
 For Inbound connectors, the data is transformed before sending to Fluvio topic, while for Outbound, it happens after the data is sent to Fluvio topic
@@ -361,7 +366,7 @@ Modify our `mqtt.yml` config with one transformation that we are moving from the
 # mqtt.yml
 apiVersion: 0.1.0
 meta:
- version: 0.2.5
+ version: x.y.z
  name: fluvio-mqtt-connector
  type: mqtt-source
  topic: mqtt-topic
@@ -376,7 +381,7 @@ mqtt:
  payload_output_type: json
 
 transforms:
- - uses: infinyon/jolt@0.3.0
+ - uses: infinyon/jolt@x.y.z
    with:
      spec:
        - operation: shift
@@ -398,14 +403,14 @@ apiVersion: 0.1.0
 meta:
  name: fluvio-sql-connector-chain
  type: sql-sink
- version: 0.2.5
+ version: x.y.z
  topic: mqtt-topic
  
 sql:
  url: "postgres://user:password@db.postgreshost.example/dbname"
 
 transforms:
- - uses: infinyon/json-sql@0.2.1
+ - uses: infinyon/json-sql@x.y.z
    with:
      invoke: insert
      mapping:
@@ -487,7 +492,18 @@ Using SmartModule chaining with the `jolt` and `json-sql` SmartModules, we obser
 
 We can choose on which side of a pipeline we wanted to transform our data without material impact to the result.
 
-[setup]: #setup
 [sql-connector-with-no-transformation]: #sql-connector-with-no-transformation
 [connector-with-json-to-json-transformation]: #connector-with-json-to-json-transformation
 [publish-json-to-mqtt-broker]: #publish-json-to-mqtt-broker
+[Inbound MQTT connector]: hub/connectors/inbound/mqtt.mdx
+[Outbound SQL connector]: hub/connectors/outbound/sql.mdx
+[PostgreSQL]: https://www.postgresql.org/
+[ElephantSQL]: https://www.elephantsql.com/
+[mosquito]: https://mosquitto.org/download/
+[json-sql]: hub/smartmodules/json-sql.mdx
+[Json-sql]: hub/smartmodules/json-sql.mdx
+[Jolt]: hub/smartmodules/jolt.mdx
+[transformation]: fluvio/concepts/transformations.mdx
+[Transformations]: fluvio/concepts/transformations.mdx
+[https://www.pgcli.com]: https://www.pgcli.com/
+

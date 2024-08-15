@@ -19,9 +19,9 @@ To follow along in this guide you need:
 This section covers sending events from Zapier Zaps to InfinyOn Cloud Webhooks.
 
 ### Pre-requisites
-* An [InfinyOn Cloud](https://infinyon.cloud/) account
+* An [InfinyOn Cloud] account
 * `fluvio` CLI installed connected to Cloud account with `fluvio cloud login`
-* A Zapier account with access to [Zapier Webhooks](https://zapier.com/features/webhooks)
+* A Zapier account with access to [Zapier Webhooks]
 * A Zap trigger. This example will use new survey responses from Google Forms
 
 ### On InfinyOn cloud cluster
@@ -110,9 +110,9 @@ The rest of this guide will cover data flow in the opposite direction.
 This covers triggering Zapier Zaps with InfinyOn Cloud's outbound HTTP Connector
 
 ### Pre-requisites
-* An [InfinyOn Cloud](https://infinyon.cloud/) account
+* An [InfinyOn Cloud] account
 * `fluvio` CLI installed connected to Cloud account with `fluvio cloud login`
-* Zapier account with access to [Zapier Webhooks](https://zapier.com/features/webhooks)dd
+* Zapier account with access to [Zapier Webhooks]
 * An action to save event from a trigger (We're using Google Sheets)
 
 ### In Zapier dashboard
@@ -133,12 +133,17 @@ We'll pause on configuring this Zap for a moment, and be back after the next sec
 1. In InfinyOn Cloud, we need to create an outbound HTTP connector.
   * Replace the url from the previous step for the `endpoint` field.
 
+:::info
+All versions are marked with `x.y.z`. To find the latest version, run:
+*  `fluvio hub connector list`
+*  `fluvio hub smartmodule list`
+:::
 
 ```yaml
 # zapier-connector.yaml
 apiVersion: 0.1.0
 meta:
-  version: 0.2.5
+  version: x.y.z
   name: zapier
   type: http-sink
   topic: cloud-event
@@ -202,3 +207,5 @@ This is the end of the guide. You should now have bi-directional data flow betwe
 [jolt]: https://github.com/infinyon/fluvio-jolt
 [array-map-json]: https://github.com/infinyon/labs-array-map-json-sm
 [How to Stream and Transform Data from Hacker News RSS Feed (YouTube Video)]: https://www.youtube.com/watch?v=raV5q6paAPM&t=1s&ab_channel=InfinyOn
+[Zapier Webhooks]: https://zapier.com/features/webhooks
+

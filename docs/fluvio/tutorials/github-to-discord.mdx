@@ -28,11 +28,16 @@ Let's get started.
 
 Create an HTTP source connector configuration file called `github.yaml` :
 
+:::info
+All versions are marked with `x.y.z`. To find the latest version, run:
+*  `fluvio hub connector list`
+*  `fluvio hub smartmodule list`
+:::
 
 ```yaml
 apiVersion: 0.1.0
 meta:
-  version: 0.2.5
+  version: x.y.z
   name: github-stars-in
   type: http-source
   topic: stars-forks
@@ -45,7 +50,7 @@ http:
     - 'Authorization: token ${{ secrets.GITHUB_TOKEN }}'
   interval: 30s
 transforms:
-  - uses: infinyon/jolt@0.3.0
+  - uses: infinyon/jolt@x.y.z
     with:
       spec:
         - operation: shift
@@ -71,7 +76,7 @@ Create an HTTP source connector configuration file called `discord.yaml` :
 ```yaml
 apiVersion: 0.1.0
 meta:
-  version: 0.2.5
+  version: x.y.z
   name: discord-stars-out
   type: http-sink
   topic: stars-forks
@@ -82,10 +87,10 @@ http:
   headers:
     - "Content-Type: application/json"
 transforms:
-  - uses: infinyon-labs/stars-forks-changes@0.1.2
+  - uses: infinyon-labs/stars-forks-changes@x.y.z
     lookback:
       last: 1
-  - uses: infinyon/jolt@0.3.0
+  - uses: infinyon/jolt@x.y.z
     with:
       spec:
         - operation: shift
@@ -108,8 +113,8 @@ Download the smartmodules used by the connectors to your cluster:
 
 
 ```bash
-$ fluvio hub sm download infinyon/jolt@0.3.0
-$ fluvio hub sm download infinyon-labs/stars-forks-changes@0.1.2
+$ fluvio hub sm download infinyon/jolt@x.y.z
+$ fluvio hub sm download infinyon-labs/stars-forks-changes@x.y.z
 ```
 
 
@@ -149,17 +154,16 @@ An alert with `:star2: 1769` will show-up in your discord channel. See it live a
 
 ### Reference
 
-* [Create a Github Stars/Forks Event Pipeline (Blog)]
-* [labs-stars-forks-changes-sm](https://github.com/infinyon/labs-stars-forks-changes-sm)
+* [labs-stars-forks-changes-sm]
 
 
 ---
 
-[Fluvio CLI]: /docs/fluvio/quickstart#install-fluvio
+[labs-stars-forks-changes-sm]: https://github.com/infinyon/labs-stars-forks-changes-sm
+[Fluvio CLI]: fluvio/quickstart.mdx#install-fluvio
 [InfinyOn Cloud]: https://infinyon.cloud/signup
 [http-sink]: https://github.com/infinyon/http-sink-connector
 [http-source]: https://github.com/infinyon/http-source-connector
 [Access Tokens]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 [Discord Webhooks]: https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
-[Create a Github Stars/Forks Event Pipeline (Blog)]: https://infinyon.com/blog/2023/07/github-stars-to-slack/
 [Fluvio Community - #alerts]: https://discord.com/channels/695712741381636168/961802307727683644
