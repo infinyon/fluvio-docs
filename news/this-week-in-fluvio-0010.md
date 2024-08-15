@@ -93,7 +93,7 @@ This feature is not yet ready to use, but you may notice this command available 
 $ fluvio table
 ```
 
-[connectors]: ../docs/connectors
+[connectors]: ../docs/connectors/overview
 
 ---
 
