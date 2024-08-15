@@ -1,0 +1,88 @@
+---
+sidebar_position: 20
+title: Run Cloud
+description: "Run a Connector on your local machine"
+---
+
+# Run Connectors on InfinyOn Cloud
+
+Check [the Hub] for a library of connectors that you can download and run. This document will guide you through downloading and running a certified connector in [InfinyOn Cloud].
+
+## Prerequisites
+
+This document assumes that you have provisioned a Cluster in your InfinyOn Cloud account. If you have not done so, please use the [following instructions][InfinyOn Cloud].
+
+
+## 1. Create a Connector Configuration File
+
+Let's create new directory for the connector configuration file:
+
+```bash copy="fl"
+$ mkdir http-source-cloud; cd http-source-cloud
+```
+
+Create `quotes-config.yml` and paste the following configuration:
+
+```yaml
+# quotes-config.yml
+apiVersion: 0.1.0
+meta:
+  version: 0.3.8
+  name: http-quotes
+  type: http-source
+  topic: quotes
+http:
+  endpoint: https://demo-data.infinyon.com/api/quote
+  interval: 2s
+```
+
+The configuration file ask the `http-source` connector to read a new quote `quote` from the `demo-data` server every 2 seconds.
+
+## 2. Run the `http-source` Connector
+
+Use the configuration file and create a new connector:
+
+```bash copy="fl"
+$ fluvio cloud connector create -c quotes-config.yaml
+```
+
+To check if the connector is running:
+
+```bash copy="fl"
+$ fluvio cloud connector list
+```
+
+The connector provisioned the `quotes` topic and it periodically sends a new quote.
+
+
+## 3. Check the Result
+
+Read from the fluvio topic:
+
+```bash copy="fl"
+$ fluvio consume quotes
+```
+
+## 4. Clean-up
+
+The connector will continue to run and consume your credits. Let's shut it down:
+
+```bash copy="fl"
+$ fluvio cloud connector delete http-quotes
+```
+
+We can also delete the topic
+
+```bash copy="fl"
+$ fluvio topic delete quotes
+```
+
+## References
+
+* [SmartModules] to apply transformations
+* [Tutorials] to see additional examples
+
+[the Hub]: hub/connectors/index.md
+[InfinyOn Cloud]: cloud/overview.mdx
+[SmartModules]: smartmodules/introduction.mdx
+[Tutorials]: fluvio/tutorials/index.md

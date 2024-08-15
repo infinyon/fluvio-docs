@@ -130,8 +130,8 @@ fluvio remote list
 It should show the following:
 
 ```bash
-  REMOTE         STATUS   LAST SEEN 
-  docker-remote  Waiting  -         
+  REMOTE           SC STATUS  SPU STATUS  LAST SEEN  ERRORS
+  docker-remote    Waiting    Waiting     -          -
 ```
 
 
@@ -217,8 +217,8 @@ fluvio home status
 It should show the following:
 
 ```bash
-  HOME  ROUTE         STATUS  LAST SEEN 
-  home  sc-home:9003  Online  1s        
+  REMOTE  SC STATUS  SPU STATUS  LAST SEEN  ERRORS
+  home    Connected  Connected   1s         -
 ```
 
 ---

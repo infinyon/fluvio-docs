@@ -4,6 +4,8 @@ title: "Overview"
 description: "Fluvio Connectors make the process of importing or exporting data simple"
 ---
 
+# Connectors Overview 
+
 Fluvio Connectors make the process of importing or exporting data simple.
 You can import data with an `Inbound` connector and export data with an `Outbound` connector.
 
@@ -11,37 +13,33 @@ Inbound and outbound connectors fundamentally work in the same way. The only dif
 
 <img
   alt="Connectors"
-  src="/img/docs/references/connectors/smart-connectors-extra.svg"
-  style={{ justify: 'center', maxWidth: '600px' }}
+  src="/img/docs/references/connectors.png"
+  style={{ justify: 'center', maxWidth: '800px' }}
 />
 
 
-- **Protocol**: Parses data according to the wire format of the connected data platform.
-- **Extract**: Extracts raw data from the protocol format and packages it neatly into data structures
-  that may be used by subsequent stages or be produced directly to a topic.
-- **Filter** (optional): A user-provided SmartModule that may determine whether a given record
-  should be discarded before sending it over the network to Fluvio, saving bandwidth.
-- **Shape** (optional): A user-provided SmartModule that may take the extracted data structures and
-  transform them in to an application-specific format.
+- **Protocol**: Parses data according to the wire format corresponding to the endpoint protocol.
+- **SmartModules** (optional): One or more user-defined tranformations that filter of shape the data records before passing them along to the next stage of the pipeline.
 
-
-### Protocol Tranformations
-
-The **Protocol** and **Extract** stages are built directly into the connector. They offer basic access to your data through the various protocols your data sources use. In the **Extract** stage, your data is structured from whatever protocol it is sourced from.
-
-
-### User-Defined Tranformations
-
-The onnectors allow you to apply your custom tranformations for post-processing (inbound) or pre-processing (outbound)the data from or to an exernal entity. You can chain muliple **Filter** and **Shape** operations as needed.
-
-The user define transformation is powered by WebAssembly (also called wasm) via [SmartModules]. Use the instructions in the [SmartModules] page to learn how to apply a tranformation or create a new one.
+Smartmodules are powered by WebAssembly (also called wasm). Check out the [SmartModules] page to learn how to apply a tranformation or create a new one.
 
 
 ### Next Steps
 
-* [Connector Catalog](hub/connectors/index.md)
-* [Run Pre-built Connectors](connectors/run-hub.mdx)
-* [Deploy a connector locally](connectors/local/introduction.mdx)
-* [Deploy a connector in the cloud](connectors/cloud/introduction.mdx)
-* [Build a new connector](connectors/local/develop/introduction.mdx)
-* [Apply transformations](connectors/smartmodules/introduction.mdx)
+* [Run connector on local machine]
+* [Run connector in the cloud]
+* [Connector Hub]
+* [Connector Configuration File]
+* [Build a new connector]
+* [Apply SmartModule transformations]
+
+
+
+[SmartModules]: smartmodules/introduction.mdx
+[Run connector on local machine]: ./run-local.mdx
+[Run connector in the cloud]: ./run-cloud.mdx
+[Connector Hub]: hub/connectors/index.md
+[Connector Configuration File]: ./configuration.mdx
+[Build a new connector]: ./developers/introduction.mdx
+[Apply SmartModule transformations]: smartmodules/introduction.mdx
+

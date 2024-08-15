@@ -1,0 +1,123 @@
+---
+sidebar_position: 40
+title: "Configuration File"
+description: "Connector Configuration File"
+---
+
+# Connector Configuration File
+
+This is a template YAML connector file that needs to be populated to be functional. In the next section, we will explore the different sections of the connector configuration file and how to properly configure each one.
+
+```yaml title="connector.yaml"
+apiVersion: 0.1.0
+
+meta:
+ name:
+ version:
+ type:
+ topic:
+
+ # optional (inbound connectors)
+ producer:
+   # optional
+   linger:
+   # optional
+   batch-size:
+   # optional
+   compression:
+
+ # optional (outbound connectors)
+ consumer:
+   # optional
+   partition:
+   # optional
+   max_bytes:
+
+ # optional
+ secrets:
+   - name: secret_1
+
+# optional
+transforms:
+ - uses: smartmodule_name
+   with:
+     param_name: param_value
+```
+
+## Connector `apiVersion` configuration
+
+The `apiVersion` is the version of the connector API that the connector uses to parse the configuration file. The current accepted version is `0.1.0`.
+
+## Connector `meta` configuration
+
+The `meta` section contains the metadata for the connector:
+
+* The `name` is the name of the connector. e.g. `my-connector`.
+* The `type` is the type of the connector. e.g. `http-source`, `http-sink`, `mqtt-source`.
+  * See the [connectors] section for the full list of connectors supported.
+* The `version` is the version of the connector. e.g. `0.1.0`.
+* The `topic` is the topic that the connector will connect to. e.g. `my-topic`. The topic will be created automatically if it does not exist.
+* The `secrets`(optional) is a list of secrets that the connector will use. This accepts a list of objects with the key `name`.
+  * See the [secrets] section for more information.
+* The `producer`(optional) is the producer configuration for the connector. Currently, this is only used for `source`/`inbound` connectors. The current supported configurations are `linger`, `compression` and `batch_size`. All configurations are optional. See examples to a list of valid values for each configuration.
+* The `consumer`(optional) is the consumer configuration for the connector. Currently, this is only used for `sink`/`outbound` connectors. The current supported configurations are `id`, `partition`, `max_bytes` and `offset`. All configurations are optional. See examples to a list of valid values for each configuration.
+
+An example with all the keys filled for a `http-source` connector:
+
+```yaml
+apiVersion: 0.1.0
+meta:
+ name: my-http-source-connector
+ type: http-source
+ version: x.y.z
+ topic: my-topic
+ producer:
+   linger: 1ms
+   batch_size: "44.0 MB"
+   # possible values: `none`, `gzip`, `snappy` and `lz4`
+   compression: gzip
+ secrets:
+   - name: MY_SECRET
+
+```
+
+An example with all the keys filled for a `http-sink` connector:
+
+```yaml
+apiVersion: 0.1.0
+meta:
+ name: my-http-sink-connector
+ type: http-sink
+ version: x.y.z
+ topic: my-topic
+ consumer:
+   max_bytes: 3 MB
+   partition: 0
+ secrets:
+   - name: MY_SECRET
+```
+
+:::info
+The `x.y.z` version should be updated with the version of the latest connector in [the Hub].
+:::
+
+## Connector `transforms` configuration
+
+Connectors support `transforms`. Records can be modified before they are sent to the topic. The `transforms` section is a list of `transform` objects. Each `transform` object has an `uses` and a `with` section.
+
+* `uses` is the reference to the SmartModule used in the transform.
+* `with` is the configuration for the transform
+
+
+### References
+
+The following references will provide additional information for:
+
+* [SmartModules] for additional information on transformations
+* [Tutorials] for end-to-end examples
+
+
+[SmartModules]: smartmodules/introduction.mdx
+[Tutorials]: fluvio/tutorials/index.md
+[connectors]: connectors/overview.mdx
+[the Hub]: hub/connectors/index.md

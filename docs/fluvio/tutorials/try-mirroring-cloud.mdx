@@ -18,7 +18,7 @@ To undestand mirroring, we need to undestand what is a Home and a Remote cluster
 
 ### Create a Cloud account
 
-Using your web browser, navigate to [https://infinyon.cloud/signup](https://infinyon.cloud/signup), where this experimental feature is available.
+Using your web browser, navigate to [https://infinyon.cloud/signup], where this experimental feature is available.
 
 After the account is created, you will be placed in the Dashboard. You may choose to create a cluster in the GUI. In this tutorial, we'll create a cluster using the CLI later.
 
@@ -82,8 +82,8 @@ fluvio remote list
 It should show the following:
 
 ```bash
-  REMOTE         STATUS   LAST SEEN 
-  edge-remote    Waiting  -         
+  REMOTE         SC STATUS  SPU STATUS  LAST SEEN  ERRORS
+  edge-remote    Waiting    Waiting     -          -
 ```
 
 ### Create the mirror topic
@@ -167,8 +167,8 @@ fluvio home status
 It should show the following:
 
 ```bash
-  HOME                                  ROUTE                           STATUS  LAST SEEN
-  c7f891c9-f1f9-4d28-b181-9777d8d07731  router.infinyon.cloud:9003  Online  1s
+  HOME                                  ROUTE                       SC STATUS  SPU STATUS  LAST SEEN  ERRORS
+  c7f891c9-f1f9-4d28-b181-9777d8d07731  router.infinyon.cloud:9003  Connected  Connected   1s         -
 ```
 
 ---
@@ -232,4 +232,4 @@ B
 [Try Mirroring - Docker]: /fluvio/tutorials/try-mirroring.mdx
 [IoT Mirroring - Cloud]: /fluvio/tutorials/iot-mirroring-cloud.mdx
 [IoT Mirroring -  Raspberry Pi to a remote]: /fluvio/tutorials/iot-mirroring-local.mdx
-
+[https://infinyon.cloud/signup]: https://infinyon.cloud/signup
