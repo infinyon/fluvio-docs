@@ -4,7 +4,7 @@ title: InfinyOn Cloud
 description: "A certifed version of Fluvio Open Source installed and maintained by the InfinyOn team."
 ---
 
-This guide will outline using the [`Fluvio CLI`] with [InfinyOn Cloud] or a local [Fluvio Cluster].
+This guide will outline using the [Fluvio CLI] with [InfinyOn Cloud] or a local [Fluvio Cluster].
 
 1. [Install Fluvio Client (CLI)](#1-installing-fluvio-client-cli)
 2. [Create an InfinyOn Cloud Account](#2-create-an-infinyon-cloud-account)
@@ -29,7 +29,7 @@ This command will download the Fluvio Version Manager (fvm), Fluvio CLI (fluvio)
 
 ## 2. Create an InfinyOn Cloud Account
 
-Create a free InfinyOn Cloud account to get access to [InfinyOn Hub]. The Hub is a data streaming store for pre-built connectors, smartmodules and other workflow components. Your InfinyOn Cloud account has `free credits`, which you may use to run Fluvio clusters in the cloud.
+Create a [free InfinyOn Cloud account][InfinyOn Cloud sign-up page] to get access to [InfinyOn Hub]. The Hub is a data streaming store for pre-built connectors, smartmodules and other workflow components. Your InfinyOn Cloud account has free credits, which you may use to run Fluvio clusters in the cloud.
 
 Head over to the [InfinyOn Cloud sign-up page] and create an account. Depending on which method you choose in account creation, you can log in with OAuth2 or username/password.
 
@@ -52,7 +52,7 @@ Password:
 
 ## 3. Start a Cluster
 
-Use [`Fluvio CLI`] to start a cluster on InfinyOn Cloud or your local machine.
+Use [Fluvio CLI] to start a cluster on InfinyOn Cloud or your local machine.
 
 Start cluster on **InfinyOn Cloud** (must be logged in as intructed in [section 2](#2-create-an-infinyon-cloud-account)):
 
@@ -69,7 +69,7 @@ $ fluvio cluster start
 Check out [Docker Installation] if you want to run the cluster in Docker instead.
 
 
-Run the following command to check the CLI and the Cluster platform versions:
+Run the following command to check the CLI and the cluster platform versions:
 
 ```bash copy="fl"
 $ fluvio version
@@ -175,7 +175,7 @@ http:
 You may run the connector on InfinyOn Cloud, or your local machine.
 
 
-#### Run HTTP Connector on `InfinyOn Cloud`
+#### Run HTTP Connector on InfinyOn Cloud
 
 To start a connector in **InfinyOn Cloud**, use the following command:
 
@@ -205,7 +205,7 @@ Consuming records from 'quotes'
 You may delete your cloud connector with the following command: `fluvio cloud connector delete http-quotes`.
 
 
-#### Run HTTP Connector on your `local` machine (alternative)
+#### Run HTTP Connector on your local machine (alternative)
 
 We'll use [Connector Development Kit (cdk)] to download and run the HTTP Source connector from [InfinyOn Hub]. With CDK, you also have the option to build your own connectors.
 
@@ -406,28 +406,27 @@ fluvio topic delete string-quotes
 
 ## Next Steps
 
-Now you're familiar with using InfinyOn Cloud with the `fluvio` CLI, Check out our [Guides] and [Tutorials].
+Now you're familiar with using InfinyOn Cloud with the [Cloud CLI], Check out our [Tutorials].
 
-[`fluvio profile`]: /docs/fluvio/cli/fluvio/profile
-[`Fluvio CLI`]: /docs/fluvio/cli/introduction
-[Fluvio Cluster]: /docs/fluvio/concepts/architecture/overview
+[`fluvio profile`]: fluvio/cli/fluvio/profile.mdx
+[Fluvio CLI]: fluvio/cli/introduction.mdx
+[Fluvio Cluster]: fluvio/concepts/architecture/overview.mdx
 [Infinyon Cloud]: https://infinyon.cloud/
-[InfinyOn Hub]: https://infinyon.cloud/hub
-[Connector Development Kit (cdk)]: /docs/latest/fluvio/cli/cdk
-[SmartModule called jolt]: /docs/fluvio/quickstart#using-the-jolt-smartmodule-to-turn-json-records-into-sentences
-[SmartModule Jolt]: /docs/fluvio/quickstart#using-the-jolt-smartmodule-to-turn-json-records-into-sentences
-[SmartModule Developer Kit (smdk)]: /docs/fluvio/cli/smdk
-[about Topics in the Fluvio docs]: /docs/fluvio/concepts/topics
-[about Producers in the Fluvio docs]: /docs/fluvio/concepts/produce-consume#producer
-[about Consumers in the Fluvio docs]: /docs/fluvio/concepts/produce-consume#consumer
-[a growing number of connectors]: /docs/connectors/local/catalog/overview
+[InfinyOn Hub]: hub/overview.mdx
+[Connector Development Kit (cdk)]: fluvio/cli/cdk.mdx
+[SmartModule called jolt]: fluvio/quickstart.mdx#using-the-jolt-smartmodule-to-turn-json-records-into-sentences
+[SmartModule Jolt]: fluvio/quickstart.mdx#using-the-jolt-smartmodule-to-turn-json-records-into-sentences
+[SmartModule Developer Kit (smdk)]: fluvio/cli/smdk.mdx
+[about Topics in the Fluvio docs]: fluvio/concepts/topics.mdx
+[about Producers in the Fluvio docs]: fluvio/concepts/produce-consume.mdx#producer
+[about Consumers in the Fluvio docs]: fluvio/concepts/produce-consume.mdx#consumer
+[a growing number of connectors]: hub/connectors/catalog
 [a random quote]: https://demo-data.infinyon.com/api/quote
-[about Connectors in the Fluvio docs]: /docs/connectors/overview
-[HTTP Source]: /docs/connectors/catalog/inbound/http
-[free Infinyon Cloud account]: https://infinyon.cloud/signup
-[InfinyOn Cloud sign-up page]: https://infinyon.cloud/signup
-[Docker Installation]: /docs/fluvio/how-to/use-fluvio-in-docker
+[about Connectors in the Fluvio docs]: connectors/overview.mdx
+[HTTP Source]: hub/connectors/inbound/http.mdx
+[InfinyOn Cloud sign-up page]: https://infinyon.cloud/ui/signup
+[Docker Installation]: fluvio/how-to/use-fluvio-in-docker.mdx
 [sign up here]: https://infinyon.com/request/ss-early-access/
 [WebAssembly]: https://webassembly.org/
-[Guides]: /docs/cloud/how-to/use-secrets
-[Tutorials]: /docs/fluvio/tutorials/hackernews-reader
+[Cloud CLI]: cloud/cli/overview.mdx
+[Tutorials]: cloud/tutorials/infinyon-cloud.mdx
