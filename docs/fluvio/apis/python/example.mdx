@@ -122,7 +122,7 @@ PARTITION = 0
 # 4. Create a consumer, and stream the data back
 if __name__ == "__main__":
    # Currently the Python client does not support creating topics
-   # Using the fluvio CLI
+   # Using the Fluvio CLI
    os.popen("fluvio topic create {}".format(TOPIC_NAME))
 
    # Connect to cluster

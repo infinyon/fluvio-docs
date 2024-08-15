@@ -4,7 +4,7 @@ description: "A short tutorial for using Webhooks"
 sidebar_position: 20
 ---
 
-This tutorial assumes that `fluvio` is installed, and logged-in to InfinyOn Cloud. Follow the [Quick Start](../../../fluvio/quickstart) to get set up.
+This tutorial assumes that `fluvio` is installed, and logged-in to InfinyOn Cloud. Follow the [Quick Start] to get set up.
 
 Webhooks are special connectors with an associated external url. Users can send data to their topics via a `HTTP POST` request.
 
@@ -28,7 +28,7 @@ webhook:
   outputType: json         # default: text, options: [text, json]
   outputUri: full          # default: none, options: [full, none, path, query]
 transforms:
-  - uses: infinyon/jolt@0.4.1
+  - uses: infinyon/jolt@x.y.z
     with:
       key: ${{ secrets.my_key }}
 ```
@@ -140,7 +140,7 @@ The consumer should now show the following output:
     "content-length": "16",
     "content-type": "application/json",
     "host": "infinyon.cloud",
-    "user-agent": "curl/7.87.0",
+    "user-agent": "curl/x.y.z",
     "x-forwarded-for": "..."
   },
   "path": "",
@@ -150,4 +150,7 @@ The consumer should now show the following output:
 
 ## Conclusion
 
-You now know how to create and configure the output of Webhooks. Check out the [Webhook Config](../how-to/webhook-config) reference to see how to configure other transformations.
+You now know how to create and configure the output of Webhooks. Check out the [Webhook Config] reference to see how to configure other transformations.
+
+[Quick Start]: fluvio/quickstart.mdx
+[Webhook Config]: cloud/reference/webhook-config.mdx
