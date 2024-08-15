@@ -4,7 +4,7 @@ description: Stateful Dataflow merge feature.
 sidebar_position: 60
 ---
 
-Dataflows can merge events from multiple topics. The merge behavior is defined in the `sources` section of the service definition. The record type must match the schema of the target topic, otherwise use the `map` operator transform as required.
+Dataflows can merge events from multiple topics. The merge behavior is defined in the `sources` section of the service definition. The record type of all sources must match, otherwise use the `map` operator to transform as required.
 
 ```yaml
   sources:
@@ -19,7 +19,7 @@ Dataflows can merge events from multiple topics. The merge behavior is defined i
         - operator: <operator-name>
 ```
 
-The `transforms` section defines the transformation to apply to the event before sending it to the target topic. The operator type depends on the desired business logic.
+The `transforms` section defines the transformation to apply to the event before sending it to the service. The operator type depends on the desired business logic.
 
 ## Merge Example
 
@@ -119,8 +119,7 @@ $ fluvio produce child
 
 Consume from `people`:
 
-%copy%
-```bash
+```bash copy="fl"
 $ fluvio consume people -Bd
 ```
 
@@ -136,4 +135,6 @@ In summary, `merge-service` utilizes `sources` to merge the data from different 
 
 ### References
 
-* <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/main/primitives/merge" target="_blank" rel="nofollow" >Merge Examples (github)</a>
+* [Merge Examples (github)]
+
+[Merge Examples (github)]: https://github.com/infinyon/stateful-dataflows-examples/tree/main/primitives/merge
