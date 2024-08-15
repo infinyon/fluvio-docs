@@ -81,7 +81,7 @@ For the full list of changes this week, be sure to check out [our CHANGELOG].
 
 [avikam]: https://github.com/avikam
 
-[this form]: https://infinyon.com/request/ss-early-access/
+[this form]: https://infinyon.com/request/sdf-onboarding/
 
 [CHANGELOG]: https://github.com/infinyon/fluvio/blob/v0.11.8/CHANGELOG.md
 

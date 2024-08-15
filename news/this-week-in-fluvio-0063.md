@@ -75,7 +75,7 @@ For the full list of changes this week, be sure to check out [our CHANGELOG].
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
-[this form]: https://infinyon.com/request/ss-early-access/
+[this form]: https://infinyon.com/request/sdf-onboarding/
 [CHANGELOG]: https://github.com/infinyon/fluvio/blob/v0.11.10/CHANGELOG.md
 [When a topic is deleted, connected clients should have their connection closed]: https://github.com/infinyon/fluvio/issues/3836
 [Remove localhost from fluvio in favor of 127.0.0.1]: https://github.com/infinyon/fluvio/issues/3866
