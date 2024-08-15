@@ -110,9 +110,6 @@ Each configuration object goes through its own lifecycle. Object status tracks t
 
 For detailed schema definition and object life cycles, checkout the [Architecture Overview].
 
-[Architecture Overview]:
-
-
 #### Object Outputs
 
 Each configuration object can converted to different data formats, such as _json_, or _yaml_. Additional data formats are available and can be exposed if required.
@@ -150,15 +147,11 @@ If the SPU leader becomes unreachable, an election is triggered and one of the S
 
 For additional information on the election algorithm, checkout [Election Design].
 
-[Election Design]:
-
 ## Client Profiles
 
 The client library utilizes profiles to hide the complexity associated with the connection configuration. Furthermore, profiles allows the client library to manage multiple Fluvio clusters from the same client instance. Simply switch the profile and all subsequent operations are applied to a different cluster.
 
 For additional information on Profile management, checkout [Fluvio Profiles] section.
-
-[Fluvio Profiles]:
 
 ## Client Workflow
 
@@ -173,6 +166,11 @@ All client operations follow a similar pattern.
 
 The Fluvio Client library is multi-threaded, and it can simultaneously connect to _multiple clusters_, and concurrently _produce and consume_ one or more data streams.
 
-[Admin API]: /docs/fluvio/concepts/architecture/client#admin-api
-[Producer API]: /docs/fluvio/concepts/architecture/client#producer-api
-[Consumer API]: /docs/fluvio/concepts/architecture/client#consumer-api
+[Admin API]: fluvio/concepts/architecture/client#admin-api
+[Producer API]: fluvio/concepts/architecture/client#producer-api
+[Consumer API]: fluvio/concepts/architecture/client#consumer-api
+[Fluvio CLI]: fluvio/cli/introduction.mdx
+[Architecture Overview]: fluvio/concepts/architecture/overview.mdx
+[Apis Page]: apis/quickstart.mdx
+[Election Design]: fluvio/concepts/architecture/replica-election.mdx
+[Fluvio Profiles]: fluvio/cli/fluvio/profile.mdx
