@@ -40,7 +40,7 @@ To get familiar, check out the example configs from our tutorials.
 * Make behavior with producing records from file consistent between `fluvio` and `smdk` - ([#2756](https://github.com/infinyon/fluvio/pull/2756))
 * [New docs for our Certified SmartModule: Jolt]
 
-[Chaining support]:../docs/smartmodules/core-concepts#chaining-with-cli
+[Chaining support]:../docs/smartmodules/chaining
 
 [HTTP to SQL tutorial]: ../docs/fluvio/tutorials/http-to-sql
 [MQTT to SQL tutorial]: ../docs/fluvio/tutorials/mqtt-to-sql
