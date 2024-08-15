@@ -33,7 +33,7 @@ The file has been downloaded to your local machine.
 Save the following configuration file on your machine:
 
 ```yaml
-# quotes-config.yml
+# quotes-config.yaml
 apiVersion: 0.1.0
 meta:
   version: 0.3.8
@@ -55,6 +55,9 @@ Use connector `.ipkg` package file and the configuration file to run the connect
 $ cdk deploy start --ipkg infinyon-http-source-0.3.8.ipkg --config ./quotes-config.yaml
 ```
 
+Add `--log-level debug` to increase log level.
+
+
 To check if the connector is running:
 
 ```bash copy="fl"
@@ -70,6 +73,13 @@ Read from the fluvio topic:
 ```bash copy="fl"
 $ fluvio consume quotes
 ```
+
+Show the logs:
+
+```bash copy="fl"
+$ cdk deploy log --name http-quotes
+```
+
 
 ## 5. Clean-up
 
