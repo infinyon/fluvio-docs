@@ -19,7 +19,7 @@ This Week in Fluvio is our weekly newsletter for development updates to [Fluvio 
   * Compatible for use in SmartModules
 
 ## Feature Highlight
-This feature was added in the previous release but was not mentioned in [last week's issue](news/this-week-in-fluvio-0040).
+This feature was added in the previous release but was not mentioned in [last week's issue].
 
 * Support for `at-least-once` and `at-most-once` in the Producer Client. ([#2481](https://github.com/infinyon/fluvio/issues/2481))
   * This feature introduces the notion of **Delivery Semantic** to Fluvio Producer. From now, you can choose in which manner you want
@@ -27,6 +27,8 @@ This feature was added in the previous release but was not mentioned in [last we
   The first one is sending without waiting for the response, hence no reaction for errors. The latter one is sending and
   retrying until succeeded (with certain assumptions). Check out more details in
   [Delivery Semantics](/docs/fluvio/concepts/delivery-semantics) section.
+
+[last week's issue]: this-week-in-fluvio-0040
 
 ---
 
