@@ -1,10 +1,10 @@
 ---
 title: Inline Dependencies
 description: Stateful Dataflows Inline Dependencies
-sidebar_position: 120
+sidebar_position: 110
 ---
 
- For inline operators, you can add `dependencies` section to include external language specific libraries. The dependencies are defined in the `dependencies` section of the operator definition. The dependencies are resolved by the Fluvio engine and made available to the operator at runtime.
+ For inline operators, you can add `dependencies` section to include external language specific libraries. The dependencies are defined in the `dependencies` section of the operator definition. The dependencies are resolved by the SDF engine and made available to the operator at runtime.
 
 
  ## External Dependencies
@@ -51,7 +51,7 @@ sidebar_position: 120
      - name: regex
        version: "1.10.0"
    run: |
-     fn validate_year(input: String) -> Result<bool, String> {
+     fn validate_year(input: String) -> Result<bool> {
          use std::sync::OnceLock;
          use regex::Regex;
 
@@ -76,7 +76,7 @@ sidebar_position: 120
    dependencies:
        - name: sdf-http
          git: "https://github.com/infinyon/sdf-guest-http"
-         tag: "v0.3.0"
+         tag: "v0.4.0"
  ```
 
  Following snippet takes a sentence and translate english to spanish using external API.   The [Request](https://docs.rs/reqwest/0.11.24/reqwest/struct.Request.html) is part of `reqwest` library and `sdf_http::blocking::send` is used to send the request.
@@ -87,14 +87,14 @@ sidebar_position: 120
    dependencies:
        - name: sdf-http
          git: "https://github.com/infinyon/sdf-guest-http"
-         tag: "v0.3.0"
+         tag: "v0.4.0"
    run: |
-     fn english_to_spanish(sentence: String) -> Result<String, String> {
+     fn english_to_spanish(sentence: String) -> Result<String> {
          use  sdf_http::http::Request;
 
          let url = format!("https://acme.com/translate?text={}", sentence);
-         let request = Request::builder().uri(url).body("").map_err(|e| e.to_string())?;
-         let response = sdf_http::blocking::send(request).map_err(|e| e.to_string())?;
+         let request = Request::builder().uri(url).body("")?;
+         let response = sdf_http::blocking::send(request)?;
          Ok(response.into_body())
      }
  ```

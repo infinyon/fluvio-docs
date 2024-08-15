@@ -51,11 +51,11 @@ update-state:
 
 Note that state value can be access using `count_per_word` state function which is automatically injected by SDF builder.
 
-This API is invoked by the update-state operator, which only returns the value of the partition state.
+This API is invoked by the `update-state` operator, which only returns the value of the partition state.
 
 In the example, `count_per_word` represents a row value of the dataframe.  If operator sees  `apple`, it will be first row in the dataframe above.
 
-However, aggregate operators like `flush` can access the entire state and perform aggregation across all partitions  "In this case, the count_per_word state function returns the entire DataFrame, not just individual rows. You can then perform DataFrame operations using the SQL API. The snippet below shows how to use SQL to get the 3 most frequent words.
+However, aggregate operators like `flush` can access the entire state and perform aggregation across all partitions. In this case, the `count_per_word` state function returns the entire DataFrame, not just individual rows. You can then perform DataFrame operations using the SQL API. The snippet below shows how to use SQL to get the 3 most frequent words.
 
 ```yaml
 flush:
@@ -76,8 +76,6 @@ flush:
             let word_count = WordCount { word, count };
             top_words.push(word_count);
         }
-
-
 
         Ok(top_words)
         }

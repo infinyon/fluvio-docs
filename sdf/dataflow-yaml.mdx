@@ -4,7 +4,7 @@ description: Stateful Dataflow file definition and examples.
 sidebar_position: 50
 ---
 
-The `dataflow.yaml` file defines the end-to-end composition <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph" target="_blank">DAG</a> of the data-streaming application. At its core, the file defines sources, schemas, services, and destinations. Each service represents a flow that has one or more sources, one or more operators, and one or more destinations.
+The `dataflow.yaml` file defines the end-to-end composition [DAG] of the data-streaming application. At its core, the file defines sources, schemas, services, and destinations. Each service represents a flow that has one or more sources, one or more operators, and one or more destinations.
 
 A dataflow is divided into two areas: [metadata definitions](#metadata-definitions) and [service composition](#service-composition-dag).
 
@@ -289,9 +289,10 @@ The engine builds the dataflow and starts the services. If you encouter errors, 
 * [Operators]
 * [SDF]
 
-
 [WASM Component Model]: https://component-model.bytecodealliance.org/
-[Services]: /sdf/services
-[Types]: /sdf/types
-[Operators]: /sdf/operators
+[Services]: services
+[Types]: services/types.mdx
+[Operators]: services/operators.mdx
 [SDF]: /sdf
+[DAG]: https://en.wikipedia.org/wiki/Directed_acyclic_graph
+[Services Section]: services
