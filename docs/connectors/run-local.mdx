@@ -1,0 +1,98 @@
+---
+sidebar_position: 30
+title: Run Local
+description: "Run a Connector on your local machine"
+---
+
+import Versions from '@site/embeds/versions';
+
+# Run Connectors on Your Local Machine
+
+Check [the Hub] for a library of certified connectors that you can download and run. If the connector you need isn't available, you can [build your own]. This document will guide you through downloading and running a certified connector from the Hub on your local machine.
+
+
+## 1. Download `http-source` Connector from the Hub
+
+Let's create new directory and download <code>infinyon/http-source@{Versions.http_source}</code> connector from the Hub:
+
+```bash copy="fl"
+$ mkdir http-source; cd http-source
+```
+
+Use [`cdk`] to download the `http-source` connector:
+
+```bash copy="fl"
+$ cdk hub download infinyon/http-source@0.3.8
+```
+
+The file has been downloaded to your local machine.
+
+
+## 2. Create a Connector Configuration File
+
+Save the following configuration file on your machine:
+
+```yaml
+# quotes-connector.yml
+apiVersion: 0.1.0
+meta:
+  version: 0.3.8
+  name: http-quotes
+  type: http-source
+  topic: quotes
+http:
+  endpoint: https://demo-data.infinyon.com/api/quote
+  interval: 2s
+```
+
+The configuration file ask the `http-source` connector to read a new quote `quote` from the `demo-data` server every 2 seconds.
+
+## 3. Run the `http-source` Connector
+
+Use connector `.ipkg` package file and the configuration file to run the connector:
+
+```bash copy="fl"
+$ cdk deploy start --ipkg infinyon-http-source-0.3.8.ipkg --config ./quotes-connector.yaml
+```
+
+To check if the connector is running:
+
+```bash copy="fl"
+$ cdk deploy list
+```
+
+The connector provisioned the `quotes` topic and it periodically sends a new quote.
+
+## 4. Check the Result
+
+Read from the fluvio topic:
+
+```bash copy="fl"
+$ fluvio consume quotes
+```
+
+## 5. Clean-up
+
+The connector is running in the background. Let's shut it down:
+
+```bash copy="fl"
+$ cdk deploy shutdown --name http-quotes
+```
+
+We can also delete the topic
+
+```bash copy="fl"
+$ fluvio topic delete quotes
+```
+
+## References
+
+* [SmartModules] to apply transformations
+* [Tutorials] to see additional examples
+
+
+[the Hub]: hub/connectors/index.md
+[build your own]: ./developers/introduction.mdx
+[`cdk`]: fluvio/cli/cdk.mdx
+[SmartModules]: smartmodules/introduction.mdx
+[Tutorials]: fluvio/tutorials/index.md
