@@ -80,10 +80,10 @@ Thanks to those who were in attendance at KubeCon and stopped and said hi to us 
 
 ![A photo of the InfinyOn booth. A screen with the InfinyOn Cloud dashboard displayed in front of an InfinyOn branded purple background](images/0048/infinyon-booth-ui.png)
 
-[`smdk` - SmartModule Development Kit CLI]: ../docs/fluvio/cli/smdk
+[`smdk` - SmartModule Development Kit CLI]: smartmodules/smdk.mdx
 [SQL outbound connector]: ../docs/hub/connectors/outbound/sql
 [local connectors docs]: ../docs/hub/connectors
-[SmartModule Development Kit docs]: ../docs/fluvio/cli/smdk
+[SmartModule Development Kit docs]: smartmodules/smdk.mdx
 [HTTP to SQL tutorial]: ../docs/fluvio/tutorials/http-to-sql
 [MQTT to SQL tutorial]: ../docs/fluvio/tutorials/mqtt-to-sql
 [New UI tutorial]: ../docs/cloud/overview

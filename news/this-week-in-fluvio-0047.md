@@ -43,14 +43,13 @@ For some of us, this was the first time meeting face-to-face. This was the first
 
 We're not yet ready to talk about it, but we are looking forward to the reveal of this collaboration. Stay tuned!
 
-[cdk]: ../docs/fluvio/cli/cdk
-
 ---
 
 Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
+[cdk]: connectors/cdk.mdx
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
