@@ -1,5 +1,5 @@
 ---
-sidebar_position: 30
+sidebar_position: 10
 title: Run Local
 description: "Run a Connector on your local machine"
 ---
@@ -8,7 +8,7 @@ import Versions from '@site/embeds/versions';
 
 # Run Connectors on Your Local Machine
 
-Check [the Hub] for a library of certified connectors that you can download and run. If the connector you need isn't available, you can [build your own]. This document will guide you through downloading and running a certified connector from the Hub on your local machine.
+Check [the Hub] for a library of connectors that you can download and run. If the connector you need isn't available, you can [build your own]. This document will guide you through downloading and running a certified connector from the Hub on your local machine.
 
 
 ## 1. Download `http-source` Connector from the Hub
@@ -33,7 +33,7 @@ The file has been downloaded to your local machine.
 Save the following configuration file on your machine:
 
 ```yaml
-# quotes-connector.yml
+# quotes-config.yml
 apiVersion: 0.1.0
 meta:
   version: 0.3.8
@@ -52,7 +52,7 @@ The configuration file ask the `http-source` connector to read a new quote `quot
 Use connector `.ipkg` package file and the configuration file to run the connector:
 
 ```bash copy="fl"
-$ cdk deploy start --ipkg infinyon-http-source-0.3.8.ipkg --config ./quotes-connector.yaml
+$ cdk deploy start --ipkg infinyon-http-source-0.3.8.ipkg --config ./quotes-config.yaml
 ```
 
 To check if the connector is running:

@@ -1,57 +1,88 @@
 ---
-sidebar_position: 40
+sidebar_position: 20
 title: Run Cloud
 description: "Run a Connector on your local machine"
 ---
 
-# Run Connectors on the Cloud
+# Run Connectors on InfinyOn Cloud
 
-Check [the Hub] for a library of certified connectors that you can download and run. If the connector you need isn't available, you can [build your own]. This document will guide you through downloading and running a certified connector from the Hub on your local machine.
+Check [the Hub] for a library of connectors that you can download and run. This document will guide you through downloading and running a certified connector in [InfinyOn Cloud].
+
+## Prerequisites
+
+This document assumes that you have provisioned a Cluster in your InfinyOn Cloud account. If you have not done so, please use the [following instructions][InfinyOn Cloud].
 
 
-## Download from Hub & Run Locally
+## 1. Create a Connector Configuration File
 
-In this example, we'll create new directory to download and run the `acme/my-connector0.1.0` connector locally:
-
-
-```bash copy="fl"
-$ mkdir test-conn; cd test-conn
-```
-
-Download the connector:
-
+Let's create new directory for the connector configuration file:
 
 ```bash copy="fl"
-$ cdk hub download acme/my-connector0.1.0
+$ mkdir http-source-cloud; cd http-source-cloud
 ```
 
-Use connector `.ipkg` package file and run it with the `--ipkg` option:
+Create `quotes-config.yml` and paste the following configuration:
 
+```yaml
+# quotes-config.yml
+apiVersion: 0.1.0
+meta:
+  version: 0.3.8
+  name: http-quotes
+  type: http-source
+  topic: quotes
+http:
+  endpoint: https://demo-data.infinyon.com/api/quote
+  interval: 2s
+```
+
+The configuration file ask the `http-source` connector to read a new quote `quote` from the `demo-data` server every 2 seconds.
+
+## 2. Run the `http-source` Connector
+
+Use the configuration file and create a new connector:
 
 ```bash copy="fl"
-$ cdk deploy start --ipkg acme/my-connector0.1.0.ipkg --config ../sample-config.yaml
+$ fluvio cloud connector create -c quotes-config.yaml
 ```
 
-This command assumes that the sample config is in the parent directory.
+To check if the connector is running:
 
-See the command reference for [`cdk`]
+```bash copy="fl"
+$ fluvio cloud connector list
+```
 
-## Run an Official Connector in the InfinyOn Cloud
+The connector provisioned the `quotes` topic and it periodically sends a new quote.
 
-With only the config file, a published connector can be run directly in the [InfinyOn Cloud].
-Check the [connector documentation] to ensure the [configuration file] is correct. The configs
-are the same between a local instance and the cloud.
 
-`fluvio cloud connector create -c sample-config.yaml`
+## 3. Check the Result
 
-See the command reference for [`fluvio cloud connector`]
+Read from the fluvio topic:
 
+```bash copy="fl"
+$ fluvio consume quotes
+```
+
+## 4. Clean-up
+
+The connector will continue to run and consume your credits. Let's shut it down:
+
+```bash copy="fl"
+$ fluvio cloud connector delete http-quotes
+```
+
+We can also delete the topic
+
+```bash copy="fl"
+$ fluvio topic delete quotes
+```
+
+## References
+
+* [SmartModules] to apply transformations
+* [Tutorials] to see additional examples
 
 [the Hub]: hub/connectors/index.md
-[build your own]: ./developers/introduction.mdx
-
 [InfinyOn Cloud]: cloud/overview.mdx
-[`cdk`]: fluvio/cli/cdk.mdx
-[configuration file]: connectors/configuration.mdx
-[connector documentation]: hub/connectors/index.md
-[`fluvio cloud connector`]: cloud/cli/connector.mdx
+[SmartModules]: smartmodules/introduction.mdx
+[Tutorials]: fluvio/tutorials/index.md
