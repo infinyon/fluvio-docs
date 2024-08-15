@@ -25,9 +25,11 @@ We are wrapping up the docs to publish the graphite connector in the [InfinyOn L
 * [Upsert on SQL Sink Connector]
 
 ## New video
-* [Collecting Hackernews RSS Feeds using InfinyOn Cloud]('https://www.youtube.com/@InfinyOn')
+* [Collecting Hackernews RSS Feeds using InfinyOn Cloud]
 
 That's all folks. until next week.
+
+[Collecting Hackernews RSS Feeds using InfinyOn Cloud]: https://www.youtube.com/@InfinyOn
 
 ---
 

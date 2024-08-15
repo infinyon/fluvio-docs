@@ -24,9 +24,11 @@ We are experimenting with how far we can push our core stream processor in terms
 * [Upsert on SQL Sink Connector]
 
 ## New video
-* [Collecting Hackernews RSS Feeds using InfinyOn Cloud]('https://www.youtube.com/@InfinyOn')
+* [Collecting Hackernews RSS Feeds using InfinyOn Cloud]
 
 That's all folks. until next week.
+
+[Collecting Hackernews RSS Feeds using InfinyOn Cloud]: https://www.youtube.com/@InfinyOn
 
 ---
 
