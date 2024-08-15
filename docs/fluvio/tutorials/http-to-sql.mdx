@@ -47,10 +47,16 @@ A detailed description of the Connector configuration file can be found in the [
 For the HTTP-specific parameters you will need to specify the link it is
 polling, and the interval at which it polls.
 
+:::info
+All versions are marked with `x.y.z`. To find the latest version, run:
+*  `fluvio hub connector list`
+*  `fluvio hub smartmodule list`
+:::
+
 ```yaml
 apiVersion: 0.1.0
 meta:
- version: 0.2.5
+ version: x.y.z
  name: cat-facts
  type: http-source
  topic: cat-facts
@@ -96,7 +102,7 @@ We can extend our config file to add an additional JSON to JSON transformation t
 ```yaml title="catfacts-basic-connector-with-transform.yml"
 apiVersion: 0.1.0
 meta:
- version: 0.2.5
+ version: x.y.z
  name: cat-facts-transformed
  type: http-source
  topic: cat-facts-data-transformed
@@ -106,7 +112,7 @@ http:
  interval: 10s
 
 transforms:
- - uses: infinyon/jolt@0.3.0
+ - uses: infinyon/jolt@x.y.z
    with:
      spec:
        - operation: default
@@ -117,13 +123,13 @@ transforms:
 In this config, we add the field `source` with the static value `http` to every record. Note that if the field
 already exists, it will not be overwritten.
 
-Before we create the connector we need to add [`infinyon/jolt@0.3.0`](https://www.fluvio.io/smartmodules/certified/jolt/) SmartModule to the cluster.
-This SmartModule uses a domain specific language (DSL) called [Jolt](https://github.com/infinyon/fluvio-jolt), to specify a transformation of input JSON to another shape of JSON data.
+Before we create the connector we need to add [infinyon/jolt@x.y.z] SmartModule to the cluster.
+This SmartModule uses a domain specific language (DSL) called [Jolt], to specify a transformation of input JSON to another shape of JSON data.
 
-Let's download this SmartModule from the [SmartModule Hub](https://www.fluvio.io/smartmodules/hub/overview/).
+Let's download this SmartModule from the [SmartModule Hub].
 
 ```bash
-$ fluvio hub sm download infinyon/jolt@0.3.0
+$ fluvio hub sm download infinyon/jolt@x.y.z
 ```
 
 Then, we create a connector just like before
@@ -159,13 +165,13 @@ We also need to run a few commands with `fluvio` to download some prepackaged Sm
 [This SmartModule](https://www.fluvio.io/smartmodules/certified/json-sql) will do a basic mapping of the JSON input into a SQL statement for the Outbound SQL connector
 
 ```bash
-$ fluvio hub sm download infinyon/json-sql@0.2.1
+$ fluvio hub sm download infinyon/json-sql@x.y.z
 ```
 
-If you have not added `infinyon/jolt@0.3.0` SmartModule on previous steps, we need to add it as well:
+If you have not added `infinyon/jolt@x.y.z` SmartModule on previous steps, we need to add it as well:
 
 ```bash
-$ fluvio hub sm download infinyon/jolt@0.3.0
+$ fluvio hub sm download infinyon/jolt@x.y.z
 ```
 
 For more info about the SmartModule Hub, check out the [Hub Overview page](https://www.fluvio.io/smartmodules/hub/overview/)
@@ -179,12 +185,12 @@ apiVersion: 0.1.0
 meta:
  name: simple-cat-facts-sql
  type: sql-sink
- version: 0.3.3
+ version: x.y.z
  topic: cat-facts
 sql:
  url: "postgres://user:password@db.postgreshost.example/dbname"
 transforms:
- - uses: infinyon/json-sql@0.2.1
+ - uses: infinyon/json-sql@x.y.z
    invoke: insert
    with:
      mapping:
@@ -241,12 +247,12 @@ apiVersion: 0.1.0
 meta:
  name: transform-cat-facts-sql
  type: sql-sink
- version: 0.3.3
+ version: x.y.z
  topic: cat-facts-data
 sql:
  url: "postgres://user:password@db.postgreshost.example/dbname"
 transforms:
- - uses: infinyon/jolt@0.3.0
+ - uses: infinyon/jolt@x.y.z
    with:
      spec:
        - operation: shift
@@ -257,7 +263,7 @@ transforms:
          spec:
            animal:
              type: "cat"
- - uses: infinyon/json-sql@0.2.1
+ - uses: infinyon/json-sql@x.y.z
    with:
      invoke: insert
      mapping:
@@ -327,26 +333,31 @@ With the Outbound SQL Connector, we utilized SmartModules in two different ways.
 1. Basic insert into a table, with a simple mapping of JSON fields into columns
 2. Configured transformation of the incoming JSON before following the same mapping process
 
-## Check out these Other Tutorials
-
-* [SmartModules with `smdk`](https://www.fluvio.io/docs/tutorials/smartmodule-development/)
-* [Creating a Data Pipeline](https://www.fluvio.io/docs/tutorials/data-pipeline/)
 
 ## Reference
 
-* [Fluvio CLI Produce](https://www.fluvio.io/cli/commands/produce/)
-* [Fluvio CLI Consume](https://www.fluvio.io/cli/commands/consume/)
-* [Fluvio CLI topic](https://www.fluvio.io/cli/commands/topic/)
-* [Fluvio CLI profile](https://www.fluvio.io/cli/client/profile/)
-* [SmartModule](https://www.fluvio.io/smartmodules/)
-* [SmartModule Rust API](https://docs.rs/fluvio-smartmodule/latest/fluvio_smartmodule/)
-[Transformations]: /docs/latest/fluvio/concepts/transformations
+* [Fluvio CLI Produce]
+* [Fluvio CLI Consume]
+* [Fluvio CLI Topic]
+* [Fluvio CLI Profile]
+* [SmartModule]
+* [SmartModule Rust API]
+* [Transformations]
 
 
-[Inbound HTTP Connector]: /docs/latest/hub/connectors/inbound/http
+[Fluvio CLI Produce]: fluvio/cli/fluvio/produce.mdx
+[Fluvio CLI Consume]: fluvio/cli/fluvio/consume.mdx
+[Fluvio CLI Topic]: fluvio/cli/fluvio/topic.mdx
+[Fluvio CLI Profile]: fluvio/cli/fluvio/profile.mdx
+[SmartModule]: smartmodules/introduction.mdx
+[SmartModule Rust API]: https://docs.rs/fluvio-smartmodule/latest/fluvio_smartmodule/
+[Transformations]: fluvio/concepts/transformations.mdx
+[Inbound HTTP Connector]: hub/connectors/inbound/http.mdx
 [castfact.ninja]: https://catfact.ninja
 [PostgreSQL]: https://www.postgresql.org/
 [ElephantSQL]: https://www.elephantsql.com/
 [Connector Configuration]: connectors/configuration.mdx
-[installation]: /docs/latest/fluvio/quickstart#install-fluvio
-[transformations]: /docs/latest/fluvio/concepts/transformations
+[infinyon/jolt@x.y.z]: hub/smartmodules/jolt.mdx
+[Jolt]: https://github.com/infinyon/fluvio-jolt
+[SmartModule Hub]: hub/smartmodules/index.md
+[installation]: fluvio/quickstart.mdx#install-fluvio

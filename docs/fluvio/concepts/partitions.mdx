@@ -15,8 +15,6 @@ guaranteed to remain ordered in the order they were committed.
 
 **Partitions** are configuration objects managed by the system. Topics and partitions are linked through a **parent-child** relationship. The partition generation algorithm is described in the [SC Architecture].
 
-[SC Architecture]:
-
 <img src="/img/docs/concepts/partitions/topic-2-partitions.svg" style={{ justify: 'center', maxWidth: '640px' }} />
 
 If a topic is deleted, all associated partitions are automatically removed.
@@ -59,3 +57,9 @@ that in order to read all records from a given topic, it may be necessary to ins
 one consumer per partition in the topic.
 
 - [Check out the multi-consumer example in the CLI reference]
+
+[SC Architecture]: fluvio/concepts/architecture/sc.mdx
+
+[Check out the key partitioning example in the CLI reference]: fluvio/cli/fluvio/produce.mdx#produce-keyvalue-records-from-stdin
+[Check out the round-robin partitioning example in the CLI reference]: fluvio/cli/fluvio/produce.mdx#producing-to-multiple-partitions-using-round-robin  
+[Check out the multi-consumer example in the CLI reference]: fluvio/cli/fluvio/consume.mdx#consume-from-a-topic-with-multiple-partitions

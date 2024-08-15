@@ -128,15 +128,10 @@ The **FC** is terminated when the last Follower Spec is removed. Each **FC** is 
 
 Topics are created with a _replication factor_ which defines the number of data copies saved for each data stream. For example, a topic with a replication factor of 3 will generate 3 copies of data, one per SPU.
 
-[Replica assignment] algorithm designates sets of SPUs to store identical copies (_replicas_) of the data for each data stream. [Election algorithm] assigns one SPU as leader and the others as followers. The leader is responsible for data propagation and the communication with producers and consumers. The followers are responsible with replicating data received from the leader. If the leader goes offline, an `election ensues` and one of the followers becomes the new leader. After the election is completed, [clients automatically reconnect] and operation resumes.
+[Replica Assignment] algorithm designates sets of SPUs to store identical copies (_replicas_) of the data for each data stream. The [Election algorithm] assigns one SPU as leader and the others as followers. The leader is responsible for data propagation and the communication with producers and consumers. The followers are responsible with replicating data received from the leader. If the leader goes offline, an `election ensues` and one of the followers becomes the new leader. After the election is completed, clients automatically reconnect and operation resumes.
 
 Election algorithm and failover scenarios are described in detail in the [Replica Election] section.
 
-
-[Replica assignment]:
-[Election algorithm]:
-[clients automatically reconnect]:
-[Replica Election]:
 
 ## Replica Storage
 
@@ -159,5 +154,8 @@ Records IO is optimized for each platform designed for high-throughput async IO.
 
 Records in replica are send to consumer using zero copy mechanism. Zero copy mechanism avoids the need to copy records in memory and increases performance.
 
-
 Records can be batched together to improve performance.
+
+[Replica Assignment]: fluvio/concepts/architecture/replica-assignment.mdx
+[Election algorithm]: fluvio/concepts/architecture/replica-election.mdx
+[Replica Election]: fluvio/concepts/architecture/replica-election.mdx

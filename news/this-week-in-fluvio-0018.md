@@ -7,7 +7,7 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
+---
 
 ## New Release - Fluvio v0.9.16
 
@@ -69,7 +69,7 @@ New Fluvio installations support the ability to switch back and forth between th
 
 CLI channels will be especially useful for the current users who have reached out to us on Discord. Now we can more easily work together to quickly validate fixes to issues without the need to build the Fluvio code locally.
 
-To try out channels now, you will need to re-install Fluvio with the [instructions on the download page](/docs/fluvio/quickstart#install-fluvio). This will download the channel-enabled frontend and the most recent `stable` release.
+To try out channels now, you will need to re-install Fluvio with the [instructions on the download page]. This will download the channel-enabled frontend and the most recent `stable` release.
 
 ```bash copy="fl"
 # Switch to the `latest` channel
@@ -147,15 +147,16 @@ Consuming records from offset 3 in topic 'twif'
 Consumer stream has closed
 ```
 
+[instructions on the download page]: ../docs/fluvio/quickstart
+
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
-
-Until next week!
 
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn

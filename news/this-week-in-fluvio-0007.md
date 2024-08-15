@@ -8,8 +8,6 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
-
 ## New Release - Fluvio v0.9.8
 
 ### Improved progress indicator for `fluvio cluster start`
@@ -19,7 +17,8 @@ for new users. This week, we've made some changes to the `fluvio cluster start` 
 including the addition of an animated spinner and some better status messages during
 the cluster installation.
 
-Before this week, the command's output looked like this:
+<!--
+ Before this week, the command's output looked like this:
 
 <video controls width="860px" title="The old command used plain print statements and no spinner">
   <source src="/news/images/0007/fluvio-cluster-start-old.mov" />
@@ -29,7 +28,7 @@ With the release of `0.9.8`, the cluster installer now looks like this:
 
 <video controls width="860px" title="The new command uses emojis, bold print, and an animated spinner">
   <source src="/news/images/0007/fluvio-cluster-start.mov" />
-</video>
+</video> -->
 
 ### Introducing `fluvio cluster diagnostics`
 
@@ -54,6 +53,5 @@ come say hello!
 Until next week!
 
 [Fluvio open source]: https://github.com/infinyon/fluvio
-[wasmtime API since 0.28]: https://github.com/alexcrichton/rfcs-2/blob/new-api/accepted/new-api.md
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [join our Discord channel]: https://discordapp.com/invite/bBG2dTz

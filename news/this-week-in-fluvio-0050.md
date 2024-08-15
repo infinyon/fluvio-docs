@@ -30,7 +30,7 @@ This is what the generated rust code for the connector looks like
 
 inline-embed file="embeds/cdk/my-connector-code.md"
 
-If you're interested in learning more, here are [the docs to CDK](/docs/connectors/local/cdk/introduction)
+If you're interested in learning more, here are [the docs to CDK]
 
 We are excited to see what you are going to build with the CDK!
 
@@ -63,18 +63,15 @@ We are also shaping work for materialized views of time based aggregates from to
 We are also exploring a developer user experience for our cloud platform. More updates on this in a couple of months.
 
 ## New blog post
-[Using DuckDB with Fluvio](https://infinyon.com/blog/2023/02/duckdb-fluvio/)
+[Using DuckDB with Fluvio]
 
-## New video
-<iframe width="560" height="315" src="https://www.youtube.com/embed/r6xiXti78Ek" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-## Open positions
-[Sr. Rust Cloud Software Engineer](https://infinyon.com/careers/cloud-engineer-senior-level/)
-[Developer Advocate](https://infinyon.com/careers/developer-advocate-mid-senior-level/)
+[the docs to CDK]: ../docs/fluvio/cli/cdk
+[Using DuckDB with Fluvio]: https://infinyon.com/blog/2023/02/duckdb-fluvio/
 
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
@@ -82,3 +79,5 @@ For the full list of changes this week, be sure to check out [our CHANGELOG].
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn
+

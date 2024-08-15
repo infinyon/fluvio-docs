@@ -129,7 +129,7 @@ Inside the `sentence` directory and create the `sdf-package.yaml` and add the fo
 
 ```yaml
 #sdf-package.yanl
-apiVersion: 0.4.0
+apiVersion: 0.5.0
 
 meta:
   name: sentence-pkg
@@ -174,7 +174,7 @@ The generator created several directories and files that we'll edit next.
 First, let's update the first function, `sentence-to-words`. Open `rust/sentence-to-words/src/lib.rs` and update the function body with the following code:
 
 ```rust
-pub(crate) fn sentence_to_words(sentence: String) -> Result<Vec<String>, String> {
+pub(crate) fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
     Ok(sentence.split_whitespace().map(String::from).collect())
 }
 ```
@@ -182,7 +182,7 @@ pub(crate) fn sentence_to_words(sentence: String) -> Result<Vec<String>, String>
 Next update `augment_count`. Open `rust/augment-count/src/lib.rs` and replace the function body:
 
 ```rust
-pub(crate) fn augment_count(word: String) -> Result<String, String> {
+pub(crate) fn augment_count(word: String) -> Result<String> {
     Ok(format!("{}({})", word, word.chars().count()))
 }
 ```
@@ -342,7 +342,7 @@ $ cd split-sentence
 Create the `dataflow.yaml` and add the following content:
 
 ```yaml name="dataflow.yaml"
-apiVersion: 0.4.0
+apiVersion: 0.5.0
 
 meta:
   name: split-sentence
@@ -462,10 +462,10 @@ fluvio topic delete words
 
 ### References
 
-* <a href="https://github.com/infinyon/stateful-dataflows-examples/" target="_blank">Example Workflows in github</a>
+* [Example Workflows in github]
 
-
-[Inline Dataflows]: /sdf/stateful-dataflows/inline-dataflows/
+[Inline Dataflows]: dataflow-inline.mdx
 [Dataflow file]: /sdf/stateful-dataflows/dataflow-file/
-[SDF]: /sdf/stateful-dataflows/sdf
+[SDF]: cli/
 [github]: https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-composed/split-sentence
+[Example Workflows in github]: https://github.com/infinyon/stateful-dataflows-examples

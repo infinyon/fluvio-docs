@@ -94,3 +94,5 @@ let producer = fluvio.topic_producer_with_config("greetings", config).await?;
 ```
 In the above example, Fluvio Producer retries at most five times; all retries take a maximum of 10 seconds. The delay between retries increases exponentially.
 The first delay is 10ms, the second is 100ms, then 1000ms, and all others are 2000ms as it's defined as a maximum allowed delay.
+
+[Producer Isolation]: fluvio/concepts/data-consistency.mdx#producer-isolation

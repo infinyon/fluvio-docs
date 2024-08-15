@@ -7,9 +7,15 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
+---
 
 ## Local Connector Development
+
+:::note
+This is an archival newsletter entry. These days if you want to run or develop
+and run a connector see the [cdk] cli utility
+:::
+
 
 This week we wanted to walkthrough the process of developing a connector.
 
@@ -35,7 +41,6 @@ Let's start with building a simple client.
 
 This client is written in Python, but we have client libraries for Rust, Javascript, Java and Go.
 
-%copy%
 ```python
 #!/usr/bin/env python3
 #
@@ -73,22 +78,19 @@ if __name__ == '__main__':
 
 Before we run this code, we need to create the fluvio topic that our client produces data to
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio topic create cat-facts-random
 ```
 
 Install fluvio package:
 
-%copy first-line%
-```shell
+```shell  copy="fl"
 $ pip install fluvio requests
 ```
 
 Running the Python code prints out a new cat fact every 10 seconds
 
-%copy first-line%
-```shell
+```shell  copy="fl"
 $ python3 ./get-cat-facts.py
 {"fact":"Cats bury their feces to cover their trails from predators.","length":59}
 {"fact":"Cats step with both left legs, then both right legs when they walk or run.","length":74}
@@ -96,8 +98,7 @@ $ python3 ./get-cat-facts.py
 
 And we verify that these records have made it to the Fluvio cluster by consuming from the topic.
 
-%copy first-line%
-```shell
+```shell  copy="fl"
 $ fluvio consume cat-facts-random -B
 Consuming records from the beginning of topic 'cat-facts-random'
 {"fact":"Cats bury their feces to cover their trails from predators.","length":59}
@@ -114,7 +115,6 @@ Then we create a new user `fluvio` with a home directory (in `/home/fluvio`).
 
 This is **required** for all connectors. The Fluvio cluster shares information with the `fluvio` user on startup.
 
-%copy%
 ```Dockerfile
 # Dockerfile
 FROM python
@@ -139,15 +139,13 @@ ENTRYPOINT get-cat-facts.py
 ### Build and Test the Container
 You can build the Docker image with this command.
 
-%copy first-line%
-```shell
+```shell  copy="fl"
 $ docker build -t infinyon/fluvio-connect-cat-facts .
 ```
 
 The image should have been created
 
-%copy first-line%
-```shell
+```shell  copy="fl"
 $ docker images
 REPOSITORY                          TAG            IMAGE ID       CREATED         SIZE
 infinyon/fluvio-connect-cat-facts   latest         08ced64017f0   5 seconds ago   936MB
@@ -161,8 +159,7 @@ CAUTION
 
 Start a the container with this `docker` command
 
-%copy first-line%
-```shell
+```shell  copy="fl"
 $ docker run -it --rm -v $HOME/.fluvio:/home/fluvio/.fluvio --network host infinyon/fluvio-connect-cat-facts
 {"fact":"In the 1750s, Europeans introduced cats into the Americas to control pests.","length":75}
 ...
@@ -184,21 +181,18 @@ By default, connectors will attempt to pull images from the internet. However, d
 
 Let's create a cluster called `fluvio`
 
-%copy first-line%
-```shell
+```shell  copy="fl"
 $ k3d cluster create fluvio
 ```
 
 And import the image (use the name of your cluster)
 
-%copy first-line%
-```shell
+```shell  copy="fl"
 $ k3d image import infinyon/fluvio-connect-cat-facts --cluster fluvio
 ```
 
 The image should have been created
 
-%copy first-line%
 ```shell
 $ docker exec k3d-fluvio-server-0 sh -c "ctr image list -q"
 docker.io/infinyon/fluvio-connect-cat-facts:latest
@@ -206,7 +200,6 @@ docker.io/infinyon/fluvio-connect-cat-facts:latest
 ```
 Load image to `minikube`:
 
-%copy first-line%
 ```shell
 $ minikube image load infinyon/fluvio-connect-cat-facts
 ```
@@ -218,8 +211,6 @@ Last step for testing our connector is verifying that it runs in the Fluvio clus
 ### The Connector config
 
 Create a connector configuration file `example-connector.yaml`:
-
-%copy%
 
 ```yaml
 # example-connector.yaml
@@ -240,13 +231,10 @@ direction: source
 
 Lastly, create the connector
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio connector create --config example-connector.yaml
 ```
-
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio connector list
  NAME                 STATUS
  cat-facts-connector  Running
@@ -254,8 +242,7 @@ $ fluvio connector list
 
 We can look at the container logs, and verify the topic has our records.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio connector logs cat-facts-connector
 {"fact":"Cats eat grass to aid their digestion and to help them get rid of any fur in their stomachs.","length":92}
 {"fact":"When a cat drinks, its tongue - which has tiny barbs on it - scoops the liquid up backwards.","length":92}
@@ -264,8 +251,7 @@ $ fluvio connector logs cat-facts-connector
 
 And again, to verify we check the contents of the topic. We see the last 3 rows match.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio consume cat-facts-random -B
 Consuming records from the beginning of topic 'cat-facts-random'
 {"fact":"Cats bury their feces to cover their trails from predators.","length":59}
@@ -277,16 +263,16 @@ Consuming records from the beginning of topic 'cat-facts-random'
 {"fact":"Cats and kittens should be acquired in pairs whenever possible as cat families interact best in pairs.","length":102}
 ```
 
+[cdk]: ../docs/fluvio/cli/cdk
 
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
-
-Until next week!
 
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn

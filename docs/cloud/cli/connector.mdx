@@ -27,7 +27,7 @@ SUBCOMMANDS:
     update    Update and restart a Connector
 ```
 
--> For more info about using connectors, see the [Connectors page](https://www.fluvio.io/connectors/). The available connector types are listed under the *Inbound* and *Outbound* sections.
+-> For more info about using connectors, see the [Connectors page]. The available connector types are listed under the *Inbound* and *Outbound* sections.
 
 ---
 
@@ -54,7 +54,7 @@ Options:
 
 To create a connector, you need to create a YAML-based connector config file.
 
-For more about the connector config file, see the [Cloud connectors page](https://www.fluvio.io/connectors/cloud-connectors/).
+For more about the connector config file, see the [Cloud connectors page].
 
 When running `fluvio cloud connector create`, pass the path to this file using the `--config`
 option.
@@ -90,11 +90,10 @@ OPTIONS:
 
 Example usage:
 
-%copy%
 ```yaml
 apiVersion: 0.1.0
 meta:
- version: 0.2.5
+ version: x.y.z
  name: cat-facts
  type: http-source
  topic: cat-facts
@@ -102,6 +101,12 @@ http:
  endpoint: "https://catfact.ninja/fact"
  interval: 10s
 ```
+
+:::info
+All versions are marked with `x.y.z`. To find the latest version, run:
+*  `fluvio hub connector list`
+*  `fluvio hub smartmodule list`
+:::
 
 ---
 
@@ -228,3 +233,5 @@ $ fluvio cloud connector delete cat-facts
 connector "cat-facts" deleted
 ```
 
+[Connectors page]: connectors/overview.mdx
+[Cloud connectors page]: cloud/tutorials/connector-basics.mdx

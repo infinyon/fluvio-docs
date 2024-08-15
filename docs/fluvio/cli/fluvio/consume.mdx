@@ -13,7 +13,7 @@ from a command-line environment.
 
 The `consume` command will only read from one of those partitions, defaulting to partition `0`.
 
-The following `fluvio consume` examples come after the [`fluvio produce` examples](/docs/fluvio/cli/fluvio/produce).
+The following `fluvio consume` examples come after the [`fluvio produce` examples].
 
 ## Examples
 
@@ -67,9 +67,6 @@ filters records from the stream based on whether they contain the letter `a`
 or not. You can find the full example code [in our GitHub repo] and compile
 it to test out yourself.
 
-[filter example]: /docs/connectors/smartmodules/transformations/filter
-[in our GitHub repo]: https://github.com/infinyon/fluvio/blob/d63e3e2569e4d64a098e5c2189ac68e6e9cd2670/crates/fluvio-smartmodule/examples/filter_json
-
 Once you have compiled your SmartModule Filter and have a `.wasm` file for it, you
 can apply it by sending the binary to the cluster when you start your CLI consumer:
 
@@ -102,7 +99,7 @@ records from the different partitions in a topic by using the `--partition (-p)`
 
 Start out by creating a new topic with multiple partitions using [`fluvio topic create`].
 
-[`fluvio topic create`]: /docs/fluvio/cli/fluvio/topic#fluvio-topic-create
+
 
 
 ```bash copy="fl"
@@ -135,9 +132,6 @@ $ fluvio produce "consume-multi" -f records.txt
 
 After producing some data, let's take a look at how the records got distributed
 among our partitions using [`fluvio partition list`].
-
-[`fluvio partition list`]: /docs/fluvio/cli/fluvio/partition#fluvio-partition-list
-
 
 ```bash copy="fl"
 $ fluvio partition list
@@ -232,3 +226,10 @@ $ fluvio consume my-topic -B --format="{{time}},{{partition}},{{offset}},{{key}}
 2022-05-04T15:52:28.875Z,0,3,batman,Bruce Wayne
 2022-05-04T15:53:37.099Z,0,4,santa,Santa Claus
 ```
+
+
+[`fluvio partition list`]: fluvio/cli/fluvio/partition.mdx#fluvio-partition-list
+[`fluvio produce` examples]: fluvio/cli/fluvio/produce.mdx
+[`fluvio topic create`]: fluvio/cli/fluvio/topic.mdx#fluvio-topic-create
+[filter example]: smartmodules/operators/filter.mdx
+[in our GitHub repo]: https://github.com/infinyon/fluvio/tree/master/smartmodule/examples/filter_json

@@ -1,22 +1,24 @@
 ---
 title: "Stateful Dataflows Overview"
-description: Stateful Dataflows are data pipelines that integrate fluvio event streaming with stateful processing to automate real-time data analytics at scale.
+description: Stateful Dataflows are data pipelines that integrate Fluvio event streaming with stateful processing to automate real-time data analytics at scale.
 sidebar_position: 10
 ---
 
-Stateful Dataflows is the embodiment of versatility in data pipelines. A utility that helps developers build, troubleshoot, and run full-featured event-driven pipelines (dataflows), SDF sparks innovation among data engineers. By leveraging [fluvio], SDF seemlessly integrates event streaming with stateful processing. Built in Rust and powered by WebAssembly, SDF dataflows are small, fast, and incredibly versatile. They empower engineers to write custom logic snippets that compile to WebAssembly and inject them into the dataflow for in-line processing. This custom logic can perform various tasks, from data transformations and error correction to malicious payload detection and complex stateful processing.
+Stateful Dataflows (SDF) is the embodiment of versatility in data pipelines. A utility that helps developers build, troubleshoot, and run full-featured event-driven pipelines (dataflows). SDF sparks innovation among data engineers. By leveraging [fluvio], SDF seemlessly integrates event streaming with stateful processing.
+
+Built in [Rust] and powered by [WebAssembly], SDF dataflows are small, fast, and incredibly versatile. They empower engineers to write custom logic snippets that compile to WebAssembly and inject them into the dataflow for in-line processing. This custom logic can perform various tasks, from data transformations and error correction to malicious payload detection and complex stateful processing.
 
 <img src="/img/sdf/sample-dataflow.jpg" alt="Sample Dataflow" style={{ display: 'block', margin: '0 auto'}} width="900" />
 
-An example dataflow that performs various operations on data from traffic sensors. Try out the tutorial on <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-inline/car-processing" target="_blank">github</a>.
+An example dataflow that performs various operations on data from traffic sensors. Try out the [tutorial on github].
 
 #### Stateful Dataflows vs. Big Data Stream Processing
 
-Traditional Big Data processing frameworks like Kafka, Flink, KStream, and Spark force users to deploy and scale microservices externally from their streaming platform of choice. SDF introduces a more powerful paradigm by providing a solution for building fully-integrated yet scalable dataflows, streamlining the entire data processing workflow. Traditional frameworks are also built with Java, so any user-defined functions must be written in Java as well. Conversely, SDF empowers users to quickly develop and test individual services in their favorite programming language.
+Traditional Big Data processing frameworks like Kafka, Flink, KStream, and Spark force users to deploy and scale microservices externally from their streaming platform of choice. `SDF` introduces a more powerful paradigm by providing a solution for building fully-integrated yet scalable dataflows, streamlining the entire data processing workflow. Traditional frameworks are also built with Java, so any user-defined functions must be written in Java as well. Conversely, SDF empowers users to quickly develop and test individual services in their favorite programming language.
 
 #### Stateful Dataflows vs. Legacy Solutions
 
-Automating data operations within legacy technology stacks, spanning message brokers, databases, microservices, and batch jobs, typically demands months of setup and years of experimentation before yielding positive outcomes. InfinyOn Stateful Dataflows frees you from infrastructure intricacies and lets you focus on your core business logic instead.
+Automating data operations within legacy technology stacks, spanning message brokers, databases, microservices, and batch jobs, typically demands months of setup and years of experimentation before yielding positive outcomes. Stateful Dataflows frees you from infrastructure intricacies and lets you focus on your core business logic instead.
 
 
 #### Who is this for?
@@ -52,11 +54,14 @@ In the [next section], we'll walk through the steps to get started with Stateful
 
 [Let's Get Started].
 
-[Dataflow File]: /sdf/dataflow-yaml
+[Dataflow File]: dataflow-yaml.mdx
 [Fluvio Cluster]: /sdf/getting-started#installing-fluvio--start-a-cluster
-[SDF (Stateful Dataflows) CLI]: /sdf/
-[next section]: /sdf/getting-started
-[Let's Get Started]: /sdf/getting-started
-[connectors]: /docs/connectors/quickstart
+[SDF (Stateful Dataflows) CLI]: cli/
+[Rust]: https://www.rust-lang.org/
+[WebAssembly]: https://webassembly.org/
+[next section]: getting-started.mdx
+[Let's Get Started]: getting-started.mdx
+[connectors]: /docs/connectors/overview
 [Hub]: /docs/cloud/tutorials/hub-basics
-[fluvio]: /docs/fluvio/quickstart
+[fluvio]: /docs/fluvio/quickstart.mdx
+[tutorial on github]: https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-inline/car-processing

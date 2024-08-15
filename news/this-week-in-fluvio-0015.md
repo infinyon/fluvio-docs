@@ -17,7 +17,7 @@ This is a big release
 
 This is the first release with official Apple M1 support. If you have an Apple M1 machine and you'd like to try out Fluvio, please read our [Getting Started] page for MacOS.
 
-[Getting Started]: /docs/get-started/mac.md
+[Getting Started]
 
 ### SmartModules
 
@@ -51,8 +51,6 @@ This feature was teased [last week], but now it is ready to be tried out.
 [last week]: /news/this-week-in-fluvio-0014.md
 
 Check out the new [Connector Developer guide] for more information about how to create your own connectors.
-
-[Connector Developer guide]: /docs/connectors/local/cdk/introduction
 
 ### FilterMap SmartModule
 
@@ -211,7 +209,6 @@ An example `tableformat`.
 
 Here we only want to display the latest state of a request. We declare the `request_id` key as `primaryKey`, which means that any new events matching an existing `request_id` will update the row.
 
-%copy%
 ```yaml
 # tableformat-config.yaml
 name: "current-requests"
@@ -255,10 +252,12 @@ A handful of user-facing issues were fixed
 * Ability to create Kubernetes-based clusters on MacOS was restored ([#1867](https://github.com/infinyon/fluvio/pull/1867))
 * Aggregate SmartModule fixed to properly accumulate from previous values instead defaulting to the initial value. ([#1869](https://github.com/infinyon/fluvio/pull/1869)) (Additional special thanks to our Discord community for reporting this bug!)
 
+[Getting Started]: ../docs/fluvio/quickstart
+[Connector Developer guide]: ../docs/connectors/local/develop/introduction
 
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
@@ -268,3 +267,4 @@ Until next week!
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn

@@ -8,10 +8,6 @@ Welcome to the second edition of This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-[Fluvio open source]: https://github.com/infinyon/fluvio
-
-BANNER
-
 ## New Release - Fluvio v0.9.1
 
 In `0.9.1`, we added support for running a Fluvio cluster locally on an
@@ -30,13 +26,12 @@ cluster on M1 with the following command:
 
 %copy first-line%
 ```bash
-$ fluvio cluster start --local
+$ fluvio cluster start
 ```
 
-[See our complete getting-started guide for Mac] for a full set of instructions
+[See our complete getting-started guide] for a full set of instructions
 for getting set up from scratch.
 
-[See our complete getting-started guide for Mac]: /docs/get-started/mac/
 
 ## Release of Fluvio `0.9.2`
 
@@ -67,4 +62,6 @@ to get involved, feel free to [join our Discord channel].
 
 Until next week!
 
+[Fluvio open source]: https://github.com/infinyon/fluvio
 [join our Discord channel]: https://discordapp.com/invite/bBG2dTz
+[See our complete getting-started guide]: ../docs/fluvio/quickstart

@@ -1,5 +1,44 @@
 ---
 sidebar_position: 100
 title: "Troubleshooting"
-description: "Using different Fluvio versions with Fluvio Version Manager (FVM)"
+description: "Troubleshoot common issues with your Fluvio cluster"
 ---
+
+This document will help you troubleshoot common issues with your Fluvio cluster.
+
+## Troubleshooting a Local Cluster
+
+
+To troubleshoot a local Fluvio cluster, you can check the logs of the SC and SPUs processes.
+
+- Run `cat ~/.fluvio/log/flv_sc.log` for SC logs
+- Run `cat ~/.fluvio/log/spu_log_XXXX.log` for each SPU
+  - E.g. when running 1 SPU, there will be `spu_log_5001.log`
+
+You can also use `tail -n 100 ~/.fluvio/log/flv_sc.log` to just print the last 100 lines of the log file.
+
+### Log directory
+
+By default, Fluvio logs are stored in the `~/.fluvio/log` directory. 
+But if you have the `FLUVIO_DIR` environment variable set, the logs will be stored in the directory specified by the variable.
+
+### Setting log level
+
+You can set various log levels as [filering tracing log].
+
+For example, to start cluster using log level `info` using cluster start
+
+```bash
+$ fluvio cluster start --rust-log=info
+```
+
+For individual binaries, you can use `RUST_LOG` env variable:
+
+```bash
+$ RUST_LOG=info fluvio run sc --local
+```
+
+The log level can be set to `trace`, `debug`, `info`, `warn`, `error`.
+
+[filering tracing log]: https://tracing.rs/tracing_subscriber/filter/struct.envfilter
+

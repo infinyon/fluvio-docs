@@ -7,7 +7,7 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
+---
 
 ## New Release - Fluvio v0.9.20
 
@@ -37,8 +37,7 @@ When developing with connectors, you may need to reconfigure your settings. This
 
 Let's work through an example using the following config.
 
-%copy%
-```yaml
+```yaml copy
 # connect.yml
 api_version: 0.2.0
 name: cat-facts
@@ -54,15 +53,13 @@ parameters:
 
 First we create our connector
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio connector create --config connect.yml
 ```
 
 As expected, we are getting cat facts of different lengths.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio consume cat-facts
 Consuming records from the end of topic 'cat-facts'. This will wait for new records
 {"fact":"The average cat food meal is the equivalent to about five mice.","length":63}
@@ -80,15 +77,13 @@ Later on I decided that I want to change my endpoint to add a query parameter. W
 
 Running `fluvio connector update` will handle updating your connector settings. This will delete your existing connector, and recreate with the config settings.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio connector update --config connect.yml
 ```
 
 After the connector restarts, we see that our output reflects the changes made in our config.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio consume cat-facts
 Consuming records from the end of topic 'cat-facts'. This will wait for new records
 {"fact":"A cat's field of vision is about 200 degrees.","length":45}
@@ -106,8 +101,8 @@ If a user switched directly to version `0.9.20` (as opposed to running the `stab
 
 First we create our version channel. (This could be any of our previous versions)
 
-%copy first-line%
-```shell
+
+```shell copy="fl"
 $ fluvio version create 0.9.20
 🎣 Fetching '0.9.20' channel binary for fluvio...
 ⏳ Downloading Fluvio CLI with latest version: 0.9.19...
@@ -117,8 +112,7 @@ $ fluvio version create 0.9.20
 
 And switch over to it
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ fluvio version switch 0.9.20
 Switched to release channel "0.9.20"
 ```

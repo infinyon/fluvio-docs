@@ -39,6 +39,12 @@ Show an example of how to build an event streaming pipeline that receives webhoo
 
 Create a webhook configuration file called `form-webhook.yaml`:
 
+:::info
+All versions are marked with `x.y.z`. To find the latest version, run:
+*  `fluvio hub connector list`
+*  `fluvio hub smartmodule list`
+:::
+
 ```yaml title="quotes-source-connector.yml"
 meta:
   name: form-webhook
@@ -47,7 +53,7 @@ webhook:
   outputParts: body
   outputType: json
 transforms:
-  - uses: infinyon-labs/json-formatter@0.1.0
+  - uses: infinyon-labs/json-formatter@x.y.z
     with:
       spec:
         match:
@@ -89,7 +95,7 @@ Create an HTTP source connector configuration file called `slack-form-alerts.yam
 ```yaml title="slack-form-alerts.yaml"
 apiVersion: 0.1.0
 meta:
-  version: 0.2.5
+  version: x.y.z
   name: slack-form-alerts
   type: http-sink
   topic: form-events
@@ -100,7 +106,7 @@ http:
   headers:
     - "Content-Type: application/json"
 transforms:
-  - uses: infinyon/jolt@0.3.0
+  - uses: infinyon/jolt@x.y.z
     with:
       spec:
         - operation: shift
@@ -112,7 +118,7 @@ The sink connector reads from the `form-events` topic and uses the `jolt` smartm
 
 #### Add Slack webhook token to InfinyOn Secrets
 
-The Slack webhook link is sensitive information, let's add the access token part to `secret` in [InfinyOn Cloud] :
+The Slack webhook link is sensitive information, let's add the [Access Token] part to `secret` in [InfinyOn Cloud] :
 
 ```bash
 $ fluvio cloud secret set SLACK_USER_ALERTS <webhook-token>
@@ -126,8 +132,8 @@ Check out [Slack Webhooks] on how to create the webhook token.
 Download the smartmodules used by the webhook ad the connector:
 
 ```bash
-$ fluvio hub download infinyon/jolt@0.3.0
-$ fluvio hub download infinyon-labs/json-formatter@0.1.0
+$ fluvio hub download infinyon/jolt@x.y.z
+$ fluvio hub download infinyon-labs/json-formatter@x.y.z
 ```
 
 Check `fluvio smartmodule list` to ensure they've been downloaded.
@@ -178,15 +184,15 @@ That's all folks!
 
 ---
 
-[webhook]: /docs/fluvio/how-to/use-webhooks
-[Webhook Basics]: /docs/fluvio/how-to/use-webhooks
-[Webhook Configuration File]: /docs/fluvio/tutorials/webhook-to-slack#create-webhook-configuration-file
-[http-sink]: /docs/connectors/catalog/outbound/http
+[webhook]: fluvio/how-to/use-webhooks.mdx
+[Webhook Basics]: fluvio/how-to/use-webhooks.mdx
+[Webhook Configuration File]: fluvio/tutorials/webhook-to-slack.mdx#create-webhook-configuration-file
+[http-sink]: https://github.com/infinyon/http-sink-connector
 [labs-json-formatter-sm]: https://github.com/infinyon/labs-json-formatter-sm
 [JSON formatter SmartModule]: https://github.com/infinyon/labs-json-formatter-sm
 [fluvio-jolt]: https://github.com/infinyon/fluvio-jolt
-[Fluvio CLI]: /docs/fluvio/quickstart#install-fluvio
+[Fluvio CLI]: fluvio/quickstart.mdx#install-fluvio
 [InfinyOn Cloud]: https://infinyon.cloud/signup
-[Access Tokens]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+[Access Token]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 [Slack Webhooks]: https://api.slack.com/messaging/webhooks
 [Cloudflare workers]: https://workers.cloudflare.com

@@ -10,7 +10,7 @@ Services define the dataflow composition and the business logic. The composition
 
 Services can be molded to perform various operations, such as traffic routing, transformations, and window processing. We'll start with a brief overview of the architecture, followed by the service definition template, and conclude with several service definition examples for:
 
-* [Simple Tranformations](#simple-tranformations)
+* [Simple Transformations](#simple-tranformations)
 * [Data Routing with Merge and Split](#data-routing-with-merge-and-split)
 * [Parallel Processing with Partitions](#parallel-processing-with-partitions)
 * [Window Processing](#window-processing)
@@ -21,12 +21,14 @@ Services are dataflow paths designed to perform one chain of operations in seque
 
 Inside transforms, the engine sends the output of one operator to the input of the next operator, as defined in the dataflow file.
 
-<img src="/img/sdf/service-Architecture.png" alt="Service Architecture"
+<img src="/img/sdf/service-architecture.png" alt="Service Architecture"
   style={{ display: 'block', margin: '0 auto' }} width="350" />
 
 The only parallelism allowed is through `partitions` as described in the [Partition section](#parallel-processing-with-partitions) below.
 
-Furthermore, [window processing](#window-processing) services are dedicated services that play a specific role in the dataflow implementation. They start the `window` keyword and perform pre-defined operations such as: `assign-timestamp`, `partition`, and `flush`. These services aim to create a state object that can be sent to a topic or referenced by other services.
+Furthermore, [window processing] services are dedicated services that play a specific role in the dataflow implementation. They start the `window` keyword and perform pre-defined operations such as: `assign-timestamp`, `partition`, and `flush`. These services aim to create a state object that can be sent to a topic or referenced by other services.
+
+[window processing]: #window-processing
 
 ## Services Template Definition
 
@@ -62,13 +64,15 @@ services:
 
 Where:
 
- - **sources** - has one or more services, with an optional tranformation. Checkout the [merge] section for examples on multiple sources.
- - **states** - has `definitions` for objects managed by this services, and `references` to external object. Checkout the [states] section for additional information.
+ - **sources** - has one or more references to topics, with an optional tranformation. Checkout the [merge] section for examples on multiple sources.
+ - **states** - has `definitions` for objects managed by the services, and `references` to an external object. Checkout the [states] section for additional information.
  - **transforms** - define the operators to be applied to the data.
- - **window** - defines the window processing parameters. Checkout [window section](#window-processing) below for additional information.
- * **partition** - defines the parallelism of the transforms. Checkout [partition section](#parallel-processing-with-partitions) below for additional information.
-  - **sinks** - has one or more services, with an optional tranformation. Checkout the [split] section for examples on multiple destinations.
+ - **window** - defines the window processing parameters. Checkout [window section] below for additional information.
+ - **partition** - defines the parallelism of the transforms. Checkout [partition section] below for additional information.
+ - **sinks** - could be zero or multiples references to topics, with an optional tranformation. Checkout the [split] section for examples on multiple destinations.
 
+[window section]: #window-processing
+[partition section]: #parallel-processing-with-partitions
 
 ## Services - Sample Use Cases
 
@@ -92,12 +96,12 @@ services:
     transforms:
       - operator: flat-map
         run: |
-          fn sentence_to_words(sentence: String) -> Result<Vec<String>, String> {
+          fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
             Ok(sentence.split_whitespace().map(String::from).collect())
           }
       - operator: map
         run: |
-          pub fn augment_count(word: String) -> Result<String, String> {
+          pub fn augment_count(word: String) -> Result<String> {
             Ok(format!("{}({})", word, word.chars().count()))
           }
 
@@ -186,7 +190,7 @@ services:
         transforms:
           - operator: filter
             run: |
-              fn is_child(person: Person) -> Result<bool, String> {
+              fn is_child(person: Person) -> Result<bool> {
                   Ok(person.age < 18)
               }
       - type: topic
@@ -194,7 +198,7 @@ services:
         transforms:
           - operator: filter
             run: |
-              fn is_adult(person: Person) -> Result<bool, String> {
+              fn is_adult(person: Person) -> Result<bool> {
                   Ok(person.age >= 18)
               }
 ```
@@ -219,19 +223,19 @@ services:
   transforms:
     - operator: flat-map
       run: |
-        fn split_sequence(sentence: String) -> Result<Vec<String>, String> {
+        fn split_sequence(sentence: String) -> Result<Vec<String>> {
           Ok(sentence.split_whitespace().map(String::from).collect())
         }
   partition:
     assign-key:
       run: |
-        fn key_by_word(word: String) -> Result<String, String> {
+        fn key_by_word(word: String) -> Result<String> {
           Ok(word.to_lowercase().chars().filter(|c| c.is_alphanumeric()).collect())
         }
 
     update-state:
       run: |
-        fn increment_word_count(_word: String) -> Result<(), String> {
+        fn increment_word_count(_word: String) -> Result<()> {
           let mut state = count_per_word();
           state.count += 1;
           state.update();
@@ -247,7 +251,7 @@ In this example, we use the `flat-map` operator to split the sentences into word
 * The chain of operation in `transforms` must end with `update-state.`
 
 
-Check out <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-inline/word-probe" target="_blank">word-probe example in github</a> for a working demo.
+Check out [word-probe example in github] for a working demo.
 
 
 ### Window Processing
@@ -267,27 +271,27 @@ services:
 
     assign-timestamp:
       run: |
-        fn assign_event_timestamp(value: String, event_time: i64) -> Result<i64, String> {
+        fn assign_event_timestamp(_value: String, event_time: i64) -> Result<i64> {
           Ok(event_time)
         }
 
     partition:
       assign-key:
         run: |
-          fn assign_word_key(word: String) -> Result<String, String> {
+          fn assign_word_key(word: String) -> Result<String> {
             Ok(word.to_lowercase().chars().filter(|c| c.is_alphanumeric()).collect())
           }
 
       update-state:
         run: |
-          fn increment_word_count(word: String) -> Result<(), String> {
+          fn increment_word_count(word: String) -> Result<()> {
             count_per_word().increment(1);
             Ok(())
             }
 
     flush:
       run: |
-        fn compute_most_used_words() -> Result<TopWords, String> {
+        fn compute_most_used_words() -> Result<TopWords> {
           let mut top3 = count_per_word().clone();
           top3.sort_by(|a, b| a.value.cmp(&b.value));
           top3.reverse();
@@ -305,7 +309,7 @@ In this example, we use the `window` operator to convert the stream of words int
 * The `update-state` operator to update the state on each record.
 * The `flush` operator returns the full data set for processing. The engine triggers the `flush operation` when the window closes, every 20 seconds.
 
-Check out <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-inline/word-counter" target="_blank">word-counter example in github</a> for a working demo.
+Check out [word-counter example in github] for a working demo.
 
 
 ### References
@@ -313,17 +317,18 @@ Check out <a href="https://github.com/infinyon/stateful-dataflows-examples/tree/
 * [SDF]
 * [States]
 
-[Operators]: /sdf/services/operators
+[Operators]: services/operators.mdx
 [SDF]: /sdf
-[merge]: /sdf/services/merge
-[split]: /sdf/services/split
-[states]: /sdf/services/states
-[Operators Section]: /sdf/services/operators
-[dataflow.yaml]: sdf/dataflow-yaml
-[sdf-package.yaml]: /sdf/sdf-package-yaml
-[timestamp operator section]: /sdf/services/operators#assign-timestamp
+[merge]: services/merge.mdx
+[split]: services/split.mdx
+[states]: services/state.mdx
+[Operators Section]: services/operators.mdx
+[dataflow.yaml]: sdf/dataflow-yaml.mdx
+[sdf-package.yaml]: sdf/sdf-package-yaml.mdx
+[timestamp operator section]: operators#assign-timestamp
 [Apache Arrow format]: https://docs.rs/arrow/latest/arrow/
 [Polars]: https://pola.rs/
 [Stateful Dataflows Examples]: https://github.com/infinyon/stateful-dataflows-examples
 [CQRS architecture]: https://en.wikipedia.org/wiki/Command_Query_Responsibility_Segregation
-[github]: https://github.com/infinyon/stateful-dataflows-examples
+[word-probe example in github]: https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-inline/word-probe
+[word-counter example in github]: https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-inline/word-counter

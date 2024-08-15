@@ -8,7 +8,7 @@ Fluvio is a distributed, programmable streaming platform written in Rust.
 ---
 Welcome to the 51st edition of this week in Fluvio.
 
-For this edition we have more details on **Community Contribution** 
+For this edition we have more details on **Community Contribution**
 
 ## Community update
 [Carson Rajcan](https://github.com/crajcan) presented to our team a really cool contribution to the Fluvio OSS.
@@ -52,7 +52,7 @@ In this example, we are still processing email addresses, but now it is possible
 %copy%
 ```shell
 echo "FooBar@test.com" | fluvio produce emails --smartmodule lowercase
-fluvio consume emails -B -d 
+fluvio consume emails -B -d
 ```
 
 Both result in the same output with the email address using only lowercase letters:
@@ -71,7 +71,7 @@ With my TDD workflow ready to go, I made the changes from the outside-in.
 2. Used those arguments to build SmartModuleInvocation(s), a type used to model SmartModules during network requests.
 3. Added the SmartModuleInvocation(s) to the ProduceRequest
 
-### For the transfer 
+### For the transfer
 
 4. Had to define how the SmartModuleInvocation(s) would be encoded & decoded
 
@@ -104,11 +104,6 @@ The records must be decompressed so they can be fed to the SmartEngine, then com
 Thank you for your feedback on Discord. We are working on a public road map that should be out soon.
 
 Keep the feedback flowing in [our Discord channel] and let us know if you'd like to see the video of Carson walking through the code.
-
-
-## Open positions
-* [Sr. Rust Cloud Software Engineer](https://infinyon.com/careers/cloud-engineer-senior-level/)
-* [Developer Advocate](https://infinyon.com/careers/developer-advocate-mid-senior-level/)
 
 ---
 
