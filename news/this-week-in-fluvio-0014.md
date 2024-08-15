@@ -7,7 +7,7 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
+---
 
 ## No new release
 
@@ -36,8 +36,6 @@ secrets:
 ```
 
 In this example, we're using the `my-test-mqtt` connector we introduced in [a previous TWiF] to get a live bytestream from an MQTT broker and store it in a topic. But before we store it, we want to parse and transform the raw bytestream into our own types with a SmartModule.
-
-[a previous TWiF]: /news/this-week-in-fluvio-0010.md#new-managed-connector
 
 Here's the SmartModule Map we're going to use to transform the connector output.
 
@@ -142,15 +140,17 @@ And we see clear differences. With the inclusion of the SmartModule, we've trans
 
 SmartConnectors are coming soon, so keep an eye out for a future release.
 
+
+[a previous TWiF]: this-week-in-fluvio-0010.md#new-managed-connector
+
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
-
-Until next week!
 
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn

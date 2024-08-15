@@ -7,7 +7,7 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
+---
 
 ## No new release
 
@@ -39,9 +39,11 @@ $ fluvio consume my-topic --filter <name>
 
 Btw, this new functionality will be in addition to the existing behavior. You can continue using local wasm filters, but we think that if you are using the same filter frequently, you will find SmartModules to be a convenient option. Especially if you are using many devices using the same SmartModule.
 
+[connectors]: ../docs/connectors
+
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
@@ -51,4 +53,6 @@ Until next week!
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
-[connectors]: /connectors
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn
+
+
