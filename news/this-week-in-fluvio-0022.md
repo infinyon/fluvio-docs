@@ -7,7 +7,7 @@ Welcome to This Week in Fluvio, our weekly newsletter
 for development updates to [Fluvio open source]. Fluvio is a distributed,
 programmable streaming platform written in Rust.
 
-BANNER
+---
 
 
 ## New Release - Fluvio v0.9.19
@@ -17,8 +17,7 @@ Now when you run `fluvio connector list`, the version of the connector is return
 
 Example connector config:
 
-%copy%
-```yaml
+```yaml copy
 # test-connector-config.yaml
 version: 0.1.1
 name: my-test-connector
@@ -46,36 +45,31 @@ This is for advanced users who are willing to compile Fluvio locally. Please fol
 
 SmartModule devs can now compile Fluvio with WASI support. This provides SmartModules access to `stdout` and `stderr` for debugging purposes.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ git clone https://github.com/infinyon/fluvio.git
 ```
 
 Build the development Fluvio cluster image with WASI support enabled
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ DEBUG_SMARTMODULE=true make build_k8_image
 ```
 
 Build the development Fluvio CLI.<br />
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ make build-cli
 ```
 
 Start our development Fluvio cluster with WASI support
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ ./target/debug/fluvio cluster start --develop
 ```
 
 Here's our example SmartModule. It is a slight modification of [our filter example](https://github.com/infinyon/fluvio/blob/d63e3e2569e4d64a098e5c2189ac68e6e9cd2670/crates/fluvio-smartmodule/examples/filter/src/lib.rs). For debugging purposes, we print the record to stdout before checking the contents of the record and applying filtering.
 
-%copy%
-```rust
+```rust copy
 use fluvio_smartmodule::{smartmodule, Record, Result};
 
 #[smartmodule(filter)]
@@ -89,37 +83,32 @@ pub fn filter(record: &Record) -> Result<bool> {
 
 Before you build the SmartModule, you need to add the `wasm32-wasi` target with `rustup`.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ rustup target add wasm32-wasi
 ```
 
 Build SmartModule using the `wasm32-wasi` target to use it against our WASI-enabled cluster.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ cargo build --release --target wasm32-wasi
 ```
 
 Load the WASI SmartModule into the cluster as `wasi-sm`
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ ./target/debug/fluvio smart-module create wasi-sm --wasm-file ./target/wasm32-wasi/release/fluvio_wasm_filter.wasm
 ```
 
 Create the testing topic `twif-22`
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ ./target/debug/fluvio topic create twif-22
 topic "twif-22" created
 ```
 
 For our example producer input, we'll send 2 records to demonstrate the SmartModule output.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ ./target/debug/fluvio produce twif-22
 > a
 Ok!
@@ -129,8 +118,7 @@ Ok!
 
 In the consumer output using our WASI SmartModule, only the first record prints, which is the correct behavior.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ ./target/debug/fluvio consume twif-22 --filter wasi-sm
 Consuming records from the end of topic 'twif-22'. This will wait for new records
 a
@@ -139,8 +127,7 @@ a
 
 To view our SmartModule debug output, we look at the SPU pod logs in Kubernetes. At the bottom of the log we can verify that the contents of each record was printed.
 
-%copy first-line%
-```shell
+```shell copy="fl"
 $ kubectl logs -f fluvio-spg-main-0
 [...]
 2022-02-15T00:45:25.502747Z  INFO accept_incoming{self=FluvioApiServer("0.0.0.0:9005")}: fluvio_service::server: Received connection, spawning request handler
@@ -301,17 +288,16 @@ Consuming records from the end of topic 'cat-facts'. This will wait for new reco
 {"status":{"version":"HTTP/1.1","code":200,"string":"OK"},"header":{"set-cookie":["XSRF-TOKEN=REDACTED expires=Wed, 16-Feb-2022 02:56:22 GMT; path=/; samesite=lax","cat_facts_session=REDACTED expires=Wed, 16-Feb-2022 02:56:22 GMT; path=/; httponly; samesite=lax"],"content-type":"application/json","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","x-xss-protection":"1; mode=block","vary":"Accept-Encoding","server":"nginx","x-ratelimit-remaining":"94","date":"Wed, 16 Feb 2022 00:56:22 GMT","transfer-encoding":"chunked","cache-control":"no-cache, private","x-ratelimit-limit":"100","access-control-allow-origin":"*","connection":"keep-alive"},"body":"{\"fact\":\"There are more than 500 million domestic cats in the world, with approximately 40 recognized breeds.\",\"length\":100}"}
 ```
 
-[Updated docs for the HTTP Connector are available](/docs/connectors/catalog/inbound/http)
+[Updated docs for the HTTP Connector are available]: ../docs/hub/connectors/inbound/http
 
 ---
 
-Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello!
+Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
-
-Until next week!
 
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz
 [Github Discussions]: https://github.com/infinyon/fluvio/discussions
+[InfinyOn Youtube Channel]: https://www.youtube.com/@InfinyOn
