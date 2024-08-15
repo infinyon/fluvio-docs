@@ -16,7 +16,7 @@ This Week in Fluvio is our weekly newsletter for development updates to [Fluvio 
 
 ## New features
 
-* [Chaining support](smartmodules/core-concepts#chaining-with-cli)
+* [Chaining support]
   * Producer: ([#2753](https://github.com/infinyon/fluvio/pull/2753))
   * Consumer: ([#2759](https://github.com/infinyon/fluvio/pull/2759))
   * SMDK: ([#2784](https://github.com/infinyon/fluvio/pull/2784))
