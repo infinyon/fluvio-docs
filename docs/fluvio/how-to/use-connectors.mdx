@@ -4,13 +4,13 @@ title: "Use Connectors"
 description: "A short tutorial for using Connectors"
 ---
 
-Ensure `fluvio` is installed and logged in to InfinyOn Cloud before proceeding. If not set up, follow the [Quick Start](/).
+Ensure that the Fluvio CLI is installed and logged in to InfinyOn Cloud before proceeding. If not set up, follow the [Quick Start].
 
 Connectors serve to transmit data into or out of your cluster, configurable via a YAML file.
 
-Utilizing [InfinyOn Cloud] for managing connectors centralizes your data pipelines, both locally and on the cloud.
+Utilizing InfinyOn Cloud for managing connectors centralizes your data pipelines, both locally and on the cloud.
 
-Manage your connectors efficiently with the [`fluvio cloud connector`][cli-connector] CLI.
+Manage your connectors efficiently with the [Cloud CLI].
 
 ## Create Your First Connector on InfinyOn Cloud
 
@@ -30,7 +30,7 @@ Below is the configuration for the [Inbound HTTP connector]
 ```yaml
 apiVersion: 0.1.0
 meta:
-  version: 0.2.1
+  version: x.y.z
   name: cat-facts
   type: http-source
   topic: cat-facts
@@ -39,7 +39,7 @@ http:
   interval: 10s
 ```
 
-In this configuration, a connector named `cat-facts` is created. It requests data from [a cat fact API](https://catfact.ninja) every 30 seconds and receives JSON data, which is stored in a topic named `cat-facts-data`.
+In this configuration, a connector named `cat-facts` is created. It requests data from [a cat fact API] every 30 seconds and receives JSON data, which is stored in a topic named `cat-facts-data`.
 
 #### Start a connector
 
@@ -57,7 +57,7 @@ Once created, list the connectors and view their current status:
 ```bash copy="fl"
 $ fluvio cloud connector list
  NAME       TYPE         VERSION  CDK  STATUS
- cat-facts  http-source  0.1.0    V3   Running
+ cat-facts  http-source  x.y.z    V3   Running
 ```
 
 #### View connector logs
@@ -66,7 +66,7 @@ Debug connector behavior by accessing the logs:
 
 ```bash copy="fl"
 $ fluvio cloud connector logs cat-facts
-connector-startup infinyon/http-source@0.1.0
+connector-startup infinyon/http-source@x.y.z
 2023-03-25T03:41:29.570294Z  INFO surf::middleware::logger::native: sending request
 2023-03-25T03:41:29.702213Z  INFO surf::middleware::logger::native: request completed
 2023-03-25T03:41:29.702258Z  INFO connector_startup::startup: downloading package url="https://hub.infinyon.cloud/hub/v0/connector/pkg/infinyon/http-source/0.1.0"
@@ -135,4 +135,7 @@ topic "cat-facts" deleted
 You've created an Inbound HTTP connector, accessed the logs, viewed the HTTP response data in the Fluvio topic, and deleted the connector and topic post-exploration. You are now prepared to create your own connectors. Check the documentation for our supported Inbound and Outbound connectors to get started with your own data sources.
 
 [InfinyOn Cloud]: https://infinyon.cloud
-[cli-connector]: /docs/cloud/tutorials/connector-basics
+[Quick Start]: cloud/tutorials/infinyon-cloud.mdx
+[Cloud CLI]: cloud/cli/connector.mdx
+[Inbound HTTP connector]: hub/connectors/inbound/http.mdx
+[a cat fact API]: https://catfact.ninja

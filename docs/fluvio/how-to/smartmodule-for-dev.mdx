@@ -4,11 +4,10 @@ title: "Build your own SmartModules"
 description: "Tutorial for Rust developers on how to use Smart Module Development Kit to build your custom transformations."
 ---
 
-This tutorial expects you to already have the Fluvio CLI installed, and InfinyOn
-Cloud set up. If neither of these is the case, please follow the instructions [here](/)!
+This tutorial assumes that Fluvio is installed, and logged-in to InfinyOn Cloud. Follow the [Quick Start] to get set up.
 
 There are four main steps for this tutorial:
-* Installing the SmartModule Development Kit CLI, `smdk`
+* Installing the SmartModule Development Kit CLI (smdk)
 * Generating a SmartModule project
 * Testing the SmartModule behavior with inputs
 * Loading the SmartModule into a cluster
@@ -16,7 +15,7 @@ There are four main steps for this tutorial:
 ## SmartModules
 
 SmartModules are user defined functions set to run on and modify the inputs/outputs to
-a Fluvio database.
+a Fluvio topic.
 
 In this tutorial, we will create a configurable SmartModule that takes in a regular expression rule, and filters input based on whether it matches the rule.
 
@@ -33,7 +32,7 @@ With `smdk`, you can generate a new SmartModule project with the guided wizard. 
 ```shell
 $ smdk generate regex_filter
 Generating new SmartModule project: regex_filter
-fluvio-smartmodule-cargo-dependency => '0.3.0'
+fluvio-smartmodule-cargo-dependency => 'x.y.z'
 ⚠️   Renaming project called `regex_filter` to `regex-filter`...
 ✔ 🤷   Which type of SmartModule would you like? · filter
 🤷   Please set a group name : my-group
@@ -240,22 +239,22 @@ Consuming records from the beginning of topic 'filter-test'
 42
 ```
 
-You now know the development workflow for SmartModules with `smdk`. You can now generate your own project that processes data. For additional information on how to publish and share SmartModules checkout [SmartModule Hub].
+You now know the development workflow for SmartModules with `smdk`. You can now generate your own project that processes data. For additional information on how to publish and share SmartModules please see [Hub].
 
-
-
-## Check out these Other Tutorials
-
-* [SmartModules with `smdk`](https://www.fluvio.io/docs/tutorials/smartmodule-development/)
-* [Creating a Data Pipeline](https://www.fluvio.io/docs/tutorials/data-pipeline/)
 
 ## Reference
 
-* [Fluvio CLI Produce](https://www.fluvio.io/cli/commands/produce/)
-* [Fluvio CLI Consume](https://www.fluvio.io/cli/commands/consume/)
-* [Fluvio CLI topic](https://www.fluvio.io/cli/commands/topic/)
-* [Fluvio CLI profile](https://www.fluvio.io/cli/client/profile/)
-* [SmartModule](https://www.fluvio.io/smartmodules/)
+* [Fluvio CLI Produce]
+* [Fluvio CLI Consume]
+* [Fluvio CLI topic]
+* [Fluvio CLI profile]
+* [SmartModule]
 
 
-[SmartModule Hub]: https://www.fluvio.io/smartmodules/hub/overview/
+[Quick Start]: cloud/tutorials/infinyon-cloud.mdx
+[Hub]: hub/overview.mdx
+[Fluvio CLI Produce]: fluvio/cli/fluvio/produce.mdx
+[Fluvio CLI Consume]: fluvio/cli/fluvio/consume.mdx
+[Fluvio CLI topic]: fluvio/cli/fluvio/topic.mdx
+[Fluvio CLI profile]: fluvio/cli/fluvio/profile.mdx
+[SmartModule]: smartmodules/introduction.mdx
