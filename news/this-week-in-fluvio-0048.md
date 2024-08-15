@@ -89,6 +89,7 @@ Thanks to those who were in attendance at KubeCon and stopped and said hi to us 
 [New UI tutorial]: /docs/cloud/how-to/use-infinyon-cloud
 [connectors docs]: ../docs/hub/connectors
 [SmartModule Hub docs]: ../docs/cloud/hub/overview
+
 ---
 
 Get in touch with us on [Github Discussions] or join [our Discord channel] and come say hello! Watch videos on our [InfinyOn Youtube Channel]
