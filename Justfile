@@ -52,14 +52,3 @@ resync-ver:
 
 sync-ver:
 	rsync -aurv docs/ versioned_docs/version-0.11.11
-
-
-[Fluvio open source]: https://github.com/infinyon/fluvio
-[Kubernetes documentation]: ../docs/fluvio/concepts/advanced/kubernetes
-[`eyre`]: https://github.com/yaahc/eyre
-[full source code for this example on GitHub]: https://github.com/infinyon/fluvio/tree/d63e3e2569e4d64a098e5c2189ac68e6e9cd2670/crates/fluvio-smartmodule/examples/map_double
-
-[check out our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
-
-[owned-builder]: https://docs.rs/derive_builder/0.10.2/derive_builder/#owned-aka-consuming
-[mutable-builder]: https://docs.rs/derive_builder/0.10.2/derive_builder/#mutable-aka-non-consuming-recommended
