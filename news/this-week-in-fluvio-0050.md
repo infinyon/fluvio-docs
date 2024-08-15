@@ -73,7 +73,7 @@ Get in touch with us on [Github Discussions] or join [our Discord channel] and c
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
-[cdk]: connectors/cdk.mdx
+[the docs to CDK]: connectors/cdk.mdx
 [Using DuckDB with Fluvio]: https://infinyon.com/blog/2023/02/duckdb-fluvio/
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
