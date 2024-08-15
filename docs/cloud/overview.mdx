@@ -163,7 +163,7 @@ Save the following configuration file on your machine:
 # quotes-source-connector.yml
 apiVersion: 0.1.0
 meta:
-  version: 0.2.5
+  version: x.y.z
   name: http-quotes
   type: http-source
   topic: quotes
@@ -188,7 +188,7 @@ Use the following command to see the connector status.
 ```bash copy="fl"
 $ fluvio cloud connector list
  NAME                 TYPE               VERSION  CDK  STATUS   LOG-LEVEL
- http-quotes          http-source        0.2.6    V3   Running  info
+ http-quotes          http-source        x.y.z    V3   Running  info
 ```
 
 We can monitor new data in the connector's topic with `fluvio consume quotes`
@@ -214,22 +214,22 @@ List the connectors available for download:
 ```bash copy="fl"
 $ cdk hub list
   CONNECTOR                          Visibility
-  infinyon/http-source@0.2.6         public
+  infinyon/http-source@x.y.z         public
   ...
 ```
 
 Download the connector on your local machine:
 
 ```bash copy="fl"
-cdk hub download infinyon/http-source@0.2.6
-downloading infinyon/http-source@0.2.6 to infinyon-http-source-0.2.6.ipkg
+cdk hub download infinyon/http-source@x.y.z
+downloading infinyon/http-source@x.y.z to infinyon-http-source-x.y.z.ipkg
 ... downloading complete
 ```
 
 Deploy the connector:
 
 ```bash copy="fl"
-$ cdk deploy start --ipkg infinyon-http-source-0.2.6.ipkg -c quotes-source-connector.yml
+$ cdk deploy start --ipkg infinyon-http-source-x.y.z.ipkg -c quotes-source-connector.yml
 ... checking package
 Log file: ./http-source.log
 Connector runs with process id: 1154
@@ -264,17 +264,17 @@ InfinyOn Hub has a growing library of SmartModules available for download:
 ```bash copy="fl"
 $ fluvio hub smartmodule list
   SMARTMODULE                              Visibility
-  infinyon-labs/array-map-json@0.1.0       public
-  infinyon-labs/dedup-filter@0.0.2         public
-  infinyon-labs/json-formatter@0.1.0       public
-  infinyon-labs/key-gen-json@0.1.0         public
-  infinyon-labs/regex-map-json@0.1.1       public
-  infinyon-labs/regex-map@0.1.0            public
-  infinyon-labs/rss-json@0.1.0             public
-  infinyon-labs/stars-forks-changes@0.1.2  public
-  infinyon/jolt@0.3.0                      public
-  infinyon/json-sql@0.2.1                  public
-  infinyon/regex-filter@0.1.0              public
+  infinyon-labs/array-map-json@x.y.z       public
+  infinyon-labs/dedup-filter@x.y.z         public
+  infinyon-labs/json-formatter@x.y.z       public
+  infinyon-labs/key-gen-json@x.y.z         public
+  infinyon-labs/regex-map-json@x.y.z       public
+  infinyon-labs/regex-map@x.y.z            public
+  infinyon-labs/rss-json@x.y.z             public
+  infinyon-labs/stars-forks-changes@x.y.z  public
+  infinyon/jolt@x.y.z                      public
+  infinyon/json-sql@x.y.z                  public
+  infinyon/regex-filter@x.y.z              public
 ```
 
 In the example, we'll use a [SmartModule called jolt] to turn json records into sentences.
@@ -282,7 +282,7 @@ In the example, we'll use a [SmartModule called jolt] to turn json records into 
 Let's download the Smartmodule to our cluster:
 
 ```bash copy="fl"
-$ fluvio hub smartmodule download infinyon/jolt@0.3.0
+$ fluvio hub smartmodule download infinyon/jolt@x.y.z
 ... cluster smartmodule install complete
 ```
 
@@ -291,7 +291,7 @@ Check the cluster to ensure it has been successfully downloaded:
 ```bash copy="fl"
 $  fluvio smartmodule list
   SMARTMODULE          SIZE
-  infinyon/jolt@0.3.0  611.5 KB
+  infinyon/jolt@x.y.z  611.5 KB
 ```
 
 Next, we'll create a transform file and test the output.
@@ -306,7 +306,7 @@ Create a `tranforms.yaml` file and copy/paste the following definition:
 ```yaml
 # File: tranforms.yaml
 transforms:
-  - uses: infinyon/jolt@0.3.0
+  - uses: infinyon/jolt@x.y.z
     with:
       spec:
         - operation: shift
@@ -341,7 +341,7 @@ Let's create a new `http-source` connector and add the transformation:
 # string-quotes-source-connector.yml
 apiVersion: 0.1.0
 meta:
-  version: 0.2.5
+  version: x.y.z
   name: string-quotes
   type: http-source
   topic: string-quotes
@@ -349,7 +349,7 @@ http:
   endpoint: https://demo-data.infinyon.com/api/quote
   interval: 3s
 transforms:
-  - uses: infinyon/jolt@0.3.0
+  - uses: infinyon/jolt@x.y.z
     with:
       spec:
         - operation: shift
@@ -368,8 +368,8 @@ Use the following command to see the connector status.
 ```bash copy="fl"
 $ fluvio cloud connector list
  NAME                 TYPE               VERSION  CDK  STATUS   LOG-LEVEL
- string-quotes        http-source        0.2.5    V3   Running  info
- http-quotes          http-source        0.2.5    V3   Running  info
+ string-quotes        http-source        x.y.z    V3   Running  info
+ http-quotes          http-source        x.y.z    V3   Running  info
 ```
 
 Let's take a look at `string-quotes`
@@ -427,5 +427,5 @@ Now you're familiar with using InfinyOn Cloud with the [Cloud CLI], Check out ou
 [Docker Installation]: fluvio/how-to/use-fluvio-in-docker.mdx
 [sign up here]: https://infinyon.com/request/ss-early-access/
 [WebAssembly]: https://webassembly.org/
-[Cloud CLI]: cloud/cli/overview.mdx
-[Tutorials]: cloud/tutorials/infinyon-cloud.mdx
+[Cloud CLI]: cli/overview.mdx
+[Tutorials]: tutorials/infinyon-cloud.mdx

@@ -13,31 +13,31 @@ Listing SmartModules will display the SmartModules available to your cluster.
 ```shell copy="fl"
 $ fluvio hub sm list
   SMARTMODULE                              Visibility
-  infinyon-labs/array-map-json@0.1.0       public
-  infinyon-labs/dedup-filter@0.0.2         public
-  infinyon-labs/json-formatter@0.1.0       public
-  infinyon-labs/key-gen-json@0.1.0         public
-  infinyon-labs/regex-map-json@0.1.1       public
-  infinyon-labs/regex-map@0.1.0            public
-  infinyon-labs/stars-forks-changes@0.1.2  public
-  infinyon/jolt@0.3.0                      public
-  infinyon/json-sql@0.2.1                  public
-  infinyon/regex-filter@0.1.0              public
+  infinyon-labs/array-map-json@x.y.z       public
+  infinyon-labs/dedup-filter@x.y.z         public
+  infinyon-labs/json-formatter@x.y.z       public
+  infinyon-labs/key-gen-json@x.y.z         public
+  infinyon-labs/regex-map-json@x.y.z       public
+  infinyon-labs/regex-map@x.y.z            public
+  infinyon-labs/stars-forks-changes@x.y.z  public
+  infinyon/jolt@x.y.z                      public
+  infinyon/json-sql@x.y.z                  public
+  infinyon/regex-filter@x.y.z              public
 ```
 
 Listing Connectors will display the connector packages you can download locally.
 ```shell copy="fl"
 $ fluvio hub conn list
   CONNECTOR                          Visibility
-  infinyon-labs/graphite-sink@0.1.2  public
-  infinyon/duckdb-sink@0.1.0         public
-  infinyon/http-sink@0.2.5           public
-  infinyon/http-source@0.2.5         public
-  infinyon/ic-webhook-source@0.1.2   public
-  infinyon/kafka-sink@0.2.7          public
-  infinyon/kafka-source@0.2.5        public
-  infinyon/mqtt-source@0.2.5         public
-  infinyon/sql-sink@0.3.3            public
+  infinyon-labs/graphite-sink@x.y.z  public
+  infinyon/duckdb-sink@x.y.z         public
+  infinyon/http-sink@x.y.z           public
+  infinyon/http-source@x.y.z         public
+  infinyon/ic-webhook-source@x.y.z   public
+  infinyon/kafka-sink@x.y.z          public
+  infinyon/kafka-source@x.y.z        public
+  infinyon/mqtt-source@x.y.z         public
+  infinyon/sql-sink@x.y.z            public
 ```
 
 
@@ -46,8 +46,8 @@ $ fluvio hub conn list
 Downloading a SmartModule is done with respect to your cluster. SmartModules need to be downloaded before they are used in transformations.
 
 ```shell copy="fl"
-$ fluvio hub sm download infinyon/jolt@0.3.0
-downloading infinyon/jolt@0.3.0 to infinyon-jolt-0.3.0.ipkg
+$ fluvio hub sm download infinyon/jolt@x.y.z
+downloading infinyon/jolt@x.y.z to infinyon-jolt-x.y.z.ipkg
 ... downloading complete
 ... checking package
 trying connection to fluvio router.infinyon.cloud:9003
@@ -57,7 +57,7 @@ trying connection to fluvio router.infinyon.cloud:9003
 Running `fluvio hub conn download` will download the package containing source code of the Connector.
 
 ```shell copy="fl"
-$ fluvio hub conn download infinyon/http-source@0.2.5
-downloading infinyon/http-source@0.2.5 to infinyon-http-source-0.2.5.ipkg
+$ fluvio hub conn download infinyon/http-source@x.y.z
+downloading infinyon/http-source@x.y.z to infinyon-http-source-x.y.z.ipkg
 ... downloading complete
 ```
