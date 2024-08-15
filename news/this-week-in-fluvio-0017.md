@@ -38,7 +38,7 @@ And finally edit your `Cargo.toml` to use the new edition.
 edition = "2021"
 ```
 [TableFormat docs]: ../docs/fluvio/cli/fluvio/table-format
-[Rust API]: ../docs/fluvio/api/rust/installation
+[Rust API]: ../docs/fluvio/apis/rust/installation
 
 ---
 
