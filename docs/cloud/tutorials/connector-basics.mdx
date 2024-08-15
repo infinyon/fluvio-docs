@@ -41,6 +41,12 @@ http:
  interval: 10s
 ```
 
+:::info
+All versions are marked with `x.y.z`. To find the latest version, run:
+*  `fluvio hub connector list`
+*  `fluvio hub smartmodule list`
+:::
+
 In this config, we are creating a connector named `cat-facts`. It will request data from <a href="https://catfact.ninja" target="_blank">a cat fact API</a> once every 30 seconds and receive json data. The connector will store the json into a topic called `cat-facts-data`
 
 
