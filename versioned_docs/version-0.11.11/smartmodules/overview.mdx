@@ -1,8 +1,10 @@
 ---
 sidebar_position: 1
-title: "Introduction"
+title: "Overview"
 description: "SmartModules are powerful components that enhance the functionality and flexibility of the Fluvio platform"
 ---
+
+# SmartModule Overview
 
 SmartModules are powerful components that enhance the functionality and flexibility of the Fluvio platform. They are programmable data streaming functions that serve as intelligent building blocks which enable users to apply tranformations. By leveraging smartmodules, users can automate repetitive tasks, orchestrate data flows, and enable advanced functionalities without requiring deep technical knowledge or extensive coding.
 
@@ -10,7 +12,15 @@ By utilizing WebAssembly, SmartModules provide a secure and isolated environment
 
 The beauty of SmartModules lies in their flexibility and adaptability. Users can configure them to suit their specific needs by adjusting parameters and settings. Producers and consumers can use SmartModules in order to shape data on both the client-side or server-side. This empowers individuals to tailor the behavior of the modules to match their unique requirements, all without writing complex code or dealing with intricate technical details.
 
-If you are interested in building your own SmartModules, checkout the [`smdk`]. InfinyOn offers a series of general purpose SmartModules. Checkout [the Hub] to see  what is available.
+<img src="/img/docs/how-to/smartmodule-basics/smartmodule-overview.svg" />
+
+You may use SmartModules in consumer, producers, as well as inbound and outbound connectors.
+
+You may use pre-build SmartModules or build your own:
+
+* [Build you your own SmartModules]
+* [Use pre-built SmartModules]
+
 
 ### Using a SmartModules
 
@@ -48,11 +58,46 @@ transforms:
 You can pass this file to the CLI with the `--transforms-file` option.
 
 
-### Cloud Pipelines with SmartModule Chaining
+### Example Pipelines
 
 Examples on how to use SmartModules in a pipeline:
+
 * [Build HTTP to SQL Pipeline]
 * [Build MQTT to SQL Pipeline]
 
+
+### References
+
+SmartModules features:
+* [Chaining Transformations]
+* [Deduplication]
+* [LookBack]
+
+Smartmodule sample repositories in github:
+
+* [labs-rss-json-sm]
+* [labs-json-formatter-sm]
+* [labs-key-gen-json-sm]
+* [labs-array-map-json-sm]
+* [labs-regex-map-json-sm]
+* [labs-stars-forks-changes-sm]
+* [labs-regex-map-sm]
+* [labs-cvs-json-sm]
+
+[Build you your own SmartModules]: ./developers/overview.mdx
 [Build HTTP to SQL Pipeline]: /docs/latest/fluvio/tutorials/http-to-sql
 [Build MQTT to SQL Pipeline]: /docs/latest/fluvio/tutorials/mqtt-to-sql
+[Use pre-built SmartModules]: hub/smartmodules/index.md
+
+[Chaining Transformations]:./features/chaining.mdx
+[Deduplication]:./features/deduplication.mdx
+[LookBack]:./features/lookback.mdx
+
+[labs-rss-json-sm]: https://github.com/infinyon/labs-rss-json-sm
+[labs-json-formatter-sm]: https://github.com/infinyon/labs-json-formatter-sm
+[labs-key-gen-json-sm]: https://github.com/infinyon/labs-key-gen-json-sm
+[labs-array-map-json-sm]: https://github.com/infinyon/labs-array-map-json-sm
+[labs-regex-map-json-sm]: https://github.com/infinyon/labs-regex-map-json-sm
+[labs-stars-forks-changes-sm]: https://github.com/infinyon/labs-stars-forks-changes-sm
+[labs-regex-map-sm]: https://github.com/infinyon/labs-regex-map-sm
+[labs-cvs-json-sm]: https://https://github.com/infinyon/labs-csv-json-sm

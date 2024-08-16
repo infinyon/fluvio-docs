@@ -131,7 +131,7 @@ Consuming records from the end of topic 'array-map-array'. This will wait for ne
 
 Docs for ArrayMap are [available here]. For a more hands-on explanation with a real-world example, please read our [blog post](https://infinyon.com/blog/2021/10/smartstream-array-map-reddit/) demonstrating the capabilities of `#[smartstream(array_map)]`.
 
-[available here]: ../docs/smartmodules/operators/array-map
+[available here]: ../docs/smartmodules/features/operators/array-map
 
 ---
 

@@ -1,0 +1,197 @@
+---
+sidebar_position: 0
+title: "QuickStart"
+description: "A short tutorial on using SmartModules"
+---
+
+# SmartModule QuickStart
+
+SmartModules are the basic building blocks for transformations in Fluvio, allowing users to define custom functions for processing or transforming streaming data. They provide a flexible way to tailor data handling to meet particular needs, enhancing Fluvio's capabilities.
+
+## Prerequisites
+
+This tutorial assumes that Fluvio is installed. Follow the [Fluvio - QuickStart] to get set up. You can follow along using a local cluster, the webhook section however requires a [Cloud] cluster.
+
+
+## See list of available SmartModules
+
+```shell copy="fl"
+$ fluvio hub sm list
+  SMARTMODULE                              Visibility
+  infinyon/jolt@x.y.z                      public
+  infinyon/json-sql@x.y.z                  public
+  infinyon/regex-filter@x.y.z              public
+  ...
+```
+
+:::info
+All versions are marked with `x.y.z` in the docs. Please use the number returned by the `fluvio hub sm list` command.
+:::
+
+
+## Download SmartModules
+
+SmartModules must be downloaded before they can be used. Afterwards, downloaded SmartModules are available for your Producers and Consumers.
+
+
+```shell copy="fl"
+$ fluvio hub smartmodule download infinyon/regex-filter@x.y.z
+downloading infinyon/regex-filter@x.y.z to infinyon-regex-filter-x.y.z.ipkg
+... downloading complete
+... checking package
+trying connection to fluvio router.infinyon.cloud:9003
+... cluster smartmodule install complete
+```
+
+## Use SmartModule with Producer and Consumer
+
+You can specify a SmartModule to use with `fluvio produce` and `fluvio consume`. Let's create a topic `cats`:
+
+```shell copy="fl"
+$ fluvio topic create cats
+```
+
+```shell copy="fl"
+$ fluvio produce cats
+> cat
+Ok!
+> dog
+Ok!
+> Cat
+```
+
+
+This consumer is using the SmartModule we just downloaded with `--smartmodule`, and is also configuring it with `--params`/`-e`.
+
+```shell copy="fl"
+$ fluvio consume -Bd --smartmodule infinyon/regex-filter@x.y.z --params regex='[Cc]at' cats
+cats
+Cats
+```
+
+The `--transforms-file` flag are for more complex transformations defined in a YAML file. See the [Transformation Chaining] page for more detail.
+
+
+## Use Multiple Transformations
+
+Smartmodules handle chainned tranformations via a `transforms.yaml` file. Order matters here, so `infinyon/jolt@x.y.z` is first and `infinyon/regex-filter@x.y.z` is second.
+
+```yaml
+transforms:
+  - uses: infinyon/jolt@x.y.z
+    with:
+      spec:
+        - operation: shift
+          spec:
+            fact: "animal.fact"
+            length: "length"
+  - uses: infinyon/regex-filter@x.y.z
+    with:
+      regex: "[Cc]at"
+```
+
+```shell copy="fl"
+$ fluvio consume --transforms-file ./my-transforms.yaml cats
+```
+
+We'll leave this example as an exercise for the reader. Checkout [Cloud Tutorials] for additional examples.
+
+
+## See list of Downloaded SmartModules
+
+```shell copy="fl"
+$ fluvio smartmodule list
+  SMARTMODULE                  SIZE
+  infinyon/regex-filter@x.y.z  312.7 KB
+```
+
+
+## Delete SmartModules
+
+```shell copy="fl"
+$ fluvio sm delete infinyon/json-sql@x.y.z
+smartmodule "infinyon/json-sql@x.y.z" deleted
+```
+
+## Use SmartModule with Connector
+
+You can define transforms when you create connectors with `transforms`
+
+
+```yaml title="connector-example.yaml"
+apiVersion: 0.1.0
+meta:
+  version: x.y.z
+  name: cat-facts
+  type: http-source
+  topic: cat-facts
+  secrets:
+    - name: AUTHORIZATION_TOKEN
+http:
+  endpoint: "https://catfact.ninja/fact"
+  interval: 10s
+  headers:
+    - "Authorization: token ${{ secrets.AUTHORIZATION_TOKEN }}"
+    - "Cache-Control: no-cache"
+transforms:
+  - uses: infinyon/jolt@x.y.z
+    with:
+      spec:
+        - operation: shift
+          spec:
+            fact: "animal.fact"
+            length: "length"
+  - uses: infinyon/regex-filter@x.y.z
+    with:
+      regex: "[Cc]at"
+```
+
+Everything is in the config file. You create a connector as usual.
+
+```shell copy="fl"
+$ fluvio cloud connector create --config connector-example.yaml
+```
+
+## Use SmartModule with Webhooks
+
+You may also use SmartModules with Webhooks. **This is a cloud-only feature.**
+
+```yaml title="example-webhook.yaml"
+meta:
+  name: my-webhook
+  topic: my-topic
+transforms:
+  - uses: infinyon/jolt@x.y.z
+    with:
+      spec:
+        - operation: shift
+          spec:
+            fact: "animal.fact"
+            length: "length"
+  - uses: infinyon/regex-filter@x.y.z
+    with:
+      regex: "[Cc]at"
+webhook:
+  outputParts: body
+```
+
+The webhook configurations are applied using `fluvio cloud` CLI.
+
+```shell copy="fl"
+fluvio cloud webhook create --config example-webhook.yaml
+```
+
+For additional information, checkout [Webhook Basics] tutorial. 
+
+## References
+
+* [Labs Projects] github repository
+
+
+[Fluvio - QuickStart]: fluvio/quickstart.mdx
+[Transformation Chaining]: smartmodules/features/chaining.mdx
+[`fluvio cloud`]: cloud/cli/overview.mdx
+[Webhook Basics]: cloud/tutorials/webhook-basics.mdx
+[Cloud Tutorials]: cloud/tutorials/index.md
+[Cloud]: cloud/overview.mdx
+[Labs Projects]: https://github.com/infinyon/labs-projects

@@ -4,7 +4,7 @@ title: "Load to Cluster"
 description: "Use your SmartModule in your Cluster and apply it on actual data"
 ---
 
-SMDK load give developers the ability to upload their own SmartModules to a local or [InfinyOn Cloud] clusters.
+SMDK load give developers the ability to upload their own SmartModules to a local cluster or [InfinyOn Cloud].
 
 This section assumes that `my-filter` project has been [built].
 
@@ -21,7 +21,7 @@ Trying connection to fluvio router.infinyon.cloud:9003
 Creating SmartModule: my-filter
 ```
 
-The SmartMoudule is uploaded to the cluster that your [`current profile`]. If you want to upload the SmartModule to multiple clusters, just switch the profile and run the `load` command again.
+The SmartMoudule is uploaded to the cluster on your [`current profile`]. If you want to upload the SmartModule to multiple clusters, just switch the profile and run the `load` command again.
 
 #### Inspect Result
 
@@ -30,7 +30,7 @@ Ensure that your SmartModule has been uploaded by running the following command 
 ```bash copy="fl"
 $ fluvio smartmodule list
   SMARTMODULE                  SIZE
-  aj/my-filter@0.1.0            85.7 KB
+  acme/my-filter@0.1.0         85.7 KB
 ```
 
 SmartModules can be used in `Consumers` and `Connectors`. Future releases will expand this capability to other system components.
@@ -64,7 +64,7 @@ Ok!
 Consume using `my-filter`:
 
 ```bash copy="fl"
-$ fluvio consume test -dB --smartmodule aj/my-filter@0.1.0
+$ fluvio consume test -dB --smartmodule acme/my-filter@0.1.0
 Consuming records from the beginning of topic 'test'
 cats
 start
@@ -80,7 +80,7 @@ SmartModule are applied to InfinyOn Cloud Connectors using `fluvio cloud connect
 Copy the following connector configuration into a`connector.yml` file:
 
 ```yaml
-version: 0.3.0
+version: 0.1.0
 name: cat-facts
 type: http-source
 topic: cats
@@ -110,13 +110,12 @@ The conector creates a topic called `cats` and filters out all records without l
 3. **[Load to your Cluster]**
 4. [Publish to SmartModule Hub]
 
-[next section]: /docs/connectors/smartmodules/smdk/publish
+[next section]: publish.mdx
 [InfinyOn Cloud]: https://infinyon.cloud
-[Load to your Cluster]: /docs/connectors/smartmodules/smdk/load
-[Publish to SmartModule Hub]: /docs/connectors/smartmodules/smdk/publish
-[Generate a SmartModule]: /docs/connectors/smartmodules/smdk/generate
-[Build and Test]: /docs/connectors/smartmodules/smdk/build
-[Load to your Cluster]: /docs/connectors/how-to/development/smdk
-[Publish to SmartModule Hub]: /docs/connectors/smartmodules/smdk/publish
-[`current profile`]: /docs/fluvio/cli/fluvio/profile
-[built]: /docs/connectors/smartmodules/smdk/build
+[built]: build.mdx
+[`current profile`]: fluvio/cli/fluvio/profile.mdx
+
+[Generate a SmartModule]: generate.mdx
+[Build and Test]: build.mdx
+[Load to your Cluster]: load.mdx
+[Publish to SmartModule Hub]: publish.mdx
