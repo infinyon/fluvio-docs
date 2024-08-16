@@ -9,8 +9,8 @@ export function Products(): JSX.Element {
 
   return (
     <section className="dark:text-white max-w-[1200px] mx-auto">
-      <Card 
-        imgSrc={diagram_img} 
+      <Card
+        imgSrc={diagram_img}
         imgAlt="Fluvio Diagram"
       >
         <h2>Transform, Enrich & Materialize</h2>
@@ -23,7 +23,7 @@ export function Products(): JSX.Element {
           <a className="home-products-btn" href="https://infinyon.cloud/ui">Go to Cloud</a>
         </div>
       </Card>
-      <Card 
+      <Card
         flip
         imgSrc={connectors_img}
         imgAlt="Fluvio Connectors"
@@ -35,8 +35,8 @@ export function Products(): JSX.Element {
         </p>
         <a className="home-products-btn" href="/docs/connectors/overview">Go to Connectors</a>
       </Card>
-      <Card 
-        imgSrc={apis_img} 
+      <Card
+        imgSrc={apis_img}
         imgAlt="Fluvio APIs"
       >
         <h2>Run Everywhere</h2>
@@ -44,7 +44,7 @@ export function Products(): JSX.Element {
           Fluvio APIs allow you to run Fluvio on any platform. Fluvio APIs are
           published as packages/crates for Rust, Python, and JavaScript.
         </p>
-        <a className="home-products-btn" href="/docs/apis/quickstart">Go to APIs</a>
+        <a className="home-products-btn" href="/docs/fluvio/apis/overview">Go to APIs</a>
       </Card>
     </section>
   );
