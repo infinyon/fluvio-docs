@@ -11,13 +11,13 @@ We paused the weekly updates because we had several big changes in flight. We wi
 
 A lot has happened in the past couple of months that is relevant to update.
 
- 
+
 ## New release
 Fluvio moved to version 0.11.3 a couple of days ago. We have had a bunch of releases since we last published an update on our site.
 
 Full Changelog of the release is here: [Fluvio Changelog]
 
- 
+
 ## New features
 Fluvio has a bunch of exciting updates. The community has been asking for a single binary deployment that can be run locally, using Docker, using Nomad. That meant we needed to decouple our tight coupling with Kubernetes. We did that in 2023 and the community started building with Fluvio!
 
@@ -39,14 +39,14 @@ In light of this our Quick Start docs has been updated to reflect the changes. G
 
 Updated [Quick Start Link]
 
- 
+
 ## Upcoming features
 There are some exciting community projects that are in development:
 
 - There are some awesome new contributions in the works which included integrations with Spider Web Crawler, OpenSearch, ElasticSearch, Qdrant, Surreal, OpenDAL etc.
 - We have an oversubscribed developer preview for Stateful Service Development Kit which makes stateful stream processing a reality.
 - We have docs on [docker based deployment].
- 
+
 ## Good First Issues
 If you are excited to contribute to Fluvio Open Source, here are 3 good first issues that you can consider:
 
@@ -68,4 +68,4 @@ Get in touch with us on [Github Discussions] or join [our Discord channel] and c
 [connector: fluvio-http-source, add an option to read data from a websocket]: https://github.com/infinyon/fluvio/issues/3829
 [MQTT Connector: Prefix auto generated Client ID to prevent connection drops]: https://github.com/infinyon/fluvio/issues/3825
 [fluvio cluster delete should prompt with cluster and endpoint name confirmation]: https://arc.net/l/quote/hcztknom
-[docker based deployment]: fluvio/installation/use-fluvio-in-docker.mdx
+[docker based deployment]: ../docs/fluvio/installation/docker

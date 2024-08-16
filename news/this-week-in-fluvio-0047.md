@@ -49,7 +49,7 @@ Get in touch with us on [Github Discussions] or join [our Discord channel] and c
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
-[cdk]: connectors/cdk.mdx
+[cdk]: ../docs/connectors/cdk
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
 [our Discord channel]: https://discordapp.com/invite/bBG2dTz

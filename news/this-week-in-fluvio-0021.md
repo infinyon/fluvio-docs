@@ -46,7 +46,7 @@ Prior to this release, the argument would render as `--some_parameter=foo`.
 
 Now the `some_parameter` key will will render as `--some-parameter=foo`
 
-[developing your own connector]:../docs/connectors/local/develop/introduction
+[developing your own connector]:../docs/connectors/developers/overview
 
 ---
 
