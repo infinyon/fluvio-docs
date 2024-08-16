@@ -1,12 +1,12 @@
 ---
-sidebar_position: 11
-title: "Custom Clients with Docker"
+sidebar_position: 1
+title: "Fluvio Clients with Docker"
 description: "A guide to run InfinyOn Cloud client in Docker environment"
 ---
 
 In this guide, you'll learn how to package your custom app with a Fluvio client into a Docker image, and how to run a container with `docker` CLI.
 
-We assume you are connected to a cluster with the CLI. If this is not the case, please login to [InfinyOn Cloud] before continuing.
+This tutorial assumes you have a fluvio cluster running. If you don't, follow the [QuickStart] to get set up.
 
 ### Example custom Fluvio client
 
@@ -15,7 +15,7 @@ To help illustrate the basic development workflow for all services using a Fluvi
 Run these commands to initialize the project
 
 
-```shell
+```bash copy="fl"
 $ cargo new fluvio-rust-client
 $ cd fluvio-rust-client
 $ cargo add async-std --features attributes
@@ -23,7 +23,6 @@ $ cargo add chrono fluvio
 ```
 
 Copy this code into `src/main.rs`
-
 
 ```rust
 use async_std::stream::StreamExt;
@@ -148,4 +147,4 @@ $ docker compose up
 ```
 
 
-[InfinyOn Cloud]: https://infinyon.cloud/
+[QuickStart]: fluvio/quickstart.mdx

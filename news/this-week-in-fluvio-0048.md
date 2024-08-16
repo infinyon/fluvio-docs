@@ -88,7 +88,7 @@ Thanks to those who were in attendance at KubeCon and stopped and said hi to us 
 [MQTT to SQL tutorial]: ../docs/fluvio/tutorials/mqtt-to-sql
 [New UI tutorial]: ../docs/cloud/overview
 [connectors docs]: ../docs/hub/connectors
-[SmartModule Hub docs]: ../docs/cloud/hub/overview
+[SmartModule Hub docs]: ../docs/hub/overview
 
 ---
 

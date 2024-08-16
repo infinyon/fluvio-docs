@@ -96,6 +96,7 @@ const config: Config = {
           editUrl: "https://github.com/infinyon/fluvio-docs/tree/main",
           showLastUpdateTime: true,
           showLastUpdateAuthor: true,
+          sidebarCollapsed: false,
           versions: {
             current: {
               label: "latest",
@@ -130,7 +131,7 @@ const config: Config = {
     image: "img/docusaurus-social-card.jpg",
     docs: {
       sidebar: {
-        autoCollapseCategories: true,
+        autoCollapseCategories: false,
       },
     },
     navbar: {
