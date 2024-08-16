@@ -186,7 +186,7 @@ That's all folks!
 [JSON formatter SmartModule]: https://github.com/infinyon/labs-json-formatter-sm
 [fluvio-jolt]: https://github.com/infinyon/fluvio-jolt
 [Fluvio CLI]: /docs/fluvio/quickstart#install-fluvio
-[InfinyOn Cloud]: https://infinyon.cloud/signup
+[InfinyOn Cloud]: https://infinyon.cloud/ui/signup
 [Access Tokens]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 [Slack Webhooks]: https://api.slack.com/messaging/webhooks
 [Cloudflare workers]: https://workers.cloudflare.com
