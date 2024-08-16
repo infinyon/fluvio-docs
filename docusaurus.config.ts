@@ -158,7 +158,7 @@ const config: Config = {
         {
           type: "doc",
           position: "left",
-          docId: "cloud/overview",
+          docId: "cloud/quickstart",
           label: "Cloud",
         },
         {
@@ -170,7 +170,7 @@ const config: Config = {
         {
           type: "doc",
           position: "left",
-          docId: "smartmodules/overview",
+          docId: "smartmodules/quickstart",
           label: "SmartModules",
         },
         {
