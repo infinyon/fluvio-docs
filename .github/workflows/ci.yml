@@ -32,10 +32,10 @@ jobs:
           NODE_ENV: production
         run: npm run build
 
-      # trial use, continue on error for now
+      # trial use, enabling error on broken link
       - name: Check internal links
         uses: untitaker/hyperlink@0.1.32
         with:
-          args: ./build
-        continue-on-error: true
+          args: ./build --check-anchors
+        # continue-on-error: true
 
