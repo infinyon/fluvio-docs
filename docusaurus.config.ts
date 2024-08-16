@@ -170,7 +170,7 @@ const config: Config = {
         {
           type: "doc",
           position: "left",
-          docId: "smartmodules/introduction",
+          docId: "smartmodules/overview",
           label: "SmartModules",
         },
         {

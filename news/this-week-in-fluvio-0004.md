@@ -66,7 +66,7 @@ Until next week!
 [Fluvio open source]: https://github.com/infinyon/fluvio
 [SDF]: ../sdf
 [@tomindisguise]: https://github.com/tomindisguise
-[a feature we call SmartStreams]: ../docs/smartmodules/introduction
+[a feature we call SmartStreams]: ../docs/smartmodules/overview
 
 [combining structural key-value data]: https://github.com/infinyon/fluvio/blob/master/src/smartstream/examples/aggregate-json/src/lib.rs
 [our CHANGELOG]: https://github.com/infinyon/fluvio/blob/master/CHANGELOG.md
