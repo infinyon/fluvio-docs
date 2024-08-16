@@ -92,6 +92,16 @@ consume();
 $ npx ts-node example.ts
 ```
 
+### Expected Output
+```
+Connecting client to fluvio
+Connecting client to fluvio
+Creating topic
+read from the end
+Key=example-key, Value=Hello World!  - Time is (...)
+```
+The above code tries to create a topic, produces an entry for the topic, and consumes the said entry. The ```process.exit(0)``` consumes only one record before ending.
+
 ## Links to Docs:
 - [Connect to Fluvio]
 - [Create a Producer]
