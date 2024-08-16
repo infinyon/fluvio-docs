@@ -115,7 +115,7 @@ const config: Config = {
           showLastUpdateAuthor: true,
           blogSidebarTitle: "This Week in Fluvio",
           blogSidebarCount: "ALL",
-          postsPerPage: 1,
+          postsPerPage: "ALL",
           editUrl:
             "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
         },
