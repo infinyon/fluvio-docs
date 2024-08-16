@@ -68,4 +68,4 @@ Get in touch with us on [Github Discussions] or join [our Discord channel] and c
 [connector: fluvio-http-source, add an option to read data from a websocket]: https://github.com/infinyon/fluvio/issues/3829
 [MQTT Connector: Prefix auto generated Client ID to prevent connection drops]: https://github.com/infinyon/fluvio/issues/3825
 [fluvio cluster delete should prompt with cluster and endpoint name confirmation]: https://arc.net/l/quote/hcztknom
-[docker based deployment]: ../docs/fluvio/how-to/use-fluvio-in-docker
+[docker based deployment]: fluvio/installation/use-fluvio-in-docker.mdx

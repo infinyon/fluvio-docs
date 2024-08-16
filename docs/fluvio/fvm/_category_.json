@@ -1,5 +1,5 @@
 {
   "label": "FVM",
-  "position": 70,
-  "collapsible": true
+  "collapsed": true,
+  "position": 70
 }
