@@ -1,0 +1,22 @@
+---
+sidebar_position: 40
+title: "CLI `cdk`"
+description: "cdk is a tool for developing Fluvio connectors"
+---
+
+`sdk` is a fluvio connector development kit cli utility to help you quickly create, test, and publish connectors.
+
+Usage:
+
+```bash copy="fl"
+$ cdk --help
+```
+
+The commands for cdk are:
+
+- `cdk generate` - Create a new connector project template
+- `cdk build` - Build the connector in the current dir
+- `cdk test` - run the connector in the current dir for testing
+- `cdk deploy` - run the connector for local deployment
+- `cdk publish` - publish the connector to the InfinyOn Hub. A cloud account is required for this.
+- `cdk hub` - list and download existing connectors to configure and run locally

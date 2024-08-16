@@ -13,7 +13,6 @@ by cluster commands. Please make sure you have followed the
 [getting started guide] and installed all the necessary dependencies before
 attempting to install your own cluster.
 
-[getting started guide]: /docs/fluvio/quickstart
 
 ## `fluvio cluster check`
 
@@ -45,18 +44,32 @@ This command is used to start your own Fluvio cluster, with all the
 machinery needed to receive, process, and serve streaming messages.
 
 There are two main variations of this command. The default variation
-is invoked simply by `fluvio cluster start`. This will install Fluvio
-to a Kubernetes cluster, typically Minikube. The other variation is
-`fluvio cluster start --local`, which will start the cluster components
-as plain processes on your local machine.
+is invoked simply by `fluvio cluster start`. This will run Fluvio
+cluster locally. The other variation is `fluvio cluster start --k8s`, which will start the cluster components to your
+configured Kubernetes context.
 
-**Example usage**
-
-To start a cluster on Minikube:
-
+### Local
+To start a cluster locally (as processes on your machine):
 
 ```bash copy="fl"
 $ fluvio cluster start
+📝 Running pre-flight checks
+     ✅ Supported helm version is installed
+     ✅ Supported kubernetes version is installed
+     ✅ Kubernetes config is loadable
+     ✅ Fixed: Missing Fluvio system charts.
+🖥️  SC Launched
+🤖 SPU group launched (1)
+👤 Profile set
+🎯 Successfully installed Fluvio!
+```
+###  Kubernetes
+
+
+To start a cluster on Kubernetes:
+
+```bash copy="fl"
+$ fluvio cluster start --k8
 📝 Running pre-flight checks
      ✅ Kubernetes config is loadable
      ✅ Supported helm version is installed
@@ -71,21 +84,10 @@ $ fluvio cluster start
 🎯 Successfully installed Fluvio!
 ```
 
-To start a cluster locally (as processes on your machine):
+:::note
+For more information on installing Fluvio with Kubernetes, go our [Kubernetes Install] section
 
-
-```bash copy="fl"
-$ fluvio cluster start --local
-📝 Running pre-flight checks
-     ✅ Supported helm version is installed
-     ✅ Supported kubernetes version is installed
-     ✅ Kubernetes config is loadable
-     ✅ Fixed: Missing Fluvio system charts.
-🖥️  SC Launched
-🤖 SPU group launched (1)
-👤 Profile set
-🎯 Successfully installed Fluvio!
-```
+:::
 
 ## `fluvio cluster delete`
 
@@ -125,3 +127,6 @@ $ fluvio cluster spu list
  ID    NAME             STATUS  TYPE      RACK  PUBLIC          PRIVATE
  5001  custom-spu-5001  Online  "custom"   -    localhost:9010  localhost:9011
 ```
+
+[getting started guide]: fluvio/quickstart.mdx
+[Kubernetes Install]: fluvio/installation/kubernetes.mdx

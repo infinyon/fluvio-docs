@@ -36,7 +36,7 @@ The mapping between incoming JSON records and the resulting SQL record is define
 
 Here, we create insert statements to `target_table` database table. Each statement has three columns:
 * **device_id** with `int` type.  The value for this column will looked-up at the following hierarchy `$.device.device_id` of the input record. If it is not present, the error will be thrown, as the mapping states, it is a required field.
-* **device_type** - text field with `mobile` marked as default value. Not required. Will be taken from `$.device.type` hierarchy. 
+* **device_type** - text field with `mobile` marked as default value. Not required. Will be taken from `$.device.type` hierarchy.
 * **record** - `jsonb` column that contains the whole input record.
 
 
@@ -106,7 +106,7 @@ The list of supported types and corresponding types from [SQL model]:
 
 ### Usage example
 
-To see **Json-Sql** SmartModule in action, we will use [SMDK] tool. 
+To see **Json-Sql** SmartModule in action, we will use [SMDK] tool.
 
 :::info
 All smartmodule versions are marked with `x.y.z`. To find the latest version, run:
@@ -162,10 +162,10 @@ For additional examples checkout the tutorials:
 * [Build MQTT to SQL Pipeline]
 
 
-[map-type]: /docs/latest/connectors/smartmodules/features/operators/map
+[map-type]: smartmodules/features/operators/map.mdx
 [SMDK]: smartmodules/smdk.mdx
 [SQL model]: https://github.com/infinyon/fluvio-connectors/blob/main/rust-connectors/models/fluvio-model-sql
-[sql-sink-connector]: /docs/latest/connectors/sql-sink-connector
+[sql-sink-connector]: hub/connectors/outbound/sql.mdx
 [Hub]: /docs/latest/hub/overview
-[Build HTTP to SQL Pipeline]: /docs/latest/fluvio/tutorials/http-to-sql
-[Build MQTT to SQL Pipeline]: /docs/latest/fluvio/tutorials/mqtt-to-sql
+[Build HTTP to SQL Pipeline]: fluvio/tutorials/http-to-sql.mdx
+[Build MQTT to SQL Pipeline]: fluvio/tutorials/mqtt-to-sql.mdx

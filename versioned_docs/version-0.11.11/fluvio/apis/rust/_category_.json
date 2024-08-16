@@ -1,5 +1,5 @@
 {
   "label": "Rust SDK",
-  "position": 20,
-  "collapsible": true
+  "collapsed": true,
+  "position": 20
 }

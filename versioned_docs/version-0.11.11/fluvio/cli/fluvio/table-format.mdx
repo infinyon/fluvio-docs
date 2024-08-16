@@ -409,11 +409,6 @@ You can scroll with
 ### Customize the `full-table` table
 You may have json data that isn't most effectively displayed with the keys ordered alphabetically. Or your data is event sourced, and you only want to see the most recent data organized by one or more primary keys.
 
-In that case, to customize the `full-table` output, you can provide the name of your [`table-format`].
+In that case, to customize the `full-table` output, you can provide the name of your `table-format`
 
 `fluvio consume <topic-name> --output full-table --table-format <table-format name>`
-
-For more information about how to use `table-format` to customize your table display (including how to rename and/or rearrange columns, or how to configure primary keys for row updating)
-
-[`full-table`]: #full-table
-[`table-format`]: #table-format

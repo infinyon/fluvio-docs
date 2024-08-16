@@ -7,13 +7,9 @@ title: "Replica Assignment"
 
 For additional information on replica sets, checkout [replica election].
 
-[replica election]:
-
 ## Replica Assignment Algorithm
 
-Fluvio replica assignment algorithm ensures that the replica leader and followers are evenly distributed across available SPUs. If you'd rather deploy your own replication algorithm, use [Manual Replica Assignment] instead.
-
-[Manual Replica Assignment]:
+Fluvio replica assignment algorithm ensures that the replica leader and followers are evenly distributed across available SPUs. If you'd rather deploy your own replication algorithm, use [Manual Replica Assignment](#manual-replica-assignment) instead.
 
 ### Computed Replica Assignment (CRA)
 
@@ -201,9 +197,7 @@ Replicas are evenly distributed across SPUs. Racks with a higher number of SPUs 
 
 ### Manual Replica Assignment
 
-**MRA** is provisioned through a **replica assignment file**. The file defines a **replica map** that is semantically similar to the **replicaMap** defined in [Topic Status]. In fact, the **replica map** defined as defined in the file is assigned to this field.
-
-[Topic Status]:
+**MRA** is provisioned through a **replica assignment file**. The file defines a **replica map** that is semantically similar to the **replicaMap** defined in the [Topic Status]. In fact, the **replica map** defined as defined in the file is assigned to this field.
 
 The following command creates a topic from a **replica assignment file**:
 
@@ -243,4 +237,6 @@ The **replica map** definition meet the following criteria:
 
 For additional information on how to check the result of a replica assignment file, checkout [Topics CLI].
 
-[Topics CLI]: /docs/fluvio/cli/fluvio/topic
+[Topics CLI]: fluvio/cli/fluvio/topic.mdx
+[replica election]: fluvio/concepts/architecture/replica-election.mdx
+[Topic Status]: fluvio/concepts/architecture/sc.mdx#topic-status

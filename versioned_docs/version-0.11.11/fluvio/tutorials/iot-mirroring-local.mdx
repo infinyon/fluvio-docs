@@ -16,8 +16,8 @@ Let's start with installing and configuring the home cluster.
 
 Installing the home cluster on Linux or Mac requires Kubernetes. Use the following instructions to set up Kubernetes on your local machine.
 
-* [Install Rancher Desktop for Mac](https://fluvio.io/docs/get-started/mac/#install-rancher-desktop)
-* [Install k3d, kubectl and helm for Linux](https://fluvio.io/docs/get-started/linux/#installing-kubernetes-cluster)
+* [Install Rancher Desktop]
+* [Install Fluvio on Kubernetes]
 
 <Idea>
   Install _Kubernetes_, then use the instructions below to install the experimental _fluvio binaries_.
@@ -125,9 +125,9 @@ fluvio remote list
 It should show the following:
 
 ```bash
-  RemoteCluster Status  Last Seen
-  edge1         Waiting -
-  edge2         Waiting -
+  REMOTE   SC STATUS  SPU STATUS  LAST SEEN  ERRORS
+  edge1    Waiting    Waiting     -          -
+  edge1    Waiting    Waiting     -          -
 ```
 
 ### Generate Metadata for Edge Clusters
@@ -367,8 +367,8 @@ First, on the `pi` terminal, check the status of the target cluster:
 fluvio cluster home
 ```
 ```bash
-HOME  ROUTE            STATUS  LAST SEEN
-home  localhost:30003  Online  3s
+HOME  ROUTE            STATUS  SC STATUS  SPU STATUS  LAST SEEN  ERRORS
+home  localhost:30003  Online  Connected  Connected   1s         -
 ```
 
 Then, consume from the edge cluster:
@@ -398,7 +398,9 @@ Produce records and observe that the mirror will resume the synchronization.
 * [IoT Mirroring - Cloud]
 * [Discord]
 
-[Try Mirroring]: /fluvio/tutorials/try-mirroring.mdx
-[Try Mirroring - Cloud]: /fluvio/tutorials/try-mirroring-cloud.mdx
-[IoT Mirroring - Cloud]: /fluvio/tutorials/iot-mirroring-cloud.mdx
+[Try Mirroring]: fluvio/tutorials/try-mirroring.mdx
+[Try Mirroring - Cloud]: cloud/tutorials/try-mirroring-cloud.mdx
+[IoT Mirroring - Cloud]: cloud/tutorials/iot-mirroring-cloud.mdx
 [Discord]: https://discord.com/invite/bBG2dTz
+[Install Rancher Desktop]: fluvio/installation/kubernetes.mdx
+[Install Fluvio on Kubernetes]:  fluvio/installation/kubernetes.mdx

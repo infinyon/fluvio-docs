@@ -133,9 +133,6 @@ $ fluvio produce "consume-multi" -f records.txt
 After producing some data, let's take a look at how the records got distributed
 among our partitions using [`fluvio partition list`].
 
-[`fluvio partition list`]: /docs/fluvio/cli/fluvio/partition#fluvio-partition-list
-
-
 ```bash copy="fl"
 $ fluvio partition list
  TOPIC          PARTITION  LEADER  REPLICAS  RESOLUTION  HW  LEO  LSR  FOLLOWER OFFSETS
@@ -230,7 +227,9 @@ $ fluvio consume my-topic -B --format="{{time}},{{partition}},{{offset}},{{key}}
 2022-05-04T15:53:37.099Z,0,4,santa,Santa Claus
 ```
 
+
+[`fluvio partition list`]: fluvio/cli/fluvio/partition.mdx#fluvio-partition-list
 [`fluvio produce` examples]: fluvio/cli/fluvio/produce.mdx
 [`fluvio topic create`]: fluvio/cli/fluvio/topic.mdx#fluvio-topic-create
-[filter example]: smartmodules/transformations/filter.mdx
+[filter example]: smartmodules/features/operators/filter.mdx
 [in our GitHub repo]: https://github.com/infinyon/fluvio/tree/master/smartmodule/examples/filter_json

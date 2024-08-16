@@ -4,17 +4,11 @@ title: "Overview"
 description: "InfinyOn Hub is a collection of Connectors, SmartModules, Dafaflows utilized by the Fluvio platform to create realt-time data pipelines."
 ---
 
-# InfinyOn Hub
+# Hub Overview
 
-InfinyOn Hub is a collection of [Connectors](#connectors), [SmartModules](#smartmodules) and [Stateful Dataflows](#stateful-dataflows) utilized by the Fluvio platform to create realt-time data pipelines. While this is a list of certified components, the Hub allows you to publish your own componets.
+The Hub is the central repository for [Connectors](#connectors), [SmartModules](#smartmodules) and [Stateful Dataflows](#stateful-dataflows) utilized by the Fluvio platform to create realt-time data pipelines. While this is a list of certified components, the Hub allows you to publish your own componets.
 
 ## Connectors
-
-Retrieve the list of connectors:
-
-```bash copy="fl"
-$ fluvio hub connector list
-```
 
 #### Inbound Connectors (source)
 
@@ -32,16 +26,20 @@ $ fluvio hub connector list
 
 ## SmartModules
 
-Retrieve the list of smartmodules:
+### Operators
 
-```bash copy="fl"
-$ fluvio hub smartmodule list
-```
+* [Filter](smartmodules/features/operators/filter.mdx)
+* [Map](smartmodules/features/operators/map.mdx)
+* [FilterMap](smartmodules/features/operators/filter-map.mdx)
+* [ArrayMap](smartmodules/features/operators/array-map.mdx)
 
-* [Filter](./smartmodules/filter)
-* [Map](./smartmodules/map)
-* [FilterMap](./smartmodules/filter_map)
-* [ArrayMap](./smartmodules/array_map)
+### Modules
+
+* [Jolt](./smartmodules/jolt.mdx)
+* [Json-SQL](./smartmodules/json-sql.mdx)
+* [Regex](./smartmodules/regex.mdx)
+
+
 
 ## Stateful Dataflows
 

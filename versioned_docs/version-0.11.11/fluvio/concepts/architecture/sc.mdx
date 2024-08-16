@@ -151,9 +151,6 @@ The algorithm that computes partition/replica distribution is described in the [
 
 Fluvio also supports **manual** partition/replica distribution through a **replica assignment file**. The file format is described in the [Topics CLI] section.
 
-[Replica Assignment]: /docs/fluvio/concepts/architecture/replica-assignment
-[Topics CLI]: /docs/fluvio/cli/fluvio/topic
-
 ##### Topic Status
 
 ```yaml
@@ -220,8 +217,6 @@ status:
 **SPU leader** is responsible for managing **Live Replicas (lrs)** and other data streaming related parameters.
 
 Replica management, election, and all other status fields are documented in the [SPU Architecture] section.
-
-[SPU Architecture]
 
 ## Workflows
 
@@ -403,3 +398,7 @@ When the SPU come back online it initiates a new connection as described in the 
 #### Live Replica (LRS) Updates
 
 **Live Replicas (LRS)** are continuous updates sent by **leader SPUs** to the **CM** to report changes in replica status. The **CM** forwards the requests to relevant **Controllers** for processing.
+
+[SPU Architecture]: fluvio/concepts/architecture/spu.mdx
+[Replica Assignment]: fluvio/concepts/architecture/replica-assignment.mdx
+[Topics CLI]: fluvio/cli/fluvio/topic.mdx
