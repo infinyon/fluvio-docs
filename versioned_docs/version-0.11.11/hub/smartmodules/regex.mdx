@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: "Regex"
+title: "Regex-filter"
 description: "Applies Regex transformations to records in a data stream."
 ---
 
@@ -8,7 +8,7 @@ This is a [filter-type] SmartModule that tests the input record against a provid
 
 ### Usage example
 
-To demonstrate how to use the [Regex] cerfied SmartModule with the [SMDK] tool. 
+To demonstrate how to use the [Regex] cerfied SmartModule with the [SMDK] tool.
 
 :::info
 All smartmodule versions are marked with `x.y.z`. To find the latest version, run:
@@ -28,7 +28,7 @@ Second, we create a file `transform.yaml` defining our regular expression:
 transforms:
 - uses: infinyon/regex-filter@x.y.z
   with:
-    regex: "[Cc]at" 
+    regex: "[Cc]at"
 ```
 
 Let's use `smdk test` to see it in action:
@@ -44,6 +44,6 @@ $ smdk test --text '{"fact": "Dogs have sweat glands at the bottom of their paws
 [No output returned]
 ```
 
-[filter-type]: /docs/latest/connectors/smartmodules/features/operators/filter
-[Regex]: /docs/latest/hub/smartmodules/regex
+[filter-type]: smartmodules/features/operators/filter.mdx
+[Regex]: hub/smartmodules/regex.mdx
 [SMDK]: smartmodules/smdk.mdx

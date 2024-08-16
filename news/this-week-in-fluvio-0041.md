@@ -28,7 +28,7 @@ This feature was added in the previous release but was not mentioned in [last we
   retrying until succeeded (with certain assumptions). Check out more details in
   [Delivery Semantics](/docs/fluvio/concepts/delivery-semantics) section.
 
-[last week's issue]: this-week-in-fluvio-0040
+[last week's issue]: this-week-in-fluvio-0040.md
 
 ---
 

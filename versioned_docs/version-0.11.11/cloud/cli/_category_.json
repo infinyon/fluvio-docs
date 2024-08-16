@@ -1,5 +1,5 @@
 {
-    "position": 10,
-    "label": "CLI 'fluvio cloud'",
-    "collapsible": true
+    "label": "Cloud CLI",
+    "collapsed": true,
+    "position": 30
   }

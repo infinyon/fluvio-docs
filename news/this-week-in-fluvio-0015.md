@@ -253,7 +253,7 @@ A handful of user-facing issues were fixed
 * Aggregate SmartModule fixed to properly accumulate from previous values instead defaulting to the initial value. ([#1869](https://github.com/infinyon/fluvio/pull/1869)) (Additional special thanks to our Discord community for reporting this bug!)
 
 [Getting Started]: ../docs/fluvio/quickstart
-[Connector Developer guide]: ../docs/connectors/local/develop/introduction
+[Connector Developer guide]: ../docs/connectors/developers/overview
 
 ---
 

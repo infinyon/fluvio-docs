@@ -40,8 +40,6 @@ The **SC** handles the **topology map** dynamically to simplify complex tasks su
 
 For a deep dive in the SC design, checkout the [SC Architecture] section.
 
-[SC Architecture]
-
 ## Streaming Processing Unit (SPU)
 
 **Streaming Processing Units (SPUs)** are responsible for all data streaming related matters. Each SPU **receives** data from producers, **sends** data to consumers, and **saves** copies of the data to local storage.
@@ -52,13 +50,9 @@ For a deep dive in the SC design, checkout the [SC Architecture] section.
 
 SPUs are also responsible for **data replication**. Data streams that are created with a __replication factor__ of 2 or more are managed by __a cluster__ of SPUs. One SPU is elected as leader and all others are followers. The leader receives the data from producers and forwards a copy to followers. Followers save a copy in their local storage. If the leader goes offline, one of the followers takes over as leader. For additional information, check out [Replica Election].
 
-[Replica Election]:
-
 Each SPU performs **leader** and **follower** duties **on multiple data streams** in parallel. For optimal performance, Fluvio utilizes all available **CPU cores**.
 
 For a deep dive into the SPU design, check out the [SPU Architecture] section.
-
-[SPU Architecture]:
 
 ## Topic/Partitions
 
@@ -82,8 +76,6 @@ SPU-1 is the leader for **topic-a/0** , SPU-2 for **topic-a/1**, and SPU-3 for *
      style={{ justify: 'center', maxWidth: '650px' }} />
 
 For additional information on partitions and replica assignments, checkout [Replica Assignment].
-
-[Replica Assignment]:
 
 ## Data Persistence
 
@@ -133,10 +125,17 @@ API reference guides for programming languages are available at:
 
 ### Internal APIs
 
-**Internal APIs** are used by the **SC** communicate with the **SPUs** and for the **SPUs** to communicate with their peers to elect leaders and exchange replica information.
+**Internal APIs** are used by the **SC** to communicate with the **SPUs** and for the **SPUs** to communicate with their peers to elect leaders and exchange replica information.
 
 <img src="/img/docs/concepts/architecture/overview/internal-apis.svg"
      alt="Internal APIs"
      style={{ justify: 'center', maxWidth: '500px' }} />
 
 For additional details about **Internal APIs** checkout Fluvio development guide on <a href="https://github.com/infinyon/fluvio" target="_blank">github</a>.
+
+[Kubernetes install]: fluvio/installation/kubernetes.mdx
+[SC Architecture]: fluvio/concepts/architecture/sc.mdx
+[Replica Election]: fluvio/concepts/architecture/replica-election.mdx
+[SPU Architecture]: fluvio/concepts/architecture/spu.mdx
+[Replica Assignment]: fluvio/concepts/architecture/replica-assignment.mdx
+[Data Retention]: fluvio/concepts/operations/data-retention.mdx

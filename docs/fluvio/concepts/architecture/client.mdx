@@ -159,18 +159,15 @@ All client operations follow a similar pattern.
 
 1. Create a profile (one time operation).
 2. Connect to the cluster, using the profile created above.
-3. Use the [Admin API] to configure or retrieve objects (optional).
+3. Use the **Admin API** to configure or retrieve objects (optional).
 4. Produce or Consume records:
-    * Use the [Producer API] to send records to a data stream.
-    * Use the [Consumer API] to retrieve records from a data stream.
+    * Use the **Producer API** to send records to a data stream.
+    * Use the **Consumer API** to retrieve records from a data stream.
 
 The Fluvio Client library is multi-threaded, and it can simultaneously connect to _multiple clusters_, and concurrently _produce and consume_ one or more data streams.
 
-[Admin API]: fluvio/concepts/architecture/client#admin-api
-[Producer API]: fluvio/concepts/architecture/client#producer-api
-[Consumer API]: fluvio/concepts/architecture/client#consumer-api
 [Fluvio CLI]: fluvio/cli/overview.mdx
 [Architecture Overview]: fluvio/concepts/architecture/overview.mdx
-[Apis Page]: apis/quickstart.mdx
+[Apis Page]: fluvio/apis/overview.mdx
 [Election Design]: fluvio/concepts/architecture/replica-election.mdx
 [Fluvio Profiles]: fluvio/cli/fluvio/profile.mdx
