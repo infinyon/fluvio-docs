@@ -4,7 +4,7 @@ title: "Overview"
 description: "Fluvio Connectors make the process of importing or exporting data simple"
 ---
 
-# Connectors Overview 
+# Connectors Overview
 
 Fluvio Connectors make the process of importing or exporting data simple.
 You can import data with an `Inbound` connector and export data with an `Outbound` connector.
@@ -15,13 +15,7 @@ Inbound and outbound connectors fundamentally work in the same way. The only dif
   alt="Connectors"
   src="/img/docs/references/connectors.png"
   style={{ justify: 'center', maxWidth: '800px' }}
-/>
-
-
-- **Protocol**: Parses data according to the wire format corresponding to the endpoint protocol.
-- **SmartModules** (optional): One or more user-defined tranformations that filter of shape the data records before passing them along to the next stage of the pipeline.
-
-Smartmodules are powered by WebAssembly (also called wasm). Check out the [SmartModules] page to learn how to apply a tranformation or create a new one.
+/>connectors/[SmartModules] page to learn how to apply a tranformation or create a new one.
 
 
 ### Next Steps
@@ -40,6 +34,6 @@ Smartmodules are powered by WebAssembly (also called wasm). Check out the [Smart
 [Run connector in the cloud]: ./how-to/run-cloud.mdx
 [Connector Hub]: hub/connectors/index.md
 [Connector Configuration File]: ./configuration.mdx
-[Build a new connector]: ./developers/introduction.mdx
+[Build a new connector]: ./developers/overview.mdx
 [Apply SmartModule transformations]: smartmodules/overview.mdx
 

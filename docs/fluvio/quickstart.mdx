@@ -30,6 +30,9 @@ available in the **stable** channel as of the moment of installation.
 Fluvio is stored in `$HOME/.fluvio`, with the executable binaries stored in
 `$HOME/.fluvio/bin`.
 
+:::tip
+  For the best compatibliity on Windows, InfinyOn recommends [WSL2]
+:::
 
 ### Start a Cluster
 
@@ -108,17 +111,7 @@ meta:
   name: http-quotes
   type: http-source
   topic: quotes
-http:
-  endpoint: https://demo-data.infinyon.com/api/quote
-  interval: 3s
-```
-
-### Running the HTTP Connector
-
-We'll use [Connector Developer Kit (cdk)] to download and run the connector.
-
-```bash copy="fl"
-$ cdk hub download infinyon/http-source@0.3.8
+http:{#my-explicit-id}
 ```
 
 ```bash copy="fl"
@@ -129,8 +122,8 @@ Use the following command to see the connector status.
 
 ```bash copy="fl"
 $ cdk deploy list
- NAME         STATUS  
- http-quotes  Running 
+ NAME         STATUS
+ http-quotes  Running
 ```
 
 We can monitor new data in the connector’s topic with fluvio consume quotes
@@ -154,12 +147,12 @@ To list available smartmodules, run:
 
 ```bash copy="fl"
 $ fluvio hub smartmodule list
-  SMARTMODULE                              Visibility 
+  SMARTMODULE                              Visibility
   infinyon/jolt@0.4.1                      public
-  ...   
+  ...
 ```
 
-#### Use `jolt` SmartModule to turn JSON records into sentences
+#### Use `jolt` SmartModule to turn JSON records into sentences {#jolt}
 
 Let’s download the Smartmodule to our cluster:
 
@@ -172,8 +165,8 @@ Check the cluster to ensure it has been successfully downloaded:
 
 ```bash copy="fl"
 $ fluvio smartmodule list
-  SMARTMODULE                    SIZE     
-  infinyon/jolt@0.4.1            589.3 KB 
+  SMARTMODULE                    SIZE
+  infinyon/jolt@0.4.1            589.3 KB
 ```
 
 Next, we’ll create a transform file and test the output.
@@ -243,9 +236,9 @@ Use the following command to see the connector status.
 
 ```bash copy="fl"
 $ cdk deploy list
- NAME           STATUS  
- http-quotes    Running 
- string-quotes  Running 
+ NAME           STATUS
+ http-quotes    Running
+ string-quotes  Running
 ```
 
 Let’s take a look at string-quotes
@@ -264,7 +257,7 @@ We now have two topics running in parallel and producing different results with 
 During this tutorial, we’ve created a couple connectors and three topics. Let's clean-up:
 
 ```bash
-cdk deploy shutdown --name http-quotes 
+cdk deploy shutdown --name http-quotes
 cdk deploy shutdown --name string-quotes
 fluvio topic delete quotes
 fluvio topic delete string-quotes
@@ -273,12 +266,14 @@ fluvio topic delete quickstart-topic
 
 ## Build complex data pipelines with Stateful Dataflows (sdf)
 
-Stateful Dataflows, also known as SDF, allow you to build hierarchical data pipelines with enrichment, window processing, and more. 
+Stateful Dataflows, also known as SDF, allow you to build hierarchical data pipelines with enrichment, window processing, and more.
 
 ![Stateful Services Chart](/img/stateful-services.png)
 
-If you'd like to participate in our Beta releaes, please sign-up here. 
+If you'd like to participate in our Beta releaes, please sign-up here.
 
 [Connector Developer Kit (cdk)]: connectors/cdk.mdx
-[build your own]: smartmodules/developer/introduction.mdx
-[Cloud]: cloud/overview.mdx
+[build your own]: smartmodules/developers/overview.mdx
+[Cloud]: cloud/quickstart.mdx
+
+[WSL2]: https://www.windowscentral.com/how-install-wsl2-windows-10
