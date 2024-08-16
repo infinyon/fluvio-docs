@@ -1,0 +1,376 @@
+---
+sidebar_position: 0
+title: QuickStart
+description: "Quickstart to get up and running quickly with InfinyOn Cloud"
+---
+
+# InfinyOn Cloud QuickStart 
+
+This guide will outline using the [Fluvio CLI] with [InfinyOn Cloud] or a local [Fluvio Cluster].
+
+1. [Install Fluvio Client (CLI)](#1-installing-fluvio-client-cli)
+2. [Create an InfinyOn Cloud Account](#2-create-an-infinyon-cloud-account)
+2. [Start a Cluster](#3-start-a-cluster)
+3. [Produce & Consume Records](#4-produce-and-consume-records)
+4. [Use Connectors](#5-use-connectors)
+5. [Use StartModules](#6-use-smartmodules)
+6. [Build Stateful Dataflows](#6-build-stateful-dataflows)
+
+Let's get started.
+
+## 1. Installing Fluvio Client (CLI)
+
+You'll need to download and install the CLI.
+
+```bash copy="fl"
+$ curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
+```
+
+This command will download the Fluvio Version Manager (fvm), Fluvio CLI (fluvio) and config files into `$HOME/.fluvio`, with the executables in `$HOME/.fluvio/bin`. To complete the installation, you must add the executables to your shell `$PATH`.
+
+
+## 2. Create an InfinyOn Cloud Account
+
+Head over to the [InfinyOn Cloud sign-up page] and create an account. Depending on which method you choose in account creation, you can log in with OAuth2 or username/password.
+
+Login to InfinyOn Cloud using **Oauth**:
+
+```bash copy="fl"
+$ fluvio cloud login --use-oauth2
+A web browser has been opened at https://infinyon-cloud.us.auth0.com/activate?user_code=GLMC-QDDJ.
+Please proceed with authentication.
+```
+
+Or, login with your **Username/Password**:
+
+```bash copy="fl"
+$ fluvio cloud login
+InfinyOn Cloud email: john@example.com
+Password:
+```
+
+
+## 3. Start a Cluster
+
+Use [Fluvio CLI] to start a cluster on InfinyOn Cloud. Start cluster on **InfinyOn Cloud** (must be logged in as intructed in [section 2](#2-create-an-infinyon-cloud-account)):
+
+```bash copy="fl"
+$ fluvio cloud cluster create
+```
+
+Run the following command to check the CLI and the cluster platform versions:
+
+```bash copy="fl"
+$ fluvio version
+```
+
+
+## 4. Produce and Consume records
+
+### Create your first topic
+
+Topics are used to store data and send data streams.
+
+You can create a topic with the following command:
+
+```bash copy="fl"
+$ fluvio topic create quickstart-topic
+```
+
+Where `quickstart-topic` is the name of your topic
+
+Read more [about Topics in the Fluvio docs].
+
+
+### Produce data to your topic
+
+You can send data (aka *produce*) to your topic.
+
+Let's try to produce text to your topic interactively:
+
+```bash copy="fl"
+$ fluvio produce quickstart-topic
+> hello world!
+Ok!
+```
+
+Typing anything and then pressing `Enter` will send a record to your topic.
+
+Press `Ctrl+C` to exit the interactive producer prompt.
+
+<Idea>
+  You may also use the following commands:
+
+  ```bash copy="fl"
+  $ fluvio produce quickstart-topic
+  > hello world!
+  Ok!
+  ```
+
+  Or pipe output to `fluvio`:
+
+  ```bash copy="fl"
+  echo "hello world!" | fluvio produce quickstart-topic
+  ```
+</Idea>
+
+Read more [about Producers in the Fluvio docs].
+
+
+### Consume data from your topic
+
+You can read data (aka *consume*) from your topic.
+
+This command will create a consumer that listens to your topic for new records and then prints it to the screen:
+
+```bash copy="fl"
+$ fluvio consume quickstart-topic
+Consuming records from the end of topic 'quickstart-topic'. This will wait for new records
+```
+
+To see this in action, open another terminal and produce new data.
+
+To see previously sent data, you can add an option to your consume command to request a starting offset with the `-B <offset>` flag.
+
+```bash copy="fl"
+$ fluvio consume quickstart-topic -B -d
+hello world!
+```
+
+**Flags**:
+* `-B` - reads from the beginning of the stream (defaults to `0` if no value supplied).
+* `-d` - closes the consumer connection after all data has been sent.
+
+Read more [about Consumers in the Fluvio docs].
+
+
+## 5. Use Connectors
+
+InfinyOn offers [a growing number of connectors] to communicate with external services.
+In this example, we will be covering the [HTTP Source] connector. The connector polls data from an HTTP endpoint that returns [a random quote] every 3 seconds to a topic called `quotes`.
+
+Save the following configuration file on your machine:
+
+```yaml
+# quotes-source-connector.yml
+apiVersion: 0.1.0
+meta:
+  version: x.y.z
+  name: http-quotes
+  type: http-source
+  topic: quotes
+http:
+  endpoint: https://demo-data.infinyon.com/api/quote
+  interval: 3s
+```
+
+You may run the connector on InfinyOn Cloud, or your local machine.
+
+
+### Run HTTP Connector on InfinyOn Cloud
+
+To start a connector in **InfinyOn Cloud**, use the following command:
+
+```bash copy="fl"
+$ fluvio cloud connector create -c quotes-source-connector.yml
+```
+
+Use the following command to see the connector status.
+
+```bash copy="fl"
+$ fluvio cloud connector list
+ NAME                 TYPE               VERSION  CDK  STATUS   LOG-LEVEL
+ http-quotes          http-source        x.y.z    V3   Running  info
+```
+
+We can monitor new data in the connector's topic with `fluvio consume quotes`
+
+```bash copy="fl"
+$ fluvio consume quotes
+Consuming records from 'quotes'
+{"quote":"We cannot solve our problems with the same thinking we used when we created them.","by":"Albert Einstein"}
+{"quote":"Whatever you are, be a good one.","by":"Abraham Lincoln"}
+{"quote":"You can't build a reputation on what you're going to do.","by":"Henry Ford"}
+{"quote":"Success is not final, failure is not fatal: It is the courage to continue that counts.","by":"Winston Churchill"}
+```
+
+You may delete your cloud connector with the following command: `fluvio cloud connector delete http-quotes`.
+
+Read more [about Connectors in the Fluvio docs].
+
+
+## 6. Use SmartModules
+
+SmartModules are user-defined functions compiled into [WebAssembly] and applied to data streaming for inline data manipulation. You can use SmartModules in the producers, consumers, as well as Connectors. InfinyOn has several pre-compiled SmartModules that you can use out of the box. Alternatively, you use [SmartModule Developer Kit (smdk)] to build your own.
+
+
+### Download a Smartmodule from the Hub
+
+InfinyOn Hub has a growing library of SmartModules available for download:
+
+```bash copy="fl"
+$ fluvio hub smartmodule list
+  SMARTMODULE                              Visibility
+  infinyon-labs/array-map-json@x.y.z       public
+  infinyon-labs/dedup-filter@x.y.z         public
+  infinyon-labs/json-formatter@x.y.z       public
+  infinyon-labs/key-gen-json@x.y.z         public
+  infinyon-labs/regex-map-json@x.y.z       public
+  infinyon-labs/regex-map@x.y.z            public
+  infinyon-labs/rss-json@x.y.z             public
+  infinyon-labs/stars-forks-changes@x.y.z  public
+  infinyon/jolt@x.y.z                      public
+  infinyon/json-sql@x.y.z                  public
+  infinyon/regex-filter@x.y.z              public
+```
+
+In the example, we'll use a [SmartModule called jolt] to turn json records into sentences.
+
+Let's download the Smartmodule to our cluster:
+
+```bash copy="fl"
+$ fluvio hub smartmodule download infinyon/jolt@x.y.z
+... cluster smartmodule install complete
+```
+
+Check the cluster to ensure it has been successfully downloaded:
+
+```bash copy="fl"
+$  fluvio smartmodule list
+  SMARTMODULE          SIZE
+  infinyon/jolt@x.y.z  611.5 KB
+```
+
+Next, we'll create a transform file and test the output.
+
+
+### Create a SmartModule transformation file
+
+SmartModules can be chained together and often require additional parameters. Fluvio uses a YAML file is used to define the transformations.
+
+Create a `tranforms.yaml` file and copy/paste the following definition:
+
+```yaml
+# File: tranforms.yaml
+transforms:
+  - uses: infinyon/jolt@x.y.z
+    with:
+      spec:
+        - operation: shift
+          spec:
+            quote: ""
+```
+
+Jolt is a complex Smartmodule that allows you to perform multiple types of JSON transformations. For additional information, check out the [SmartModule Jolt] docs.
+
+
+### Test the SmartModule
+
+As the `quotes` are readily available for us in the `quotes` topic, we'll use the consumer command to test this SmartModule.
+
+```bash copy="fl"
+$  fluvio consume quotes --transforms-file tranforms.yaml -T=2
+Consuming records from 'quotes' starting 2 from the end of log
+"The greatest glory in living lies not in never falling, but in rising every time we fall."
+"Simplicity is the ultimate sophistication."
+```
+
+We are consuming the last two quotes topic records and transforming the json into a string.
+
+
+### Apply the Smartmodule to the Connector
+
+Let's say we don't use the authors in the quotes; instead, only the quote represented strings. We can accomplish this result by simply applying the transformation to the connector.
+
+Let's create a new `http-source` connector and add the transformation:
+
+```yaml
+# string-quotes-source-connector.yml
+apiVersion: 0.1.0
+meta:
+  version: x.y.z
+  name: string-quotes
+  type: http-source
+  topic: string-quotes
+http:
+  endpoint: https://demo-data.infinyon.com/api/quote
+  interval: 3s
+transforms:
+  - uses: infinyon/jolt@x.y.z
+    with:
+      spec:
+        - operation: shift
+          spec:
+            quote: ""
+```
+
+Ready to run the connector:
+
+```bash copy="fl"
+$ fluvio cloud connector create -c string-quotes-source-connector.yml
+```
+
+Use the following command to see the connector status.
+
+```bash copy="fl"
+$ fluvio cloud connector list
+ NAME                 TYPE               VERSION  CDK  STATUS   LOG-LEVEL
+ string-quotes        http-source        x.y.z    V3   Running  info
+ http-quotes          http-source        x.y.z    V3   Running  info
+```
+
+Let's take a look at `string-quotes`
+
+```bash copy="fl"
+$ fluvio consume string-quotes
+Consuming records from 'string-quotes'
+"It's not whether you get knocked down, it's whether you get up."
+"Honesty is the first chapter in the book of wisdom."
+```
+
+We now have two topics running in parallel and producing different results with a simple SmartModule transformation. When you apply inline transformations, the number of possibilities is virtually endless.
+
+
+## 6. Build Stateful Dataflows
+
+Stateful Dataflows is currently in preview. With stateful dataflows, you can chain services, accumulate state, and perform window-based aggregates.
+
+Checkout [SDF section] for additional information.
+
+## Clean-up Resources
+
+During this tutorial, we've created connectors that continue generating traffic to our cloud cluster. Run the following commands to clean up:
+
+```bash copy="fl"
+fluvio cloud connector delete http-quotes
+fluvio cloud connector delete string-quotes
+fluvio topic delete quotes
+fluvio topic delete string-quotes
+```
+
+
+## Next Steps
+
+Now you're familiar with using InfinyOn Cloud with the [Cloud CLI], Check out our [Tutorials].
+
+[Fluvio CLI]: fluvio/cli/overview.mdx
+[Fluvio Cluster]: fluvio/concepts/architecture/overview.mdx
+[Infinyon Cloud]: https://infinyon.cloud/
+[InfinyOn Hub]: hub/overview.mdx
+[Connector Development Kit (cdk)]: connectors/cdk.mdx
+[SmartModule called jolt]: fluvio/quickstart.mdx#using-the-jolt-smartmodule-to-turn-json-records-into-sentences
+[SmartModule Jolt]: fluvio/quickstart.mdx#using-the-jolt-smartmodule-to-turn-json-records-into-sentences
+[SmartModule Developer Kit (smdk)]: smartmodules/smdk.mdx
+[about Topics in the Fluvio docs]: fluvio/concepts/topics.mdx
+[about Producers in the Fluvio docs]: fluvio/concepts/produce-consume.mdx#producer
+[about Consumers in the Fluvio docs]: fluvio/concepts/produce-consume.mdx#consumer
+[a growing number of connectors]: hub/overview.mdx#connectors
+[a random quote]: https://demo-data.infinyon.com/api/quote
+[about Connectors in the Fluvio docs]: connectors/overview.mdx
+[HTTP Source]: hub/connectors/inbound/http.mdx
+[InfinyOn Cloud sign-up page]: https://infinyon.cloud/ui/signup
+[Docker Installation]: fluvio/installation/use-fluvio-in-docker.mdx
+[WebAssembly]: https://webassembly.org/
+[Cloud CLI]: cli/overview.mdx
+[Tutorials]: tutorials/index.md
+[SDF section]: /sdf

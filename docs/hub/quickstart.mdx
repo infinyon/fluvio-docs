@@ -1,17 +1,20 @@
 ---
-sidebar_position: 1
-title: "Use The Hub"
-description: "A short tutorial on InfinyOn Hub"
+sidebar_position: 0
+title: "Quickstart"
+description: "The Hub is a central repository for Connectors, SmartModules, Dataflows, and more"
 ---
 
-The InfinyOn Hub serves as a centralized repository for InfinyOn SmartConnectors, SmartModules, and other extensions. It facilitates the discovery and deployment of extensions to enhance the data streaming capabilities of Fluvio. The hub provides a platform for developers and data engineers to easily access pre-built solutions or share their own extensions.
+# Hub Quickstart
+
+The InfinyOn Hub serves as a centralized repository for InfinyOn tConnectors, SmartModules, and Dataflows. It facilitates the discovery and deployment of extensions to enhance the data streaming capabilities of Fluvio. The hub provides a platform for developers and data engineers to easily access pre-built solutions or share their own extensions.
+
 
 ## List
 
-Listing SmartModules will display the SmartModules available to your cluster.
+List the SmartModules available for download.
 
 ```shell copy="fl"
-$ fluvio hub sm list
+$ fluvio hub smartmodule list
   SMARTMODULE                              Visibility
   infinyon-labs/array-map-json@x.y.z       public
   infinyon-labs/dedup-filter@x.y.z         public
@@ -25,10 +28,10 @@ $ fluvio hub sm list
   infinyon/regex-filter@x.y.z              public
 ```
 
-Listing Connectors will display the connector packages you can download locally.
+List the Connectors available for download.
 
 ```shell copy="fl"
-$ fluvio hub conn list
+$ fluvio hub connector list
   CONNECTOR                          Visibility
   infinyon-labs/graphite-sink@x.y.z  public
   infinyon/duckdb-sink@x.y.z         public
@@ -44,7 +47,7 @@ $ fluvio hub conn list
 
 ## Download
 
-Downloading a SmartModule is done with respect to your cluster. SmartModules need to be downloaded before they are used in transformations.
+Downloading a SmartModule to a target cluster defined by your [`profile`]. SmartModules need to be downloaded before they are used in transformations.
 
 ```shell copy="fl"
 $ fluvio hub sm download infinyon/jolt@x.y.z
@@ -62,3 +65,6 @@ $ fluvio hub conn download infinyon/http-source@x.y.z
 downloading infinyon/http-source@x.y.z to infinyon-http-source-x.y.z.ipkg
 ... downloading complete
 ```
+
+
+ [`profile`]: fluvio/cli/fluvio/profile.mdx
