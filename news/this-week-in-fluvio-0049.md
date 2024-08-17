@@ -42,8 +42,8 @@ To get familiar, check out the example configs from our tutorials.
 
 [Chaining support]:../docs/smartmodules/features/chaining
 
-[HTTP to SQL tutorial]: ../docs/fluvio/tutorials/http-to-sql
-[MQTT to SQL tutorial]: ../docs/fluvio/tutorials/mqtt-to-sql
+[HTTP to SQL tutorial]: ../docs/cloud/tutorials/http-to-sql
+[MQTT to SQL tutorial]: ../docs/cloud/tutorials/mqtt-to-sql
 
 [Kafka outbound connector v0.3.1]: ../docs/hub/connectors/outbound/kafka
 [SQL outbound connector]: ../docs/hub/connectors/outbound/sql
