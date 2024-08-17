@@ -1,22 +1,72 @@
 ---
-sidebar_position: 10
-title: "Overview"
-description: "Getting started with Fluvio in a few minutes."
+sidebar_position: 1
+title: Overview
+description: "Fluvio - A lean edge to core distributed streaming engine"
 ---
+# Fluvio Overview
 
-
-Fluvio is an open-source data streaming platform that aggregates, correlates, and apply programmable intelligence to data in motion.
+Fluvio is a lean distributed streaming engine designed for edge to core stream processing. It offers a unique combination of performance, scalability, and programmability, making it an ideal choice for building real-time data pipelines.
+Written in Rust, Fluvio provides low-latency, secure, high-performance programmable streaming on cloud-native architecture.
+Fluvio provides client libraries for Rust, Python, JavaScript and more. – [Learn more about Fluvio client libraries]
 
 <img src="/img/docs/references/fluvio-stack.svg" />
 
-Written in Rust, Fluvio provides low-latency, high-performance programmable streaming on cloud-native architecture.
+## Cloud Native
+Fluvio is cloud native by design. Built as a collection of loosely coupled components which run and scale dynamically on demand.
+Fluvio is:
+- Declarative - to reduce the management burden.
+- Kubernetes native - to plug-in native in K8 environments.
+- Horizontally scalable - to meet data elasticity requirements.
+- Self-healing - to recover from failures without human intervention.
 
-SmartModules, powered by WebAssembly, provide users the ability to perform inline computations on streaming
-data without leaving the cluster. - [Learn more about SmartModules][smartmodules]
+## Edge Native
+Fluvio is built to be lean and efficient to cold start in milliseconds and operated efficiently on any system architecture.
+Fluvio is:
+- Lightweight - 37 MB single binary that runs on ARM64 IoT devices
+- Event Driven - Fully event-driven with async architecture to support large I/O.
+- Multithreaded - Leverage multi-core CPU architecture to operate at maximum performance.
+- Fast - Internal component benchmarks are at nanosecond latency for data processing leading to a real-time system
 
-Fluvio provides client libraries for several popular programming languages. – [Learn more about Fluvio's client libraries][api]
+## AI Native
+Fluvio is built with full feature data processing APIs for analytics and AI. It's ideal for developers who want to build data pipelines to power intelligent applications.
+Fluvio helps developers:
+- Customize and manage Data Lifecycle.
+- Orchestrate long-running data& AI pipelines.
+- Deploy declarative APIs for stream processing and materialization.
 
+### Key Features and Benefits
 
+1. Cloud-Native Design: Simplified deployment and management in cloud environments
+- Horizontal scaling
+- Self-healing capabilities
+- Declarative management
+- Kubernetes-native
 
-[smartmodules]: smartmodules/overview.mdx
-[api]: fluvio/apis/overview.mdx
+2. Efficient Resource Usage: Suitable for both cloud and edge computing
+- Low latency
+- Small memory footprint
+- Leverage multi-core CPU architecture
+- Fully event-driven with async architecture
+
+3. Enhanced Security: Robust security features for distributed infrastructures
+- Data stream segregation
+- User and team isolation in cloud
+- Fine-grained access control in cloud
+
+4. Comprehensive APIs: Flexibility to customize stream processing with familiar languages
+- Full-featured data APIs for developers
+- Support for Rust, Python, SQL, JavaScript and more
+
+5. Programmable Stream Processing: High-performance, low-latency data processing capabilities
+- WebAssembly-powered customization
+- Secure sandbox execution
+- Fast inline computation
+- Language-agnostic development
+
+## Technical Highlights
+- *Powered by Rust:* Offers high performance, safety, and cross-platform compatibility
+- *WebAssembly Integration:* Enables secure, high-performance custom stream processing logic
+- *Cloud-Native Control Plane:* Inspired by Kubernetes, uses declarative programming with eventual consistency
+
+Fluvio aims to democratize event driven architecture, enabling organizations to build real-time, data-driven services efficiently and securely.
+[Learn more about Fluvio client libraries]: fluvio/apis/overview.mdx
