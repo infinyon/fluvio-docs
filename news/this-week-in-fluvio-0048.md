@@ -84,8 +84,8 @@ Thanks to those who were in attendance at KubeCon and stopped and said hi to us 
 [SQL outbound connector]: ../docs/hub/connectors/outbound/sql
 [local connectors docs]: ../docs/hub/connectors
 [SmartModule Development Kit docs]: ../docs/smartmodules/smdk
-[HTTP to SQL tutorial]: ../docs/fluvio/tutorials/http-to-sql
-[MQTT to SQL tutorial]: ../docs/fluvio/tutorials/mqtt-to-sql
+[HTTP to SQL tutorial]: ../docs/cloud/tutorials/http-to-sql
+[MQTT to SQL tutorial]: ../docs/cloud/tutorials/mqtt-to-sql
 [New UI tutorial]: ../docs/cloud/quickstart
 [connectors docs]: ../docs/hub/connectors
 [SmartModule Hub docs]: ../docs/hub/overview
