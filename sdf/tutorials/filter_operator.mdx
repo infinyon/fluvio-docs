@@ -1,0 +1,32 @@
+---
+sidebar_position: 10
+title: "Filter Operator"
+description: "Filter Operator Tutorial"
+---
+
+
+# Prerequisites
+
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions
+
+# Introduction
+
+The Filter Operator is a powerful tool that allows you to filter messages based on a condition. This tutorial will show you how to use the Filter Operator to filter messages from a topic.
+
+# Operator Overview
+
+Here is a simple filter operator.  It takes a string as input and returns a boolean value.  If the input string contains a question mark, the operator will return `true`.  Otherwise, it will return `false`.
+
+```YAML
+    transforms:
+      - operator: filter
+        run: |
+          fn filter_questions(input: String) -> Result<bool> {
+            Ok(input.contains("?"))
+          }
+
+```
+
+
+
+## Reference

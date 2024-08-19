@@ -1,261 +1,56 @@
 ---
 title: Getting Started
-description: Guide on how to create Stateful Dataflows using the Stateful Dataflows (SDF) command line interface.
+description: Getting started with Stateful Dataflows
 sidebar_position: 20
 ---
 
-# Getting Started with Stateful Dataflows
 
-This guide will get you started with [SDF], an utility that helps developers build, troubleshoot, and run full-featured event-driven dataflows.
+Provisioning and operating a Stateful Dataflow requires the following system components:
 
+1. [Fluvio Cluster] to enable dataflows to consume and produce streaming data.
 
-#### Overview
+2. [Dataflow File] to define the schema, composition, services, and operations.
 
-This [SDF] release includes several new features and improvements. The main feature is [composition], which allows you to create individual packages and import them to create dataflows.
+3. [SDF (Stateful Dataflows) CLI] to build, test, and deploy the dataflows.
 
-
-#### Example Dataflow
-
-As an example, we'll create a dataflow that splits sentences into words, and counts the number of characters in each word.
-
-<img src="/img/sdf/_release-app.jpg" alt="Preview Example"
-  style={{ display: 'block', margin: '0 auto', border: 'solid #ddd' }} width="700" />
-
-The dataflow reads from `sentences` topic and writes to `words` topics.  This example is available for download in [github].
+The Stateful Dataflows can be built, tested, and run locally during preview releases. As we approach general availability, they can also be deployed in your InfinyOn Cloud cluster. In addition, the dataflows may be published to [Hub] and shared with others with one click and installation.
 
 
-## Prerequisites
+# Inline Definitons
 
-Building a Stateful Dataflow requires the following software:
+**Inline Dataflows** are [dataflow.yaml] files that include everything necessary to run a data pipeline. Inline dataflows are useful for trying out various features of the product. Deploying an inline dataflow is simple:
 
-* Rust **1.80** or beyond - [Install Rust]
-* `wasm32-wasip1` Rust target installed. Typically, installed with: `rustup target add wasm32-wasip1`
+1. [Download (or create) a dataflow file](#1-create-the-dataflow-file)
+2. [Run the dataflow](#2-run-the-dataflow)
 
-
-## Installing Fluvio & Start a Cluster
-
-SDF requires a Fluvio Cluster to consume, produce, and stream records between services.
-
-Download and install the CLI.
-
-```bash copy="fl"
-$ curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
-```
-
-This command will download the Fluvio Version Manager (fvm), Fluvio CLI (fluvio) and config files into `$HOME/.fluvio`, with the executables in `$HOME/.fluvio/bin`. To complete the installation, you must add the executables to your shell `$PATH`.
-
-Start a **Local** cluster:
-
-```bash copy="fl"
-$ fluvio cluster start
-```
-
-If you prefer to run your cluster in InfinyOn Cloud follow the instructions [here].
-
-Run the following command to check the CLI and the Cluster platform versions:
-
-```bash copy="fl"
-$ fluvio version
-```
-
-Your Fluvio cluster is ready for use.
+While inline dataflows are a breeze to get started with, maintaining code in `yaml` is not always ideal. For complex projects, we recommend using [Composable Dataflows].
 
 
-## Install and Setup SDF
+### Create a Dataflow
 
-SDF is in beta and it requires the following image:
+Let's create a simple dataflow to split a sentence into words and count the words. This is the same example we used in the [Composable Dataflows] section, so you can examine both sections for a comparission.
+
+##### 1. Create the Dataflow file
+
+Ceate a dataflow file in the directory `split-sentence` directory:
 
 ```bash
-fvm install sdf-beta1
+$ mkdir -p split-sentence-inline
+$ cd split-sentence-inline
 ```
 
-You can validate prerequisites with:
+Create the `dataflow.yaml` and add the following content:
 
-```bash
-sdf setup
-All pre-requisites are installed!
-```
-
-Your SDF environment is ready to go.
-
-
-## Use `Composition` to build a Stateful Dataflow
-
-Composition has two main components, [packages](#1-building-a-package) and [dataflows](#2-build-the-stateful-dataflow). You can build and test a package independently, then import it into a dataflow. For additional information, check out the [Composition] section.
-
-### 1. Building a Package
-
-The package is a collection of services, functions, and states that can be defined, tested, then be imported into a dataflow.
-
-Let's build one:
-
-#### 1.1 Create a Package File
-
-Open the terminal, create a fresh project directory, say `split-sentence`, where we'll add the dataflow later on. Inside the project directory, create a `packages` directory and a subdirectory `sentence` for the package itself:
-
-```bash
-$ mkdir -p split-sentence/packages/sentence
-$ cd split-sentence/packages/sentence
-```
-
-Inside the `sentence` directory and create an file called `sdf-package.yaml` and add the following content:
-
-```yaml title="sdf-package.yaml"
+```yaml title="dataflow.yaml"
 apiVersion: 0.5.0
 
 meta:
-  name: sentence-pkg
+  name: split-sentence-inline
   version: 0.1.0
   namespace: example
 
-functions:
-
-  sentence-to-words:
-    operator: flat-map
-    inputs:
-      - name: sentence
-        type: string
-    output:
-      type: string
-
-  augment-count:
-    operator: map
-    inputs:
-      - name: word
-        type: string
-    output:
-      type: string
-
-dev:
+config:
   converter: raw
-```
-
-The package file instructs the generator to build two functions, `sentence-to-words` and `augment-count`, that we intend to implement. In addition, it tells the `sdf test` runtime that our inputs should be ingested as `raw` for testing our routines.
-
-#### 1.2 Generate the Package Project
-
-The SDF generate command parses the `sdf-package.yaml` file and builds the project:
-
-```bash copy="fl"
-$ sdf generate
-```
-
-The generator created several directories and files that we'll edit next.
-
-
-#### 1.3 Add the Custom Code
-
-First let's update the first function `sentence-to-words`. Open `rust/sentence-to-words/src/lib.rs` and update the function body with the following code:
-
-```rust
-fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
-    Ok(sentence.split_whitespace().map(String::from).collect())
-}
-```
-
-Next update `augment_count`. Open `rust/augment-count/src/lib.rs` and replace the function body:
-
-```rust
-fn augment_count(word: String) -> Result<String> {
-    Ok(format!("{}({})", word, word.chars().count()))
-}
-```
-
-Let's add some tests as well:
-
-```rust
-#[cfg(test)]
-mod test {
-    use super::*;
-
-    #[test]
-    fn test_augment_count() {
-        let input = "Hello".to_string();
-        let output = Component::augment_count(input);
-        assert_eq!(output.unwrap(), "Hello(5)");
-    }
-}
-```
-
-We've implemented both functions, it's time to compile and test our work.
-
-
-#### 1.4 Build and Test the Package
-
-To build the package, run:
-
-```bash
-$ sdf build
-```
-
-SDF has a built-in `test` interactive shell. Let's bring it up:
-
-```bash
-$ sdf test
-```
-
-In the test shell, you can view the functions available for testing:
-
-```bash copy="fl"
->> show functions
-sentence-to-words
-augment-count
-```
-
-Let's test `sentence-to-words` first:
-
-```bash copy="fl"
->> test function sentence-to-words --value "Hello World"
-Hello
-World
-```
-
-Next, test `augment-count`:
-
-```bash
->> test function augment-count --value "Hello"
-Hello(5)
-```
-
-You may also test the `rust` code via Cargo:
-
-```bash
-cd rust/augment-count
-cargo test
-```
-
-The tests passed, and package now is ready to use in the dataflow file.
-
-
-### 2. Build the Stateful Dataflow
-
-We are building a dataflow that reads words from `sentences` topic, and publishes the result to `words` topic. Let's get started.
-
-
-#### 2.1 Create a Dataflow File
-
-Navigate to the base project directory.
-
-```bash
-$ cd ../../
-```
-
-Create a file called `dataflow.yaml` and copy/paste the following content:
-
-```yaml
-apiVersion: 0.5.0
-
-meta:
-  name: split-sentence
-  version: 0.1.0
-  namespace: example
-
-imports:
-  - pkg: example/sentence-pkg@0.1.0
-    path: ./packages/sentence
-    functions:
-      - name: sentence-to-words
-      - name: augment-count
 
 topics:
   sentence:
@@ -277,106 +72,93 @@ services:
 
     transforms:
       - operator: flat-map
-        uses: sentence-to-words
+        run: |
+          fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
+            Ok(sentence.split_whitespace().map(String::from).collect())
+          }
       - operator: map
-        uses: augment-count
+        run: |
+          pub fn augment_count(word: String) -> Result<String> {
+            Ok(format!("{}({})", word, word.chars().count()))
+          }
 
     sinks:
       - type: topic
         id: words
-
-dev:
-  imports:
-    - pkg: example/sentence-pkg@0.1.0
-      path: ./packages/sentence
 ```
 
-This example focuses on composition, and the area of interest is the `imports` section:
+##### 2. Run the Dataflow
 
-* `package` - is the name of the package we are importing (a composition of the `meta` fields of the package)
-* `path` - is the relative directory where this package can be found.
-* `functions` - the name of the functions we want to import.
+Use `sdf` command line tool to run the dataflow:
 
-The imported functions are then referenced them by name in the `transforms` section.
-
-
-#### 2.2 Run the Dataflow
-
-Let's run the project:
-
-```bash copy="fl"
+```bash
 $ sdf run --ui --ephemeral
-Please visit http://127.0.0.1:8000 to view your workflow visualization
-
->>
 ```
 
-**Note:**
-* The `run` command performs multiple operations:
-  * imports and links all packages
-  * compiles inline code (if needed)
-  * looks-up the topics in the cluster and automatically creates them if they don't exist.
-* The `--ui` flag generates a visual representation of the dataflow at <a href="http://127.0.0.1:8000" target="_blank">http://127.0.0.1:8000</a>.
-* When you close the `run` intractive editor, the dataflow stops processing records.
+Use `--ui` to generate the graphical representation and run the Studio.
 
+##### 3. Test the Dataflow
 
-#### 2.3 Test the Dataflow
-
-To test the dataflow, we'll generate to one topic and read from the other.
-
-Produce a sentence in the `sentence` topic:
+1. Produce sentences to in `sentence` topic:
 
 ```bash copy="fl"
-$ echo 'Hello from stateful dataflows' | fluvio produce sentence
+$ fluvio produce sentence
 ```
 
-Consume from the `words` topic:
+
+```bash
+Hello world
+Hi there
+```
+
+Consume from `words` to retrieve the result:
 
 ```bash copy="fl"
 $ fluvio consume words -Bd
-Consuming records from 'words' starting from the beginning of log
+```
+
+```bash
 Hello(5)
-from(4)
-stateful(8)
-dataflows(9)
+world(5)
+Hi(2)
+there(5)
 ```
 
-Note, the both functions have been applied, with the first function spliting the sentence into words and the second counting the number of characters in each word.
+##### 4. Show State
 
-SDF also exposes execution metrics. To view the metrics, run:
+The dataflow collects runtime metrics that you can inspect in the runtime terminal.
+
+Check the `sentence-to-words` counters:
 
 ```bash copy="fl"
->> show state
- Namespace                                 Keys  Type
- sentence-words/augment-count/metrics      1     table
- sentence-words/sentence/topic.offset      1     offset
- sentence-words/sentence-to-words/metrics  1     table
- sentence-words/sentence/metrics           1     table
+>> show state sentence-words/sentence-to-words/metrics
+ Key    Window  succeeded  failed
+ stats  *       2          0
 ```
 
-Let's pick a metric:
+Check the `augment-count` counters:
 
 ```bash copy="fl"
->> show state  sentence-words/augment-count/metrics
+>> show state sentence-words/augment-count/metrics
  Key    Window  succeeded  failed
  stats  *       4          0
 ```
 
-:tada: Congratulations! You have successfully used compositino to build a Stateful Dataflow.
+Congratulations! You've successfully built and run a composable dataflow! The project is available for download in [github].
+
+##### 5. Clean-up
+
+Exit `sdf` terminal and remove the topics:
+
+```bash
+fluvio topic delete sentence
+fluvio topic delete words
+```
 
 
-## Other Examples
+### References
 
-For additional examples, check out [stateful-dataflows-examples] in github. The examples cover additional functionality shipped in prior preview releases.
-
-## We Love Feedback
-
-Stateful Dataflows is an ambitious project with many possibilities and just as many hazards. Please get in touch, we would love to hear your feedback and help us steer the product in the right direction.
-
-
-[SDF]: /sdf
-[composition]: dataflow-composition.mdx
-[stateful-dataflows-examples]: https://github.com/infinyon/stateful-dataflows-examples
-[github]: https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-composed/split-sentence
-[Install Rust]: https://www.rust-lang.org/tools/install
-[here]: /docs/cloud/quickstart#2-create-an-infinyon-cloud-account
+[Composable Dataflows]: compositions/dataflow-composition.mdx
+[dataflow.yaml]: concepts/dataflow-yaml.mdx
+[github]: https://github.com/infinyon/stateful-dataflows-examples/
+[Example Workflows in github]: https://github.com/infinyon/stateful-dataflows-examples
