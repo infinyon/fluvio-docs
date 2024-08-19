@@ -19,9 +19,9 @@ Installing the home cluster on Linux or Mac requires Kubernetes. Use the followi
 * [Install Rancher Desktop]
 * [Install Fluvio on Kubernetes]
 
-<Idea>
+:::tip
   Install _Kubernetes_, then use the instructions below to install the experimental _fluvio binaries_.
-</Idea>
+:::
 
 
 ### Create a new directory
@@ -149,9 +149,9 @@ fluvio remote export edge1 --public-endpoint host.orb.internal --file edge1.json
 
 The home edge device is a Raspberry Pi device. You may skip this if you don't have such a device.
 
-<Idea>
+:::tip
   The IP address of our machine where the upstream server is running is `192.168.79.252`.  Please identify your own IP address and replace it in the command below.
-</Idea>
+:::
 
 
 ```bash
@@ -169,9 +169,9 @@ The test below was performed on a Raspberry Pi v3 running Ubuntu 32-bit image.
 
 We'll use the metadata file `edge2.json` that we've exported above to provision this device.
 
-<Alert>
+:::tip
   Iddentify the IP address of your Raspberry Pi device and it replace below
-</Alert>
+:::
 
 Using the `upstream` terminal, let's scp the `edge2.json` file to the edge device:
 
@@ -316,9 +316,9 @@ fluvio cluster upgrade --local
 
 The topic on the upstream cluster should automatically synchronize with the edge cluster.
 
-<Alert>
+:::tip
   Wait for the connection retry interval to trigger for the new records to arrive.
-</Alert>
+:::
 
 Let's consume:
 
