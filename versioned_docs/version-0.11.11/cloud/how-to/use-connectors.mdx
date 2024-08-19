@@ -21,9 +21,9 @@ To follow this guide you will need to sign up for [InfinyOn Cloud] and log into 
 fluvio cloud login
 ```
 
-<Idea>
+:::tip
   Check out the [Cloud CLI docs] for more details about logging into the CLI.
-</Idea>
+:::
 
 ### Example HTTP connector
 
@@ -112,9 +112,9 @@ To verify, you can consume from the topic with the `fluvio consume` CLI.
 
 We are using the `-B` option to start from the beginning offset of the topic. Once you reach the end of the topic, you can see new data as it is sent to the topic. To exit this live view, press `Ctrl+C`.
 
-<Idea>
+:::tip
   Using the `--disable-continuous` flag with `fluvio consume` will exit the stream once the last record has printed to screen
-</Idea>
+:::
 
 ```shell
 $ fluvio consume cat-facts-data -B
