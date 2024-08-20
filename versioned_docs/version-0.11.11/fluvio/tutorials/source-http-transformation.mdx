@@ -1,0 +1,139 @@
+---
+sidebar_position: 2
+title: "Customizing Connector with Transformation"
+description: "Part 2 of HTTP to SQL Sink tutorial series."
+---
+
+# Prerequisites
+
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions [here][installation]!
+
+
+# Introduction
+
+Building on the [Streaming from HTTP Source] tutorial, we will customize the Source HTTP Connector with transformation that will let you modify the records before they are sent to the topic.
+
+Why would you want to do this? 
+
+Often, you are only interested in a subset of the data, or add/remove fields, or even change the shape of the record. This is where transformations come in.
+
+In this tutorial, we will show you how to customize the HTTP Source Connector to add a field to every record before it is sent to the topic.
+
+
+# SmartModule
+
+SmartModule is a reusable piece of code that can be attached to a connector to perform a specific task. In this case, we will use a SmartModule to transform the incoming JSON records before they are sent to the topic.
+
+SmartModule is executed using WebAssembly runtime, which means it is very small and secure. You can write your own SmartModules in Rust, or use the prepackaged ones from the [SmartModule Hub].
+
+Unlike connectors, SmartModules in the Hub are packaged WASM files. 
+
+The SmartModule we will use in this tutorial implements domain specific language (DSL) called [Jolt], to specify a transformation of input JSON to another shape of JSON data.
+
+To use jolt SmartModule, we need to download it to the cluster.
+
+```bash
+$ fluvio hub sm download infinyon/jolt@0.4.1
+```
+
+Once you have the SmartModule downloaded, you can list them:
+
+```bash
+$ fluvio hub sm list
+  SMARTMODULE          SIZE     
+  infinyon/jolt@0.4.1  589.3 KB 
+```
+
+
+# Customizing HTTP Connector with JOLT SmartModule
+
+In order to customize the HTTP Source Connector, we need to create a configuration file that includes the transformation.
+
+Before we start modified connector, please terminate existing running connector.
+
+Coyp and paste following config and save it as `http-cat-facts-transform.yaml`.   This configuration use the same endpoint as the previous tutorial except different topic name.
+
+import CodeBlock from '@theme/CodeBlock';
+import CatFactBasic from '!!raw-loader!./config/http-cat-fact-transform.yaml';
+
+<CodeBlock language="yaml">{CatFactBasic}</CodeBlock>
+
+Noticed that we just added `transforms` section which added JOLT specification to insert a new field `source` with value `http` to every record.
+
+Once you have the config file, you can create the connector using the `cdk deploy start` command as before.  
+
+```bash
+$ cdk deploy start --ipkg infinyon-http-source-0.3.8.ipkg --config ./http-cat-facts-transform.yaml
+```
+
+
+You can use `cdk deploy list` to view the status of the connector.
+
+```bash
+$ cdk deploy list
+ NAME       STATUS  
+ cat-facts  Running 
+```
+
+# Checking the data
+
+Similar to the previous tutorial, we can use `fluvio consume` to view the incoming data in the topic `cat-facts-transformed` which was created by the connector.
+
+```bash
+$ fluvio consume cat-facts -T4
+Consuming records starting 4 from the end of topic 'cat-facts'
+
+{"fact":"Heat occurs several times a year and can last anywhere from 3 to 15 days.","length":73,"source":"http"}
+{"fact":"Cats prefer to remain non-confrontational. They will not fight to show dominance, but rather to stake their territory. Cats will actually go to extremes to avoid one another in order to prevent a possible confrontation.","length":219,"source":"http"}
+{"fact":"Cats only sweat through their paws and nowhere else on their body","length":65,"source":"http"}
+{"fact":"Unlike dogs, cats do not have a sweet tooth. Scientists believe this is due to a mutation in a key taste receptor.","length":114,"source":"http"}
+```
+As you can see, the `source` field has been added to every record. This is the transformation we added to the connector.
+
+You can terminate the consume command by pressing `Ctrl+C`.
+
+
+### Cleaning up
+
+Shut down the connector and delete the topic.
+
+```bash
+$ cdk deploy shutdown --name cat-facts-transformed
+$ fluvio topic delete cat-facts-transform
+```
+
+## Conclusion and Next Step
+
+In this tutorial, we showed you how to customize the HTTP Source Connector with transformation using SmartModule.  
+
+SmartModule is a powerful tool that can be used to perform complex transformations on the incoming data.  
+
+In the next tutorial, we will show you how to use the sink connector to stream data from an topic to a SQL database.
+
+
+## Reference
+
+* [Fluvio CLI Produce]
+* [Fluvio CLI Consume]
+* [Fluvio CLI Topic]
+* [Fluvio CLI Profile]
+* [SmartModule]
+* [SmartModule Rust API]
+* [Transformations]
+
+[Streaming from HTTP Source]: source-http-basic.mdx
+[Connector Overview]: connectors/overview.mdx
+[Fluvio CLI Produce]: fluvio/cli/fluvio/produce.mdx
+[Fluvio CLI Consume]: fluvio/cli/fluvio/consume.mdx
+[Fluvio CLI Topic]: fluvio/cli/fluvio/topic.mdx
+[Fluvio CLI Profile]: fluvio/cli/fluvio/profile.mdx
+[SmartModule]: smartmodules/overview.mdx
+[SmartModule Rust API]: https://docs.rs/fluvio-smartmodule/latest/fluvio_smartmodule/
+[Transformations]: fluvio/concepts/transformations.mdx
+[Inbound HTTP Connector]: hub/connectors/inbound/http.mdx
+[castfact.ninja]: https://catfact.ninja
+[Configuration]: connectors/configuration.mdx
+[infinyon/jolt@x.y.z]: hub/smartmodules/jolt.mdx
+[Jolt]: https://github.com/infinyon/fluvio-jolt
+[SmartModule Hub]: hub/smartmodules/index.md
+[installation]: fluvio/quickstart.mdx#install-fluvio
