@@ -1,53 +1,15 @@
-import React, {useCallback, useState, useRef, useEffect} from 'react';
-import clsx from 'clsx';
-import copy from 'copy-text-to-clipboard';
 import {translate} from '@docusaurus/Translate';
-import type {Props} from '@theme/CodeBlock/CopyButton';
+import copy from 'copy-text-to-clipboard';
+import clsx from 'clsx';
+import React, {useCallback, useState, useRef, useEffect} from 'react';
+
 import IconCopy from '@theme/Icon/Copy';
 import IconSuccess from '@theme/Icon/Success';
+import { CopyBehavior, textWithCopyBehavior } from '@site/src/functions/copy-behavior';
+
+import type {Props} from '@theme/CodeBlock/CopyButton';
 
 import styles from './styles.module.css';
-
-const CODE_BLOCK_COPY_REGEXP = /copy=(?<quote>["'])(?<copy>.*?)\1/;
-
-export enum CopyBehavior {
-  FirstLine = 'fl',
-  FullText = 'full',
-}
-
-const COPY_BEHAVIOR = Object.values(CopyBehavior);
-
-export function parseCodeBlockCopy(metastring?: string): CopyBehavior {
-  const copy = metastring?.match(CODE_BLOCK_COPY_REGEXP)?.groups!.copy?.trim();
-
-  if (!copy) {
-    // Fallback to Full Text
-    return CopyBehavior.FullText;
-  }
-
-  const match = COPY_BEHAVIOR.find((cb) => cb === copy) as CopyBehavior | undefined;
-
-  if (match) {
-    return match;
-  }
-
-  throw new Error(`Invalid copy behavior: ${copy}. Valid values are: ${COPY_BEHAVIOR.join(', ')}`);
-}
-
-function textWithCopyBehavior(text: string, cb: CopyBehavior): string {
-  switch(cb) {
-    case CopyBehavior.FirstLine:
-      const final = text.split('\n')[0];
-
-      if (final.startsWith('$')) {
-        return final.slice(1).trim();
-      }
-
-      return final;
-    default:
-      return text;
-  }
-}
 
 export default function CopyButton({code, className, copyBehavior}: Props & {
   copyBehavior: CopyBehavior;
@@ -55,7 +17,7 @@ export default function CopyButton({code, className, copyBehavior}: Props & {
   const [isCopied, setIsCopied] = useState(false);
   const copyTimeout = useRef<number | undefined>(undefined);
   const handleCopyCode = useCallback(() => {
-    const text = textWithCopyBehavior(code, copyBehavior);
+  const text = textWithCopyBehavior(code, copyBehavior);
 
     copy(text);
     setIsCopied(true);
