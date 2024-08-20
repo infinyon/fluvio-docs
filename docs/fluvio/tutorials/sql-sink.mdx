@@ -119,7 +119,7 @@ import CdkDeploySqlSink from '!!raw-loader!@site/embeds/cmds/cdk-deploy-start-sq
 
 You can use `cdk deploy list` to view the status of the connector.
 
-```bash
+```bash copy="fl"
 $ cdk deploy list
  NAME       STATUS  
  simple-cat-facts-sql  Running 
@@ -135,7 +135,7 @@ By default, sink connector will consume the data from the end of topic which mea
 
 Let's produce a single record to the topic.
 
-```
+```bash copy="fl"
 $ fluvio produce cat-facts
 {"fact":"A cat’s jaw can’t move sideways, so a cat can’t chew large chunks of food.","length":74}
 Ok!

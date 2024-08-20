@@ -78,7 +78,7 @@ import CdkDeployHttpSrc from '!!raw-loader!@site/embeds/cmds/cdk-deploy-start-ht
 
 You can use `cdk deploy list` to view the status of the connector.
 
-```bash
+```bash copy="fl"
 $ cdk deploy list
  NAME       STATUS  
  cat-facts  Running 
@@ -88,7 +88,7 @@ $ cdk deploy list
 
 Similar to the previous tutorial, we can use `fluvio consume` to view the incoming data in the topic `cat-facts-transformed` which was created by the connector.
 
-```bash
+```bash copy="fl"
 $ fluvio consume cat-facts -T4
 Consuming records starting 4 from the end of topic 'cat-facts'
 
@@ -106,10 +106,11 @@ You can terminate the consume command by pressing `Ctrl+C`.
 
 Shut down the connector and delete the topic.
 
-```bash
+```bash copy="full"
 $ cdk deploy shutdown --name cat-facts-transformed
 $ fluvio topic delete cat-facts-transform
 ```
+
 
 ## Conclusion and Next Step
 

@@ -68,9 +68,11 @@ After downloading, you need to create a configuration file to provision the conn
 
 Coyp and paste following config and save it as `http-cat-facts.yaml`.
 
+
 import CatFactBasic from '!!raw-loader!@site/embeds/connectors/http-cat-fact-basic.yaml';
 
 <CodeBlock language="yaml">{CatFactBasic}</CodeBlock>
+
 
 Each connector has a `meta` section which is same across all connector.  The `http` section is specific to the `HTTP Source Connector`.
 
@@ -83,13 +85,15 @@ The `interval` is set to `10s` which means the connector will poll the endpoint 
 
 Once you have the config file, you can create the connector using the `cdk deploy start` command.
 
+
 import CdkDeployHttpSrc from '!!raw-loader!@site/embeds/cmds/cdk-deploy-start-http-source-cat-facts.bash';
 
 <CodeBlock language="bash" copyBehavior="fl">$ {CdkDeployHttpSrc}</CodeBlock>
 
+
 You can use `cdk deploy list` to view the status of the connector.
 
-```bash
+```bash copy="fl"
 $ cdk deploy list
  NAME       STATUS  
  cat-facts  Running 
@@ -101,7 +105,7 @@ Use `fluvio consume` to view the incoming data in the topic `cat-facts` which wa
 
 This command will consume the last 4 records from the topic in the stream mode.
 
-```bash
+```bash copy="fl"
 $ fluvio consume cat-facts -T4
 Consuming records starting 4 from the end of topic 'cat-facts'
 {"fact":"A cat lover is called an Ailurophilia (Greek: cat+lover).","length":57}
@@ -119,18 +123,18 @@ You can terminate the consume command by pressing `Ctrl+C`.
 
 To shutdown traffic, you can shutdown local connector using the `cdk deploy shutdown` command.
 
-```bash
+```bash copy="fl"
 $ cdk deploy shutdown --name cat-facts
 ```
 
 You can also delete the topic by using the `fluvio topic delete` command.
 
-```bash
+```bash copy="fl"
 $ fluvio topic delete cat-facts
 ```
 
 This should result in no connectors running:
-```bash
+```bash copy="fl"
 $ cdk deploy list
  NAME  STATUS  
 ```
