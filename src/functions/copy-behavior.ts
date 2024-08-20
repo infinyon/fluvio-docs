@@ -31,8 +31,8 @@ export function parseCodeBlockCopy(metastring?: string): CopyBehavior {
   );
 }
 
-function removeCommandPrefix(text: string): string {
-  let buff = `` ;
+function copyFullText(text: string): string {
+  let buff = '';
 
   while (text.length) {
     const token: string = text[0];
@@ -78,7 +78,7 @@ export function textWithCopyBehavior(text: string, behavior: CopyBehavior): stri
     case CopyBehavior.FirstLine:
       return copyFirstLine(text);
     case CopyBehavior.FullText:
-      return removeCommandPrefix(text);
+      return copyFullText(text);
     default:
       console.warn(`Invalid copy behavior ${behavior}`);
       return text;
