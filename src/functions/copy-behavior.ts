@@ -1,11 +1,13 @@
 export enum CopyBehavior {
-  FirstLine = 'fl',
-  FullText = 'full',
+  FirstLine = "fl",
+  FullText = "full",
 }
 
 const CODE_BLOCK_COPY_REGEXP = /copy=(?<quote>["'])(?<copy>.*?)\1/;
 
 const COPY_BEHAVIOR_VALUES = Object.values(CopyBehavior);
+
+const NON_BREAKING_SPACE = ' ';
 
 // Parses properties from the metastring of a code block and extracts the [`CopyBehavior`].
 export function parseCodeBlockCopy(metastring?: string): CopyBehavior {
@@ -16,30 +18,69 @@ export function parseCodeBlockCopy(metastring?: string): CopyBehavior {
     return CopyBehavior.FullText;
   }
 
-  const match = COPY_BEHAVIOR_VALUES.find((cb) => cb === copy) as CopyBehavior | undefined;
+  const match = COPY_BEHAVIOR_VALUES.find((cb) => cb === copy) as
+    | CopyBehavior
+    | undefined;
 
   if (match) {
     return match;
   }
 
-  throw new Error(`Invalid copy behavior: ${copy}. Valid values are: ${COPY_BEHAVIOR_VALUES.join(', ')}`);
+  throw new Error(
+    `Invalid copy behavior: ${copy}. Valid values are: ${COPY_BEHAVIOR_VALUES.join(", ")}`,
+  );
 }
 
-export function clearCommandPrefix(text: string): string {
-  if (text.startsWith('$')) {
-    return text.slice(1).trim();
+function removeCommandPrefix(text: string): string {
+  let buff = `` ;
+
+  while (text.length) {
+    const token: string = text[0];
+    const nextToken: string | undefined = text[1];
+
+    text = text.slice(1);
+
+    if (token === '$') {
+      buff += NON_BREAKING_SPACE;
+      continue;
+    }
+
+    if (token === '>' && nextToken === '>') {
+      text = text.slice(1);
+      buff += NON_BREAKING_SPACE;
+      buff += NON_BREAKING_SPACE;
+
+      continue;
+    }
+
+    buff += token;
   }
 
-  return text;
+  return buff;
 }
 
-export function textWithCopyBehavior(text: string, cb: CopyBehavior): string {
-  switch(cb) {
+function copyFirstLine(text: string): string {
+  const final = text.split('\n')[0];
+
+  if (final.startsWith('$')) {
+    return final.slice(1).trim();
+  }
+
+  if (final.startsWith('>>')) {
+    return final.slice(2).trim();
+  }
+
+  return final;
+}
+
+export function textWithCopyBehavior(text: string, behavior: CopyBehavior): string {
+  switch (behavior) {
     case CopyBehavior.FirstLine:
-      return clearCommandPrefix(text.split('\n')[0]);
+      return copyFirstLine(text);
     case CopyBehavior.FullText:
-      return text.split('\n').map((v) => clearCommandPrefix(v.trim())).join('\n');
+      return removeCommandPrefix(text);
     default:
+      console.warn(`Invalid copy behavior ${behavior}`);
       return text;
   }
 }

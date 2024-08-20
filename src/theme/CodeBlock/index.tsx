@@ -2,8 +2,7 @@ import React, {isValidElement, type ReactNode} from 'react';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import ElementContent from '@theme/CodeBlock/Content/Element';
 import StringContent from '@theme/CodeBlock/Content/String';
-
-import { parseCodeBlockCopy } from './CopyButton';
+import { parseCodeBlockCopy } from '@site/src/functions/copy-behavior';
 
 import type {Props} from '@theme/CodeBlock';
 
