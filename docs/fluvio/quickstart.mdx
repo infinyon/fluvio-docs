@@ -3,6 +3,17 @@ sidebar_position: 0
 title: "Quickstart"
 description: "Getting started with Fluvio in a few minutes."
 ---
+import CodeBlock from '@theme/CodeBlock';
+import HttpSrcQuotes from '!!raw-loader!../_embeds/connectors/http-source-quotes.yaml';
+import HttpSrcQuotesTransform from '!!raw-loader!../_embeds/connectors/http-source-quotes-transform.yaml';
+import CdkHubDownload from '!!raw-loader!../_embeds/cmds/cdk-hub-download-http-source.bash';
+import CdkDeployHttpSrcQuotes from '!!raw-loader!../_embeds/cmds/cdk-deploy-start-http-source-quotes.bash';
+import CdkDeployHttpSrcStringQuotes from '!!raw-loader!../_embeds/cmds/cdk-deploy-start-http-source-string-quotes.bash';
+import FlvHubSmListJolt from '!!raw-loader!../_embeds/cmds/hub-sm-list-jolt.bash';
+import FlvHubSmDownloadJolt from '!!raw-loader!../_embeds/cmds/hub-sm-download-jolt.bash';
+import HubSmListJolt from '!!raw-loader!../_embeds/cmds/sm-list-jolt.bash';
+import TransformsJolt from '!!raw-loader!../_embeds/transforms/infinyon-jolt.yaml';
+
 
 # Quickstart
 
@@ -102,31 +113,20 @@ hello world!
 
 InfinyOn offers a growing number of connectors to communicate with external services. In this example, we will be covering the HTTP Source connector. The connector polls data from an HTTP endpoint that returns a random quote every 3 seconds to a topic called quotes.
 
-Create a file named `quotes-source-connector.yml` and save the following configuration:
+Create a file and save the following configuration:
 
-```yaml title="quotes-source-connector.yml"
-apiVersion: 0.1.0
-meta:
-  version: 0.3.8
-  name: http-quotes
-  type: http-source
-  topic: quotes
-http:
-  endpoint: https://demo-data.infinyon.com/api/quote
-  interval: 3s
-```
+<CodeBlock language="yaml">{HttpSrcQuotes}</CodeBlock>
+
 
 ### Running the HTTP Connector
 
 We'll use [Connector Developer Kit (cdk)] to download and run the connector.
 
-```bash copy="fl"
-$ cdk hub download infinyon/http-source@0.3.8
-```
+<CodeBlock language="bash" copyBehavior="fl">$ {CdkHubDownload}</CodeBlock>
 
-```bash copy="fl"
-$ cdk deploy start --ipkg infinyon-http-source-0.3.8.ipkg -c quotes-source-connector.yml
-```
+Run the following command to deploy the connector:
+
+<CodeBlock language="bash" copyBehavior="fl">$ {CdkDeployHttpSrcQuotes}</CodeBlock>
 
 Use the following command to see the connector status.
 
@@ -152,32 +152,21 @@ Consuming records from 'quotes'
 
 SmartModules are user-defined functions compiled into WebAssembly and applied to data streaming for inline data manipulation. You can use SmartModules in the producers, consumers, as well as Connectors. InfinyOn has several pre-compiled SmartModules that you can use out of the box. Alternatively, you can [build your own].
 
-
 To list available smartmodules, run:
 
-```bash copy="fl"
-$ fluvio hub smartmodule list
-  SMARTMODULE                              Visibility
-  infinyon/jolt@0.4.1                      public
-  ...
-```
+<CodeBlock language="bash" copyBehavior="fl">$ {FlvHubSmListJolt}</CodeBlock>
 
-#### Use `jolt` SmartModule to turn JSON records into sentences {#jolt}
+
+#### Use `jolt` SmartModule to turn JSON records into sentences
 
 Let’s download the Smartmodule to our cluster:
 
-```bash copy="fl"
-$ fluvio hub smartmodule download infinyon/jolt@0.4.1
-... cluster smartmodule install complete
-```
+<CodeBlock language="bash" copyBehavior="fl">$ {FlvHubSmDownloadJolt}</CodeBlock>
 
 Check the cluster to ensure it has been successfully downloaded:
 
-```bash copy="fl"
-$ fluvio smartmodule list
-  SMARTMODULE                    SIZE
-  infinyon/jolt@0.4.1            589.3 KB
-```
+<CodeBlock language="bash" copyBehavior="fl">$ {HubSmListJolt}</CodeBlock>
+
 
 Next, we’ll create a transform file and test the output.
 
@@ -187,15 +176,7 @@ SmartModules can be chained together and often require additional parameters. Fl
 
 Create a file named `transforms.yaml` and paste the following configuration:
 
-```yaml title="transforms.yml"
-transforms:
-  - uses: infinyon/jolt@0.4.1
-    with:
-      spec:
-        - operation: shift
-          spec:
-            quote: ""
-```
+<CodeBlock language="yaml">{TransformsJolt}</CodeBlock>
 
 Jolt is a complex Smartmodule that allows you to perform multiple types of JSON transformations. For additional information, check out the SmartModule Jolt docs.
 
@@ -215,32 +196,13 @@ We are consuming the last two quotes topic records and transforming the json int
 
 Let’s say we don’t use the authors in the quotes; instead, only the quote represented strings. We can accomplish this result by simply applying the transformation to the connector.
 
-Let’s create a new named `string-quotes-source-connector.yml` and add the following configuration:
+Let’s create a new file add the following configuration:
 
-```yaml title="string-quotes-source-connector.yml"
-apiVersion: 0.1.0
-meta:
-  version: 0.3.8
-  name: string-quotes
-  type: http-source
-  topic: string-quotes
-http:
-  endpoint: https://demo-data.infinyon.com/api/quote
-  interval: 3s
-transforms:
-  - uses: infinyon/jolt@0.4.1
-    with:
-      spec:
-        - operation: shift
-          spec:
-            quote: ""
-```
+<CodeBlock language="yaml">{HttpSrcQuotesTransform}</CodeBlock>
 
 Ready to run the connector:
 
-```bash copy="fl"
-$ cdk deploy start --ipkg infinyon-http-source-0.3.8.ipkg -c string-quotes-source-connector.yml
-```
+<CodeBlock language="bash" copyBehavior="fl">$ {CdkDeployHttpSrcStringQuotes}</CodeBlock>
 
 Use the following command to see the connector status.
 
