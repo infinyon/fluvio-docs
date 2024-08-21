@@ -4,6 +4,11 @@ title: "Connector Transformations"
 description: "Part 2 of 3: HTTP to SQL Sink tutorial series."
 ---
 import CodeBlock from '@theme/CodeBlock';
+import HubSmDownload from '!!raw-loader!../../_embeds/cmds/hub-sm-download-jolt.bash';
+import HubSmList from '!!raw-loader!../../_embeds/cmds/sm-list-jolt.bash';
+import CatFactBasic from '!!raw-loader!../../_embeds/connectors/http-cat-fact-transform.yaml';
+import CdkDeployHttpSrc from '!!raw-loader!../../_embeds/cmds/cdk-deploy-start-http-source-cat-facts-xform.bash';
+
 
 # Connector Transformations
 
@@ -38,16 +43,9 @@ The SmartModule we will use in this tutorial implements domain specific language
 
 To use jolt SmartModule, we need to download it to the cluster.
 
-
-import HubSmDownload from '!!raw-loader!@site/embeds/cmds/hub-sm-download-jolt.bash';
-
 <CodeBlock language="bash" copyBehavior="fl">$ {HubSmDownload}</CodeBlock>
 
-
-
 Once you have the SmartModule downloaded, you can list them:
-
-import HubSmList from '!!raw-loader!@site/embeds/cmds/sm-list-jolt.bash';
 
 <CodeBlock language="bash" copyBehavior="fl">$ {HubSmList}</CodeBlock>
 
@@ -60,21 +58,13 @@ Before we start modified connector, please terminate existing running connector.
 
 Coyp and paste following config and save it as `http-cat-facts-transform.yaml`.   This configuration use the same endpoint as the previous tutorial except different topic name.
 
-
-import CatFactBasic from '!!raw-loader!@site/embeds/connectors/http-cat-fact-transform.yaml';
-
 <CodeBlock language="yaml">{CatFactBasic}</CodeBlock>
-
 
 Noticed that we just added `transforms` section which added JOLT specification to insert a new field `source` with value `http` to every record.
 
 Once you have the config file, you can create the connector using the `cdk deploy start` command as before.  
 
-
-import CdkDeployHttpSrc from '!!raw-loader!@site/embeds/cmds/cdk-deploy-start-http-source-cat-facts-xform.bash';
-
 <CodeBlock language="bash" copyBehavior="fl">$ {CdkDeployHttpSrc}</CodeBlock>
-
 
 You can use `cdk deploy list` to view the status of the connector.
 
