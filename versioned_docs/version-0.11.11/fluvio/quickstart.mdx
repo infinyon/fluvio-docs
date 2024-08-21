@@ -111,7 +111,17 @@ meta:
   name: http-quotes
   type: http-source
   topic: quotes
-http:{#my-explicit-id}
+http:
+  endpoint: https://demo-data.infinyon.com/api/quote
+  interval: 3s
+```
+
+### Running the HTTP Connector
+
+We'll use [Connector Developer Kit (cdk)] to download and run the connector.
+
+```bash copy="fl"
+$ cdk hub download infinyon/http-source@0.3.8
 ```
 
 ```bash copy="fl"
