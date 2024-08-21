@@ -4,7 +4,11 @@ title: "HTTP Source -> Topic"
 description: "Part 1 of 3: HTTP to SQL Sink tutorial series."
 ---
 import CodeBlock from '@theme/CodeBlock';
-import Versions from '@site/embeds/versions';
+import Versions from '../../_embeds/versions';
+import CatFactBasic from '!!raw-loader!../../_embeds/connectors/http-cat-fact-basic.yaml';
+import CdkHubDownload from '!!raw-loader!../../_embeds/cmds/cdk-hub-download-http-source.bash';
+import CdkDeployHttpSrc from '!!raw-loader!../../_embeds/cmds/cdk-deploy-start-http-source-cat-facts.bash';
+
 
 # HTTP Source -> Topic
 
@@ -54,8 +58,6 @@ The connector you downloaded contains binary executable.  The connector is packa
 
 In this tutorial, we will be using the `HTTP Source Connector` from the Hub.
 
-import CdkHubDownload from '!!raw-loader!@site/embeds/cmds/cdk-hub-download-http-source.bash';
-
 <CodeBlock language="bash" copyBehavior="fl">$ {CdkHubDownload}</CodeBlock>
 
 
@@ -68,8 +70,6 @@ After downloading, you need to create a configuration file to provision the conn
 
 Coyp and paste following config and save it as `http-cat-facts.yaml`.
 
-
-import CatFactBasic from '!!raw-loader!@site/embeds/connectors/http-cat-fact-basic.yaml';
 
 <CodeBlock language="yaml">{CatFactBasic}</CodeBlock>
 
@@ -85,8 +85,6 @@ The `interval` is set to `10s` which means the connector will poll the endpoint 
 
 Once you have the config file, you can create the connector using the `cdk deploy start` command.
 
-
-import CdkDeployHttpSrc from '!!raw-loader!@site/embeds/cmds/cdk-deploy-start-http-source-cat-facts.bash';
 
 <CodeBlock language="bash" copyBehavior="fl">$ {CdkDeployHttpSrc}</CodeBlock>
 

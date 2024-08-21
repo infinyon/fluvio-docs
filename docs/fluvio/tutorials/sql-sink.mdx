@@ -4,6 +4,12 @@ title: "Topic -> SQL Sink"
 description: "Part 1 of 3: HTTP to SQL Sink tutorial series."
 ---
 import CodeBlock from '@theme/CodeBlock';
+import HubDownloadSqlSink from '!!raw-loader!../../_embeds/cmds/cdk-hub-download-sql-sink.bash';
+import SmDownloadJsonSql from '!!raw-loader!../../_embeds/cmds/hub-sm-download-json-sql.bash';
+import SmListJsonSqlJolt from '!!raw-loader!../../_embeds/cmds/sm-list-json-sql-jolt.bash';
+import CatSQL from '!!raw-loader!../../_embeds/connectors/sql-cat-fact.yaml';
+import CdkDeploySqlSink from '!!raw-loader!../../_embeds/cmds/cdk-deploy-start-sql-sink-cat-facts.bash';
+
 
 # Topic -> SQL Sink
 
@@ -35,37 +41,21 @@ We will be using topics from first tutorial [Streaming from HTTP Source] which s
 
 As in previous tutorials, we will use `cdk` to manage the connectors.   Run following command to download the connector from the Hub.
 
-
-import HubDownloadSqlSink from '!!raw-loader!@site/embeds/cmds/cdk-hub-download-sql-sink.bash';
-
 <CodeBlock language="bash" copyBehavior="fl">$ {HubDownloadSqlSink}</CodeBlock>
-
 
 Then download SQL SmartModule from the Hub.
 
-
-import SmDownloadJsonSql from '!!raw-loader!@site/embeds/cmds/hub-sm-download-json-sql.bash';
-
 <CodeBlock language="bash" copyBehavior="fl">$ {SmDownloadJsonSql}</CodeBlock>
-
 
 Then you should see two smartmodules downloaded assuming you have already downloaded the `jolt` SmartModule from previous tutorial.
 
-
-import SmListJsonSqlJolt from '!!raw-loader!@site/embeds/cmds/sm-list-json-sql-jolt.bash';
-
 <CodeBlock language="bash" copyBehavior="fl">$ {SmListJsonSqlJolt}</CodeBlock>
-
 
 ## Sink Connector configuration
 
 Coyp and paste following config and save it as `sql-cat-fact.yaml`.
 
-
-import CatSQL from '!!raw-loader!@site/embeds/connectors/sql-cat-fact.yaml';
-
 <CodeBlock language="yaml">{CatSQL}</CodeBlock>
-
 
 This configuration will read data from `cat-facts` topic and insert into `animalfacts` table in the database.  The `json-sql` SmartModule will transform the JSON data into SQL insert statement.
 
@@ -111,11 +101,7 @@ You can confirm table is created:
 
 Once you have the config file, you can create the connector using the `cdk deploy start` command.
 
-
-import CdkDeploySqlSink from '!!raw-loader!@site/embeds/cmds/cdk-deploy-start-sql-sink-cat-facts.bash';
-
 <CodeBlock language="bash" copyBehavior="fl">$ {CdkDeploySqlSink}</CodeBlock>
-
 
 You can use `cdk deploy list` to view the status of the connector.
 
