@@ -32,6 +32,10 @@ export function parseCodeBlockCopy(metastring?: string): CopyBehavior {
   );
 }
 
+// Copies full text clearing "special characters" like "$" and ">>" used in code blocks.
+//
+// We want to keep text hierarchy for examples like YAML which is used widely or Rust
+// code blocks.
 function copyFullText(text: string): string {
   const isSingleLine = !text.includes('\n');
 
