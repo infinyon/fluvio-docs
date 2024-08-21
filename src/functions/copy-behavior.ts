@@ -1,6 +1,7 @@
 export enum CopyBehavior {
   FirstLine = "fl",
   FullText = "full",
+  Commands = "cmd",
 }
 
 const CODE_BLOCK_COPY_REGEXP = /copy=(?<quote>["'])(?<copy>.*?)\1/;
@@ -89,12 +90,28 @@ function copyFirstLine(text: string): string {
   return final;
 }
 
+function copyCommands(text: string): string {
+  return text.split('\n').map((line) => {
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith('$')) {
+      return trimmed.slice(1).trim();
+    }
+
+    if (trimmed.startsWith('>>')) {
+      return trimmed.slice(2).trim();
+    }
+  }).join('\n');
+}
+
 export function textWithCopyBehavior(text: string, behavior: CopyBehavior): string {
   switch (behavior) {
     case CopyBehavior.FirstLine:
       return copyFirstLine(text);
     case CopyBehavior.FullText:
       return copyFullText(text);
+    case CopyBehavior.Commands:
+      return copyCommands(text);
     default:
       console.warn(`Invalid copy behavior ${behavior}`);
       return text;

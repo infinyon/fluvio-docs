@@ -132,4 +132,34 @@ describe("copy behavior smoke tests", () => {
       want,
     );
   });
+
+  it(`clears multiline commands for bash ("$") examples`, () => {
+    const have = `
+$ fluvio cluster create
+$ fluvio topic create my-topic
+$ fluvio produce my-topic`;
+    const want = `
+fluvio cluster create
+fluvio topic create my-topic
+fluvio produce my-topic`;
+
+    expect(textWithCopyBehavior(have, CopyBehavior.Commands)).toStrictEqual(
+      want,
+    );
+  });
+
+  it(`clears multiline commands for sdf (">>") examples`, () => {
+    const have = `
+>> show state filter-service/filter-questions/metrics
+>> select dataflow wordcount-window-simple
+>> exit`;
+    const want = `
+show state filter-service/filter-questions/metrics
+select dataflow wordcount-window-simple
+exit`;
+
+    expect(textWithCopyBehavior(have, CopyBehavior.Commands)).toStrictEqual(
+      want,
+    );
+  });
 });
