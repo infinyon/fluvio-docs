@@ -45,7 +45,7 @@ Fluvio is stored in `$HOME/.fluvio`, with the executable binaries stored in
   For the best compatibliity on Windows, InfinyOn recommends [WSL2]
 :::
 
-### Start a Cluster
+## Start a Cluster
 
 Start cluster on you local machine with the following command:
 
@@ -57,7 +57,7 @@ $ fluvio cluster start
   To run a cloud cluster, see the [Cloud] documentation.
 :::
 
-### Create your first topic
+## Create your first topic
 
 Topics are used to store data and send data streams.
 
@@ -69,7 +69,7 @@ $ fluvio topic create quickstart-topic
 
 > Where `quickstart-topic` is the name of your topic
 
-### Produce Records
+## Produce Records
 
 You can send data (aka _produce_) to your topic.
 
@@ -85,7 +85,7 @@ Typing anything and then pressing Enter will send a record to your topic.
 
 > Press `Ctrl+C` to exit the interactive producer prompt.
 
-### Consume Records
+## Consume Records
 
 You can read data (aka _consume_) from your topic.
 
@@ -109,7 +109,7 @@ hello world!
 - `-B, --beginning` flag is used to specify the starting offset. Defaults to `0`
 - `-d, --disable-continuous` closes the consumer connection after all data has been sent.
 
-### Start a Connector
+## Start a Connector
 
 InfinyOn offers a growing number of connectors to communicate with external services. In this example, we will be covering the HTTP Source connector. The connector polls data from an HTTP endpoint that returns a random quote every 3 seconds to a topic called quotes.
 
@@ -118,7 +118,7 @@ Create a file and save the following configuration:
 <CodeBlock language="yaml">{HttpSrcQuotes}</CodeBlock>
 
 
-### Running the HTTP Connector
+## Running the HTTP Connector
 
 We'll use [Connector Developer Kit (cdk)] to download and run the connector.
 
@@ -147,8 +147,7 @@ Consuming records from 'quotes'
 {"quote":"Success is not final, failure is not fatal: It is the courage to continue that counts.","by":"Winston Churchill"}
 ```
 
-
-### Transform Records with SmartModules
+## Transform Records with SmartModules
 
 SmartModules are user-defined functions compiled into WebAssembly and applied to data streaming for inline data manipulation. You can use SmartModules in the producers, consumers, as well as Connectors. InfinyOn has several pre-compiled SmartModules that you can use out of the box. Alternatively, you can [build your own].
 
@@ -157,7 +156,7 @@ To list available smartmodules, run:
 <CodeBlock language="bash" copyBehavior="fl">$ {FlvHubSmListJolt}</CodeBlock>
 
 
-#### Use `jolt` SmartModule to turn JSON records into sentences
+### Use `jolt` SmartModule to turn JSON records into sentences
 
 Let’s download the Smartmodule to our cluster:
 
@@ -170,7 +169,7 @@ Check the cluster to ensure it has been successfully downloaded:
 
 Next, we’ll create a transform file and test the output.
 
-#### Create a SmartModule transformation file
+### Create a SmartModule transformation file
 
 SmartModules can be chained together and often require additional parameters. Fluvio uses a YAML file is used to define the transformations.
 
@@ -180,7 +179,7 @@ Create a file named `transforms.yaml` and paste the following configuration:
 
 Jolt is a complex Smartmodule that allows you to perform multiple types of JSON transformations. For additional information, check out the SmartModule Jolt docs.
 
-#### Test the SmartModule
+### Test the SmartModule
 
 ```bash copy="fl"
 $  fluvio consume quotes --transforms-file transforms.yaml -T=2
@@ -192,7 +191,7 @@ Consuming records from 'quotes' starting 2 from the end of log
 We are consuming the last two quotes topic records and transforming the json into a string. The stream continues consuming as our connectors is still running.
 
 
-### Creating a data pipeline with a Connector and a SmartModule
+## Create a data pipeline with a Connector and a SmartModule
 
 Let’s say we don’t use the authors in the quotes; instead, only the quote represented strings. We can accomplish this result by simply applying the transformation to the connector.
 
@@ -224,7 +223,7 @@ Consuming records from 'string-quotes'
 
 We now have two topics running in parallel and producing different results with a simple SmartModule transformation. When you apply inline transformations, the number of possibilities are virtually endless.
 
-### Clean-up Resources
+## Clean-up Resources
 
 During this tutorial, we’ve created a couple connectors and three topics. Let's clean-up:
 
@@ -242,10 +241,11 @@ Stateful Dataflows, also known as SDF, allow you to build hierarchical data pipe
 
 ![Stateful Services Chart](/img/stateful-services.png)
 
-If you'd like to participate in our Beta releaes, please sign-up here.
+Checkout the [SDF section] for more information.
 
 [Connector Developer Kit (cdk)]: connectors/cdk.mdx
 [build your own]: smartmodules/developers/overview.mdx
 [Cloud]: cloud/quickstart.mdx
+[SDF section]: /sdf
 
 [WSL2]: https://www.windowscentral.com/how-install-wsl2-windows-10
