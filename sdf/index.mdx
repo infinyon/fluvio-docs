@@ -1,5 +1,5 @@
 ---
-title: "Stateful Dataflows Overview"
+title: "Overview"
 description: Stateful Dataflows are data pipelines that integrate Fluvio event streaming with stateful processing to automate real-time data analytics at scale.
 sidebar_position: 10
 ---
@@ -35,32 +35,22 @@ Stateful Dataflows are an extension of Fluvio, leveraging the Fluvio infrastruct
 
 Fluvio [connectors] serve as the interface to external ingress and egress services. Fluvio publishes a growing library of connectors, such as HTTP, Kafka, NATs, SQL, S3, etc. Connectors are easy to build, test, deploy, and share with the community.
 
-#### How do I get started?
-
-Provisioning and operating a Stateful Dataflow requires the following system components:
-
-1. [Fluvio Cluster] to enable dataflows to consume and produce streaming data.
-
-2. [Dataflow File] to define the schema, composition, services, and operations.
-
-3. [SDF (Stateful Dataflows) CLI] to build, test, and deploy the dataflows.
-
-The Stateful Dataflows can be built, tested, and run locally during preview releases. As we approach general availability, they can also be deployed in your InfinyOn Cloud cluster. In addition, the dataflows may be published to [Hub] and shared with others with one click and installation.
 
 
-## Next Steps
+## Next Step
 
-In the [next section], we'll walk through the steps to get started with Stateful Dataflows.
+In the [Let's Get Started], we'll walk through the steps to get started with Stateful Dataflows.
 
 [Let's Get Started].
 
-[Dataflow File]: dataflow-yaml.mdx
-[Fluvio Cluster]: /sdf/getting-started#installing-fluvio--start-a-cluster
+
+# References
+
 [SDF (Stateful Dataflows) CLI]: cli/
 [Rust]: https://www.rust-lang.org/
 [WebAssembly]: https://webassembly.org/
-[next section]: getting-started.mdx
-[Let's Get Started]: getting-started.mdx
+[next section]: quickstart.mdx
+[Let's Get Started]: quickstart.mdx
 [connectors]: /docs/connectors/overview
 [Hub]: /docs/hub/overview
 [fluvio]: /docs/fluvio/quickstart
