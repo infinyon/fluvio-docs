@@ -1,30 +1,36 @@
 ---
-sidebar_position: 2
-title: "Customizing Connector with Transformation"
-description: "Part 2 of HTTP to SQL Sink tutorial series."
+sidebar_position: 11
+title: "Connector Transformations"
+description: "Part 2 of 3: HTTP to SQL Sink tutorial series."
 ---
+import CodeBlock from '@theme/CodeBlock';
 
-# Prerequisites
+# Connector Transformations
 
-This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions [here][installation]!
+This tutorial is part of the **HTTP website to SQL database** series:
+* [Part 1: HTTP Source -> Topic]
+* **Part 2: Connector Transformations**
+* [Part 3: Topic -> SQL Sink]
 
 
-# Introduction
+## Introduction
 
-Building on the [Streaming from HTTP Source] tutorial, we will customize the Source HTTP Connector with transformation that will let you modify the records before they are sent to the topic.
+Building on the [HTTP Source -> Topic] tutorial, we will customize the Source HTTP Connector with transformations to modify the records before sending them to the topic.
 
-Why would you want to do this? 
+#### Why would you want to do this? 
 
 Often, you are only interested in a subset of the data, or add/remove fields, or even change the shape of the record. This is where transformations come in.
 
-In this tutorial, we will show you how to customize the HTTP Source Connector to add a field to every record before it is sent to the topic.
+#### Prerequisites
+
+You will need a `local` fluvio cluster and `cdk` to follow along. Follow the [installation instructions][installation] if you don't have them already.
 
 
-# SmartModule
+## SmartModules
 
-SmartModule is a reusable piece of code that can be attached to a connector to perform a specific task. In this case, we will use a SmartModule to transform the incoming JSON records before they are sent to the topic.
+SmartModules are reusable pieces of code that can be attached to a connector to perform specific tasks. In this case, we will use a SmartModule to transform the incoming JSON records before we send it to the topic.
 
-SmartModule is executed using WebAssembly runtime, which means it is very small and secure. You can write your own SmartModules in Rust, or use the prepackaged ones from the [SmartModule Hub].
+SmartModules are executed using the WebAssembly runtime, which means they are small and secure. You can write your own SmartModule in Rust, or use the prepackaged ones from the [SmartModule Hub].
 
 Unlike connectors, SmartModules in the Hub are packaged WASM files. 
 
@@ -32,20 +38,21 @@ The SmartModule we will use in this tutorial implements domain specific language
 
 To use jolt SmartModule, we need to download it to the cluster.
 
-```bash
-$ fluvio hub sm download infinyon/jolt@0.4.1
-```
+
+import HubSmDownload from '!!raw-loader!@site/embeds/cmds/hub-sm-download-jolt.bash';
+
+<CodeBlock language="bash" copyBehavior="fl">$ {HubSmDownload}</CodeBlock>
+
+
 
 Once you have the SmartModule downloaded, you can list them:
 
-```bash
-$ fluvio hub sm list
-  SMARTMODULE          SIZE     
-  infinyon/jolt@0.4.1  589.3 KB 
-```
+import HubSmList from '!!raw-loader!@site/embeds/cmds/sm-list-jolt.bash';
+
+<CodeBlock language="bash" copyBehavior="fl">$ {HubSmList}</CodeBlock>
 
 
-# Customizing HTTP Connector with JOLT SmartModule
+## Customizing HTTP Connector with JOLT SmartModule
 
 In order to customize the HTTP Source Connector, we need to create a configuration file that includes the transformation.
 
@@ -53,33 +60,35 @@ Before we start modified connector, please terminate existing running connector.
 
 Coyp and paste following config and save it as `http-cat-facts-transform.yaml`.   This configuration use the same endpoint as the previous tutorial except different topic name.
 
-import CodeBlock from '@theme/CodeBlock';
-import CatFactBasic from '!!raw-loader!./config/http-cat-fact-transform.yaml';
+
+import CatFactBasic from '!!raw-loader!@site/embeds/connectors/http-cat-fact-transform.yaml';
 
 <CodeBlock language="yaml">{CatFactBasic}</CodeBlock>
+
 
 Noticed that we just added `transforms` section which added JOLT specification to insert a new field `source` with value `http` to every record.
 
 Once you have the config file, you can create the connector using the `cdk deploy start` command as before.  
 
-```bash
-$ cdk deploy start --ipkg infinyon-http-source-0.3.8.ipkg --config ./http-cat-facts-transform.yaml
-```
+
+import CdkDeployHttpSrc from '!!raw-loader!@site/embeds/cmds/cdk-deploy-start-http-source-cat-facts-xform.bash';
+
+<CodeBlock language="bash" copyBehavior="fl">$ {CdkDeployHttpSrc}</CodeBlock>
 
 
 You can use `cdk deploy list` to view the status of the connector.
 
-```bash
+```bash copy="fl"
 $ cdk deploy list
  NAME       STATUS  
  cat-facts  Running 
 ```
 
-# Checking the data
+## Check the data
 
 Similar to the previous tutorial, we can use `fluvio consume` to view the incoming data in the topic `cat-facts-transformed` which was created by the connector.
 
-```bash
+```bash copy="fl"
 $ fluvio consume cat-facts -T4
 Consuming records starting 4 from the end of topic 'cat-facts'
 
@@ -93,14 +102,15 @@ As you can see, the `source` field has been added to every record. This is the t
 You can terminate the consume command by pressing `Ctrl+C`.
 
 
-### Cleaning up
+## Clean up
 
 Shut down the connector and delete the topic.
 
-```bash
+```bash copy="full"
 $ cdk deploy shutdown --name cat-facts-transformed
 $ fluvio topic delete cat-facts-transform
 ```
+
 
 ## Conclusion and Next Step
 
@@ -111,7 +121,7 @@ SmartModule is a powerful tool that can be used to perform complex transformatio
 In the next tutorial, we will show you how to use the sink connector to stream data from an topic to a SQL database.
 
 
-## Reference
+## References
 
 * [Fluvio CLI Produce]
 * [Fluvio CLI Consume]
@@ -121,7 +131,10 @@ In the next tutorial, we will show you how to use the sink connector to stream d
 * [SmartModule Rust API]
 * [Transformations]
 
-[Streaming from HTTP Source]: source-http-basic.mdx
+
+[Part 1: HTTP Source -> Topic]: http-source.mdx
+[HTTP Source -> Topic]: http-source.mdx
+[Part 3: Topic -> SQL Sink]: sql-sink.mdx
 [Connector Overview]: connectors/overview.mdx
 [Fluvio CLI Produce]: fluvio/cli/fluvio/produce.mdx
 [Fluvio CLI Consume]: fluvio/cli/fluvio/consume.mdx
