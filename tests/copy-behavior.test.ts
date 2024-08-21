@@ -1,20 +1,27 @@
-import { expect, describe, it } from 'vitest';
+import { expect, describe, it } from "vitest";
 
-import { CopyBehavior, textWithCopyBehavior } from '../src/functions/copy-behavior';
+import {
+  CopyBehavior,
+  textWithCopyBehavior,
+} from "../src/functions/copy-behavior";
 
-describe('copy behavior smoke tests', () => {
+describe("copy behavior smoke tests", () => {
   it(`removes trailing "$" from line when using "fl" behavior`, () => {
-    const have = '$ fluvio topic create my-topic';
-    const want = 'fluvio topic create my-topic';
+    const have = "$ fluvio topic create my-topic";
+    const want = "fluvio topic create my-topic";
 
-    expect(textWithCopyBehavior(have, CopyBehavior.FirstLine)).toStrictEqual(want);
+    expect(textWithCopyBehavior(have, CopyBehavior.FirstLine)).toStrictEqual(
+      want,
+    );
   });
 
   it(`removes trailing ">>" from line when using "fl" behavior`, () => {
-    const have = '>> show state filter-service/filter-questions/metrics';
-    const want = 'show state filter-service/filter-questions/metrics';
+    const have = ">> show state filter-service/filter-questions/metrics";
+    const want = "show state filter-service/filter-questions/metrics";
 
-    expect(textWithCopyBehavior(have, CopyBehavior.FirstLine)).toStrictEqual(want);
+    expect(textWithCopyBehavior(have, CopyBehavior.FirstLine)).toStrictEqual(
+      want,
+    );
   });
 
   it(`removes trailing "$" from line when using "full" behavior`, () => {
@@ -32,7 +39,9 @@ describe('copy behavior smoke tests', () => {
         cat hello-world.txt
       Hello, World!`;
 
-    expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(want);
+    expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(
+      want,
+    );
   });
 
   it(`removes ">>" from text using "full" behavior`, () => {
@@ -44,6 +53,83 @@ describe('copy behavior smoke tests', () => {
          show state filter-service/filter-questions/metrics
          show state filter-service/filter-questions/metrics`;
 
-    expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(want);
+    expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(
+      want,
+    );
+  });
+
+  it(`allows "$" embedded into text`, () => {
+    const have = `
+      "raw_fact_json":
+        json-key: "$"
+        value:
+          type: "jsonb"
+          required: true`;
+
+    expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(
+      have,
+    );
+  });
+
+  it(`respects identation for yaml-like`, () => {
+    const have = `
+      apiVersion: 0.5.0
+      meta:
+        name: filter-example
+        version: 0.1.0
+        namespace: examples
+
+      config:
+        converter: raw
+
+      topics:
+        sentences:
+          schema:
+            value:
+              type: string
+
+        questions:
+          schema:
+            value:
+              type: string
+
+      services:
+        filter-service:
+          sources:
+            - type: topic
+              id: sentences
+
+          transforms:
+            - operator: filter
+              run: |
+                fn filter_questions(input: String) -> Result<bool> {
+                  Ok(input.contains("?"))
+                }
+
+          sinks:
+            - type: topic
+              id: questions`;
+
+    expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(
+      have,
+    );
+  });
+
+  it(`trims single-line snippets with "$"`, () => {
+    const have = `$ fluvio produce sentence`;
+    const want = `fluvio produce sentence`;
+
+    expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(
+      want,
+    );
+  });
+
+  it(`trims single-line snippets with ">>"`, () => {
+    const have = `>> show state filter-service/filter-questions/metrics`;
+    const want = `show state filter-service/filter-questions/metrics`;
+
+    expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(
+      want,
+    );
   });
 });

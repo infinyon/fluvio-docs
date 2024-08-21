@@ -32,16 +32,27 @@ export function parseCodeBlockCopy(metastring?: string): CopyBehavior {
 }
 
 function copyFullText(text: string): string {
+  const isSingleLine = !text.includes('\n');
+
   let buff = '';
+  let prevToken: string | undefined = undefined;
 
   while (text.length) {
     const token: string = text[0];
     const nextToken: string | undefined = text[1];
+    const isFirstToken = !prevToken || prevToken === NON_BREAKING_SPACE || prevToken === '\n';
 
     text = text.slice(1);
 
     if (token === '$') {
-      buff += NON_BREAKING_SPACE;
+      if (isFirstToken) {
+        buff += NON_BREAKING_SPACE;
+        prevToken = NON_BREAKING_SPACE;
+        continue;
+      }
+
+      buff += token;
+      prevToken = token;
       continue;
     }
 
@@ -49,11 +60,16 @@ function copyFullText(text: string): string {
       text = text.slice(1);
       buff += NON_BREAKING_SPACE;
       buff += NON_BREAKING_SPACE;
-
+      prevToken = NON_BREAKING_SPACE;
       continue;
     }
 
     buff += token;
+    prevToken = token;
+  }
+
+  if (isSingleLine) {
+    return buff.trim();
   }
 
   return buff;
