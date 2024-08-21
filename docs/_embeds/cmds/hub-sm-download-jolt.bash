@@ -1,1 +1,2 @@
-fluvio hub sm download infinyon/jolt@0.4.1
+fluvio hub smartmodule download infinyon/jolt@0.4.1
+... cluster smartmodule install complete
