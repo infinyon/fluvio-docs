@@ -137,7 +137,7 @@ describe("copy behavior smoke tests", () => {
     const have = `
 $ fluvio cluster create
 $ fluvio topic create my-topic
-$ fluvio produce my-topic`;
+$ fluvio produce my-topic  `; // checks for trailing spaces
     const want = `
 fluvio cluster create
 fluvio topic create my-topic
@@ -152,7 +152,7 @@ fluvio produce my-topic`;
     const have = `
 >> show state filter-service/filter-questions/metrics
 >> select dataflow wordcount-window-simple
->> exit`;
+>> exit  `; // checks for trailing spaces
     const want = `
 show state filter-service/filter-questions/metrics
 select dataflow wordcount-window-simple
