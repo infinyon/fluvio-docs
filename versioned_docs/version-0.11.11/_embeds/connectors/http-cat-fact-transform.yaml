@@ -4,7 +4,6 @@ meta:
   name: cat-facts-transformed
   type: http-source
   topic: cat-facts-data-transform
-  create-topic: true
 
 http:
   endpoint: https://catfact.ninja/fact

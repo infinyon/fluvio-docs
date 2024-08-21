@@ -1,1 +1,0 @@
-fluvio hub sm download infinyon/json-sql@0.2.1

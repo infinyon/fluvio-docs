@@ -1,1 +1,0 @@
-cdk deploy start --ipkg infinyon-http-source-0.3.8.ipkg --config ./http-cat-facts.yaml
