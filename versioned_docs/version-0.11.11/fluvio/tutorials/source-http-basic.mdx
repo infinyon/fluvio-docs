@@ -1,0 +1,171 @@
+---
+sidebar_position: 10
+title: "HTTP Source -> Topic"
+description: "Part 1 of 3: HTTP to SQL Sink tutorial series."
+---
+import CodeBlock from '@theme/CodeBlock';
+import Versions from '../../_embeds/versions';
+import CatFactBasic from '!!raw-loader!../../_embeds/connectors/http-cat-fact-basic.yaml';
+import CdkHubDownload from '!!raw-loader!../../_embeds/cmds/cdk-hub-download-http-source.bash';
+import CdkDeployHttpSrc from '!!raw-loader!../../_embeds/cmds/cdk-deploy-start-http-source-cat-facts.bash';
+
+
+# HTTP Source -> Topic
+
+This tutorial is part of the **HTTP website to SQL database** series:
+* **Part 1: HTTP Source -> Topic**
+* [Part 2: Connector Transformations]
+* [Part 3: Topic -> SQL Sink]
+
+
+# Introduction
+
+This tutorial guides you through creating a simple data pipeline that streams data from a website through the [HTTP source connector]. 
+
+#### Tutorial will cover
+
+- How to download and start an Inbound HTTP Connector
+- Read data from the topic
+- Stop the connector
+
+#### Prerequisites
+
+You will need a `local` fluvio cluster and `cdk` to follow along. Follow the [installation instructions][installation] if you don't have them already.
+
+
+## Connector Overview
+
+The Fluvio connector lets fluvio to interact with external systems.  There are two types of connectors: `Source` and `Sink`.
+
+The `Source` connector reads data from an external system and writes it to a Fluvio topic. 
+The `Sink` connector reads data from a Fluvio topic and writes it to an external system.
+
+In this tutorial, we will be using the `HTTP Source Connector` to read data from a website and write it to a topic.  It is designed to read data from an HTTP endpoint and write it to a Fluvio topic.
+
+It is designed to either poll the endpoint at a regular interval or stream data.   In this tutorial, we will be polling the endpoint every 10 seconds as website is not designed to stream data.
+
+The connector is configured using a YAML file.  Please refer to the [Connector Overview] for more information on connectors and [Configuration] format.
+
+For local clusters, the connectors are managed using `cdk` which is already installed with Fluvio CLI.  You are responsible for managing lifecycle of the connectors.
+
+If you are using Infinyon Cloud, the connectors are managed by the platform and you do not need to worry about lifecycle management.
+
+## Hub
+
+The Fluvio Hub is a central repository for connectors.  You can download, list and upload connectors using the `cdk hub` command.
+
+The connector you downloaded contains binary executable.  The connector is packaged as an `ipkg` file. 
+
+In this tutorial, we will be using the `HTTP Source Connector` from the Hub.
+
+<CodeBlock language="bash" copyBehavior="fl">$ {CdkHubDownload}</CodeBlock>
+
+
+This command will download the <code>{Versions.infinyon_http_source}.ipkg</code> file containing the connector binary.
+
+
+## Configure for HTTP Source Connector
+
+After downloading, you need to create a configuration file to provision the connector.  Following configuration file provisions the `HTTP Source Connector` to query periodically the [castfact.ninja] website.
+
+Coyp and paste following config and save it as `http-cat-facts.yaml`.
+
+
+<CodeBlock language="yaml">{CatFactBasic}</CodeBlock>
+
+
+Each connector has a `meta` section which is same across all connector.  The `http` section is specific to the `HTTP Source Connector`.
+
+Noticed that in the `meta`, `create-type` is set to true which means the topic will be created if it does not exist.
+
+The `interval` is set to `10s` which means the connector will poll the endpoint every 10 seconds.
+
+
+## Start the Connector
+
+Once you have the config file, you can create the connector using the `cdk deploy start` command.
+
+
+<CodeBlock language="bash" copyBehavior="fl">$ {CdkDeployHttpSrc}</CodeBlock>
+
+
+You can use `cdk deploy list` to view the status of the connector.
+
+```bash copy="fl"
+$ cdk deploy list
+ NAME       STATUS  
+ cat-facts  Running 
+```
+
+## Check the Data
+
+Use `fluvio consume` to view the incoming data in the topic `cat-facts` which was created by the connector.
+
+This command will consume the last 4 records from the topic in the stream mode.
+
+```bash copy="fl"
+$ fluvio consume cat-facts -T4
+Consuming records starting 4 from the end of topic 'cat-facts'
+{"fact":"A cat lover is called an Ailurophilia (Greek: cat+lover).","length":57}
+{"fact":"British cat owners spend roughly 550 million pounds yearly on cat food.","length":71}
+{"fact":"Fossil records from two million years ago show evidence of jaguars.","length":67}
+{"fact":"Relative to its body size, the clouded leopard has the biggest canines of all animals\u2019 canines. Its dagger-like teeth can be as long as 1.8 inches (4.5 cm).","length":156}
+```
+
+The http connector will poll the endpoint every 10 seconds and write the data to the topic.  As you can see, CLI output will refresh every 10 seconds with new data.
+
+You can terminate the consume command by pressing `Ctrl+C`.
+
+
+## Clean Up
+
+To shutdown traffic, you can shutdown local connector using the `cdk deploy shutdown` command.
+
+```bash copy="fl"
+$ cdk deploy shutdown --name cat-facts
+```
+
+You can also delete the topic by using the `fluvio topic delete` command.
+
+```bash copy="fl"
+$ fluvio topic delete cat-facts
+```
+
+This should result in no connectors running:
+```bash copy="fl"
+$ cdk deploy list
+ NAME  STATUS  
+```
+
+Note that the topic `cat-facts` will still exist and you can consume the data from it.  If you start the connector again, it will append data to the same topic.
+
+If you restart the host, the connector will not be running.  You will need to start it again.  You can automate this by using a service manager like `systemd` or `supervisor`.   Alternatively, you can use docker to run the connector.
+
+## Conclusion and Next Step
+
+Congratulations! You have successfully created a data pipeline that reads data from a website and writes it to a topic.
+
+This tutorial just barely scratches the surface of what you can do with Fluvio and Connectors.
+
+There are many other source connectors available in the Hub such as `mqtt` and `kafka`.  You can explore them using the `cdk hub connector list` command.
+
+In the next tutorial [Customizing HTTP Connector], we will introduce `SmartModule` which can be used to transform the data before writing it to the topic.
+
+## References
+
+* [Fluvio CLI Consume]
+* [Fluvio CLI Topic]
+* [Fluvio CLI Profile]
+
+
+[Part 2: Connector Transformations]: connector-transformations.mdx
+[Part 3: Topic -> SQL Sink]: sql-sink.mdx
+[Http source connector]: hub/connectors/inbound/http.mdx
+[Customizing HTTP Connector]: connector-transformations.mdx
+[Connector Overview]: connectors/overview.mdx
+[Fluvio CLI Consume]: fluvio/cli/fluvio/consume.mdx
+[Fluvio CLI Topic]: fluvio/cli/fluvio/topic.mdx
+[Fluvio CLI Profile]: fluvio/cli/fluvio/profile.mdx
+[Inbound HTTP Connector]: hub/connectors/inbound/http.mdx
+[castfact.ninja]: https://catfact.ninja
+[installation]: fluvio/quickstart.mdx#install-fluvio

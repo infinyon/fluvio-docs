@@ -1,0 +1,69 @@
+---
+sidebar_position: 200
+title: "Troubleshooting"
+description: "Connector Troubleshooting"
+---
+
+# Connector Build Troubleshooting
+
+## Multiplatform builds
+
+Connectors on the Hub can be published associated with multiple targets so
+they can be run multiple platforms. This can be accomplished by building cdk on
+the same target it's intended for, or cross compiling one target from another
+platform.  Compiling for one target while on another target can be complex, so
+this troubleshooting section provides added target toolchain support information
+for some common platfom/target combinations.
+
+## MacOS
+
+Build command for local builds, if `cdk build` does not work, explicitly specify
+the target:
+
+```bash
+cdk build --target aarch64-apple-darwin
+```
+
+## Ubuntu or Debian based Linux Distributions {#ubuntu-debian}
+
+Build prerequisites for `x86-unknown-linux-musl` on Ubuntu from an
+`x86-unknown-linux-gnu` environment.
+
+System packages:
+```bash
+sudo apt install build-essential musl-tools
+```
+
+Build command to build and test locally, instead of 'cdk build', use the
+following:
+
+```bash
+CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=x86_64-linux-musl-gcc cdk build
+```
+
+## Other rust cargo cross-platform build toolchains
+
+Connector projects are rust projects, and different choices exist for cross
+compilation.  A project connector binary build by a rust toolchain can be
+published by `cdk` with a `--no-build` flag.  Different cross compilation
+projects for rust include:
+
+- Cargo cross https://github.com/cross-rs/cross
+- Cargo zigbuild https://github.com/rust-cross/cargo-zigbuild
+
+For a working example, see the [connector-publish github workflow].
+
+## Windows, WSL, WSL2
+
+Fluvio and `cdk` are supported for windows only though WSL2.  WSL2 often installs
+Ubuntu as the default Linux distrubition. See the [Ubuntu] section for more
+build troubleshooting.
+
+## Infinyon Cloud Certified Connectors
+
+Infinyon Certified connectors are built for the `aarch64-unknown-linux-musl` target.
+
+To build and publish for the cloud, InfinyOn often uses a [connector-publish github workflow].
+
+[Ubuntu]: #ubuntu-debian
+[connector-publish github workflow]: https://github.com/infinyon/fluvio/blob/master/.github/workflows/connector-publish.yml
