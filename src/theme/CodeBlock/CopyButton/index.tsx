@@ -17,7 +17,7 @@ export default function CopyButton({code, className, copyBehavior}: Props & {
   const [isCopied, setIsCopied] = useState(false);
   const copyTimeout = useRef<number | undefined>(undefined);
   const handleCopyCode = useCallback(() => {
-  const text = textWithCopyBehavior(code, copyBehavior);
+    const text = textWithCopyBehavior(code, copyBehavior);
 
     copy(text);
     setIsCopied(true);
