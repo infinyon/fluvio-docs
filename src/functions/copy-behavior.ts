@@ -1,6 +1,7 @@
 export enum CopyBehavior {
   FirstLine = "fl",
   FullText = "full",
+  Commands = "cmd",
 }
 
 const CODE_BLOCK_COPY_REGEXP = /copy=(?<quote>["'])(?<copy>.*?)\1/;
@@ -31,34 +32,6 @@ export function parseCodeBlockCopy(metastring?: string): CopyBehavior {
   );
 }
 
-function copyFullText(text: string): string {
-  let buff = '';
-
-  while (text.length) {
-    const token: string = text[0];
-    const nextToken: string | undefined = text[1];
-
-    text = text.slice(1);
-
-    if (token === '$') {
-      buff += NON_BREAKING_SPACE;
-      continue;
-    }
-
-    if (token === '>' && nextToken === '>') {
-      text = text.slice(1);
-      buff += NON_BREAKING_SPACE;
-      buff += NON_BREAKING_SPACE;
-
-      continue;
-    }
-
-    buff += token;
-  }
-
-  return buff;
-}
-
 function copyFirstLine(text: string): string {
   const final = text.split('\n')[0];
 
@@ -73,14 +46,27 @@ function copyFirstLine(text: string): string {
   return final;
 }
 
+function copyCommands(text: string): string {
+  return text.split('\n').map((line) => {
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith('$')) {
+      return trimmed.slice(1).trim();
+    }
+
+    if (trimmed.startsWith('>>')) {
+      return trimmed.slice(2).trim();
+    }
+  }).join('\n');
+}
+
 export function textWithCopyBehavior(text: string, behavior: CopyBehavior): string {
   switch (behavior) {
     case CopyBehavior.FirstLine:
       return copyFirstLine(text);
-    case CopyBehavior.FullText:
-      return copyFullText(text);
+    case CopyBehavior.Commands:
+      return copyCommands(text);
     default:
-      console.warn(`Invalid copy behavior ${behavior}`);
       return text;
   }
 }
