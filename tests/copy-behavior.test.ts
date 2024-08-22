@@ -24,7 +24,7 @@ describe("copy behavior smoke tests", () => {
     );
   });
 
-  it(`removes trailing "$" from line when using "full" behavior`, () => {
+  it(`full-text wont remove trailing "$" from line when using "full" behavior`, () => {
     const have = `
       $ mkdir -p /tmp/hello-world
       $ cd /tmp/hello-world
@@ -33,10 +33,10 @@ describe("copy behavior smoke tests", () => {
       Hello, World!`;
 
     const want = `
-        mkdir -p /tmp/hello-world
-        cd /tmp/hello-world
-        echo "Hello, World!" > hello-world.txt
-        cat hello-world.txt
+      $ mkdir -p /tmp/hello-world
+      $ cd /tmp/hello-world
+      $ echo "Hello, World!" > hello-world.txt
+      $ cat hello-world.txt
       Hello, World!`;
 
     expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(
@@ -44,14 +44,14 @@ describe("copy behavior smoke tests", () => {
     );
   });
 
-  it(`removes ">>" from text using "full" behavior`, () => {
+  it(`full-text wont remove ">>" from text using "full" behavior`, () => {
     const have = `
       >> show state filter-service/filter-questions/metrics
       >> show state filter-service/filter-questions/metrics`;
 
     const want = `
-         show state filter-service/filter-questions/metrics
-         show state filter-service/filter-questions/metrics`;
+      >> show state filter-service/filter-questions/metrics
+      >> show state filter-service/filter-questions/metrics`;
 
     expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(
       want,
@@ -115,18 +115,18 @@ describe("copy behavior smoke tests", () => {
     );
   });
 
-  it(`trims single-line snippets with "$"`, () => {
+  it(`full-text wont trim single-line snippets with "$"`, () => {
     const have = `$ fluvio produce sentence`;
-    const want = `fluvio produce sentence`;
+    const want = `$ fluvio produce sentence`;
 
     expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(
       want,
     );
   });
 
-  it(`trims single-line snippets with ">>"`, () => {
+  it(`full-text wont trim single-line snippets with ">>"`, () => {
     const have = `>> show state filter-service/filter-questions/metrics`;
-    const want = `show state filter-service/filter-questions/metrics`;
+    const want = `>> show state filter-service/filter-questions/metrics`;
 
     expect(textWithCopyBehavior(have, CopyBehavior.FullText)).toStrictEqual(
       want,
