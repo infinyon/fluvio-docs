@@ -9,7 +9,7 @@ Provisioning and operating a Stateful Dataflow requires the following system com
 
 1. [Fluvio Cluster] to enable dataflows to consume and produce streaming data.
 
-2. [Dataflow File](dataflow.yaml) to define the schema, composition, services, and operations.
+2. [Dataflow File][dataflow-yaml] to define the schema, composition, services, and operations.
 
 3. [SDF (Stateful Dataflows) CLI] to build, test, and deploy the dataflows.
 
@@ -17,7 +17,7 @@ The Stateful Dataflows can be built, tested, and run locally during preview rele
 
 # Inline Definitons
 
-**Inline Dataflows** are [dataflow.yaml] files that include everything necessary to run a data pipeline. Inline dataflows are useful for trying out various features of the product. Deploying an inline dataflow is simple:
+**Inline Dataflows** are [dataflow.yaml][dataflow-yaml] files that include everything necessary to run a data pipeline. Inline dataflows are useful for trying out various features of the product. Deploying an inline dataflow is simple:
 
 1. [Download (or create) a dataflow file](#1-create-the-dataflow-file)
 2. [Run the dataflow](#2-run-the-dataflow)
@@ -158,7 +158,7 @@ fluvio topic delete words
 ### References
 
 [Composable Dataflows]: compositions/overview.mdx
-[dataflow.yaml]: concepts/dataflow-yaml.mdx
+[dataflow-yaml]: concepts/dataflow-yaml.mdx
 [github]: https://github.com/infinyon/stateful-dataflows-examples/
 [Example Workflows in github]: https://github.com/infinyon/stateful-dataflows-examples
 [Fluvio Cluster]: /docs/fluvio/quickstart#start-a-cluster
