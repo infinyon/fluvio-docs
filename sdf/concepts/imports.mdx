@@ -4,15 +4,18 @@ description: :Package imports
 sidebar_position: 400
 ---
 
-Dataflows and packages can import function and types from other  packages.  This allows you to reuse code and types across multiple projects.
+Dataflows and packages can import function and types from other packages.  This hierarchical import structure allows you to reuse code and types across multiple projects.
 
-Importing has two parts:
+Importing a package involves these steps:
 - specifying the package to import
-- specifying the functions and types to import
+- specifying the functions
+- specifying the types to import
+
+You can either import functions or types or both.
 
 # Importing Functions
 
-Use keyword: `functions` in the `imports` sections to import functions.
+Use keyword: `functions` in a `imports` sections to import functions.
 
 Syntax: 
 ```yaml
@@ -36,7 +39,7 @@ imports:
 
 The function can be alias to a different name. In this case, the function `my-hello-fn` is imported as `hello-fn`.
 
-This allows you to invoked the function using `use` keyword.  
+After import, you can reference the function with the `uses` keyword. 
 
 ```yaml
   transforms:
@@ -48,7 +51,7 @@ Since `hello-fn` is filter-map function, It can only be used in the `filter-map`
 
 # Importing Types
 
-Similar to functions, you can import types from other packages.
+Similar to functions, you can also import types from other packages.
 
 Syntax: 
 ```yaml
@@ -58,7 +61,7 @@ imports:
       - name: <type-name>
 ```
 
-Here is sample config to  imports a type `my-hello-type` from the package `sdf-test/hello`:
+Here is sample config that imports a type `my-hello-type` from the package `sdf-test/hello`:
 
 ```yaml
 imports:
@@ -80,4 +83,4 @@ imports:
 
 # Recursive Imports
 
-You can import functions and types from packages that themselves import functions and types from other packages. 
+Recursive imports are also supported.  You can import functions and types from packages that themselves import functions and types from other packages. 

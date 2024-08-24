@@ -6,7 +6,7 @@ sidebar_position: 30
 
 # Introduction
 
-The InfinyOn Hub is cloud infrastructure for sharing and discovering SDF package.  Please see [Hub] for more information.
+The InfinyOn Hub is the cloud infrastructure for sharing and discovering SDF packages.  Please see [Hub] for more information.
 
 An SDF Package can be published as either a public or private package.  Public packages are available to anyone without restriction.  Private packages are only available to users who have been granted access to the namespace.
 
@@ -16,15 +16,15 @@ By default, all packages are private unless explicitly published as public.
 
 # Ready for Publishing
 
-SDF Package are immutable.  Once published, the package cannot be changed.  If you need to make changes, you will need to create a new version of the package.  This is why it is important to ensure that the package is tested and ready for publishing.
+SDF Packages are immutable.  Once published, the package cannot be changed.  If you need to make changes, you will need to create a new version of the package.  This is why it is important to ensure that the package is tested and ready for publishing.
 
-SDF package follow semver versioning.  The version number is specified in the `meta.version` field of the package file.
+SDF packages follow semver versioning.  The version number is specified in the `meta.version` field of the package file.
 
 Before publishing,
 - Test with `sdf test` to ensure it is working with sample data.
 - Run with test dataflow to ensure it is working in a dataflow.
 
-To test with a dataflow, create a dataflow file and add `dev` section as below: 
+To test with a dataflow, create a dataflow file and add `dev` section at the bottom of the file: 
 ```
 dev:
   imports:
@@ -32,19 +32,19 @@ dev:
       path: ./packages/sentence
 ```
 
-This will let dataflow use the package from the local directory.
+The dev section instructs the dataflow to use the package from the local directory.
 
 Then run the dataflow with with ephemeral mode: `sdf run --ephemeral` otherwise dataflow will not be able to find the package.
 
 # Publishing
 
-After tested and ready, you can publish the package with `sdf hub publish` command.  Remember, by default, packages are private.  
+After tested and ready, publish the package using with `sdf hub publish` command.  As mentioned before, the packages are private by default.  
 
 ```bash
 $ sdf hub publish
 ```
 
-To list all the packages you can see: `sdf hub list` command.
+To list all the packages run: `sdf hub list` command.
 
 ```bash
 $ sdf hub list
@@ -56,12 +56,13 @@ $ sdf hub list
 $ sdf hub publish --public
 ```
 
+Once you have published the package, it will be available to anyone.  Each version of package can be published as public or private.
 
 # Using Hub Package from Dataflow or Package
 
-Please see [Imports] for more information on how to define `imports` in the dataflow or package file that references the package from the Hub.
+Please see [Imports] for more information on how to use packages from the Hub in the dataflow or package files.
 
-When you run the dataflow or package, the package will be automatically downloaded from the Hub and used.
+When you run the dataflow or package, imported packages will be automatically downloaded from the Hub and used.
 
 ### References
 
