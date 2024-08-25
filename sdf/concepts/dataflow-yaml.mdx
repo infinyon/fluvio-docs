@@ -207,8 +207,6 @@ topics:
     schema:
       key:
         type: <type-name>
-        converter: 
-          <converter-type>
       value:
         type: <type-name>
         converter: 
@@ -223,8 +221,7 @@ topics:
 
 * **topic-name** - is the name of the topic.
 * **key** - is the schema definition for the record key (**optional**).
-  * **type** - is the schema type for the key.
-  * **converter** - is the converter to deserialize the key (**optional** - defaults to [config](#config)).
+  * **type** - is the schema type for the key. The key only supports [primitive types].
 * **value** - is the schema definition for the record value
   * **type** - is the schema type for the value.
   * **converter** - is the converter to deserialize the key (**optional** - ddefaults to [config](#config)).
@@ -303,6 +300,7 @@ dev:
 [WASM Component Model]: https://component-model.bytecodealliance.org/
 [Services key-value section]: services/key-value.mdx
 [Types]: services/types.mdx
+[primitive types]: services/types.mdx#primitive-types
 [Operators]: services/operators.mdx
 [SDF]: /sdf
 [DAG]: https://en.wikipedia.org/wiki/Directed_acyclic_graph
