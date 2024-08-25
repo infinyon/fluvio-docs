@@ -257,7 +257,33 @@ Services define the dataflow composition and the business logic. Check out the [
 
 ### `dev`
 
-The [sdf] command line tool offers commands to run a dataflow file.
+
+The [sdf] section is used to test package without publishing them to the Hub. 
+
+To develop package from start:
+- Create a local package
+- Add `dev` section to the `dataflow.yaml` file to locate the local package.
+- Run the dataflow with the `--dev` flag to load the local package instead of downloading them from the Hub. 
+- Repeat the process until the package is ready for publishing.
+- Then publish the package to the Hub.
+
+Here is syntax for the `dev` section:
+```yaml
+dev:
+  imports:
+    - pkg: <package-namespace>/<package-name>@<package-version>
+      path: <local path>
+```
+
+Example of the `dev` section:
+```yaml
+dev:
+  imports:
+    - pkg: example/sentence-pkg@0.1.0
+      path: ./packages/sentence
+```
+
+
 
 
 ### References
