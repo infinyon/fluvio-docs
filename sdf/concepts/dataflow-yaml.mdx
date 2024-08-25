@@ -261,11 +261,12 @@ Services define the dataflow composition and the business logic. Check out the [
 The [sdf] section is used to test package without publishing them to the Hub. 
 
 To develop package from start:
-- Create a local package
-- Add `dev` section to the `dataflow.yaml` file to locate the local package.
-- Run the dataflow with the `--dev` flag to load the local package instead of downloading them from the Hub. 
-- Repeat the process until the package is ready for publishing.
-- Then publish the package to the Hub.
+
+* Create a local package
+* Add `dev` section to the `dataflow.yaml` file to locate the local package.
+* Run the dataflow with the `--dev` flag to load the local package instead of downloading them from the Hub. 
+* Repeat the process until the package is ready for publishing.
+* Then publish the package to the Hub.
 
 Here is syntax for the `dev` section:
 ```yaml
@@ -275,7 +276,8 @@ dev:
       path: <local path>
 ```
 
-Example of the `dev` section:
+#### For Example
+
 ```yaml
 dev:
   imports:
@@ -283,10 +285,14 @@ dev:
       path: ./packages/sentence
 ```
 
+<hr/>
 
 
+## Dataflow Examples
 
-### References
+* Checkout the github repo for [dataflow examples].
+
+## References
 * [Services]
 * [Types]
 * [Operators]
@@ -303,3 +309,4 @@ dev:
 [Services]: services
 [Services Section]: services
 [batching]: /docs/latest/fluvio/concepts/batching
+[dataflow examples]: https://github.com/infinyon/stateful-dataflows-examples
