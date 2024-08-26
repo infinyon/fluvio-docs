@@ -1,0 +1,73 @@
+---
+sidebar_position: 10
+title: "Filter Operator"
+description: "Filter Operator Tutorial"
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Filter from '!!raw-loader!../_embeds/dataflows/filter-operator.yaml';
+
+The Filter Operator is a powerful tool that allows you to filter messages based on a condition.  It is a simple operator that takes a single input and returns a boolean value.  If the input meets the condition, the operator will return `true`.  Otherwise, it will return `false`.
+
+## Prequisites
+
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
+
+## Syntax
+
+Here is a simple filter operator.  It takes a string as input and returns a boolean value.  If the input string contains a question mark, the operator will return `true`.  Otherwise, it will return `false`.
+
+```YAML
+    transforms:
+      - operator: filter
+        run: |
+          fn filter_questions(input: String) -> Result<bool> {
+            Ok(input.contains("?"))
+          }
+
+```
+
+## Running the Example
+
+Copy and paste following config and save it as `dataflow.yaml`.
+
+
+<CodeBlock language="yaml">{Filter}</CodeBlock>
+
+To run example:
+```bash copy="cmd"
+$ sdf run --ephemeral
+```
+
+Produce sentences to in `sentence` topic:
+
+```bash copy="cmd"
+$ echo "Hello world" | fluvio produce sentences
+$ echo "Are you there?" | fluvio produce sentences
+```
+
+Consume topic `questions` to retrieve the result in another terminal:
+
+```bash copy="cmd"
+$ fluvio consume questions -Bd
+Are you there?
+```
+
+Only questions are returned.
+
+
+## Cleanup
+
+Exit `sdf` terminal and clean-up. The `--force` flag removes the topics:
+
+```bash
+sdf clean --force
+```
+
+
+## Conclusion
+
+We just covered one of the most basic operators in SDF, the Filter Operator.  Combining with other basic operators, you can build more complex dataflows to process your data.
+
+
+[installation]: /docs/fluvio/quickstart#install-fluvio
