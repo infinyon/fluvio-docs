@@ -57,7 +57,7 @@ function copyCommands(text: string): string {
     if (trimmed.startsWith('>>')) {
       return trimmed.slice(2).trim();
     }
-  }).join('\n');
+  }).filter(Boolean).join('\n');
 }
 
 export function textWithCopyBehavior(text: string, behavior: CopyBehavior): string {
