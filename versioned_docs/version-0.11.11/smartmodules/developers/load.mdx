@@ -80,17 +80,20 @@ SmartModule are applied to InfinyOn Cloud Connectors using `fluvio cloud connect
 Copy the following connector configuration into a`connector.yml` file:
 
 ```yaml
-version: 0.1.0
-name: cat-facts
-type: http-source
-topic: cats
-direction: source
-parameters:
-  endpoint: https://catfact.ninja/fact
-  interval: 10s
+apiVersion: 0.1.0
+meta:
+ version: x.y.z
+ name: cat-facts
+ type: http-source
+ topic: cats
+ create-topic: true
+ 
+http:
+ endpoint: "https://catfact.ninja/fact"
+ interval: 10s
+
 transforms:
-  - uses: acme/my-filter@0.1.0
-    invoke: filter
+ - uses: acme/my-filter@0.1.0
 ```
 
 Create a connector using the configuration file.

@@ -87,18 +87,17 @@ First, let's generate a new SmartModule using SMDK tool:
 
 ```bash copy="fl"
 $ smdk generate
-Using hub https://hub-dev.infinyon.cloud
 🤷   Project Name: filter-with-lookback
-✔ 🤷   Will your SmartModule be public? · false
+🤷   Please set a group name: local
 ✔ 🤷   Which type of SmartModule would you like? · filter
 ✔ 🤷   Will your SmartModule use init parameters? · false
+✔ 🤷   Will your SmartModule be public? · false
 [1/7]   Done: .gitignore
 [2/7]   Done: Cargo.toml
 [3/7]   Done: README.md
-[4/7]   Done: SmartModule.toml
-[5/7]   Done: rust-toolchain.toml
-[6/7]   Done: src/lib.rs
-[7/7]   Done: src
+[4/7]   Done: SmartModule.toml                                                                    
+[5/7]   Done: rust-toolchain.toml                                                                 [6/7]   Done: src/lib.rs                     
+[7/7]   Done: src  
 ```
 Then, put the code snippet from above into `src/lib.rs` file.
 
@@ -110,11 +109,16 @@ $ smdk build
 $ smdk load
 ```
 
+Create a topic
+```bash copy="fl"
+$ smdk test-topic
+```
+
 Let's produce 3 records into our topic:
 
 
 ```bash copy="fl"
-$ fluvio produce test_topic
+$ fluvio produce test-topic
 > 1
 Ok!
 > 2
@@ -127,7 +131,7 @@ In another terminal, run Fluvio Consumer with `transforms.yaml` file from the ex
 
 
 ```bash copy="fl"
-$ fluvio consume test_topic  --transforms-file transforms.yaml
+$ fluvio consume test-topic  --transforms-file transforms.yaml
 ```
 
 If you insert another record in Producer, Consumer will only output it only if it's greater than 3 (last record value when Consumer started).
