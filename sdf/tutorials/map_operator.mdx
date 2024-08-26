@@ -1,0 +1,73 @@
+---
+sidebar_position: 10
+title: "Map Operator"
+description: "Map Operator Tutorial"
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Map from '!!raw-loader!../_embeds/dataflows/map-operator.yaml';
+
+The Map Operator is a versatile tool that allows you to transform an existing message and re-encode the input into a new message format.  The operator takes the input and maps it into any type. Every message in the original topic will be mapped to a new topic. Please see filter-mapping for filter and mapping.
+
+## Prequisites
+
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
+
+## Syntax
+
+Below is an example of a tranform function. The example demostrates how to map a sentence into a new string that outputs the size of the original string.
+
+```YAML
+    transforms:
+      - operator: map 
+        run: |
+          fn get_sentence_length(input: String) -> Result<String> {
+            Ok(format!("Inserted string size {}",input.len()))
+          }
+```
+
+## Running the Example
+
+Copy and paste following config and save it as `dataflow.yaml`.
+
+
+<CodeBlock language="yaml">{Map}</CodeBlock>
+
+To run example:
+```bash copy="cmd"
+$ sdf run --ephemeral
+```
+
+Produce sentences to in `sentence` topic:
+
+```bash copy="cmd"
+$ echo "This string is size 22" | fluvio produce sentences
+$ echo "This string is size 23." | fluvio produce sentences
+```
+
+Consume topic `questions` to retrieve the result in another terminal:
+
+```bash copy="cmd"
+$ fluvio consume len -Bd
+Inserted string size 22
+Inserted string size 23
+```
+
+Each string will be mapped via the function provided.
+
+
+## Cleanup
+
+Exit `sdf` terminal and clean-up. The `--force` flag removes the topics:
+
+```bash
+sdf clean --force
+```
+
+
+## Conclusion
+
+We just covered another basic operator in SDF, the Map Operator. 
+
+
+[installation]: /docs/fluvio/quickstart#install-fluvio
