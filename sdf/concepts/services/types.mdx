@@ -9,7 +9,9 @@ The types define the schema of the object used in the dataflow.   Once defined, 
 
 Types are in defined `types` section of the dataflow.  They can be defined in the package which can be shared across multiple dataflows.
 
-# Primitive Types
+<hr />
+
+## Primitive Types
 
 The primitive types represents basic primitive types.  The following are the list of primitive types:
 
@@ -30,11 +32,15 @@ types:
     type: f8
 ```
 
-# String
+<hr />
+
+## String
 
 String is a sequence of characters.  It is defined as `string` type.
 
-# Object
+<hr />
+
+## Object
 
 Object type represents a complex type that has multiple properties.  It is defined as `object` type.  The properties are defined as key-value pairs.
 For example, the following is a simple object type representing a person.
@@ -64,7 +70,10 @@ types:
         type: weight
 ```
 
-# Enum
+<hr />
+
+
+## Enum
 
 Can represents different variant of the type.  It can represent a simple enum or sum type.  To define enum, use `enum` followed by `oneOf` properties.
 
@@ -133,7 +142,10 @@ If this is serialized as JSON, it will look like this:
 }
 ```
 
-# List 
+<hr />
+
+
+## List 
 
 List represents an ordered sequence of items.  It is defined as `list` type.  The item must be same type.  For example, the following is a list type representing list of fruits.
 
@@ -153,7 +165,9 @@ If this is serialized as JSON, it will look like this:
 }
 ```
 
-# Key-Value
+<hr />
+
+## Key-Value
 
 Key-Value type is used by partitioned state.  `Key-Value` can be defined in the `type` section or as part of the `state` definition.  The following is a key-value type representing a word count in the state.
 
@@ -181,8 +195,10 @@ types:
         type: u16
 ```
 
+<hr />
 
-# Types in the Operator 
+
+## Types in the Operator 
 
 Once the types are defined, it can be used in the operator.  For example, the following is a `map` operator that takes `Car` type and return `CarLocation` type.
 
@@ -201,8 +217,10 @@ transforms:
 
 Note that when used in the operator, type name will be translated according to languages convention.  For example, in Rust, the type name will be `CarLocation` because Rust uses CamelCase.  In Python, it will be `car_location` because Python uses snake_case.
 
+<hr />
 
-# Types in the Source and Sink for Serialization and Deserialization
+
+## Types in the Source and Sink for Serialization and Deserialization
 
 Types are used in the source and sink for serialization and deserialization.  It is configured globally in the dataflow as default for all topics.  It can be also configured per source or sink..
 
