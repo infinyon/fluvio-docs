@@ -10,35 +10,16 @@ sidebar_position: 20
 * The [PartitionConsumer.stream](https://infinyon.github.io/fluvio-client-python/fluvio.html#PartitionConsumer.stream) returns an object which implements the [python iterator convention](https://wiki.python.org/moin/Iterator) to allow for iterating over the stream in a for-loop.
 
 To see the full docs, visit our [pdoc page](https://infinyon.github.io/fluvio-client-python/fluvio.html).
-## Example Workflow
 
-Follow the [installation instructions](/) to run this example.
+## Examples
 
-### Prerequisites
+### Producer
 
 Create the topic used to produce and consume records:
 
-```bash
-fluvio topic create python-data
+```bash copy="cmd"
+$ fluvio topic create python-data
 ```
-
-### Login
-
-Login to Infinyon Cloud using username/password
-
-```python
-from fluvio import cloud
-cloud.login(email="my@email.com", password="mypassword")
-```
-
-You can also use the oauth method to log in. However this is only for interactive sessions.
-
-```python
-from fluvio import cloud
-cloud.login(Oauth2=true)
-```
-
-### Producer
 
 Create a file called `python-produce.py`:
 
@@ -65,7 +46,7 @@ if __name__ == "__main__":
 
 Let's run the file:
 
-```shell copy="fl"
+```bash copy="cmd"
 $ python python-produce.py
 ```
 
@@ -95,17 +76,27 @@ if __name__ == "__main__":
 
 Let's run the file:
 
-```shell copy="fl"
+```bash copy="cmd"
 $ python python-consume.py
 ```
 
 ## Example with a SmartModule
 
+This is a 3 part example:
+
+* [Build a SmartModule that converts records to uppercase]
+* [Add a Python script that uses the SmartModule](#python-script-that-uses-a-smartmodule)
+* [Test the Python script](#test-python-script)
+
+### Python Script that uses a SmartModule
+
+Create a file called `smartmodule-consumer.py`:
+
 ```python
 #!/usr/bin/env python
 import os
 from datetime import datetime
-from fluvio import Fluvio, Offset, ConsumerCoonfig
+from fluvio import Fluvio, Offset, ConsumerConfig
 
 TOPIC_NAME = "hello-python-smartmodule"
 PARTITION = 0
@@ -132,19 +123,23 @@ if __name__ == "__main__":
    # We're just going to get the last record
    consumer = fluvio.partition_consumer(TOPIC_NAME, PARTITION)
 
-
-   # Create a ConsumerConfig using your "uppercase-map" smartmodule
+   # Create a ConsumerConfig using your "uppercase" smartmodule
    config = ConsumerConfig()
-   config.smartmodule(name="uppercase-map")
+   config.smartmodule(name="uppercase")
 
    for record in consumer.stream_with_config(Offset.from_end(0), config):
        print("{}".format(record.value_string()))
        break
 ```
 
-## Links to Docs:
-* [Connect to Fluvio](https://infinyon.github.io/fluvio-client-python/fluvio.html#Fluvio.connect)
-* [Get a Producer](https://infinyon.github.io/fluvio-client-python/fluvio.html#Fluvio.topic_producer)
-* [Send to Topic](https://infinyon.github.io/fluvio-client-python/fluvio.html#TopicProducer.send)
-* [Get a Consumer](https://infinyon.github.io/fluvio-client-python/fluvio.html#Fluvio.partition_consumer)
-* [Get a Stream](https://infinyon.github.io/fluvio-client-python/fluvio.html#PartitionConsumer.stream)
+### Test Python Script 
+
+Read to test the script:
+
+```shell copy="cmd"
+$ python smartmodule-consumer.py
+HELLO WORLD! - TIME IS: 2024-08-25 21:04:51.172045
+```
+
+
+[Build a SmartModule that converts records to uppercase]: /docs/smartmodules/tutorials/make-uppercase.mdx

@@ -75,7 +75,8 @@ mqtt:
 Run connector locally using `cdk` tool (from root directory or any sub-directory):
 
 ```bash
-cdk deploy start --config sample-config.yaml
+cdk hub download infinyon/mqtt-source@x.y.z
+cdk deploy start --config sample-config.yaml --ipkg infinyon/mqtt-source@x.y.z
 
 cdk deploy list # to see the status
 cdk deploy log my-mqtt-connector # to see connector's logs

@@ -138,8 +138,7 @@ describe("copy behavior smoke tests", () => {
 $ fluvio cluster create
 $ fluvio topic create my-topic
 $ fluvio produce my-topic  `; // checks for trailing spaces
-    const want = `
-fluvio cluster create
+    const want = `fluvio cluster create
 fluvio topic create my-topic
 fluvio produce my-topic`;
 
@@ -153,10 +152,22 @@ fluvio produce my-topic`;
 >> show state filter-service/filter-questions/metrics
 >> select dataflow wordcount-window-simple
 >> exit  `; // checks for trailing spaces
-    const want = `
-show state filter-service/filter-questions/metrics
+    const want = `show state filter-service/filter-questions/metrics
 select dataflow wordcount-window-simple
 exit`;
+
+    expect(textWithCopyBehavior(have, CopyBehavior.Commands)).toStrictEqual(
+      want,
+    );
+  });
+
+  it(`supports multiline clearing`, () => {
+    const have = `$ fluvio consume questions -Bd
+    Are you there?
+    A
+    Bd
+    C`;
+    const want = `fluvio consume questions -Bd`;
 
     expect(textWithCopyBehavior(have, CopyBehavior.Commands)).toStrictEqual(
       want,
