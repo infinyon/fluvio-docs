@@ -36,6 +36,8 @@ Below is an example of a tranform function using filter-map. The function first 
           }
 ```
 
+A filter map returns an Option that could either be None or a Some. In this case, if the string does not match up to the regex it returns a None. If it does, it returns the computed string.
+
 ## Running the Example
 
 Copy and paste following config and save it as `dataflow.yaml`.
