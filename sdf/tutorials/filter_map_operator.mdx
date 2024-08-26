@@ -11,7 +11,7 @@ The Filter-Map Operator is a tool that combines both a filter and a map at the s
 
 ## Prerequisites
 
-This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here](/docs/fluvio/quickstart).
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
 
 ## Syntax
 
@@ -36,7 +36,7 @@ Below is an example of a tranform function using filter-map. The function first 
           }
 ```
 
-A filter map returns an Option that could either be None or a Some. In this case, if the string does not match up to the regex it returns a None. If it does, it returns the computed string.
+A filter map returns an Option that could either be None or a Some. In this case, if the string does not match up to the regex it returns a None. If it does, it returns the computed `value`.
 
 ## Running the Example
 
@@ -77,3 +77,6 @@ sdf clean --force
 ## Conclusion
 
 We just covered another basic operator in SDF, the Filter-Map Operator. 
+
+
+[installation]: /docs/fluvio/quickstart#install-fluvio
