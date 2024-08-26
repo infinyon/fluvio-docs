@@ -184,11 +184,11 @@ const config: Config = {
           position: "right",
           docsPluginId: "default",
         },
-        // {
-        //   type: "docsVersionDropdown",
-        //   position: "right",
-        //   docsPluginId: "sdf",
-        // },
+        {
+          type: "docsVersionDropdown",
+          position: "right",
+          docsPluginId: "sdf",
+        },
         {
           type: "custom-Discord",
           position: "right",
