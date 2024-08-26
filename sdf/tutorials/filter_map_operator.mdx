@@ -9,9 +9,9 @@ import FilterMap from '!!raw-loader!../_embeds/dataflows/filter-map-operator.yam
 
 The Filter-Map Operator is a tool that combines both a filter and a map at the same time. 
 
-## Prequisites
+## Prerequisites
 
-This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here](/docs/fluvio/quickstart).
 
 ## Syntax
 
@@ -53,11 +53,11 @@ $ sdf run --ephemeral
 Produce sentences to in `sentence` topic:
 
 ```bash copy="cmd"
-$ echo "hello+world=" fluvio produce sentences
+$ echo "hello+world=" | fluvio produce sentences
 $ echo "9999+1=" | fluvio produce sentences
 ```
 
-Consume topic `questions` to retrieve the result in another terminal:
+Consume topic `domath` to retrieve the result in another terminal:
 
 ```bash copy="cmd"
 $ fluvio consume domath -Bd
@@ -76,4 +76,4 @@ sdf clean --force
 
 ## Conclusion
 
-We just covered another basic operator in SDF, the Map Operator. 
+We just covered another basic operator in SDF, the Filter-Map Operator. 
