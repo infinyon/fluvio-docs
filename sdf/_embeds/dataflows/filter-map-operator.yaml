@@ -1,0 +1,46 @@
+# dataflow.yaml
+apiVersion: 0.5.0
+meta:
+  name: filter-example
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: raw
+
+topics:
+  sentences:
+    schema:
+      value:
+        type: string
+  domath:
+    schema:
+      value:
+        type: string
+
+services:
+  filter-service:
+    sources:
+      - type: topic
+        id: sentences
+
+    transforms:
+      - operator: filter-map 
+        dependencies:
+          - name: regex
+            version: "1"
+        run: |
+          fn get_sentence_length(input: String) -> Result<Option<String> > {
+            let re = regex::Regex::new(r"^(\d+)\+(\d+)=$").unwrap();
+            if let Some(num) = re.captures(&input) {
+                let a: i32 = num.get(1).unwrap().as_str().parse().unwrap();
+                let b: i32 = num.get(2).unwrap().as_str().parse().unwrap();
+                return Ok(Some(format!("{}{}",input,(a+b))));
+            } else{
+                return Ok(None);
+            }
+          }
+
+    sinks:
+      - type: topic
+        id: domath
