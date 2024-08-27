@@ -1,0 +1,40 @@
+# dataflow.yaml
+apiVersion: 0.5.0
+meta:
+  name: flat-map-example
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: raw
+
+topics:
+  sentences:
+    schema:
+      value:
+        type: string
+  halfword:
+    schema:
+      value:
+        type: string
+
+services:
+  filter-service:
+    sources:
+      - type: topic
+        id: sentences
+
+    transforms:
+      - operator: flat-map
+        run: |
+          fn halfword(input: String) -> Result<Vec<String>> {
+            let mut ret: Vec<String> = Vec::new();
+            let mid = input.len() / 2;
+            ret.push(format!("{}",&input[..mid]));
+            ret.push(format!("{}",&input[mid..]));
+            Ok(ret)
+          }
+
+    sinks:
+      - type: topic
+        id: halfword
