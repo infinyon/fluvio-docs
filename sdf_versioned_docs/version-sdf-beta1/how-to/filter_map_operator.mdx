@@ -1,0 +1,83 @@
+---
+title: "Operator - FilterMap"
+description: "Filter Map Operator Tutorial"
+sidebar_position: 40
+---
+import CodeBlock from '@theme/CodeBlock';
+import FilterMap from '!!raw-loader!../_embeds/dataflows/filter-map-operator.yaml';
+
+# FilterMap Operator
+
+The Filter-Map Operator is a tool that combines both a filter and a map at the same time. The operator here will be used to detect whether or not a sentence is a simple math addition equation with the filter and if so, it will be mapped to a string with the answer.
+
+## Prerequisites
+
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
+
+## Syntax
+
+Below is an example of a transform function using filter-map. The function first tries match the string to a regex under the form of a+b= where a and b are integers. Because regex is not in rust's standard library we have to import the library. Thus, the example below contains an example for dependencies with regex imported.
+
+```YAML
+    transforms:
+      - operator: filter-map 
+        dependencies:
+          - name: regex
+            version: "1"
+        run: |
+          fn get_sentence_length(input: String) -> Result<Option<String> > {
+            let re = regex::Regex::new(r"^(\d+)\+(\d+)=$").unwrap();
+            if let Some(num) = re.captures(&input) {
+                let a: i32 = num.get(1).unwrap().as_str().parse().unwrap();
+                let b: i32 = num.get(2).unwrap().as_str().parse().unwrap();
+                return Ok(Some(format!("{}{}",input,(a+b))));
+            } else{
+                return Ok(None);
+            }
+          }
+```
+
+A filter map returns an Option that could either be None or a Some. In this case, if the string does not match up to the regex it returns a None. If it does, it returns the computed `value`.
+
+## Running the Example
+
+Copy and paste following config and save it as `dataflow.yaml`.
+
+
+<CodeBlock language="yaml">{FilterMap}</CodeBlock>
+
+To run example:
+```bash copy="cmd"
+$ sdf run --ephemeral
+```
+
+Produce sentences to in `sentence` topic:
+
+```bash copy="cmd"
+$ echo "hello+world=" | fluvio produce sentences
+$ echo "9999+1=" | fluvio produce sentences
+```
+
+Consume topic `domath` to retrieve the result in another terminal:
+
+```bash copy="cmd"
+$ fluvio consume domath -Bd
+9999+1=10000
+```
+Only strings matching the required format gets computed.
+
+## Cleanup
+
+Exit `sdf` terminal and clean-up. The `--force` flag removes the topics:
+
+```bash copy="cmd"
+$ sdf clean --force
+```
+
+
+## Conclusion
+
+We just covered another basic operator in SDF, the Filter-Map Operator. 
+
+
+[installation]: /docs/fluvio/quickstart#install-fluvio

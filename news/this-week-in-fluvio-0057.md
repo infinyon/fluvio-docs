@@ -16,7 +16,7 @@ We had 4 conversations with lead data engineers and architects to discuss their 
 * Full [changelog is available here]
 
 ## Upcoming features
-* We are produtizing a lean binary that runs on top of edge devices with minimum memory and storage with caching and mirroring to ensure data delivery from edge to cloud without losing data.
+* We are productizing a lean binary that runs on top of edge devices with minimum memory and storage with caching and mirroring to ensure data delivery from edge to cloud without losing data.
 * We are also building out the foundations for multi region deployment to support users in the EU
 * This is a way for us to get hybrid deployments and a single binary install of our stream processing engine.
 * Upcoming blog on deduplication is in progress

@@ -1,0 +1,76 @@
+---
+title: "Operator - FlatMap"
+description: "FlatMap Operator Tutorial"
+sidebar_position: 30
+---
+import CodeBlock from '@theme/CodeBlock';
+import FlatMap from '!!raw-loader!../_embeds/dataflows/flat-map-operator.yaml';
+
+# FlatMap Operator
+
+The Flat-Map Operator allows an input from the source to be split into multiple entries in the sink. Because it is a map operator, split inputs can be mapped too. However, unlike a map operator, it creates a one to many mapping. Its a powerful tool that could be used to digest arrays, objects, or other nested data. In this example, we will write an dataflow that splits a string in half with FlatMap. 
+
+## Prerequisites
+
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
+
+## Syntax
+
+Below is an example of a transform function using flat-map. The function takes the string and splits in half. Both halves are inserted into the sink.  
+
+```YAML
+    transforms:
+      - operator: flat-map
+        run: |
+          fn halfword(input: String) -> Result<Vec<String>> {
+            let mut ret: Vec<String> = Vec::new();
+            let mid = input.len() / 2;
+            ret.push(format!("first half: {}",&input[..mid]));
+            ret.push(format!("second half: {}",&input[mid..]));
+            Ok(ret)
+          }
+```
+In the example function, the return type is a vector of strings. The split string is re-encoded. In general, the transform function should return a vector of the sink's type.
+
+## Running the Example
+
+Copy and paste following config and save it as `dataflow.yaml`.
+
+
+<CodeBlock language="yaml">{FlatMap}</CodeBlock>
+
+To run example:
+```bash copy="cmd"
+$ sdf run --ephemeral
+```
+
+Produce sentences to in `sentence` topic:
+
+```bash copy="cmd"
+$ echo "0123456789" | fluvio produce sentences
+```
+
+Consume topic `halfword` to retrieve the result in another terminal:
+
+```bash copy="cmd"
+$ fluvio consume halfword -Bd
+first half: 01234
+second half: 56789
+```
+Here two strings are produced from the input.
+
+## Cleanup
+
+Exit `sdf` terminal and clean-up. The `--force` flag removes the topics:
+
+```bash copy="cmd"
+$ sdf clean --force
+```
+
+
+## Conclusion
+
+We just covered another basic operator in SDF, the Flat-Map Operator. The Flat-Map is a powerful operator. As a matter of fact, the Flat-Map operator can be used inplace of other operators.
+
+
+[installation]: /docs/fluvio/quickstart#install-fluvio

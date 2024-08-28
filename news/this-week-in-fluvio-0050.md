@@ -56,7 +56,7 @@ As Winter is now over... We are planning community events to champion community 
 Let us know what events you are interested in [our Discord channel].
 
 ## InfinyOn Cloud updates
-We are putting the finishing touches on connector secrets for you to use the InfinyOn certified connectors built using CDK to interact with InfinyOn Cloud while useing passwords, API keys.
+We are putting the finishing touches on connector secrets for you to use the InfinyOn certified connectors built using CDK to interact with InfinyOn Cloud while using passwords, API keys.
 
 We are also shaping work for materialized views of time based aggregates from topics.
 

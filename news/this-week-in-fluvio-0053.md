@@ -9,15 +9,15 @@ Fluvio is a distributed, programmable streaming platform written in Rust.
 After yet another hiatus this week in Fluvio is back! We have released a number of improvements in the last little while.
 
 Our [public roadmap](https://github.com/orgs/infinyon/projects/12/views/1) is live!
-The high level functionality that we are building on Fluvio and InfinyOn Cloud is availble on the roadmap.
+The high level functionality that we are building on Fluvio and InfinyOn Cloud is available on the roadmap.
 
 We want to hear from you about the features and functionality you are looking for and encourage you to submit issues to the [Fluvio Repo] (https://github.com/infinyon/fluvio).
 
 ## New release
 [Fluvio 0.10.12](https://github.com/infinyon/fluvio/releases/tag/v0.10.12):
-Our latest release inludes:
+Our latest release includes:
 * Updates to the CLI to pass topic-configuration to create topics.
-* Updated SQL Sink Connectore to support upsert.
+* Updated SQL Sink Connector to support upsert.
 * We launched a certified DuckDB connector based on [Fluvio DUck](https://github.com/infinyon/fluvio-duck)!
 
 
