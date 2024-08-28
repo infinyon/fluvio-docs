@@ -10,13 +10,19 @@ Provisioning and operating a Stateful Dataflow requires the following system com
 
 1. [Fluvio Cluster] to enable dataflows to consume and produce streaming data.
 
-2. [SDF CLI] to deploy, or build and test dataflows.
-
-3. [Dataflow File][dataflow-yaml] to define the schema, composition, services, and operations.
+2. [Dataflow File][dataflow-yaml] to define the schema, composition, services, and operations.
 
 
 The Stateful Dataflows can be built, tested, and run locally during preview releases. As we approach general availability, they can also be deployed in your InfinyOn Cloud cluster. In addition, the dataflows may be published to [Hub] and shared with others with one click and installation.
 
+
+### Installing SDF CLI
+
+`sdf` is mainly managed through a CLI, we install it using [fvm].
+
+```
+$ fvm install sdf-beta1.1
+```
 
 # Inline Definitions
 
@@ -159,7 +165,8 @@ sdf clean --force
 
 **Note** The `--force` keyword should only be used if you want to remove everything, including the topics created by this dataflow.
 
-
+[Hub]: /docs/hub/overview
+[fvm]: /docs/fluvio/fvm/introduction
 [Composable Dataflows]: composition/overview.mdx
 [dataflow-yaml]: concepts/dataflow-yaml.mdx
 [github]: https://github.com/infinyon/stateful-dataflows-examples/
