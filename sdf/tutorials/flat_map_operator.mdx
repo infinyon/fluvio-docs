@@ -15,7 +15,7 @@ This guide uses `local` Fluvio cluster. If you need to install it, please follow
 
 ## Syntax
 
-Below is an example of a tranform function using flat-map. The function takes the inputted string and splits in half. Both halves are inserted into the sink.  
+Below is an example of a tranform function using flat-map. The function takes the string and splits in half. Both halves are inserted into the sink.  
 
 ```YAML
     transforms:
@@ -62,8 +62,8 @@ Here two strings are produced from the input.
 
 Exit `sdf` terminal and clean-up. The `--force` flag removes the topics:
 
-```bash
-sdf clean --force
+```bash copy="cmd"
+$ sdf clean --force
 ```
 
 

@@ -19,7 +19,7 @@ topics:
         type: string
 
 services:
-  filter-service:
+  flat-map-service:
     sources:
       - type: topic
         id: sentences
