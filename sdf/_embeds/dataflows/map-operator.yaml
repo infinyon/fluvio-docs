@@ -1,7 +1,7 @@
 # dataflow.yaml
 apiVersion: 0.5.0
 meta:
-  name: filter-example
+  name: map-example
   version: 0.1.0
   namespace: examples
 
@@ -19,18 +19,16 @@ topics:
         type: string
 
 services:
-  filter-service:
+  map-service:
     sources:
       - type: topic
         id: sentences
-
     transforms:
       - operator: map 
         run: |
           fn get_sentence_length(input: String) -> Result<String> {
             Ok(format!("Inserted string size {}",input.len()))
           }
-
     sinks:
       - type: topic
         id: len

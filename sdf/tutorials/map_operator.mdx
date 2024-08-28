@@ -9,7 +9,7 @@ import Map from '!!raw-loader!../_embeds/dataflows/map-operator.yaml';
 
 The Map Operator is a versatile tool that allows you to transform an existing message and re-encode the input into a new message format.  The operator takes the input and maps it into any type. Every message in the original topic will be mapped to a new topic. Please see filter-mapping for filter and mapping.
 
-## Prequisites
+## Prerequisites
 
 This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
 
@@ -45,7 +45,7 @@ $ echo "This string is size 22" | fluvio produce sentences
 $ echo "This string is size 23." | fluvio produce sentences
 ```
 
-Consume topic `questions` to retrieve the result in another terminal:
+Consume topic `len` to retrieve the result in another terminal:
 
 ```bash copy="cmd"
 $ fluvio consume len -Bd
@@ -60,11 +60,13 @@ Each string will be mapped via the function provided.
 
 Exit `sdf` terminal and clean-up. The `--force` flag removes the topics:
 
-```bash
-sdf clean --force
+```bash copy="cmd"
+$ sdf clean --force
 ```
 
 
 ## Conclusion
 
 We just covered another basic operator in SDF, the Map Operator. 
+
+[installation]: /docs/fluvio/quickstart#install-fluvio
