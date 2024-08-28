@@ -1,7 +1,7 @@
 ---
 title: SDF Architecture
 description: InfinyOn Data Stack
-sidebar_position: 90
+sidebar_position: 1
 ---
 
 # SDF Architecture Diagram
@@ -15,6 +15,10 @@ Let's define each layer from bottom to top.
 ### Data Streaming & State Management
 
 At the core, the InfinyOn data stack combines `data streaming` and `state management` technologies. [Fluvio] handles event streaming, persistence, replication, and connections with external data sources and target destinations. [SDF] manages state objects such as SQL tables and key-value documents.
+
+### Services
+
+[Services], while omitted from the diagram, define the composition of a subsection of the data-pilelines. Services define the data source, chain of operations, state objects, and the destination.
 
 ### Operators
 
@@ -42,7 +46,8 @@ The studio is the dataflow visualization tool. It allows you to investigate the 
 
 [Fluvio]: https://github.com/infinyon/fluvio
 [SDF]: /sdf
-[Operators]: services/operators.mdx
+[Services]: services.mdx
+[Operators]: operators.mdx
 [command line interface]: sdf/cli/index.mdx
 [github]: https://github.com/infinyon/stateful-dataflows-examples
 [InfinyOn Hub]: /docs/hub/overview

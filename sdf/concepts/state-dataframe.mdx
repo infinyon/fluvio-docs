@@ -1,7 +1,7 @@
 ---
-title: Arrow Dataframe state
+title: State - Arrow Dataframe
 description: Stateful Dataflows Dataframe Integration
-sidebar_position: 100
+sidebar_position: 60
 ---
 
 States are a key concept in SDF. They hold a simple value or they can be divided into multiple partitions based on a key.  Each partition state can have many different types.  
@@ -81,7 +81,7 @@ flush:
         }
 ```
 
-# SQL API
+## SQL API
 
 For any state that is dataframe, you can use SQL API to perform dataframe operation.  SDF uses polar SQL to perform dataframe operation.  
 The result of the SQL operation is always dataframe.  So you can perform multiple SQL operation to get the desired result.
@@ -92,7 +92,7 @@ The SQL is executed in the context of the dataframe.  And name of the dataframe 
 let top3 = word_counts.sql("select * from count_per_word order by count desc limit 3")?;
 ```
 
-# Row API
+## Row API
 
 Once you have dataframe, you can use row api to access values of individual rows.  To get rows, you can use `rows` function on the dataframe.
 

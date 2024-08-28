@@ -1,7 +1,7 @@
 ---
 title:  "Dataflow"
 description: Stateful Dataflow file definition and examples.
-sidebar_position: 21
+sidebar_position: 10
 ---
 
 import CodeBlock from '@theme/CodeBlock';
@@ -232,7 +232,7 @@ topics:
 
 <CodeBlock language="yaml">{Topics}</CodeBlock>
 
-The [Services key-value section] describes how to map topic keps to functions.
+The [Key Handling section] describes how to map topic keps to functions.
 
 <hr/>
 
@@ -296,15 +296,15 @@ dev:
 * [SDF]
 
 
-[composition section]: sdf/concepts/composition/overview.mdx
+[composition section]: sdf/composition/overview.mdx
 [WASM Component Model]: https://component-model.bytecodealliance.org/
-[Services key-value section]: services/key-value.mdx
-[Types]: services/types.mdx
-[primitive types]: services/types.mdx#primitive-types
-[Operators]: services/operators.mdx
+[Key Handling section]: key-handling.mdx
+[Types]: types.mdx
+[primitive types]: types.mdx#primitive-types
+[Operators]: operators.mdx
 [SDF]: /sdf
 [DAG]: https://en.wikipedia.org/wiki/Directed_acyclic_graph
-[Services]: services
-[Services Section]: services
+[Services]: services.mdx
+[Services Section]: services.mdx
 [batching]: /docs/latest/fluvio/concepts/batching
 [dataflow examples]: https://github.com/infinyon/stateful-dataflows-examples

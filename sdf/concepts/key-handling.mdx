@@ -1,8 +1,10 @@
 ---
-title: Key-Value Types
+title: Key Handling
 description: Stateful Dataflow Key/Value type definition.
-sidebar_position: 40
+sidebar_position: 110
 ---
+
+# Key Handling (Topics &lt;=&gt; SDF)
 
 Fluvio data streaming allows you to define [key-value streams], where the key is used for partitioning. The engine makes the keys accessible to the SDF function by passing them to all functions in a chain of operations. In addition, the engine can also modify the keys from one stream to another.
 
