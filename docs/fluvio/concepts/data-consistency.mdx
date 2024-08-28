@@ -31,7 +31,7 @@ Isolation is a configuration parameter of Producer that has two values:
 ```bash
 $ fluvio produce greetings --isolation read_committed
 ```
-<!-- TODO recommend change read-commited to ack_committed -->
+<!-- TODO recommend change read-committed to ack_committed -->
 
 2. `ReadUncommitted` - Leader does not wait for records to get committed before sending acknowledgement to Producer.
 ```bash

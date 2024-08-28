@@ -12,7 +12,7 @@ Worker is a process that runs the dataflows continuously.  Unlike ephemeral CLI,
 
 Worker can run anywhere as long as it can connect to the Fluvio cluster.  Worker can be run in data center, cloud, or edge device.  There is no limit on number of workers that can be run.  Each worker can run multiple dataflows.  It is recommended to a run a single worker per machine.
 
-SDF can target different worker by selecting the worker profile.  Worker profile is associated with the Fluvio profile.  When you switch the Fluvio profile, SDF will automatically switch the worker profile.  Once you have selected the worker, same worker will be used for all dataflow operation until you selecte different worker.
+SDF can target different worker by selecting the worker profile.  Worker profile is associated with the Fluvio profile.  When you switch the Fluvio profile, SDF will automatically switch the worker profile.  Once you have selected the worker, same worker will be used for all dataflow operation until you select a different worker.
 
 By default, SDF will run the dataflow in the worker.  If you are using InfinyOn Cloud, the worker will be provisioned and automatically registered in the profile. 
 
@@ -71,7 +71,7 @@ if you have delete the fluvio cluster, worker need to be manually shutdown and c
 
 # Remote Worker
 
-Remote worker is a worker runs in different machine from the CLI.   It is typicall set up by devops team for production environment. 
+Remote worker is a worker runs in different machine from the CLI.   It is typically set up by DevOps team for production environment. 
 
 Typical lifecycle for using remote worker is:
 1. Start remote worker in the server.

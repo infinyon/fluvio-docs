@@ -16,7 +16,7 @@ This guide uses `local` Fluvio cluster. If you need to install it, please follow
 
 ## Syntax
 
-Below is an example of a tranform function using filter-map. The function first tries match the string to a regex under the form of a+b= where a and b are integers. Because regex is not in rust's standard library we have to import the library. Thus, the example below contains an example for dependencies with regex imported.
+Below is an example of a transform function using filter-map. The function first tries match the string to a regex under the form of a+b= where a and b are integers. Because regex is not in rust's standard library we have to import the library. Thus, the example below contains an example for dependencies with regex imported.
 
 ```YAML
     transforms:

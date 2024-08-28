@@ -68,9 +68,9 @@ dev:
 * [apiVersion](#apiversion) - defines engine version of the dataflow file.
 * [meta](#meta) - defines the name, version, and namespace of the dataflow.
 * [imports](#imports) - defines the external packages `optional`.
-* [config](#config) - defines configutions applied to the entire dataflow file `optional`.
-* [types](#types)- definess the type definitions `optional`.
-* [topics](#topics) - defines the topics used in the datataflow.
+* [config](#config) - defines configurations applied to the entire dataflow file `optional`.
+* [types](#types)- defines the type definitions `optional`.
+* [topics](#topics) - defines the topics used in the dataflow.
 * [services](#services) - defines the input, output, operators and states for each flow.
 * [dev](#dev) - defines properties for developers `optional`.
 
@@ -139,7 +139,7 @@ imports:
 
 #### Where
 
-* **pkg** - is the unique identifired of the package
+* **pkg** - is the unique identifier of the package
 * **types** - the list of types referenced by name.
 * **functions** - the list of functions referenced by name.
 * **states** - the list of states referenced by name.
@@ -162,19 +162,19 @@ config:
   consumer: 
     <consumer-properties>
   producer: 
-    <procucer-properties>
+    <producer-properties>
 ```
 
 #### Where
 
-* **converter** - define the default serializaiton/deserialization for reading and writing events. Supported formats are: `raw` and `json`. The converter configuration can be overwritten by the topic configuration.
+* **converter** - define the default serialization/deserialization for reading and writing events. Supported formats are: `raw` and `json`. The converter configuration can be overwritten by the topic configuration.
 
 * **consumer** - define the default consumer configuration. Supported properties are:
   * `default_starting_offset` - define the default starting offset for the consumer. The consumer can read from `beginning` or `end` with an offset `value`. User `0` if you want to read the first or last item.
 
 * **producer** - define the default producer configuration. Supported properties are:
   * `linger_ms` - the time in milliseconds to wait for additional records to arrive before publishing a message batch.
-  * `batshe_size` - the maximum size of a message batch.
+  * `batch_size` - the maximum size of a message batch.
 
 Checkout [batching] for more details.
 
@@ -183,7 +183,7 @@ Checkout [batching] for more details.
 
 <CodeBlock language="yaml">{Config}</CodeBlock>
 
-All consumers start reading from the end of the datastream and parse the records from json. All producers write their records to the datastream in json.
+All consumers start reading from the end of the data-stream and parse the records from json. All producers write their records to the data-stream in json.
 
 
 #### Defaults
@@ -224,7 +224,7 @@ topics:
   * **type** - is the schema type for the key. The key only supports [primitive types].
 * **value** - is the schema definition for the record value
   * **type** - is the schema type for the value.
-  * **converter** - is the converter to deserialize the key (**optional** - ddefaults to [config](#config)).
+  * **converter** - is the converter to deserialize the key (**optional** - defaults to [config](#config)).
 * **producer** - is the producer configuration (**optional** - defaults to [config](#config)).
 * **consumer** - is the consumer configuration (**optional** - defaults to [config](#config)).
 
@@ -232,7 +232,7 @@ topics:
 
 <CodeBlock language="yaml">{Topics}</CodeBlock>
 
-The [Key Handling section] describes how to map topic keps to functions.
+The [Key Handling section] describes how to map topic keeps to functions.
 
 <hr/>
 
