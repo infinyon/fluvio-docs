@@ -13,11 +13,11 @@ topics:
     schema:
       value:
         type: string
-  sentence-start-col:
+  digit-start-col:
     schema:
       value:
         type: string 
-  sentence-start:
+  digit-start:
     schema:
       value:
         type: string 
@@ -28,7 +28,7 @@ services:
       - type: topic
         id: sentences
     states:
-      count-by-first-letter:
+      count-by-first-digit:
         type: keyed-state
         properties:
           key: 
@@ -46,7 +46,7 @@ services:
       partition:
         assign-key:
           run: |
-            fn key_first_character(str: String) -> Result<String> {
+            fn key_first_digit(str: String) -> Result<String> {
               if str.len() == 0 {
                 return Ok("empty".to_string());
               }
@@ -54,26 +54,26 @@ services:
             }
         update-state:
           run: |
-            fn increment_color_count(str: String) -> Result<()> {
-              count_by_first_letter().increment(1);
+            fn increment_digit_count(str: String) -> Result<()> {
+              count_by_first_digit().increment(1);
               Ok(())
             }
       flush:
         run: |
-          fn get_first_character_count() -> Result<String> {
-            let cc = count_by_first_letter().clone();
-            Ok(cc.into_iter().map(|(letter, count)|
-                format!("Sentences with {} occured {} times,",letter,count)
+          fn get_first_digit_count() -> Result<String> {
+            let cc = count_by_first_digit().clone();
+            Ok(cc.into_iter().map(|(digit, count)|
+                format!("Numbers with {} occured {} times,",digit,count)
             ).collect())
           }
     sinks:
       - type: topic
-        id: sentence-start-col
+        id: digit-start-col
 
   split-service:
     sources:
       - type: topic
-        id: sentence-start-col
+        id: digit-start-col
     transforms:
       - operator: flat-map
         run: |
@@ -85,4 +85,4 @@ services:
           }
     sinks:
       - type: topic
-        id: sentence-start
+        id: digit-start

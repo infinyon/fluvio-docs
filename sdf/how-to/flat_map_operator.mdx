@@ -8,7 +8,7 @@ import FlatMap from '!!raw-loader!../_embeds/dataflows/flat-map-operator.yaml';
 
 # FlatMap Operator
 
-The Flat-Map Operator allows an input from the source to be split into multiple entries in the sink. Because it is a map operator, split inputs can be mapped too. However, unlike a map operator, it creates a one to many mapping. Its a powerful tool that could be used to digest arrays, objects, or other nested data.
+The Flat-Map Operator allows an input from the source to be split into multiple entries in the sink. Because it is a map operator, split inputs can be mapped too. However, unlike a map operator, it creates a one to many mapping. Its a powerful tool that could be used to digest arrays, objects, or other nested data. In this example, we will write an dataflow that splits a string in half with FlatMap. 
 
 ## Prerequisites
 
@@ -70,7 +70,7 @@ $ sdf clean --force
 
 ## Conclusion
 
-We just covered another basic operator in SDF, the Flat-Map Operator. 
+We just covered another basic operator in SDF, the Flat-Map Operator. The Flat-Map is a powerful operator. As a matter of fact, the Flat-Map operator can be used inplace of other operators.
 
 
 [installation]: /docs/fluvio/quickstart#install-fluvio
