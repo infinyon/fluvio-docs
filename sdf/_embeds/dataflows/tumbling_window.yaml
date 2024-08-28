@@ -79,8 +79,8 @@ services:
         run: |
           fn split(input: String) -> Result<Vec<String>> {
             let result: Vec<String> = input.split(',')
-                                   .map(|s| s.to_string())
-                                   .collect();
+              .map(|s| s.to_string())
+              .collect();
             Ok(result)
           }
     sinks:

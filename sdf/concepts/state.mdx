@@ -40,7 +40,7 @@ states:
 
 ### Arrow-Row Value
 
-The `arrow-row` values are defined using arrow [types] definitions. The arrow-row states are stored in [arrow dataframe] format. You may think of an arrow state as databases, such as [Postgres]. The advantage of this format is that is accessible by third-party libraries such as [Polars]. An`arrow-row` state is defined as follows:
+The `arrow-row` values are defined using arrow definitions. The arrow-row states are stored in [arrow dataframe] format. You may think of an arrow state as databases, such as [Postgres]. The advantage of this format is that is accessible by third-party libraries such as [Polars]. An`arrow-row` state is defined as follows:
 
 ```yaml
 states:
@@ -58,7 +58,7 @@ states:
             type: f32
 ```
 
-Check out the [types] section for addition information on arrow types.
+Check out the [arrow dataframe] section for addition information.
 
 
 ## State Definition & Usage
@@ -167,7 +167,8 @@ State can be defined in a package [sdf-package.yaml] file. The apporach allows y
 We'll use an example to show how to implement, test, and import a state from a package file.
 
 [types]: types.mdx
-[sdf-package.yaml]: sdf/concepts/composition/sdf-package-yaml.mdx
+[arrow dataframe]: state-dataframe.mdx
+[sdf-package.yaml]: sdf/composition/sdf-package-yaml.mdx
 [dataflow.yaml]: sdf/index.mdx
 [window processing]: sdf/concepts/window-processing.mdx
 [CQRS architecture]: https://en.wikipedia.org/wiki/Command_Query_Responsibility_Segregation
