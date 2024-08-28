@@ -248,10 +248,10 @@ Next, we'll create a transform file and test the output.
 
 SmartModules can be chained together and often require additional parameters. Fluvio uses a YAML file is used to define the transformations.
 
-Create a `tranforms.yaml` file and copy/paste the following definition:
+Create a `transforms.yaml` file and copy/paste the following definition:
 
 ```yaml
-# File: tranforms.yaml
+# File: transforms.yaml
 transforms:
   - uses: infinyon/jolt@x.y.z
     with:
@@ -269,7 +269,7 @@ Jolt is a complex Smartmodule that allows you to perform multiple types of JSON 
 As the `quotes` are readily available for us in the `quotes` topic, we'll use the consumer command to test this SmartModule.
 
 ```bash copy="fl"
-$  fluvio consume quotes --transforms-file tranforms.yaml -T=2
+$  fluvio consume quotes --transforms-file transforms.yaml -T=2
 Consuming records from 'quotes' starting 2 from the end of log
 "The greatest glory in living lies not in never falling, but in rising every time we fall."
 "Simplicity is the ultimate sophistication."

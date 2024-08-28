@@ -10,7 +10,7 @@ sidebar_position: 30
 
 The engine implements `transforms` operators chained in an array inside a transforms section and `named` operators following a hierarchical convention.
 
-The [tranforms operators](#transforms-operators) are:
+The [transforms operators](#transforms-operators) are:
 
 * [map](#map)
 * [filter](#filter)
@@ -60,8 +60,8 @@ Check out [map example in github] for a working demo.
 
 The `filter` operator takes a record and returns a boolean that tells the engine whether to drop it or forward it to the next operator:
 
-  * `true` - foward the record to the next operator.
-  * `false` - drop the record.
+  * `true` - forwards the record to the next operator.
+  * `false` - drops the record.
 
 While in most cases, one operator's output becomes the next operator's input; the `filter` operation works differently. The operator returns a boolean to control the state, and the engine then sends the record to the next operator.
 
@@ -83,8 +83,8 @@ Check out [filter example in github] for a working demo.
 
 The `filter-map` operator combines a filter and a map operation; it takes a record and returns a modified record or none. The return value tells the engine to forward the records to the next operator or to drop them:
 
-  * `Some(Record)` - foward the record to the next operator.
-  * `None` - drop the record.
+  * `Some(Record)` - forwards the record to the next operator.
+  * `None` - drops the record.
 
 The following example defines a `filter-map` that transforms sentences longer than ten characters to uppercase and drops all others:
 
@@ -232,7 +232,7 @@ The `partition` operation divides the stream into data sets that are processed i
 * [transforms](#transforms-operators)
 * [update-state](#update-state)
 
-Assign-key is mandatory, whereas `tranforms` and `update-state` are optional, but at least one of them is required.
+Assign-key is mandatory, whereas `transforms` and `update-state` are optional, but at least one of them is required.
 
 The following example shows how the `partition` operation divides the stream into words and updates the state object `count_per_word()` with the latest word count:
 

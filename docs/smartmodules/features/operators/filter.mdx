@@ -63,7 +63,7 @@ $ cat server.log
 {"level":"debug","message":"Deserializing request from client"}
 {"level":"debug","message":"Client request deserialized"}
 {"level":"debug","message":"Connecting to database"}
-{"level":"warn","message":"Client dropped connnection"}
+{"level":"warn","message":"Client dropped connection"}
 {"level":"info","message":"Accepted incoming connection"}
 {"level":"debug","message":"Deserializing request from client"}
 {"level":"debug","message":"Client request deserialized"}
@@ -210,7 +210,7 @@ Test `info` log:
 ```bash copy="fl"
 $ smdk test --text='{"level":"info","message":"Server listening on 0.0.0.0:8000"}'
 loading module at: ~/smdk/json-filter/target/wasm32-unknown-unknown/release-lto/json_filter.wasm
-1 records outputed
+1 records outputted
 {"level":"info","message":"Server listening on 0.0.0.0:8000"}
 ```
 
@@ -252,7 +252,7 @@ $ fluvio consume server-logs -B -d
 {"level":"debug","message":"Deserializing request from client"}
 {"level":"debug","message":"Client request deserialized"}
 {"level":"debug","message":"Connecting to database"}
-{"level":"warn","message":"Client dropped connnection"}
+{"level":"warn","message":"Client dropped connection"}
 {"level":"info","message":"Accepted incoming connection"}
 {"level":"debug","message":"Deserializing request from client"}
 {"level":"debug","message":"Client request deserialized"}
@@ -288,12 +288,12 @@ $ fluvio consume server-logs -dB --smartmodule=john/json-filter@0.1.0
 Consuming records from the beginning of topic 'server-logs'
 {"level":"info","message":"Server listening on 0.0.0.0:8000"}
 {"level":"info","message":"Accepted incoming connection"}
-{"level":"warn","message":"Client dropped connnection"}
+{"level":"warn","message":"Client dropped connection"}
 {"level":"info","message":"Accepted incoming connection"}
 {"level":"error","message":"Unable to connect to database"}
 ```
 
-Congratulations! :tada: Eveything worked as expected!
+Congratulations! :tada: Everything worked as expected!
 
 
 ## Publish to SmartModule Hub

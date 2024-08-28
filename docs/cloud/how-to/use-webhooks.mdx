@@ -33,7 +33,7 @@ transforms:
       key: ${{ secrets.my_key }}
 ```
 
-The minimum configuration has needs the top 2 requred fields: `name` and `topic`. The `name` is the name of the webhook, and the `topic` is the topic that the webhook will publish to.
+The minimum configuration has needs the top 2 required fields: `name` and `topic`. The `name` is the name of the webhook, and the `topic` is the topic that the webhook will publish to.
 
 
 ## Create a simple Webhook
@@ -86,7 +86,7 @@ In another terminal, star a consumer that reads form the beginning:
 $ fluvio consume my-webhook-topic -B
 ```
 
-We should see the folloing output:
+We should see the following output:
 
 ```bash
 Hello World!

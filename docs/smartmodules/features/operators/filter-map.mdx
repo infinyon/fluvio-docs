@@ -130,7 +130,7 @@ Next, we check what type of event we received. If it's an `order_ready` event, w
 
 ### Build the SmartModule
 
-Let's make sure our code compiles. If eveything works as expected, there is a `.wasm` file generated in the target directory.
+Let's make sure our code compiles. If everything works as expected, there is a `.wasm` file generated in the target directory.
 
 
 ```bash copy="fl"
@@ -146,13 +146,13 @@ Your SmartModule WASM binary is now ready for use.
 
 Let's test our work using the command line `test` facility.
 
-Test `filter` component to ensure non-mathing records are eliminated:
+Test `filter` component to ensure non-matching records are eliminated:
 
 
 ```bash copy="fl"
 $ smdk test --text='{"type":"account_created","account_id":"1","username":"bill9876","preferred_name":"Bill","phone_number":"1-800-234-5678"}'
 loading module at: ~/smdk/filter-map/target/wasm32-unknown-unknown/release-lto/filter_map.wasm
-0 records outputed
+0 records outputted
 ```
 
 Test `map` part to ensure matching records are transformed:
@@ -161,7 +161,7 @@ Test `map` part to ensure matching records are transformed:
 ```bash copy="fl"
 $ smdk test --text='{"type":"order_ready","account_id":"1","sms_number":"1-800-234-5678","sms_name":"Bill"}'
 loading module at: ~/smdk/filter-map/target/wasm32-unknown-unknown/release-lto/filter_map.wasm
-1 records outputed
+1 records outputted
 {"message":"Hello Bill, your groceries have been collected and are ready to pick up!","number":"1-800-234-5678"}
 ```
 
@@ -238,7 +238,7 @@ Consuming records from the beginning of topic 'filter-map'
 {"message":"Hello Mary, your groceries have been collected and are ready to pick up!","number":"1-222-222-2222"}
 ```
 
-Congratulations! :tada: Eveything worked as expected!
+Congratulations! :tada: Everything worked as expected!
 
 ## Publish to SmartModule Hub
 

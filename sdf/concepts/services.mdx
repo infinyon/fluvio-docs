@@ -4,13 +4,13 @@ description: Stateful Dataflow Services definition.
 sidebar_position: 20
 ---
 
-Services define the dataflow composition and the business logic. The composition is determinted via `sources` and the `sinks`, and the business logic and the internal state by the `transforms` and the `states`.
+Services define the dataflow composition and the business logic. The composition is determined via `sources` and the `sinks`, and the business logic and the internal state by the `transforms` and the `states`.
 
 ## Overview
 
 Services can be molded to perform various operations, such as traffic routing, transformations, and window processing. We'll start with a brief overview of the architecture, followed by the service definition template, and conclude with several service definition examples for:
 
-* [Simple Transformations](#simple-tranformations)
+* [Simple Transformations](#simple-transformations)
 * [Data Routing with Merge and Split](#data-routing-with-merge-and-split)
 * [Parallel Processing with Partitions](#parallel-processing-with-partitions)
 * [Window Processing](#window-processing)
@@ -64,21 +64,21 @@ services:
 
 Where:
 
- - **sources** - has one or more references to topics, with an optional tranformation. Checkout the [merge] section for examples on multiple sources.
+ - **sources** - has one or more references to topics, with an optional transformation. Checkout the [merge] section for examples on multiple sources.
  - **states** - has `definitions` for objects managed by the services, and `references` to an external object. Checkout the [states] section for additional information.
  - **transforms** - define the operators to be applied to the data.
  - **window** - defines the window processing parameters. Checkout [window section] below for additional information.
  - **partition** - defines the parallelism of the transforms. Checkout [partition section] below for additional information.
- - **sinks** - could be zero or multiples references to topics, with an optional tranformation. Checkout the [split] section for examples on multiple destinations.
+ - **sinks** - could be zero or multiples references to topics, with an optional transformation. Checkout the [split] section for examples on multiple destinations.
 
 [window section]: #window-processing
 [partition section]: #parallel-processing-with-partitions
 
 ## Services - Sample Use Cases
 
-Services are like Lego; you can stitch them together in multiple ways to cover a high number of use cases. This section describes several use cases that should give you a better understanding on how to archiect your own dataflow.
+Services are like Lego; you can stitch them together in multiple ways to cover a high number of use cases. This section describes several use cases that should give you a better understanding on how to architect your own dataflow.
 
-### Simple Tranformations
+### Simple Transformations
 
 One of the simplest forms of services is a chain of operators that perform data transformations.
 
@@ -214,7 +214,7 @@ Partitions give you the ability to divide the data in sets and process each data
 
 <img src="/img/sdf/service-partitions.png" alt="Service Partitions" style={{ display: 'block', margin: '0 auto' }} width="720" />
 
-Say you have a stream of `sentences` where you want to count the occurrences of each word in all sentences. Partitioning helps to solve this problem by assigning a partition key to each `word` and incremeting each partition independently.
+Say you have a stream of `sentences` where you want to count the occurrences of each word in all sentences. Partitioning helps to solve this problem by assigning a partition key to each `word` and incrementing each partition independently.
 
 Partitions improve performance by processing records in parallel, and it also makes the custom code straightforward to write.
 

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 20
 title: "Create an Data Pipeline from Webhook to Slack"
-description: "Event data pipeline that recevies events from an InfinyOn Cloud Webhook and sends an alert to Slack"
+description: "Event data pipeline that receives events from an InfinyOn Cloud Webhook and sends an alert to Slack"
 ---
 
 This guide shows an end-to-end event pipeline that reads an event from a webhook, generates a formatted string, and publishes the result to Slack. While this is a simple example, it has many event notification use cases, such as:
@@ -160,7 +160,7 @@ Check `fluvio cloud connector list` to ensure it has been successfully provision
 
 ### Test Data Pipeline
 
-Use `curl` to send a POST request with a fictious user request to our webhook link. In production environments, this iw what a website would send:
+Use `curl` to send a POST request with a fictitious user request to our webhook link. In production environments, this iw what a website would send:
 
 ```bash
 $ curl -X POST https://infinyon.cloud/webhooks/v1/<token> \
