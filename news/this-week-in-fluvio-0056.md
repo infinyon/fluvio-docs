@@ -8,7 +8,7 @@ Fluvio is a distributed, programmable streaming platform written in Rust.
 ---
 Big updates are on the verge of being released this week. Fluvio 0.10.14 is going to have some awesome updates!
 
-This week hase been great with our efforts aligning towards our next release.
+This week has been great with our efforts aligning towards our next release.
 
 BTW, we have been offering free data architecture reviews to data practitioners to help with planning data pipelines. We have talked to over 10 data engineers and architects in the last couple of weeks and these have been awesome. If you'd like to a have a conversation about your data pipelines and discuss problems, validate ideas - email me at drc@infinyon.com
 
@@ -20,7 +20,7 @@ Our biggest update that is in the works is an engine that powers unbounded state
 This is a big step towards our vision for a composable unified stateful stream processing platform.
 
 ## Developer experience improvements
-We have been working on running our coure stream processor at the edge to support ARM based sensors with limited memory and we brought back the raspberry pi out of our shelves and working on a demo.
+We have been working on running our core stream processor at the edge to support ARM based sensors with limited memory and we brought back the raspberry pi out of our shelves and working on a demo.
 
 We are also working on lean implementations of our runtime and control plane to build the foundations to support issues of data privacy and data sovereignty with hybrid deployment patterns.
 

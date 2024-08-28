@@ -14,7 +14,7 @@ This Week in Fluvio is our weekly newsletter for development updates to [Fluvio 
 ### `fluvio connector` CLI deprecation
 We intend to remove the `fluvio connector` subcommand, and related API from the Fluvio open source project, and migrate the support of managed connectors to [InfinyOn Cloud](https://infinyon.cloud).
 
-We will announce the release to expect this change ahead of time. Currently, we are updating our documentation with equivilent workflows in preparation to support OSS Fluvio users though this migration.
+We will announce the release to expect this change ahead of time. Currently, we are updating our documentation with equivalent workflows in preparation to support OSS Fluvio users though this migration.
 
 :::note
 This is an archival newsletter entry, for the latest on running connectors see docs on the [cdk] cli
