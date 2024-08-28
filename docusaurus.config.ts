@@ -75,6 +75,18 @@ const config: Config = {
         path: "sdf",
         routeBasePath: "sdf",
         sidebarPath: "./sidebarsSdf.ts",
+        versions: {
+          current: {
+            label: "latest",
+            path: "latest",
+          },
+          ["sdf-beta1.1"]: {
+            label: "sdf-beta1.1 (stable)",
+          },
+          ["sdf-beta1"]: {
+            label: "sdf-beta1",
+          },
+        },
       },
     ],
     [

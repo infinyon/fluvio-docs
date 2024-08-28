@@ -1,0 +1,130 @@
+---
+description: SDF Clean Command
+sidebar_position: 50
+---
+
+# `sdf run`
+
+The `sdf run` compiles and runs a dataflow. The command expects a `dataflow.yaml` file in the current directory.
+The command loads the dataflow, compiles all components, and starts a process to run the dataflow —all artifacts are stored in the `.sdf` directory and should not be manually changed.
+
+After provisioning the command enters an [interactive shell] that allows you to interact with the dataflow.
+
+[interactive shell]: #run-interactive-shell
+
+### `sdf run` command
+
+The `run` command has several options:
+
+```bash copy="fl"
+$ sdf run -h
+Run dataflow (requires: dataflow.yaml)
+
+Usage: sdf run [OPTIONS]
+
+Options:
+      --ui
+          Start Development Studio [env: UI=]
+  -p, --port <PORT>
+          Port for web server to listen on [env: PORT=] [default: 8000]
+  -e, --env <ENV_LIST>
+          (Optional) environment variables to be passed to each operator They
+          should be passed using key=value format Eg. sdf run -e foo=bar -e
+          key=value -e one=1
+      --skip-running
+          when set, it will skip running the service
+      --build-profile <BUILD_PROFILE>
+          [default: release]
+      --dev
+          set runtime to use dev mode [env: DEV=]
+      --prod
+          set runtime to use production mode [env: PROD=]
+      --force-update
+          Force update
+```
+
+Where:
+* `--ui` start graphical representation of the project in a web browser. The default port is `8000`.
+* `--port` sets the port for the web server to listen on
+* `--env` sets environment variables to be passed to operators
+* `--skip-running` - compiles components and exists without running the dataflow
+* `--build-profile` - sets the build profile
+* `--dev` - sets runtime to apply dev specific parameters
+* `--prod` - sets runtime to apply prod specific parameters
+* `--force-update` - forces the update of the project dependencies
+
+In addition, the `run` command opens interactive shell.
+
+
+### `run` interactive shell
+
+The interactive shell allows you to look-up runtime object, such as state.
+
+```bash copy="fl"
+>> help
+SDF - Stateful Dataflow
+
+Usage: <COMMAND>
+
+Commands:
+  show  Show or List states. Use `show state --help` for more info
+  exit  Stop interactive session
+```
+
+
+#### `show state`
+
+Show states or show state for given namespace and key.
+
+```bash copy="fl"
+>> show state -h
+List all states or show state for given key
+
+Usage: show state [OPTIONS] [NAMESPACE]
+
+Arguments:
+  [NAMESPACE]  namespace of state
+
+Options:
+      --key <KEY>        key of state
+      --filter <FILTER>  filter regex
+```
+
+Where:
+* `--key` and `--filter` refines the result.
+
+#### Examples
+
+
+##### Run command
+
+Navigate to the directory with `dataflow.yaml` file, and run the command:
+
+```bash
+$ sdf run
+```
+
+The command generates all components required and starts a process to run the dataflow.
+
+
+##### Show all available objects
+
+Use the default command to show objects:
+
+```bash copy="fl"
+>> show state
+ Namespace                                Keys  Type
+ filter-service/sentences/metrics         1     table
+ filter-service/filter-questions/metrics  1     table
+ filter-service/sentences/topic.offset    1     offset
+```
+
+#### Show state for a key
+
+Show the detailed information:
+
+```bash copy="fl"
+>> show state filter-service/filter-questions/metrics
+ Key    Window  succeeded  failed
+ stats  *       2          0
+```
