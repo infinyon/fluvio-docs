@@ -119,14 +119,14 @@ types:
     oneOf:
       public:
         deserialize:
-          rename: private
+          rename: available
         type: null
       private:
         deserialize:
-          rename: private
+          rename: draft
         type: null
 ```
-In this example, the `visibility` type will successfully deserialize when the input is `public` or `private`. The same configuration could be applied on object properties.
+In this example, the `visibility` type will successfully deserialize when the input is `available` or `draft`. The same configuration could be applied on object properties.
 
 #### Custom deserialization in example
 
@@ -142,11 +142,11 @@ For instance, if we want to parse the following data:
             "humanLabel": "Technology"
         }
     ],
-    "visibility": "public"
+    "visibility": "available"
 }
 ```
 
-We could define the types at this way, to properly deserialize and serialize using that format:
+Let's look at the full example
 
 ```yaml
 types:
@@ -185,15 +185,15 @@ types:
     oneOf:
       public:
         serialize:
-          rename: public
+          rename: available
         deserialize:
-          rename: private
+          rename: available
         type: null
       private:
         deserialize:
-          rename: private
+          rename: draft
         serialize:
-          rename: private
+          rename: draft
         type: null
 ```
 
