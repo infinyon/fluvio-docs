@@ -165,7 +165,7 @@ const config: Config = {
         {
           position: "left",
           label: "SDF",
-          to: "/sdf",
+          to: "/sdf/quickstart",
         },
         {
           type: "doc",
