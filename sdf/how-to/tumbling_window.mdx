@@ -7,15 +7,16 @@ sidebar_position: 1
 import CodeBlock from '@theme/CodeBlock';
 import TumblingWindow from '!!raw-loader!../_embeds/dataflows/tumbling_window.yaml';
 
-SDF has a tumbling window that collects entries from the source for a fixed duration of the window before finally being sent to the sink topic. For more in-depth explanation about windows, read [this][windows]. In this example, we will write a dataflow that aggregates the first digits of random numbers.
+SDF has a tumbling window that collects entries from the source for a fixed duration of the window before finally being sent to the sink topic. For more in-depth explanation about windows, read [this][windows]. 
 
 ## Prerequisites
 
 This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
 
-## States
-
-For windows, we need to implement states. To read more about states, the following [page][state] shows information about states.
+## Dataflow
+### Overview
+In this example, we will write a dataflow that aggregates the first digits of random numbers. For windows, we need to implement states to store data. To read more about states, the following [page][state] shows information about states. 
+<img src="/img/sdf/how_to_images/window_example.png" alt="Visual of defined dataflow"  style={{ display: 'block', margin: '0 auto', }} width="700" />
 
 ### Define a state
 
@@ -49,7 +50,7 @@ We will define a window with the following syntax
         (...)
 ```
 
-### Five components
+### Five components of a window
 
 #### 1. Add Window duration
 ```YAML

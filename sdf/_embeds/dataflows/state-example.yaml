@@ -1,0 +1,63 @@
+# dataflow.yaml
+apiVersion: 0.5.0
+meta:
+  name: state-example
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: raw
+topics:
+  sentences:
+    schema:
+      value:
+        type: string
+  count-input:
+    schema:
+      value:
+        type: string
+
+services:
+  count-service:
+    sources:
+      - type: topic
+        id: sentences
+    states:
+      counter: 
+        type: keyed-state
+        properties:
+          key: 
+            type: string
+          value:
+            type: u32  
+    partition:
+      assign-key:
+        run: |
+          fn map_count(input: String) -> Result<String> {
+            Ok("counter".to_string())
+          }
+      update-state:
+        run: |
+          fn add_count(input: String) -> Result<()> {
+            counter().increment(1);
+            Ok(())
+          }
+
+  map-service:
+    sources:
+      - type: topic
+        id: sentences
+    states:
+      counter:
+        from: count-service.counter
+    transforms:
+      - operator: map 
+        run: |
+          fn new_input(_input: String) -> Result<String> {
+            let cc = counter().clone();
+            if cc.len() == 0 { return Ok("0".to_string()); }
+            return Ok(format!("{}",counter().clone()[0].1));
+          }
+    sinks:
+      - type: topic
+        id: count-input
