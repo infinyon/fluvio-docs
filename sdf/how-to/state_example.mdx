@@ -136,7 +136,6 @@ $ fluvio consume count-input -Bd
 2
 4
 ```
-The following out is consumed after running the produce command four times. Sometimes the entries will print out the same number or skip. Both services are running together and competing, so there will be some nondeterminism.
 
 ## Cleanup
 
@@ -149,7 +148,7 @@ $ sdf clean --force
 
 ## Conclusion
 
-We just implemented tumbling windows. Windows can be applied to applications needing aggregated data over a specified time window.
+We just implement another example with states. 
 
 [installation]: /docs/fluvio/quickstart#install-fluvio
 [tumbling_window]: /sdf/how-to/tumbling_window
