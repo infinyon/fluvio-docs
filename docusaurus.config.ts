@@ -272,6 +272,12 @@ const config: Config = {
       },
     ],
   ],
+  scripts: [
+    {
+      src: '/js/getkoala.js',
+      async: false,
+    }
+  ]
 };
 
 export default config;
