@@ -7,6 +7,7 @@ sidebar_position: 1000
 import CodeBlock from '@theme/CodeBlock';
 import TumblingWindow from '!!raw-loader!../_embeds/dataflows/tumbling_window.yaml';
 
+SDF has a tumbling window that collects entries from the source for a fixed duration of the window before finally being sent to the sink topic. For more in-depth explanation about windows, read [this][windows]. In this example, we will write a dataflow that aggregates the first digits of random numbers.
 SDF has a tumbling window that collects entries from the source for a fixed duration of the window before finally being sent to the sink topic. For more in-depth explanation about windows, read [this][windows]. 
 
 ## Prerequisites
