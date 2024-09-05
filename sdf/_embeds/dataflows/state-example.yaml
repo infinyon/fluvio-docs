@@ -12,10 +12,6 @@ topics:
     schema:
       value:
         type: string
-  count-input:
-    schema:
-      value:
-        type: string
 
 services:
   count-service:
@@ -42,22 +38,3 @@ services:
             counter().increment(1);
             Ok(())
           }
-
-  map-service:
-    sources:
-      - type: topic
-        id: sentences
-    states:
-      counter:
-        from: count-service.counter
-    transforms:
-      - operator: map 
-        run: |
-          fn new_input(_input: String) -> Result<String> {
-            let cc = counter().clone();
-            if cc.len() == 0 { return Ok("0".to_string()); }
-            return Ok(format!("{}",counter().clone()[0].1));
-          }
-    sinks:
-      - type: topic
-        id: count-input

@@ -1,13 +1,13 @@
 ---
 title: "State Example"
 description: "State Example"
-sidebar_position: 1
+sidebar_position: 1000
 ---
 
 import CodeBlock from '@theme/CodeBlock';
 import StateExample from '!!raw-loader!../_embeds/dataflows/state-example.yaml';
 
-This tutorial is a continuation to the [tumbling how to][tumbling_window]. Unlike the tumbling window, we will write a dataflow that does not have its data expire. We will continue to use states in this example to write a simple dataflow that counts the number of entries sent to a topic. The following [page][states] contains an indepth explanation about states.
+This tutorial is for using states. We will use states in this example to write a simple dataflow that counts the number of entries sent to a topic. The following [page][states] contains an indepth explanation about states.
 
 ## Prerequisites
 
@@ -16,12 +16,12 @@ This guide uses `local` Fluvio cluster. If you need to install it, please follow
 ## Dataflow
 
 ### Overview
-We will first define a service that contains a state and then a second service that references the state of the first service. Both services will take a sink from the target topic, but only the second service will produce messages to the final topic.
+We will define a service that contains a state which counts how much entries have entered the source.
 
 <img src="/img/sdf/how_to_images/state_example.png" alt="Visual of defined dataflow"  style={{ display: 'block', margin: '0 auto', }} width="700" />
 
-### Service A
-The purpose of the this service is to read and process data from the sink topic. In this service we will define the state as well as the state logic.
+### Service With State
+In this section we will show how to write a dataflow with a primitive state. The service needs to include a `state` and a `partition`. Inside the state, we will define a key-value pair. For our case, we are only using a primitive key-value pair(`String -> u32`). Inside the `partition`, we will define an `assign-key` and `update-state`. The function in `assign-key` will take the input from the source and map it to a key. The function in `update-state` will define the logic how the state is updated.
 
 ```YAML
 count-service:
@@ -68,47 +68,6 @@ run: |
   }
 ```
 
-### Service B
-The second service serves as a way to read from the state. It will not update the state.
-
-```YAML
-map-service:
-  sources:
-    - type: topic
-      id: sentences
-  states:
-    counter:
-      from: count-service.counter
-  transforms:
-    (...)
-  sinks:
-    - type: topic
-      id: count-input
-```
-
-#### 1. Reference the state from service A
-
-We need to reference the state defined in service A. In general it would be `serviceA.state-name`. Now we can reference the state via `state_name()` in our code. There is some special naming conventions to be careful about.
-```YAML
-states:
-  counter:
-    from: count-service.counter
-```
-
-#### 2. Defining the logic
-Our logic for this example is really simple. We will produce messages to the sink. We want our message to contain the total number of messages our service has seen. 
-```YAML
-transforms:
-  - operator: map 
-    run: |
-      fn new_input(_input: String) -> Result<String> {
-        let cc = counter().clone();
-        if cc.len() == 0 { return Ok("0".to_string()); }
-        return Ok(format!("{}",cc[0].1));
-      }
-```
-As we can see here, the `counter()` references the state defined in service A. For `keyed-state`, the `counter()` returns a vector of tuple of `(key,state)` values. In our case, we only have one key. This function acts like the `flush` in the tumbling window page without actually flushing out the whole state. See the [flush in the window page][window].  
-
 ## Running the Example
 
 Copy and paste following config and save it as `dataflow.yaml`.
@@ -124,17 +83,17 @@ $ sdf run --ephemeral
 You can produce data to the `sentence` topic via
 ```bash copy="cmd"
 $ echo 'hello' | fluvio produce sentences
+$ echo 'hello' | fluvio produce sentences
+$ echo 'hello' | fluvio produce sentences
 ```
 It does not matter the input as the dataflow only counts entries.
 
 ### Consume data
-You can consume the topic `count-input`
+You can see how much entries have entered sentences through using sdf's CI
 ```bash copy="cmd"
-$ fluvio consume count-input -Bd
-0
-1
-2
-4
+>> show state count-service/counter/state 
+ Key      Window  Value 
+ counter  *       3   
 ```
 
 ## Cleanup

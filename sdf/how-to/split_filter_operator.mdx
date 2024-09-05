@@ -1,0 +1,104 @@
+---
+title: "Split Operator - Filter"
+description: "Split Filter Operator Tutorial"
+sidebar_position: 500
+---
+import CodeBlock from '@theme/CodeBlock';
+import SplitFilter from '!!raw-loader!../_embeds/dataflows/splitfilter-operator.yaml';
+
+# Split Filter Map Operator
+
+The `Split Filter` is an operator used to selectively filter out what entries enter what sinks. The `Split Filter` is useful when wanting to sort entries into multiple sinks. For this example, we will refer to the example for the [filter operator][filter]. We will map strings from the `topic` sentences to sink topics `question` and `not-question`. The following visual shows how the service interacts with a single source to two sinks.
+<img src="/img/sdf/how_to_images/split_filter_operator.png" alt="Visual of defined dataflow"  style={{ display: 'block', margin: '0 auto', }} width="700" />
+
+## Prerequisites
+
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
+
+## Transformation
+
+The general syntax follows from the [filter operator's][filter] transform but is instead embedded with the sinks. 
+```YAML
+sinks:
+  - type: topic
+    id: (...)
+    transforms:
+      - operator: filter
+        run: |
+          (... filter function ...)
+    (... more topics ...)
+```
+In our case, the function takes a string as input, but will always return a boolean value.  If the input string contains a question mark, the operator will return `true`.  Otherwise, it will return `false`.
+
+```YAML
+sinks:
+  - type: topic
+    id: question
+    transforms:
+      - operator: filter
+        run: |
+          fn filter_question(sentence: String) -> Result<bool>{
+            Ok(sentence.contains("?"))
+          }
+  - type: topic
+    id: not-question
+    transforms:
+      - operator: filter
+        run: |
+          fn filter_not_question(sentence: String) -> Result<bool>{
+            Ok(!sentence.contains("?"))
+          }
+```
+
+## Running the Example
+
+Copy and paste following config and save it as `dataflow.yaml`.
+
+
+<CodeBlock language="yaml">{SplitFilter}</CodeBlock>
+
+To run example:
+```bash copy="cmd"
+$ sdf run --ephemeral
+```
+
+Produce sentences to in `sentence` topic:
+
+```bash copy="cmd"
+$ echo "Hello world" | fluvio produce sentences
+$ echo "Are you there?" | fluvio produce sentences
+```
+
+Consume topic `question` to retrieve the result in another terminal:
+
+```bash copy="cmd"
+$ fluvio consume question -Bd
+Are you there?
+```
+
+Consume the other topic `not-question`
+```bash copy="cmd"
+$ fluvio consume not-question -Bd
+Hello world
+```
+
+Instead of one topic with only questions, we see that both topics are sent to sinks.
+
+
+## Cleanup
+
+Exit `sdf` terminal and clean-up. The `--force` flag removes the topics:
+
+```bash copy="cmd"
+$ sdf clean --force
+```
+
+
+## Conclusion
+
+In this example, we covered how to use split traffic with the filter operator. While quite similar to the filter transform, using it as a split operator may allow for easier code.
+
+
+[installation]: /docs/fluvio/quickstart#install-fluvio
+[filter]: /sdf/how-to/filter_operator
+
