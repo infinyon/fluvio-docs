@@ -18,7 +18,7 @@ We are wrapping up the docs to publish the graphite connector in the [InfinyOn L
 
 ## Developer experience improvements
 * We are experimenting with running the fluvio binary on the edge devices and pushing it to the limits to enable more efficient data capture in memory and internet constraints without data loss as opposed to the existing message brokers.
-* We are also testing out inbound webhook implementation to capture data into topics and conceptualizing what an oputbound webhook gateway might look liketo read from streaming topics.
+* We are also testing out inbound webhook implementation to capture data into topics and conceptualizing what an outbound webhook gateway might look like to read from streaming topics.
 * Finally, we have made progress on shaping and prototyping stateful materialized views on stream! This is one of the most asked functionality and we are working with select partners to test out the functionality in their context.
 
 ## New blog post

@@ -62,7 +62,7 @@ The `meta` section contains the metadata for the connector:
 * The `producer`(optional) is the producer configuration for the connector. Currently, this is only used for `source`/`inbound` connectors. The current supported configurations are `linger`, `compression` and `batch_size`. All configurations are optional. See examples to a list of valid values for each configuration.
 * The `consumer`(optional) is the consumer configuration for the connector. Currently, this is only used for `sink`/`outbound` connectors. The current supported configurations are `id`, `partition`, `max_bytes` and `offset`. All configurations are optional. See examples to a list of valid values for each configuration.
 
-An minimim connector configuration would look like:
+At minimum connector configuration would look like:
 
 ```yaml
 apiVersion: 0.1.0

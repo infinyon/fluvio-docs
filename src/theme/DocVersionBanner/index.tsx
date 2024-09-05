@@ -1,4 +1,4 @@
-import React, {type ComponentType} from 'react';
+import React, { type ComponentType } from 'react';
 import clsx from 'clsx';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Link from '@docusaurus/Link';
@@ -8,12 +8,12 @@ import {
   useDocVersionSuggestions,
   type GlobalVersion,
 } from '@docusaurus/plugin-content-docs/client';
-import {ThemeClassNames} from '@docusaurus/theme-common';
+import { ThemeClassNames } from '@docusaurus/theme-common';
 import {
   useDocsPreferredVersion,
   useDocsVersion,
 } from '@docusaurus/theme-common/internal';
-import type {Props} from '@theme/DocVersionBanner';
+import type { Props } from '@theme/DocVersionBanner';
 import type {
   VersionBanner,
   PropVersionMetadata,
@@ -116,16 +116,16 @@ function DocVersionBannerEnabled({
   versionMetadata: PropVersionMetadata;
 }): JSX.Element {
   const {
-    siteConfig: {title: siteTitle},
+    siteConfig: { title: mainSiteTitle },
   } = useDocusaurusContext();
-  const {pluginId} = useActivePlugin({failfast: true})!;
+  const { pluginId } = useActivePlugin({ failfast: true })!;
 
   const getVersionMainDoc = (version: GlobalVersion) =>
     version.docs.find((doc) => doc.id === version.mainDocId)!;
 
-  const {savePreferredVersionName} = useDocsPreferredVersion(pluginId);
+  const { savePreferredVersionName } = useDocsPreferredVersion(pluginId);
 
-  const {latestDocSuggestion, latestVersionSuggestion} =
+  const { latestDocSuggestion, latestVersionSuggestion } =
     useDocVersionSuggestions(pluginId);
 
   // Try to link to same doc in latest version (not always possible), falling
@@ -133,6 +133,12 @@ function DocVersionBannerEnabled({
   const latestVersionSuggestedDoc =
     latestDocSuggestion ?? getVersionMainDoc(latestVersionSuggestion);
 
+  let siteTitle;
+  if (versionMetadata.pluginId == "default") {
+    siteTitle = mainSiteTitle;
+  } else {
+    siteTitle = versionMetadata.pluginId;
+  };
   return (
     <div
       className={clsx(

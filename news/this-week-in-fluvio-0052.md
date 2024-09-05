@@ -20,7 +20,7 @@ a connector configuration can refer to the secrets.
 # Motivation
 Customers need to be able to provide secrets to connectors
 in a protected way in order to access their own or third-party
-services with the confidence that Infynyon infrastructure 
+services with the confidence that Infinyon infrastructure
 provides protection from loss of the secrets.
 
 # Approach
@@ -44,7 +44,7 @@ Note: The current implementation limits the scope of the secrets to connectors o
 
 ## Displaying secrets: `fluvio cloud secret list`
 
-One security principle in effect with secret list is that we never want to send custoemr secrets out of the cloud. They are only decrypted at the point of use inside the connector. But users still need to see what named secrets have been set, and potentially when they were last updated.
+One security principle in effect with secret list is that we never want to send customer secrets out of the cloud. They are only decrypted at the point of use inside the connector. But users still need to see what named secrets have been set, and potentially when they were last updated.
 
 ```sh
 $ fluvio cloud secret list

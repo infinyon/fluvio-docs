@@ -80,7 +80,7 @@ Let's break down what's happening here:
 
 This template SmartModule will parse each record as an `i32` integer, then multiply that value by 2.
 
-Let's make sure our code compiles. If eveything works as expected, there will be a `.wasm` file generated in the target directory.
+Let's make sure our code compiles. If everything works as expected, there will be a `.wasm` file generated in the target directory.
 
 ```bash copy="fl"
 $ smdk build
@@ -98,7 +98,7 @@ Now that we've written our map, let's test using the command line.
 ```bash copy="fl"
 $ smdk test --text=6
 loading module at: ~/smdk/map-example/target/wasm32-unknown-unknown/release-lto/map_example.wasm
-1 records outputed
+1 records outputted
 12
 ```
 
@@ -114,7 +114,7 @@ $ fluvio topic create map-double
 topic "map-double" created
 ```
 
-In a new terminal, producde the following entries:
+In a new terminal, produce the following entries:
 
 ```bash copy="fl"
 $ fluvio produce map-double
@@ -176,7 +176,7 @@ Consuming records from the beginning of topic 'map-double'
 10
 ```
 
-Congratulations! :tada: Eveything worked as expected!
+Congratulations! :tada: Everything worked as expected!
 
 
 ### Publish to SmartModule Hub

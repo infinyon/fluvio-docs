@@ -30,7 +30,7 @@ Let's perform the matching test for our `my-filter` that looks for letter `a`:
 ```bash copy="fl"
 $ smdk test --text cat
 loading module at: ~/smdk/my-filter/target/wasm32-unknown-unknown/release-lto/my_filter.wasm
-1 records outputed
+1 records outputted
 cat
 ```
 
@@ -39,7 +39,7 @@ Next, a non-matching test, reading the input from the `stdin`:
 ```bash copy="fl"
 $ echo -n dog | smdk test --stdin
 loading module at: ~/smdk/my-filter/target/wasm32-unknown-unknown/release-lto/my_filter.wasm
-0 records outputed
+0 records outputted
 ```
 
 Checkout the `smdk test -h` for additional parameters.

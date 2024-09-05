@@ -6,7 +6,7 @@ title: "Delivery Semantics"
 The Internet, as well as other networks, is considered an unreliable communication channel. There can be delays or lost messages, and connections can fail unexpectedly.
 This affects the reliability of record delivery between producers and the SPU.
 
-Fluvio producers can be configued with a `delivery_semantic` configuration option, which allows choosing a delivery mechanism. Each mechanism has
+Fluvio producers can be configured with a `delivery_semantic` configuration option, which allows choosing a delivery mechanism. Each mechanism has
 a different trade-off between reliability and performance. There are two delivery semantics currently supported by producers:
 `at-most-once` and `at-least-once` (default).
 
