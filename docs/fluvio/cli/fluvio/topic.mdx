@@ -158,4 +158,28 @@ $ fluvio topic delete greeting
 topic "greeting" deleted
 ```
 
+## `fluvio topic add-partition`
+
+This command adds a partition to an existing topic.
+It will return the partition number and the SPU id where the partition is located.
+
+**Example usage**
+
+
+```bash copy="fl"
+$ fluvio topic add-partition greeting
+ PARTITION  SPU
+ 1          5001
+```
+
+You can also specify the number of new partitions to add using the `-c` or `--count` flag.
+
+```bash copy="fl"
+$ fluvio topic add-partition greeting -c 3
+ PARTITION  SPU
+ 2          5002
+ 3          5003
+ 4          5001
+```
+
 [the docs for more info about data retention]: fluvio/concepts/operations/data-retention.mdx

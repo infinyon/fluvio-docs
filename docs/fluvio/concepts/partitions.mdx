@@ -58,8 +58,19 @@ one consumer per partition in the topic.
 
 - [Check out the multi-consumer example in the CLI reference]
 
-[SC Architecture]: fluvio/concepts/architecture/sc.mdx
 
+#### Add Partitions to a Topic
+
+Even topics already created can have new partitions added to them, allowing more parallelism and higher throughput, but also using more disk space.
+
+Adding a partition will not rebalance the data from the existing partitions. The rebalancing will happen naturally after the records age.
+
+- [Check out the add-partitions example in the CLI reference]
+
+
+
+[SC Architecture]: fluvio/concepts/architecture/sc.mdx
 [Check out the key partitioning example in the CLI reference]: fluvio/cli/fluvio/produce.mdx#produce-keyvalue-records-from-stdin
 [Check out the round-robin partitioning example in the CLI reference]: fluvio/cli/fluvio/produce.mdx#producing-to-multiple-partitions-using-round-robin  
 [Check out the multi-consumer example in the CLI reference]: fluvio/cli/fluvio/consume.mdx#consume-from-a-topic-with-multiple-partitions
+[Check out the add-partitions example in the CLI reference]: fluvio/cli/fluvio/topic.mdx#fluvio-topic-add-partition
