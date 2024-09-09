@@ -16,7 +16,7 @@ This guide uses `local` Fluvio cluster. If you need to install it, please follow
 ## Dataflow
 
 ### Overview
-For this example, we will right a dataflow that tracks books in a library system. It will take a book from the source and return the book as a value combined with a barcode as the key. We will write a short hashing function that takes the title and hashes it into a barcode that will serve as the key for our sink.
+For this example, we will write a dataflow that tracks books in a library system. It will take a book from the source and return the book as a value combined with a barcode as the key. We will write a short hashing function that takes the title and hashes it into a barcode that will serve as the key for our sink.
 
 <img src="/img/sdf/how_to_images/keyvalueOutput.png" alt="Visual of defined dataflow"  style={{ display: 'block', margin: '0 auto', }} width="700" />
 
