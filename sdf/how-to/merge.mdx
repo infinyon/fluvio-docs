@@ -1,0 +1,97 @@
+---
+title: "Merge Operator - Map"
+description: "Merge With Map Tutorial"
+sidebar_position: 600
+---
+import CodeBlock from '@theme/CodeBlock';
+import Merge from '!!raw-loader!../_embeds/dataflows/merge-example.yaml';
+
+# Merge
+
+Services in fluvio can be defined to have multiple sinks and sources. In this example, we will implement a service that takes in multiple sources via a merge. The example will simulate buying and selling stocks. There is a topic `buy` and another topic `sell` that aggreate to create a log of buy and sell orders. The visual shows the dataflow we will implement. 
+<img src="/img/sdf/how_to_images/merge.png" alt="Visual of defined dataflow"  style={{ display: 'block', margin: '0 auto', }} width="700" />
+
+## Prerequisites
+
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
+
+## Transformation
+
+We can add a transform operator to our source list.
+```YAML
+source:
+  - type: topic
+    id: (...)
+    transforms:
+      - operator: map
+        run: |
+          (... filter function ...)
+    (... more topics ...)
+```
+In our case, we have two topics `buy` and `sell` that read json objects that include a name, amount, and price. We will map the json object into a string that gets sent into the topic `message` which will log the orders.
+
+```YAML
+sources:
+  - type: topic
+    id: buy
+    transforms:
+      - operator: map
+        run: |
+          fn buy_order(order: Order) -> Result<String> {
+            Ok(format!("+ Buy Order for  {}x{} at {}",order.name,order.amount,order.price))
+          }
+  - type: topic
+    id: sell 
+    transforms:
+      - operator: map
+        run: |
+          fn sell_order(order: Order) -> Result<String> {
+            Ok(format!("- Sell Order for {}x{} at {}",order.name,order.amount,order.price))
+          }
+```
+
+## Running the Example
+
+Copy and paste following config and save it as `dataflow.yaml`.
+
+
+<CodeBlock language="yaml">{Merge}</CodeBlock>
+
+To run example:
+```bash copy="cmd"
+$ sdf run --ephemeral
+```
+
+Produce json objects to each of the topics:
+
+```bash copy="cmd"
+$ echo '{"name":"AMZN","amount":20,"price":173.33}' | fluvio produce buy
+$ echo '{"name":"TSLA","amount":20,"price":219.41}' | fluvio produce sell
+```
+
+Consume topic `message` to retrieve the result:
+
+```bash copy="cmd"
+$ fluvio consume message -Bd
+"+ Buy Order for  AMZNx20 at 173.33"
+"- Sell Order for TSLAx20 at 219.41"
+```
+
+Both the buy order and sell order has been mapped into a string to be logged.
+
+## Cleanup
+
+Exit `sdf` terminal and clean-up. The `--force` flag removes the topics:
+
+```bash copy="cmd"
+$ sdf clean --force
+```
+
+
+## Conclusion
+
+In this example, we covered how to use merge to allow services to consume multiple sources.
+
+[installation]: /docs/fluvio/quickstart#install-fluvio
+[filter]: /sdf/how-to/filter_operator
+

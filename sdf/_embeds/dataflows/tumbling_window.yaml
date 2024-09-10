@@ -1,7 +1,7 @@
 # dataflow.yaml
 apiVersion: 0.5.0
 meta:
-  name: flat-map-example
+  name: window-example
   version: 0.1.0
   namespace: examples
 

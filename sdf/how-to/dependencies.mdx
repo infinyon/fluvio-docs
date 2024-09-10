@@ -1,0 +1,87 @@
+---
+title: "Transform Dependencies - Regex"
+description: "Dependencies Example"
+sidebar_position: 50
+---
+import CodeBlock from '@theme/CodeBlock';
+import Regex from '!!raw-loader!../_embeds/dataflows/regex.yaml';
+
+# Transform Dependencies
+
+In this example, we will show how import rust crates otherwise not included. In this example, we will import the regex library and verify that the source topic reads proper https website links.
+
+## Prerequisites
+
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
+
+## Transformation
+
+Below is the syntax for importing multiple crates.
+```YAML
+transforms:
+  - operator: (transfrom operator)
+    dependencies:
+      - name: (library a)
+        version: (version number)
+      - name: (library b)
+        version: (version number)
+      (... more crates ...)
+    run: |
+      (...)
+```
+In our example, the following is our transfrom operator.
+```YAML
+transforms:
+  - operator: filter
+    dependencies:
+      - name: regex
+        version: "1"
+    run: |
+      fn verify(input: String) -> Result<bool> {
+        let re = regex::Regex::new(r"^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$")
+                    .unwrap();
+        Ok(re.is_match(&input))
+      }
+```
+
+## Running the Example
+
+Copy and paste following config and save it as `dataflow.yaml`.
+
+
+<CodeBlock language="yaml">{Regex}</CodeBlock>
+
+To run example:
+```bash copy="cmd"
+$ sdf run --ephemeral
+```
+
+Produce sentences to in `sentence` topic:
+
+```bash copy="cmd"
+$ echo "hello world" | fluvio produce sentences
+$ echo "https://www.fluvio.io" | fluvio produce sentences
+```
+
+Consume topic `validlink` to retrieve the result in another terminal:
+
+```bash copy="cmd"
+$ fluvio consume validlink -Bd
+https://www.fluvio.io
+```
+
+## Cleanup
+
+Exit `sdf` terminal and clean-up. The `--force` flag removes the topics:
+
+```bash copy="cmd"
+$ sdf clean --force
+```
+
+
+## Conclusion
+
+We just covered another basic operator in SDF, the Flat-Map Operator. The Flat-Map is a powerful operator. As a matter of fact, the Flat-Map operator can be used inplace of other operators.
+
+
+[installation]: /docs/fluvio/quickstart#install-fluvio
