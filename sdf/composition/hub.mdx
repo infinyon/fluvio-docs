@@ -24,7 +24,7 @@ Before publishing,
 - Test with `sdf test` to ensure it is working with sample data.
 - Run with test dataflow to ensure it is working in a dataflow.
 
-To test with a dataflow, create a dataflow file and add `dev` section at the bottom of the file: 
+To test with a dataflow, create a dataflow file and add `dev` section at the bottom of the file:
 ```
 dev:
   imports:
@@ -38,10 +38,10 @@ Then run the dataflow with with ephemeral mode: `sdf run --ephemeral` otherwise 
 
 # Publishing
 
-After tested and ready, publish the package using with `sdf hub publish` command.  As mentioned before, the packages are private by default.  
+After tested and ready, publish the package using with `sdf publish` command.  As mentioned before, the packages are private by default.
 
 ```bash
-$ sdf hub publish
+$ sdf publish
 ```
 
 To list all the packages run: `sdf hub list` command.
@@ -53,7 +53,7 @@ $ sdf hub list
 ## Publishing as package as public, use `--public` flag
 
 ```bash
-$ sdf hub publish --public
+$ sdf publish --public
 ```
 
 Once you have published the package, it will be available to anyone.  Each version of package can be published as public or private.
