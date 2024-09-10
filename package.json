@@ -17,12 +17,12 @@
     "test:dev": "vitest"
   },
   "dependencies": {
-    "@docusaurus/core": "3.4.0",
-    "@docusaurus/plugin-content-blog": "3.4.0",
-    "@docusaurus/plugin-google-gtag": "3.4.0",
-    "@docusaurus/preset-classic": "3.4.0",
+    "@docusaurus/core": "^3.5.2",
+    "@docusaurus/plugin-content-blog": "^3.5.2",
+    "@docusaurus/plugin-google-gtag": "^3.5.2",
+    "@docusaurus/preset-classic": "^3.5.2",
     "@easyops-cn/docusaurus-search-local": "^0.44.5",
-    "@mdx-js/react": "^3.0.0",
+    "@mdx-js/react": "^3.0.1",
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.0",
     "raw-loader": "^4.0.2",
