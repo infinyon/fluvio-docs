@@ -206,7 +206,7 @@ const config: Config = {
           position: "right",
         },
         {
-          type: "custom-GitHub",
+          type: "custom-GitHubStars",
           position: "right",
         },
       ],
