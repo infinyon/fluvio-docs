@@ -1,7 +1,7 @@
 .githubStars {
     align-items: center;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     list-style-type: none;
     margin-right: 1rem;
 }
