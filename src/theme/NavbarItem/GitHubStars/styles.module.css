@@ -1,0 +1,16 @@
+.githubStars {
+    align-items: center;
+    display: flex;
+    justify-content: start;
+    list-style-type: none;
+    margin-right: 1rem;
+}
+
+.githubStars a {
+    height: 20px;
+}
+
+.githubStars img {
+    height: 100%;
+    width: 100%;
+}
