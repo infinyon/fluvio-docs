@@ -113,9 +113,7 @@ Options:
 ### `fluvio profile export`
 
 ```bash
-Export a profile for use in other applications. By default a fluvio config format
-in toml is exported which can be used by setting environment variable FLV_PROFILE_PATH
-to the exported file for configuration in environments like CI workflows or Docker containers.
+Export a profile for use in other applications.
 
 Usage: fluvio profile export [OPTIONS] [PROFILE_NAME]
 
@@ -127,6 +125,8 @@ Options:
   -h, --help           Print help
 ```
 
+By default a fluvio config in toml format is exported which can be used by setting environment variable FLV_PROFILE_PATH
+to the exported file for configuration in environments like CI workflows or Docker containers.
 
 ### `fluvio profile add`
 
