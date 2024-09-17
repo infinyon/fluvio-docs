@@ -1,0 +1,27 @@
+# sql.yaml
+apiVersion: 0.1.0
+meta:
+ name: simple-cat-facts-sql
+ type: sql-sink
+ version: 0.4.3
+ topic: cat-facts
+sql:
+ url: "postgres://user:password@db.postgreshost.example/dbname"
+transforms:
+ - uses: infinyon/json-sql@0.2.1
+   invoke: insert
+   with:
+     mapping:
+       table: "animalfacts"
+       map-columns:
+         "length":
+           json-key: "length"
+           value:
+             type: "int"
+             default: "0"
+             required: true
+         "raw_fact_json":
+           json-key: "$"
+           value:
+             type: "jsonb"
+             required: true
