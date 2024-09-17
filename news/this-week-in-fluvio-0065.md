@@ -40,7 +40,7 @@ Notable changes in this new version:
 
 - You can now use `fluvio cluster upgrade` to seamlessly upgrade local clusters to the latest Fluvio version.
 - Enhanced feedback for SPU-to-SPU connections during mirroring, with clearer error reporting on failures.
-- Fluvio profile export <profile> now works with FLV_PROFILE_PATH, thanks to open source contributor @PanGan21 for help with this fix, and see docs for how this works.
+- `fluvio profile export <profile>` now works with flv_profile_path, thanks to open source contributor @pangan21 for help with this fix, and see docs for how this works.
 - `cdk build` now defaults to more compatible native targets
 
 ## Bug fixes
