@@ -5,9 +5,9 @@ sidebar_position: 60
 
 # `sdf deploy`
 
-The `sdf deploy` execute a dataflow in the worker. 
+The `sdf deploy` command executes a dataflow in the worker. 
 
-After provisioning the command enters an [interactive shell] that allows you to interact with the dataflow.
+After provisioning, the command enters an [interactive shell] that allows you to interact with the dataflow.
 
 [interactive shell]: #run-interactive-shell
 
@@ -36,18 +36,18 @@ Options:
 ```
 
 Where:
-* `--ui` start graphical representation of the project in a web browser. The default port is `8000`.
+* `--ui` starts graphical representation of the project in a web browser. The default port is `8000`.
 * `--port` sets the port for the web server to listen on
 * `--env` sets environment variables to be passed to operators
-* `--skip-dataflow` skips deploying current dataflow  in the directory.
+* `--skip-dataflow` skips deploying the dataflow in the current directory.
 
 
-Once deployment is done, the `deploy` command opens interactive shell to worker.
+Once deployment is complete, the `deploy` command opens interactive shell to worker.
 
 
 ### `deploy` interactive shell
 
-The interactive shell allows you to look-up runtime object, such as state.
+The interactive shell allows you to look-up runtime objects, such as stat
 
 ```bash copy="fl"
 >> help
