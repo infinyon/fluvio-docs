@@ -157,7 +157,7 @@ For example, if you have dataflow `fraud-detector` and `car-processor` running i
 $> sdf worker create main
 ```
 
-The local worker store the dataflow state in the local file system.  The dataflow state is stored in the `~/.sdf/<cluster>/worker/<dataflow>`.
+The local worker stores the dataflow state in the local file system.  The dataflow state is stored in the `~/.sdf/<cluster>/worker/<dataflow>`.
 Sor for `local` cluster, files will be stored in `~/.sdf/local/worker/dataflows`.
 
 if you have delete the fluvio cluster, worker need to be manually shutdown and created again.  This limitation will be removed in the future release
