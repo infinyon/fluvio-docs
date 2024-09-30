@@ -16,9 +16,8 @@ For production deployment, the `deploy` command is used to deploy the dataflow o
 
 
 To use deployment mode, it's essential to understand the following concepts:
-- Types of workers
-- Managing workers
-- Deploying dataflows
+- Workers
+- Deploying dataflows to workers
 - Dataflow lifecycle within a worker
 
 # Worker
@@ -27,101 +26,22 @@ A worker is the deployment target for a dataflow and must be created and provisi
 
 There is no limit to the number of dataflows you can run on each worker, apart from CPU, memory, and disk constraints. For optimal performance, it is recommended to run a single worker per machine.
 
-## Managing workers
+There are two types of workers: `Host` and `Remote`.  `Host` is a simple worker designed for local deployment without requiring any additional infrastructure.  It is not designed for robust production deployment.  
+For typical production deployment, you will use `Remote` worker.  It is designed to run in the cloud, data center, or edge device.   If you are using InfinyOn Cloud, the `remote` cloud worker is automatically provisioned and registered in your profile. 
 
-Workers must be registered before deploying a dataflow. The CLI provides commands to manage workers, including creating, listing, switching, and deleting them.
+Each worker has a unique identifier for the Fluvio cluster. The worker profile is stored in the local machine and is used to match the worker with the Fluvio cluster. When you switch the Fluvio profile, the worker profile is also switched. Once a worker is selected, it will be used for all dataflow operations until you choose a different worker.
+The worker also human-readable name that is used to identify the worker in the CLI.
 
-To list registered workers, you can use `list` command.  It will show the current selected worker with `*`.
+### Host Workers
 
-```bash
-$> sdf worker list
-    NAME          TYPE    CLUSTER       WORKER ID                            
- *  worker1       Remote  cluster1      afd1-2738-41ef-8edc-9f04e500b919
-    worker2       Remote  cluster1      wer2-qwerty-dummy-id
-    edge1         Remote  cluster1      edg1-worker-id
-```
-
-InfinyOn Cloud workers are automatically provisioned and registered in your profile. All other workers must be manually registered or created using the CLI.
-
-To switch the worker, you can use `switch` command:
-
-```bash
-$> sdf worker switch <worker-name>
-```
-
-This assumes worker-name is already created or registered.  
-
-
-
-##  Worker types
-
-There are two types of workers: `Host` and `Remote`.  `Host` is worker that use a simple deployment model suitable for local machine or edge device.  It is not designed for robust production deployment.  SDF CLI is used to manage host worker.
-A Remote worker refers to any provisioned worker that is located elsewhere, such as in the cloud, a data center, or on an edge device. To use it, you simply need to register the worker. Building robust remote workers is outside the scope of the SDF CLI, as it involves complex infrastructure scenarios. If you need assistance with deploying a remote worker, please contact support. 
-
-
-If you are using InfinyOn Cloud, the worker is automatically provisioned and registered in your profile. 
-
-
-### Remote Worker
-
-Remote worker is a worker runs in different machine from the CLI.   It is typically set up by DevOps team for production environment. 
-
-Typical lifecycle for using remote worker is:
-1. Start remote worker in the server.
-2. Register the worker with the name in your machine.
-3. Run the dataflow in the remote worker.
-4. Unregister the worker when it is no longer needed.  This doesn't shutdown the worker but remove it from the profile.
-
-Note that there are many ways to manage the remote worker.  You can use Kubernetes, Docker, Systemd, Terraform, Ansible, or any other tool that can manage the server process and ensure it can restart when server is rebooted.
-
-InfinyOn cloud is good example of remote worker.  When you create a cluster in InfinyOn cloud, it will automatically provision the worker for you.  It will also sync the profile when cluster is created.
-
-Once know there are remote worker, you can discover them using `sdf worker list -all` command.
-
-```bash
-$> sdf worker list -all
-    NAME  TYPE    CLUSTER  WORKER ID                            
- *  main  Host    local    7fd7eda3-2738-41ef-8edc-9f04e500b919
-    N/A   Remote  local    edg2-worker-id
-```
-
-These shows a host worker in your local machine and remote worker with id `edg2-worker-id` running somewhere.   To register the remote worker, you can use `register` command.
-
-```bash
-$> sdf worker register <name> <worker-id>
-```
-
-Example, registering the remote worker with name `edge2` and worker id `edg2-worker-id`.
-
-```bash
-$> sdf worker register edge2 edg2-worker-id
-Worker `edge2` is registered for cluster: `local`
-```
-
-You can switch among worker using `switch` command.
-
-```bash
-$> sdf worker switch <worker_profile>
-```
-
-
-To unregister the worker after you are done with and no longer need,  you can use `unregister` command:
-
-```bash
-$> sdf worker unregister <name>
-```
-
-### Host Worker 
-
-
-To create host worker, you can use the following command:
+To create host worker, you can use the following command. 
 ```bash
 $> sdf worker create <name>
 ```
 
-This will spawn the worker process in the background.  It will run until you shutdown the worker or machine is rebooted.  The name can be anything as long as it is unique for your machine since profile are not shared across different machines.  
+This will creates and register a new worker in your machine.  It will run in the background until you shutdown the worker or machine is rebooted.  The name can be anything as long as it is unique for your machine since profile are not shared across different machines.  
 
-Once you have created the worker, You can list them:
+Once you have created the worker, You can list them. 
 
 ```bash
 $> sdf worker create main
@@ -130,7 +50,7 @@ $> sdf worker list
     NAME  TYPE  CLUSTER  WORKER ID                            
  *  main  Host  local    7fd7eda3-2738-41ef-8edc-9f04e500b919
 ```
-The `*` indicates the current selected worker.  The worker id is internal unique identifier for current fluvio cluster.  Unless specified, it will be generated by the system.
+The `*` indicates the current selected worker.  
 
 SDF only support running a single HOST worker for each machine since a single worker can support many dataflow.  If you try to create another worker, you will get an error message.
 
@@ -163,14 +83,85 @@ For the `local` cluster, files will be stored in `~/.sdf/local/worker/dataflows`
 if you have deleted the fluvio cluster, the worker needs to be manually shutdown and created again.  This limitation will be removed in a future release
 
 
-If you're using InfinyOn Cloud, the worker will be automatically provisioned and registered in your profile.
-A worker is the deployment target for a dataflow. It can run anywhere as long as it can connect to the Fluvio cluster—whether in a data center, cloud, or on an edge device. There is no limit to the number of workers you can run, but each worker’s capacity to handle dataflows and their performance depends on available resources. It is recommended to run a single worker per machine for optimal performance.
+### Remote Workers
 
-Deployment uses the worker profile to match a specific worker. When you switch the Fluvio profile, SDF automatically switches the worker profile as well. Once a worker is selected, it will be used for all dataflow operations until you choose a different worker.
+Typical lifecycle for using remote worker:
+1. Provision remote worker in the server.
+2. Register the worker with the name in your machine.
+3. Run the dataflow in the remote worker.
+4. Unregister the worker when it is no longer needed.  This doesn't shutdown the worker but remove it from the profile.
+
+Note that there are many ways to manage the remote worker.  You can use Kubernetes, Docker, Systemd, Terraform, Ansible, or any other tool that can manage the server process and ensure it can restart when server is rebooted.  Please contact InfinyOn support for more information.
+
+InfinyOn cloud is a simplest way to use the remote worker.   When you create a cluster in InfinyOn cloud, it will automatically provision and sync worker for you.  
+
+The worker is automatically register when you create the cluster.  By default, worker is name as cluster name.
+
+```bash
+$ fluvio cloud create cluster
+Creating cluster bigfoot
+Done!
+
+$ sdf worker list
+    NAME          TYPE    CLUSTER           WORKER ID                            
+ *  big-foot      Remote  big-foot-awx      big-foot
+
+```bash
 
 
+To register the known remote worker, you can use `register` command.
 
-# Deploy dataflow
+```bash
+$> sdf worker register <name> <worker-id>
+```
+
+Example, registering the remote worker with name `edge2` and worker id `edg2-worker-id`.
+
+```bash
+$> sdf worker register edge2 edg2-worker-id
+Worker `edge2` is registered for cluster: `local`
+```
+
+You can switch among worker using `switch` command.
+
+```bash
+$> sdf worker switch <worker_profile>
+```
+
+To unregister the worker after you are done with and no longer need,  you can use `unregister` command:
+
+```bash
+$> sdf worker unregister <name>
+```
+
+## Managing workers
+
+Workers must be registered before deploying a dataflow. The CLI provides commands to manage workers, including creating, listing, switching, and deleting them.
+
+
+To switch the worker, you can use `switch` command:
+
+```bash
+$> sdf worker switch <worker-name>
+```
+
+This assumes worker-name is already created or registered.  
+
+
+You can use `sdf worker list -all` command to discover workers in the same fluvio cluster. This is useful when you are working in the team and want to know what workers are available.
+
+```bash
+$> sdf worker list -all
+finding all available workers:
+    NAME  TYPE    CLUSTER  WORKER ID                                   VERSION                       
+ *  main  Host    local    7fd7eda3-2738-41ef-8edc-9f04e500b919        beta2
+    N/A   Remote  local    edg2-worker-id                              beta2
+```
+
+With `-all` option, it will display `version` of the discovered worker. 
+
+
+# Deploying dataflow
 
 Once worker is selected, you can deploy the dataflow using `deploy` command:
 
