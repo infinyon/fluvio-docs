@@ -6,7 +6,7 @@ sidebar_position: 60
 
 # Introduction
 
-When you use `run` command to execute a dataflow, it runs within the same process as the CLI. This is useful for development and testing because it's easy to start without needing to manage additional resources. It allows for quick testing and validation of the dataflow, and you can easily load and integrate development packages.
+When you use the `run` command to execute a dataflow, it runs within the same process as the CLI. This is useful for development and testing because it's easy to start without needing to manage additional resources. It allows for quick testing and validation of the dataflow, and you can easily load and integrate development packages.
 
 For production deployment, the `deploy` command is used to deploy the dataflow on a worker. All operations available in `run` also apply to deploy, with the following differences:
 - The dataflow is executed on the worker, not within the CLI process. The CLI communicates with the worker on the user's behalf.
