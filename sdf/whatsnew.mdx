@@ -6,6 +6,31 @@ sidebar_position: 20
 
 # Beta 2
 
+## Upgrading 
+
+To upgrade to the beta2, run the following command:
+
+```bash
+$ fvm install sdf-beta2
+```
+
+For upgrading cloud workers, please contact InfinyOn support. 
+
+### Compatibility and Breaking changes
+
+V4 of dataflow is no longer supported. Please upgrade to V5.
+Beta2 CLI is not compatible with Beta1 workers.  Please upgrade workers to Beta2.
+
+### Package migration
+
+Since beta2, the packages functions are consolidated in a single rust crate on generation. This allows us to share types and logic between different package functions.
+
+In order to migrate your existing packages, you need to generate your package (`sdf generate`) using the `sdf-beta2` version and then copy the code in the new location of the generated code.
+
+In other words, for each function, the logic in `rust/<function-name>/src/lib.rs` must be copied on `rust/<package-name>/src/<function_name>.rs`. But please, make sure that all the attributes in `#[sdf]` attribute macro matches with the attributes that we get on code generation.
+
+
+
 ## New Features
 
 - Support for customizing JSON serialization and deserialization
@@ -24,21 +49,10 @@ sidebar_position: 20
 - Worker: Worker listing with `-all` shows the version.
 - Config: Producer config now supports `compression`, `isolation`, and `timeout`.
 - Cloud: Cloud supports larger worker storage.
+- Cloud: Secret support
 - Package: Generated codes are consolidated and hidden from developers.
 - Operator: Operator error messages are sent to log. 
 
 ## Bug Fixes
 - CLI show list of created topics
-
-## Breaking Changes
-
-V4 of dataflow is no longer supported. Please upgrade to V5.
-
-## Package migration
-
-Since beta2, the packages functions are consolidated in a single rust crate on generation. This allows us to share types and logic between different package functions.
-
-In order to migrate your existing packages, you need to generate your package (`sdf generate`) using the `sdf-beta2` version and then copy the code in the new location of the generated code.
-
-In other words, for each function, the logic in `rust/<function-name>/src/lib.rs` must be copied on `rust/<package-name>/src/<function_name>.rs`. But please, make sure that all the attributes in `#[sdf]` attribute macro matches with the attributes that we get on code generation.
 
