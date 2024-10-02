@@ -8,18 +8,27 @@ sidebar_position: 20
 
 ## Upgrading 
 
-To upgrade to the beta2, run the following command:
+To upgrade CLI to the beta2, run the following command:
 
 ```bash
 $ fvm install sdf-beta2
 ```
 
-For upgrading cloud workers, please contact InfinyOn support. 
+To upgrade host workers, shutdown and restart the worker:
+
+```bash
+$ sdf worker shutdown <host-worker-name>
+$ sdf worker create <host-worker-name>
+```
+
+For upgrading cloud workers, please contact [InfinyOn support](#infinyon-support).
 
 ### Compatibility and Breaking changes
 
-V4 of dataflow is no longer supported. Please upgrade to V5.
-Beta2 CLI is not backward compatible with Beta1 workers.  Please upgrade workers to Beta2 in order to use the Beta2 CLI.
+`0.4.0` version of dataflow is no longer supported. Please upgrade to `0.5.0`. 
+The version of the dataflow is specified in the `apiVersion` field in the dataflow file.
+
+
 
 ### CLI changes
 
@@ -65,6 +74,10 @@ In other words, for each function, the logic in `rust/<function-name>/src/lib.rs
 
 ## Bug Fixes
 - CLI show list of created topics
+
+## InfinyOn Support
+
+For any questions or issues, please contact InfinyOn support at support@infinyon.com  or https://discordapp.com/invite/bBG2dTz
 
 
 [deployment]: deployment.mdx
