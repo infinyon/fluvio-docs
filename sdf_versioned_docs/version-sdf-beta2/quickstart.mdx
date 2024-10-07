@@ -1,0 +1,175 @@
+---
+title: Quickstart
+description: Getting started with Stateful Dataflows
+sidebar_position: 10
+---
+
+# SDF Quickstart
+
+Provisioning and operating a Stateful Dataflow requires the following system components:
+
+1. [Fluvio Cluster] to enable dataflows to consume and produce streaming data.
+
+2. [Dataflow File][dataflow-yaml] to define the schema, composition, services, and operations.
+
+
+The Stateful Dataflows can be built, tested, and run locally during preview releases. As we approach general availability, they can also be deployed in your InfinyOn Cloud cluster. In addition, the dataflows may be published to [Hub] and shared with others with one click and installation.
+
+
+# Inline Definitions
+
+Inline dataflows are [dataflow.yaml][dataflow-yaml] files that include everything necessary to run a data pipeline. Inline dataflows are useful for trying out various features of the product. Deploying an inline dataflow is simple:
+
+1. [Download (or create) a dataflow file](#2-create-the-dataflow-file)
+2. [Run the dataflow](#3-run-the-dataflow)
+
+While inline dataflows are a breeze to get started with, maintaining code in `yaml` is not always ideal. For complex projects, we recommend using [Composable Dataflows].
+
+
+## Create and Run a Dataflow
+
+Let's create a simple dataflow to split a sentence into words and count the words.
+
+
+### 1. Installing SDF CLI
+
+Stateful dataflows are managed via [sdf cli] that we install it using [fvm].
+
+```
+$ fvm install sdf-beta2
+```
+
+### 2. Create the Dataflow file
+
+Create a dataflow file in the directory `split-sentence` directory:
+
+```bash
+$ mkdir -p split-sentence-inline
+$ cd split-sentence-inline
+```
+
+Create the `dataflow.yaml` and add the following content:
+
+```yaml title="dataflow.yaml"
+apiVersion: 0.5.0
+
+meta:
+  name: split-sentence-inline
+  version: 0.1.0
+  namespace: example
+
+config:
+  converter: raw
+
+topics:
+  sentence:
+    schema:
+      value:
+        type: string
+        converter: raw
+  words:
+    schema:
+      value:
+        type: string
+        converter: raw
+
+services:
+  sentence-words:
+    sources:
+      - type: topic
+        id: sentence
+
+    transforms:
+      - operator: flat-map
+        run: |
+          fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
+            Ok(sentence.split_whitespace().map(String::from).collect())
+          }
+      - operator: map
+        run: |
+          pub fn augment_count(word: String) -> Result<String> {
+            Ok(format!("{}({})", word, word.chars().count()))
+          }
+
+    sinks:
+      - type: topic
+        id: words
+```
+
+### 3. Run the Dataflow
+
+Use `sdf` command line tool to run the dataflow:
+
+```bash
+$ sdf run --ui
+```
+
+Use `--ui` to generate the graphical representation and run the Studio.
+
+### 4. Test the Dataflow
+
+Produce sentences to in `sentence` topic:
+
+```bash copy="fl"
+$ fluvio produce sentence
+```
+
+
+```bash
+Hello world
+Hi there
+```
+
+Consume from `words` to retrieve the result:
+
+```bash copy="fl"
+$ fluvio consume words -Bd
+```
+
+```bash
+Hello(5)
+world(5)
+Hi(2)
+there(5)
+```
+
+### 5. Show State
+
+The dataflow collects runtime metrics that you can inspect in the runtime terminal.
+
+Check the `sentence-to-words` counters:
+
+```bash copy="fl"
+>> show state sentence-words/sentence-to-words/metrics
+ Key    Window  succeeded  failed
+ stats  *       2          0
+```
+
+Check the `augment-count` counters:
+
+```bash copy="fl"
+>> show state sentence-words/augment-count/metrics
+ Key    Window  succeeded  failed
+ stats  *       4          0
+```
+
+Congratulations! You've successfully built and run a composable dataflow! The project is available for download in [github].
+
+### 6. Clean-up
+
+Exit `sdf` terminal and remove the topics:
+
+```bash
+sdf clean --force
+```
+
+**Note** The `--force` keyword should only be used if you want to remove everything, including the topics created by this dataflow.
+
+[Hub]: /docs/hub/overview
+[fvm]: /docs/fluvio/fvm/introduction
+[Composable Dataflows]: composition/overview.mdx
+[dataflow-yaml]: concepts/dataflow-yaml.mdx
+[github]: https://github.com/infinyon/stateful-dataflows-examples/
+[Example Workflows in github]: https://github.com/infinyon/stateful-dataflows-examples
+[Fluvio Cluster]: /docs/fluvio/quickstart#start-a-cluster
+[SDF CLI]: cli/index.mdx

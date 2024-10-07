@@ -1,0 +1,88 @@
+# dataflow.yaml
+apiVersion: 0.5.0
+meta:
+  name: window-example
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: raw
+
+topics:
+  sentences:
+    schema:
+      value:
+        type: string
+  digit-start-col:
+    schema:
+      value:
+        type: string 
+  digit-start:
+    schema:
+      value:
+        type: string 
+
+services:
+  window-collect-service:
+    sources:
+      - type: topic
+        id: sentences
+    states:
+      count-by-first-digit:
+        type: keyed-state
+        properties:
+          key: 
+            type: string
+          value:
+            type: u32   
+    window: 
+      tumbling: 
+        duration: 15s
+      assign-timestamp:
+        run: | 
+          fn assign_event_timestamp(_str: String, time: i64) -> Result<i64> {
+            Ok(time)
+          }
+      partition:
+        assign-key:
+          run: |
+            fn key_first_digit(str: String) -> Result<String> {
+              if str.len() == 0 {
+                return Ok("empty".to_string());
+              }
+              Ok(str[0..1].to_string())
+            }
+        update-state:
+          run: |
+            fn increment_digit_count(str: String) -> Result<()> {
+              count_by_first_digit().increment(1);
+              Ok(())
+            }
+      flush:
+        run: |
+          fn get_first_digit_count() -> Result<String> {
+            let cc = count_by_first_digit().clone();
+            Ok(cc.into_iter().map(|(digit, count)|
+                format!("Numbers with {} occured {} times,",digit,count)
+            ).collect())
+          }
+    sinks:
+      - type: topic
+        id: digit-start-col
+
+  split-service:
+    sources:
+      - type: topic
+        id: digit-start-col
+    transforms:
+      - operator: flat-map
+        run: |
+          fn split(input: String) -> Result<Vec<String>> {
+            let result: Vec<String> = input.split(',')
+              .map(|s| s.to_string())
+              .collect();
+            Ok(result)
+          }
+    sinks:
+      - type: topic
+        id: digit-start
