@@ -19,7 +19,7 @@ jobs:
       - name: install dependencies
         run: npm install
       - name: create sdf version
-        run: npm run docusaurus sdf:version $SDF_VERSION
+        run: npm run docusaurus docs:version:sdf $SDF_VERSION
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
