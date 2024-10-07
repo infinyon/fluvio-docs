@@ -4,9 +4,18 @@ import tailwindPlugin from "./plugins/tailwind-plugin.cjs";
 
 import type * as Preset from "@docusaurus/preset-classic";
 
+import sdfVersionsList from "./sdf_versions.json" with { type: "json" };
+
+
 const FLUVIO_REPOSITORY_URL = "https://github.com/InfinyOn/fluvio";
 
 const STABLE_VERSION = "0.11.12";
+
+// read sdf-versions.json and build versions object
+const sdfVersions = sdfVersionsList.reduce((acc, version) => ({
+  ...acc,
+  [version]: { label: version }
+}), {});
 
 const config: Config = {
   title: "Fluvio",
@@ -80,12 +89,7 @@ const config: Config = {
             label: "latest",
             path: "latest",
           },
-          ["sdf-beta1.1"]: {
-            label: "sdf-beta1.1 (stable)",
-          },
-          ["sdf-beta1"]: {
-            label: "sdf-beta1",
-          },
+          ...sdfVersions
         },
       },
     ],
