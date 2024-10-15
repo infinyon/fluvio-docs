@@ -53,6 +53,9 @@ Doc | Version Command
 `fluvio` | `npm run docusaurus docs:version <VERSION>`
 `sdf` | `npm run docusaurus docs:version:sdf <VERSION>`
 
+> [!WARNING]
+> Versions specified in the command should not be prefixed with `v`.
+
 ## Release and Publish
 
 In order to release a version and publish it you need to run:
