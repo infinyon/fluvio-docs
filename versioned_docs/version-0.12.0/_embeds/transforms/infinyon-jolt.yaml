@@ -1,0 +1,8 @@
+#transforms.yml
+transforms:
+  - uses: infinyon/jolt@0.4.1
+    with:
+      spec:
+        - operation: shift
+          spec:
+            quote: ""
