@@ -141,18 +141,18 @@ It should show the following:
 
 Mirror topics on the home clusters has multiple partitions, where each partition has a `1-to-1` relationship with the remote cluster.
 
-Create a partition assignment file to define the remote devices:
-
+Create the mirror topic, then add the remote to it:
 
 ```bash
-echo '["docker-remote"]' > devices.json
+fluvio topic create mirror-topic  --mirror
+fluvio topic add-mirror mirror-topic docker-remote
 ```
 
-Apply the configuration file to create the topic:
-
+or apply a json file with an array of remotes that you want to assign when creating a topic:
 
 ```bash
-fluvio topic create mirror-topic --mirror-apply devices.json
+echo '["docker-remote"]' > assignment_file.json
+fluvio topic create mirror-topic --mirror-apply assignment_file.json
 ```
 
 List partitions to check the assignment:
