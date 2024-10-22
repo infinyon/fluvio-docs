@@ -65,10 +65,10 @@ The producer could be created with the following configurations: `max_request_si
 
 These configurations control the behavior of the producer in the following way:
 
-* `max_request_size`: Maximum amount of bytes that the producer can send in a single request. If the record is larger than the max request size, the producer will fail to send the record. Defaults to 1048576 bytes.
-* `batch_size`: Maximum amount of bytes accumulated by the records before sending the batch. If the record is larger than the batch size, the producer will send the record in a single new batch. Defaults to 16384 bytes.
+* `max_request_size`: Maximum number of bytes that the producer can send in a single request. If the record is larger than the max request size, the producer drops the record and returns an error. Defaults to 1048576 bytes.
+* `batch_size`: Maximum number of bytes accumulated by the records before sending the batch. If the record is larger than the batch size, the producer will split the records and send them in multiple batches. Defaults to 16384 bytes.
 * `compression`: Compression algorithm used by the producer to compress each batch before sending to the SPU. Supported compression algorithms are `none`, `gzip`, `snappy` and `lz4`.
-* `linger`: Time to wait before sending batches to the server that have not reached maximum batch size. Defaults to 100 ms.
+* `linger`: The maximum time to wait to accumulate records before sending the batch. Defaults to 100 ms.
 * `partitioner`: custom class/struct that assigns the partition to each record that needs to be send. Defaults to Siphash Round Robin partitioner.
 
 ### Sending
