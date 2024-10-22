@@ -1,39 +1,18 @@
 ---
 sidebar_position: 70
 title: "Mirroring - Raspberry Pi to Cluster"
-description: "Reliable IoT monitoring from movable or static Edges sensors."
+description: "Reliable IoT monitoring from movable or static Remote sensors."
 ---
 
-# Mirroring IoT Data from Raspberry Pi to Local Cluster
+# Mirroring IoT Data from Raspberry Pi
 
-This advanced tutorial requires a Raspberry Pi and a local installation of your collector cluster running on Kubernetes.
+This advanced tutorial requires a Raspberry Pi and a local installation of your collector cluster running on Local.
 
 ## Raspberry Pi to Local Cluster
 
-This section will use Raspberry Pi v3 running Ubuntu 32-bit as the edge device and our local machine for the home cluster.
+This section will use a Raspberry Pi v3 running Ubuntu as the remote device and our local machine for the home cluster.
+
 Let's start with installing and configuring the home cluster.
-
-
-## Install Home Cluster on Local Machine
-
-Installing the home cluster on Linux or Mac requires Kubernetes. Use the following instructions to set up Kubernetes on your local machine.
-
-* [Install Rancher Desktop]
-* [Install Fluvio on Kubernetes]
-
-:::tip
-  Install _Kubernetes_, then use the instructions below to install the experimental _fluvio binaries_.
-:::
-
-
-### Create a new directory
-
-Create a clean directory for the configuration and metadata files:
-
-
-```bash
-mkdir -p local/projects/mirror; cd local/projects/mirror
-```
 
 
 ### Download `fluvio` binary
@@ -54,7 +33,7 @@ Use the fluvio binary to start the cluster:
 
 
 ```bash
-fluvio cluster start --k8
+fluvio cluster start
 ```
 
 Check the result with:
@@ -64,42 +43,31 @@ Check the result with:
 fluvio cluster status
 ```
 
-### Register Edge clusters
 
-Use the `remote` CLI to register the edge clusters (edge1 and edge2) with the upstream cluster:
 
-**Edge 1**:
+**Remote Raspberry Cluster**:
 
 
 ```bash
-fluvio remote register edge1
-```
-
-**Edge 2**:
-
-
-```bash
-fluvio remote register edge2
+fluvio remote register remote-raspberry
 ```
 
 ### Create the mirror topic
 
-Mirror topics on the upstream clusters has multiple partitions, where each partition has a `1-to-1` relationship with the edge cluster.
+Mirror topics on the home cluster have multiple partitions, where each partition has a `1-to-1` relationship with the remote cluster.
 
-Create a partition assignment file to define the edge devices:
-
+Create the mirror topic, then add the remote to it:
 
 ```bash
-echo '[
-    "edge1", "edge2"
-]' > assignment_file.json
+fluvio topic create mirror-topic  --mirror
+fluvio topic add-mirror mirror-topic remote-raspberry
 ```
 
-Apply the configuration file to create the topic:
-
+or apply a JSON file with an array of remotes that you want to assign when creating a topic:
 
 ```bash
-fluvio topic create edge-topic --mirror-apply assignment_file.json
+echo '["remote-raspberry"]' > assignment_file.json
+fluvio topic create mirror-topic --mirror-apply assignment_file.json
 ```
 
 List partitions to check the assignment:
@@ -112,9 +80,8 @@ fluvio partition list
 It should display all partitions:
 
 ```bash
-  TOPIC       PARTITION  LEADER  MIRROR        REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
-  edge-topic  0          5001    edge1           []        Online      0 B   0   0    0    0                 []
-  edge-topic  1          5001    edge2           []        Online      0 B   0   0    0    0                 []
+  TOPIC         PARTITION  LEADER  MIRROR                     REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
+  mirror-topic  0          5001    remote-raspberry           []        Online      0 B   0   0    0    0                 []
 ```
 
 List remote clusters to check their status:
@@ -127,80 +94,66 @@ fluvio remote list
 It should show the following:
 
 ```bash
-  REMOTE   SC STATUS  SPU STATUS  LAST SEEN  ERRORS
-  edge1    Waiting    Waiting     -          -
-  edge1    Waiting    Waiting     -          -
+  REMOTE              SC STATUS  SPU STATUS  LAST SEEN  ERRORS
+  remote-raspberry    Waiting    Waiting     -          -
 ```
 
-### Generate Metadata for Edge Clusters
+### Generate Metadata for a Remote Cluster
 
-Each edge cluster requires a unique metadata file that gives the edge cluster the information to connect to the upstream cluster and the topic/mirror where the data is synchronized.
+Each remote cluster requires a unique metadata file that gives the remote cluster the information to connect to the home cluster and the topic/mirror where the data is synchronized.
 
-Generate a metadata file for each cluster:
-
-**Edge 1**:
-
-The home edge device is a Virtual Machine emulating an IoT device:
-
-
-```bash
-fluvio remote export edge1 --public-endpoint host.orb.internal --file edge1.json
-```
-
-**Edge 2**:
-
-The home edge device is a Raspberry Pi device. You may skip this if you don't have such a device.
+The home remote device is a Raspberry Pi device. You may skip this if you don't have such a device.
 
 :::tip
-  The IP address of our machine where the upstream server is running is `192.168.79.252`.  Please identify your own IP address and replace it in the command below.
+  The IP address of our machine where the home server is running is `192.168.1.42`.  Please identify your own IP address and replace it with the command below.
 :::
 
 
 ```bash
-fluvio remote export edge1 --public-endpoint 192.168.79.252 --file edge2.json
+fluvio remote export remote-raspberry --public-endpoint 192.168.1.42 --file remote2.json
 ```
 
-We'll transfer these files to edge devices in the following sections.
+We'll transfer these files to remote devices in the following sections.
 
-# Install Edge Cluster on Raspberry Pi (optional)
+# Install Remote Cluster on Raspberry Pi
 
-We'll use the same procedure as before to mirror from Raspberry Pi to the same upstream cluster.
-The test below was performed on a Raspberry Pi v3 running Ubuntu 32-bit image.
+We'll use the same procedure as before to mirror from the Raspberry Pi to the same home cluster.
+The test below was performed on a Raspberry Pi v3 running an Ubuntu image.
 
-### Download metadata file
+### Download the metadata file
 
-We'll use the metadata file `edge2.json` that we've exported above to provision this device.
+We'll use the metadata file `remote-raspberry.json` that we've exported above to provision this device.
 
 :::tip
-  Identify the IP address of your Raspberry Pi device and it replace below
+  Identify the IP address of your Raspberry Pi device and it replaces below
 :::
 
-Using the `upstream` terminal, let's scp the `edge2.json` file to the edge device:
+Using the `home` terminal, let's use the `scp` command to send the `remote-raspberry.json` file to the remote device:
 
 
 ```bash
-scp edge2.json fluvio@192.168.79.139:~
+scp remote-raspberry.json fluvio@192.168.1.50:~
 ```
 
-### Login into the edge device
+### Login to the remote device
 
 Spawn a new terminal and login into the Raspberry Pi:
 
 
 ```bash
-ssh fluvio@192.168.79.139
+ssh fluvio@192.168.1.50
 ```
 
 ### Download fluvio binaries
 
-On the raspberry pi, run the following command:
+On the Raspberry Pi, run the following command:
 
 
 ```bash
 curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
 ```
 
-Run `fluvio version` to double check.
+Run `fluvio version` to double-check.
 
 ### Start cluster
 
@@ -215,7 +168,7 @@ fluvio cluster start
 Then, we'll use the metadata file on the Raspberry Pi to connect:
 
 ```bash
-fluvio home connect --file edge2.json
+fluvio home connect --file remote-raspberry.json
 ```
 
 Let's check the partitions:
@@ -225,27 +178,27 @@ Let's check the partitions:
 fluvio partition list
 ```
 
-The edge device should show the following partition::
+The remote device should show the following partition::
 
 ```bash
   TOPIC       PARTITION  LEADER  MIRROR                         REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
-  edge-topic  0          5001    home_name:0:public_endpoint    []        Online      0 B   11  11   11   0                 []
+  mirror-topic  0          5001    home_name:0:public_endpoint    []        Online      0 B   11  11   11   0                 []
 ```
 
 
 ---
 
-## Test 1:  Mirror from Raspberry Pi Edge to Upstream
+## Test 1:  Mirror from Raspberry Pi Remote to Home
 
-Let's produce on the Raspberry Pi and consume from the upstream cluster.
+Let's produce on the Raspberry Pi and consume from the home cluster.
 
-### Produce to edge cluster
+### Produce for a remote cluster
 
 Produce on the `pi` terminal:
 
 
 ```bash
-fluvio produce edge-topic
+fluvio produce mirror-topic
 ```
 
 ```bash
@@ -255,12 +208,12 @@ Ok!
 Ok!
 ```
 
-### Consume from upstream
+### Consume from home
 
-Consume on the `upstream` terminal:
+Consume on the `home` terminal:
 
 ```bash
-fluvio consume edge-topic --mirror edge2 -B
+fluvio consume mirror-topic --mirror remote-raspberry -B
 ```
 
 ```bash
@@ -272,33 +225,32 @@ Mirror test is successful.
 
 
 
-## Test 2:  Upstream Cluster Offline
+## Test 2:  Home Cluster Offline
 
-Shutdown the upstream cluster and check that the edge cluster can continue receiving records. Then, resume the upstream cluster and ensure the data is synchronized and can consumed on both sides.
+Shutdown the home cluster and check that the remote cluster can continue receiving records. Then, resume the home cluster and ensure the data is synchronized and can be consumed on both sides.
 
-### Shutdown upstream cluster
+### Shutdown the home cluster
 
-On the `upstream` terminal, shutdown the cluster:
+On the `home` terminal, shutdown the cluster:
 
 
 ```bash
 fluvio cluster shutdown --local
-kubectl delete spu custom-spu-5001
 ```
 
-Ensure the cluster is shutdown:
+Ensure the cluster is off with:
 
 
 ```bash
  fluvio cluster status
 ```
 
-### On edge cluster
+### Produce on the remote cluster
 
 Produce a few more records on the `pi` terminal:
 
 ```bash
-fluvio produce edge-topic
+fluvio produce mirror-topic
 ```
 
 ```
@@ -307,26 +259,26 @@ D
 E
 ```
 
-### Reconnect upstream cluster & consume from topic
+### Reconnect home cluster & consume from topic
 
-On the `upstream` terminal, restart the cluster:
+On the `home` terminal, restart the cluster:
 
 
 ```bash
 fluvio cluster upgrade --local
 ```
 
-The topic on the upstream cluster should automatically synchronize with the edge cluster.
+The topic on the home cluster should automatically synchronize with the remote cluster.
 
 :::tip
-  Wait for the connection retry interval to trigger for the new records to arrive.
+  Wait for the connection retry interval to trigger for the records to arrive.
 :::
 
 Let's consume:
 
 
 ```bash
-fluvio consume edge-topic --mirror edge2 -B
+fluvio consume mirror-topic --mirror remote-raspberry -B
 ```
 
 ```
@@ -341,13 +293,13 @@ The disconnect test was successful.
 
 
 
-## Test 3: Edge Cluster Offline
+## Test 3: Remote Cluster Offline
 
-This test ensures that the edge cluster will not lose data following a power loss.
+This test ensures that the remote cluster will not lose data following a power loss.
 
-### Restart edge cluster
+### Restart the remote cluster
 
-On the `edge` terminal, shutdown the cluster:
+On the `remote` terminal, shutdown the cluster:
 
 
 ```bash
@@ -361,7 +313,7 @@ Restart the cluster:
 fluvio cluster upgrade
 ```
 
-### Consume from edge cluster
+### Consume from a remote cluster
 
 First, on the `pi` terminal, check the status of the target cluster:
 
@@ -373,11 +325,11 @@ HOME  ROUTE            STATUS  SC STATUS  SPU STATUS  LAST SEEN  ERRORS
 home  localhost:30003  Online  Connected  Connected   1s         -
 ```
 
-Then, consume from the edge cluster:
+Then, consume from the remote cluster:
 
 
 ```bash
-fluvio consume edge-topic -B
+fluvio consume mirror-topic -B
 ```
 
 ```
@@ -390,7 +342,7 @@ E
 
 Produce records and observe that the mirror will resume the synchronization.
 
-🎉 Congratulations! You have successfully tested edge mirroring using Raspberry Pi. It is now time to roll it out in your environment.
+🎉 Congratulations! You have successfully tested remote mirroring using the Raspberry Pi. It is now time to roll it out in your environment.
 
 
 
@@ -404,5 +356,5 @@ Produce records and observe that the mirror will resume the synchronization.
 [Try Mirroring - Cloud]: cloud/tutorials/try-mirroring-cloud.mdx
 [IoT Mirroring - Cloud]: cloud/tutorials/iot-mirroring-cloud.mdx
 [Discord]: https://discord.com/invite/bBG2dTz
-[Install Rancher Desktop]: fluvio/installation/kubernetes.mdx
-[Install Fluvio on Kubernetes]:  fluvio/installation/kubernetes.mdx
+[Install Fluvio on Local]: fluvio/installation/local.mdx
+
