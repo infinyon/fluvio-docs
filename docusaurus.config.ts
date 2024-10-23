@@ -280,6 +280,10 @@ const config: Config = {
     {
       src: '/js/getkoala.js',
       async: false,
+    },
+    {
+      src: '/js/syftdata.js',
+      async: false,
     }
   ]
 };
