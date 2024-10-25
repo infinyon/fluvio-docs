@@ -23,8 +23,6 @@ types:
         type: u16
 ```
 
-Once defined, it can used to enforce the schema on the data from the source.  The enforcement is specific to serialization format.  Currently, SDF supports JSON serialization format but it can be extended to other formats in the future.
-
 To enforce schema, all you have to is to specify the schema in the `topic` section.  For example, the following is a topic definition with schema:
 
 ```yaml
@@ -34,6 +32,19 @@ topics:
       value:
         type: person
 ```
+
+Schema can be enforced for both key and value part of the record.
+
+Once defined, it can used to enforce the schema on the data from the source.  The enforcement is specific to serialization format.  Currently, SDF supports JSON serialization format but it can be extended to other formats in the future.
+
+The serialization format is defined int the configuration section: 
+```
+config:
+  converter: json
+```
+
+This will use `json` for all topics.  But you can override per topic. 
+
 
 Given the schema above, the following JSON object will pass the schema validation:
 
