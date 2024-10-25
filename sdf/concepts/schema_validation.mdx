@@ -1,0 +1,88 @@
+---
+title: Schema Validation
+description: Schema Validation
+sidebar_position: 60
+---
+
+SDF provides a schema validation feature to ensure that the data flowing through the dataflow is in the correct format. 
+
+# Schema
+
+First step is to define data schema.  Schema is defined in the [types] section of the dataflow.  The types can be define as inline or in the package which can be shared across multiple dataflows.
+
+For example, the following is a simple object type representing a person.
+
+```yaml
+types:
+  person:
+    type: object
+    properties:
+      name:
+        type: string
+      weight:
+        type: u16
+```
+
+Once defined, it can used to enforce the schema on the data from the source.  The enforcement is specific to serialization format.  Currently, SDF supports JSON serialization format but it can be extended to other formats in the future.
+
+To enforce schema, all you have to is to specify the schema in the `topic` section.  For example, the following is a topic definition with schema:
+
+```yaml
+topics:
+  persons:
+    schema:
+      value:
+        type: person
+```
+
+Given the schema above, the following JSON object will pass the schema validation:
+
+```json
+{
+  "name": "John",
+  "weight": 150
+}
+```
+
+However, the following JSON object will fail the schema validation:
+
+```json
+{
+  "name": "John",
+  "weight": "150"
+}
+```
+
+The schema validation error will be reported in the [operator log].  The error message will indicate the field that failed the validation.  The failed record will be skipped and the dataflow will continue to process the next record.
+
+Number of failed records will be also reflected in the internal metrics. The metrics can be accessed via the `sdf show state <operator>/metrics` command.
+
+The SDF type supports following concepts in the schema:
+- primitive types such as string, integer, float, boolean.
+- enum types
+- composite objects with nested properties
+- array or list of objects
+
+# Versioning
+
+Inline schema's version is inherited from dataflow version. If you want to version the schema, you can define the schema in the package and then version the package.  The versioned package can be then used in the dataflow.
+
+The schema package then can be published to [Hub] and imported into the dataflow.
+
+Version follows semver syntax.  For example, the following is a versioned schema package:
+
+```yaml
+apiVersion: 0.5.0
+meta:
+  name: person
+  version: 0.1.0
+  namespace: acme
+```
+
+The `apiVersion` is the pkg syntax version and `version` in the `meta` section is the schema version.
+
+
+
+[types]: /sdf/concepts/types.mdx
+[operator log]: /sdf/cli/log.mdx
+[Hub]: /sdf/composition/hub.mdx
