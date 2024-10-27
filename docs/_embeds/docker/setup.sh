@@ -1,7 +1,7 @@
-# Build Environment
+# build dockerfile
 docker build -t fluvio:fluvio .
 
-# Run SDF in Docker
+# start fluvio cluster
 docker compose up -d
 
 # Download profile to the CLI
