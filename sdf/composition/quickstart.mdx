@@ -4,6 +4,9 @@ description: Guide on how to create Stateful Dataflows using the Stateful Datafl
 sidebar_position: 20
 ---
 
+import CodeBlock from '@theme/CodeBlock';
+import InstallFvm from '!!raw-loader!../_embeds/install-sdf.bash';
+
 # Getting Started with Stateful Dataflows
 
 This guide will get you started with [SDF], an utility that helps developers build, troubleshoot, and run full-featured event-driven dataflows.
@@ -60,9 +63,7 @@ Your Fluvio cluster is ready for use.
 
 SDF is in beta and it requires the following image:
 
-```bash
-fvm install sdf-beta3
-```
+<CodeBlock language="bash">{InstallFvm}</CodeBlock>
 
 You can validate prerequisites with:
 
@@ -369,7 +370,7 @@ For additional examples, check out [stateful-dataflows-examples] in github. The 
 Stateful Dataflows is an ambitious project with many possibilities and just as many hazards. Please get in touch, we would love to hear your feedback and help us steer the product in the right direction.
 
 
-[SDF]: sdf
+[SDF]: ../../
 [composition]: overview.mdx
 [stateful-dataflows-examples]: https://github.com/infinyon/stateful-dataflows-examples
 [github]: https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-composed/split-sentence
