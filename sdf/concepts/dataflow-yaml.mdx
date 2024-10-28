@@ -215,6 +215,7 @@ topics:
       <consumer-properties>
     producer: 
       <producer-properties>
+    profile: <optional-string>
 ```
 
 #### Where
@@ -227,6 +228,7 @@ topics:
   * **converter** - is the converter to deserialize the key (**optional** - defaults to [config](#config)).
 * **producer** - is the producer configuration (**optional** - defaults to [config](#config)).
 * **consumer** - is the consumer configuration (**optional** - defaults to [config](#config)).
+* **profile** - is the [Fluvio profile] that will be used to perform the connection. Useful to reach an external cluster.
 
 #### For Example
 
@@ -308,3 +310,4 @@ dev:
 [Services Section]: services.mdx
 [batching]: /docs/latest/fluvio/concepts/batching
 [dataflow examples]: https://github.com/infinyon/stateful-dataflows-examples
+[Fluvio profile]: /docs/latest/fluvio/cli/fluvio/profile

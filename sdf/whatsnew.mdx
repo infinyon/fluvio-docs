@@ -4,14 +4,14 @@ description: Changes and updates to SDF
 sidebar_position: 20
 ---
 
-# Beta 2
+# Beta 3
 
 ## Upgrading 
 
-To upgrade CLI to the beta2, run the following command:
+To upgrade CLI to the beta3, run the following command:
 
 ```bash
-$ fvm install sdf-beta2
+$ fvm install sdf-beta3
 ```
 
 To upgrade host workers, shutdown and restart the worker:
@@ -25,63 +25,24 @@ For upgrading cloud workers, please contact [InfinyOn support](#infinyon-support
 
 ### Compatibility and Breaking changes
 
-`0.4.0` version of dataflow is no longer supported. Please upgrade to `0.5.0`. 
-The version of the dataflow is specified in the `apiVersion` field in the dataflow file.
-
-
 
 ### CLI changes
-
-Publishing command is simplified. 
-`sdf hub publish` -> `sdf publish`
-
-
-`run` command is separated into `run` and `deploy`.  Please see [deployment] for details:
-
-To run dataflow in ephemeral mode:
-Beta1.1:  `sdf run --ephemeral`
-Beta2:    `sdf run`
-
-
-To run dataflow in a worker:
-Beta1.1:  `sdf run`,
-Beta2:    `sdf deploy`
-
+- `sdf worker list` now performs workers version check by default
 
 ### Package migration
 
-Since beta2, the packages functions are consolidated in a single rust crate on generation. This allows us to share types and logic between different package functions.
-
-In order to migrate your existing packages, you need to generate your package (`sdf generate`) using the `sdf-beta2` version and then copy the code in the new location of the generated code.
-
-In other words, for each function, the logic in `rust/<function-name>/src/lib.rs` must be copied on `rust/<package-name>/src/<function_name>.rs`. But please, make sure that all the attributes in `#[sdf]` attribute macro matches with the attributes that we get on code generation.
-
-
+We suggest to regenerate the packages again and copy the operator logic in the new generated file, to include the package generated code improvements.
 
 ## New Features
 
-- Support for customizing JSON serialization and deserialization (see [custom serialization])
+- Support connecting to other fluvio cluster topics via profile. See how to access external clusters in [topics configuration].
 
 ## Improvements
-
-- CLI: Operators logs works for both `run` and `deployment` mode including cloud.
-- CLI: Hub package list now shows public or private packages.
-- Hub: Private package works with hub.
-- Deployment: Separate `run` vs `deployment` mode.
-- Deployment: Dataflows can be stopped and started in the worker.
-- Deployment: dataflow command uses fully qualified package name to avoid conflicts.
-- Deployment: `show dataflow` now display the status and last updated time.
-- Deployment: Dataflow can be stopped and restarted.
-- Deployment: Import errors are properly reported.
-- Worker: Worker listing with `-all` shows the version.
-- Config: Producer config now supports `compression`, `isolation`, and `timeout`.
-- Cloud: Cloud supports larger worker storage.
-- Cloud: Secret support
-- Package: Generated codes are consolidated and hidden from developers.
-- Operator: Operator error messages are sent to log. 
+- Upgrade wasmtime to 26
+- Support `sdf cleanup` in packages.
 
 ## Bug Fixes
-- CLI show list of created topics
+- Terminate daemon sdf if parent terminates
 
 ## InfinyOn Support
 
@@ -89,5 +50,4 @@ For any questions or issues, please contact InfinyOn support at support@infinyon
 
 
 [deployment]: deployment.mdx
-[custom serialization]: concepts/custom-serialization.mdx
-
+[topics configuration]: concepts/dataflow-yaml.mdx#topics
