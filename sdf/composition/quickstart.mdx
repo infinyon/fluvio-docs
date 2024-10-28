@@ -9,11 +9,6 @@ sidebar_position: 20
 This guide will get you started with [SDF], an utility that helps developers build, troubleshoot, and run full-featured event-driven dataflows.
 
 
-#### Overview
-
-This [SDF] release includes several new features and improvements. The main feature is [composition], which allows you to create individual packages and import them to create dataflows.
-
-
 #### Example Dataflow
 
 As an example, we'll create a dataflow that splits sentences into words, and counts the number of characters in each word.
@@ -66,7 +61,7 @@ Your Fluvio cluster is ready for use.
 SDF is in beta and it requires the following image:
 
 ```bash
-fvm install sdf-beta2
+fvm install sdf-beta3
 ```
 
 You can validate prerequisites with:
@@ -145,7 +140,7 @@ The generator created several directories and files that we'll edit next.
 
 #### 1.3 Add the Custom Code
 
-First let's update the first function `sentence-to-words`. Open `rust/sentence-to-words/src/lib.rs` and update the function body with the following code:
+First let's update the first function `sentence-to-words`. Open `rust/sentence-pkg/src/sentence_to_words.rs` and update the function body with the following code:
 
 ```rust
 fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
@@ -153,7 +148,7 @@ fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
 }
 ```
 
-Next update `augment_count`. Open `rust/augment-count/src/lib.rs` and replace the function body:
+Next update `augment_count`. Open `rust/sentence-pkg/src/augment_count.rs` and replace the function body:
 
 ```rust
 fn augment_count(word: String) -> Result<String> {
@@ -374,7 +369,7 @@ For additional examples, check out [stateful-dataflows-examples] in github. The 
 Stateful Dataflows is an ambitious project with many possibilities and just as many hazards. Please get in touch, we would love to hear your feedback and help us steer the product in the right direction.
 
 
-[SDF]: /sdf
+[SDF]: sdf
 [composition]: overview.mdx
 [stateful-dataflows-examples]: https://github.com/infinyon/stateful-dataflows-examples
 [github]: https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-composed/split-sentence
