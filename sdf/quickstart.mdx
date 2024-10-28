@@ -4,6 +4,10 @@ description: Getting started with Stateful Dataflows
 sidebar_position: 10
 ---
 
+import CodeBlock from '@theme/CodeBlock';
+import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
+
+
 # SDF Quickstart
 
 Provisioning and operating a Stateful Dataflow requires the following system components:
@@ -35,9 +39,7 @@ Let's create a simple dataflow to split a sentence into words and count the word
 
 Stateful dataflows are managed via [sdf cli] that we install it using [fvm].
 
-```
-$ fvm install sdf-beta2
-```
+<CodeBlock language="bash">{InstallFvm}</CodeBlock>
 
 ### 2. Create the Dataflow file
 
