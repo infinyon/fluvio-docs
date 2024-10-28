@@ -6,6 +6,8 @@ sidebar_position: 20
 
 import CodeBlock from '@theme/CodeBlock';
 import InstallFvm from '!!raw-loader!../_embeds/install-sdf.bash';
+import SentenceToWords from '!!raw-loader!../_embeds/operators/sentence_to_words.rs';
+import AugmentCount from '!!raw-loader!../_embeds/operators/augment_count.rs';
 
 # Getting Started with Stateful Dataflows
 
@@ -143,19 +145,11 @@ The generator created several directories and files that we'll edit next.
 
 First let's update the first function `sentence-to-words`. Open `rust/sentence-pkg/src/sentence_to_words.rs` and update the function body with the following code:
 
-```rust
-fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
-    Ok(sentence.split_whitespace().map(String::from).collect())
-}
-```
+<CodeBlock language="rust">{SentenceToWords}</CodeBlock>
 
 Next update `augment_count`. Open `rust/sentence-pkg/src/augment_count.rs` and replace the function body:
 
-```rust
-fn augment_count(word: String) -> Result<String> {
-    Ok(format!("{}({})", word, word.chars().count()))
-}
-```
+<CodeBlock language="rust">{AugmentCount}</CodeBlock>
 
 Let's add some tests as well:
 
