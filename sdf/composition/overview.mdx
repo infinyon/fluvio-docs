@@ -171,7 +171,7 @@ The generator created several directories and files that we'll edit next.
 
 ##### 3. Add the Custom Code
 
-First, let's update the first function, `sentence-to-words`. Open `rust/sentence-to-words/src/lib.rs` and update the function body with the following code:
+First, let's update the first function, `sentence-to-words`. Open `rust/sentence-pkg/src/sentence_to_words.rs` and update the function body with the following code:
 
 ```rust
 pub(crate) fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
@@ -179,7 +179,7 @@ pub(crate) fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
 }
 ```
 
-Next update `augment_count`. Open `rust/augment-count/src/lib.rs` and replace the function body:
+Next update `augment_count`. Open `rust/sentence-pkg/src/augment_count.rs` and replace the function body:
 
 ```rust
 pub(crate) fn augment_count(word: String) -> Result<String> {
@@ -231,7 +231,7 @@ augment-count
 Let's test `sentence-to-words` first:
 
 ```bash copy="fl"
->> test function sentence-to-words --input "Hello World"
+>> test function sentence-to-words --value "Hello World"
 Hello
 World
 ```
@@ -239,14 +239,14 @@ World
 Next, test `augment-count`:
 
 ```bash copy="fl"
->> test function augment-count --input "Hello"
+>> test function augment-count --value "Hello"
 Hello(5)
 ```
 
 You may also test the `rust` code via Cargo:
 
 ```bash
-$ cd rust
+$ cd rust/sentence-pkg
 $ cargo test
 ```
 
@@ -436,7 +436,7 @@ The dataflow collects runtime metrics that you can inspect in the runtime termin
 Check the `sentence-to-words` counters:
 
 ```bash copy="fl"
->> show state sentence-words/sentence-to-words/metrics --table
+>> show state sentence-words/sentence-to-words/metrics
  Key    Window  succeeded  failed
  stats  *       2          0
 ```
@@ -444,7 +444,7 @@ Check the `sentence-to-words` counters:
 Check the `augment-count` counters:
 
 ```bash copy="fl"
->> show state sentence-words/augment-count/metrics --table
+>> show state sentence-words/augment-count/metrics
  Key    Window  succeeded  failed
  stats  *       4          0
 ```
