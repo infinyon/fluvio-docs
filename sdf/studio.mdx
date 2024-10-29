@@ -30,4 +30,20 @@ $> sdf run --ui
 $> sdf deploy --ui
 ```
 
+**Note**: the `--port` flag can be used to specify a custom port whenever the `--ui` flag is provided.
+
+## Visualizing a dataflow
+
+Most of the dataflow structure will be apparent by viewing the graph rendered by SDF studio. The graph has two types of nodes, which represent your topics and services. You will also notices two types of edges. Grey edges, which indicate a topic is acting as a source or sink for a service, and orange edges which indicate a service is referencing a state object owned by another service.
+
+Clicking a grey edge will open an info bar to the right with additional details about the source/sink relationship.
+
+<img src="/img/sdf/studio-source.jpg" alt="SDF Studio" style={{ display: 'block', margin: '0 auto'}} width="600" />
+
+## Viewing Metrics
+
+SDF State objects can be viewed in a table format either by clicking on the state object directly on the service that owns it, or by clicking on the "Metrics" button on the bottom right of the page.
+
+<img src="/img/sdf/studio-states.jpg" alt="SDF Studio" style={{ display: 'block', margin: '0 auto'}} width="600" />
+
 [Infinyon Cloud website]: https://infinyon.cloud/ui/account/studio
