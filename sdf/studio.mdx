@@ -1,16 +1,24 @@
 ---
-title: User Interface
+title: Graphical User Interface
 description: Deployment of dataflow thru Worker
 sidebar_position: 80
 ---
 
 # Studio
 
-SDF Studio is the official web-based user interface for visualizing SDF dataflows. Infinyon Cloud users can find the application on the [Infinyon Cloud website]. Additionally, self-hosted SDF users can deploy the SDF Studio webserver locally via the SDF CLI.
+SDF Studio is the official user interface for Stateful Dataflows. Studio can be used to visualize dataflow graphs and view relevant metrics. 
 
-### Running SDF Studio in a self-hosted environment
+<img src="/img/sdf/studio-overview.jpg" alt="SDF Studio" style={{ display: 'block', margin: '0 auto'}} width="900" />
 
-### Without a worker:
+## Using SDF Studio in Infinyon Cloud
+
+Infinyon Cloud users can find the application on the [Infinyon Cloud website].
+
+## Running SDF Studio in a self-hosted environment
+
+Self-hosted SDF users can deploy the SDF Studio webserver locally via the SDF CLI.
+
+### When running a dataflow without a worker:
 
 ```bash
 $> sdf run --ui
