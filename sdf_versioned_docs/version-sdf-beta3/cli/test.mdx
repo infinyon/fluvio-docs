@@ -1,0 +1,118 @@
+---
+description: SDF Test Command
+sidebar_position: 50
+---
+
+# `sdf test`
+
+The `sdf test` is a runtime command that allows you to test functions and states defined in packages. Navigate to a project directory with a `sdf-package.yaml` file definition, compile the package, and run `sdf test`. The command opens an interactive terminal that allows you to test your package components.
+
+## `sdf test` command
+
+The `sdf test` CLI allows you to setup an environment to test your functions before deploying them in production. When functions interact with state, the test environment allows you to initialize, and view state objects as well.
+
+```bash copy="fl"
+>> --help
+SDF - Stateful Dataflow
+
+Usage: <COMMAND>
+
+Commands:
+  add   Add state
+  show  Show functions or states
+  test  Run test
+  exit  Stop interactive session
+```
+
+The test commands work inline or in an interactive mode.
+
+
+#### `add state`
+
+Augment or initialize a state object.
+
+```bash copy="fl"
+>> add state -h
+Usage: add state --key <STATE_KEY> --value <STATE_VALUE> <STATE_NAME>
+
+Arguments:
+  <STATE_NAME>
+
+Options:
+  -k, --key <STATE_KEY>
+  -v, --value <STATE_VALUE>
+```
+
+The key and value format must match the schema defined by the state object.
+
+### Examples
+
+##### sdf test function
+
+Test functions inline rather than in interactive mode. Given a function that turns a string into lowercase, we'll test as follows:
+
+```bash copy="fl"
+$ sdf test function --input "Test" format-word
+Testing package: count-words-pkg
+test
+```
+
+## `sdf test` inline command
+
+The `test` command has the following hierarchy:
+
+```bash copy="fl"
+$ sdf test -h
+Test command shell (requires sdf-package.yaml)
+
+Usage: sdf test [OPTIONS] [COMMAND]
+
+Commands:
+  function    test functions inline
+
+Options:
+      --dev   set runtime to use dev mode [env: DEV=]
+```
+
+Where:
+* `--dev` - development profile to be used for building code
+
+
+#### Example
+
+When writing automated tests, inline commands are preferred over the interactive mode. Use `--dev` flag to run a test.
+
+To test a function that masks SSN numbers, you would run the following command:
+
+```bash copy="fl"
+$ sdf test --dev function mask-ssn --value "My SSN is 534-34-3443."
+My SSN is ***-**-****.
+```
+
+The command returns a result rather than entering interactive mode.
+
+### `sdf test function` command
+
+```bash copy="fl"
+$ sdf test function -h
+Usage: sdf test function [OPTIONS] --value <<VALUE>> <FN_NAME>
+
+Arguments:
+  <FN_NAME>  Function name
+
+Options:
+  -v, --value <VALUE>          Record value mapped to the `value` input of the function
+  -k, --key <KEY>              Record key mapped to the `key` input of the function
+  -s, --state-key <STATE_KEY>  The key of the state the function runner uses to look-up
+                               state object
+  -o, --output <OUTPUT>        Output types, where  v: is value (default), and kv: is
+                               key-value [default: v]
+```
+
+Where:
+* `--value` maps ot the input parameter of the function
+* `--key` maps to the `optional` input parameter of the function
+* `--state-key` asks by the engine to look-up a state
+* `--output` ask the engine to show values-only or key-values
+
+[sdf-package.yaml]: /sdf/sdf-package-yaml

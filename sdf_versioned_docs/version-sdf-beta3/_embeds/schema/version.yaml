@@ -1,0 +1,5 @@
+apiVersion: 0.5.0
+meta:
+  name: person-age-validation
+  version: 0.1.0
+  namespace: examples

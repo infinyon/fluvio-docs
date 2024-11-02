@@ -1,0 +1,96 @@
+---
+description: SDF Deployment Command
+sidebar_position: 60
+---
+
+# `sdf deploy`
+
+The `sdf deploy` command executes a dataflow in the worker. 
+
+After provisioning, the command enters an [interactive shell] that allows you to interact with the dataflow.
+
+[interactive shell]: #deploy-interactive-shell
+
+### `sdf deploy` command
+
+The `deploy` command has several options:
+
+```bash copy="fl"
+$ sdf deploy -h
+Run dataflow (requires: dataflow.yaml)
+
+Usage: sdf deploy [OPTIONS]
+
+Options:
+      --ui
+          Start Development Studio [env: UI=]
+  -p, --port <PORT>
+          Port for web server to listen on [env: PORT=] [default: 8000]
+  -e, --env <ENV_LIST>
+          (Optional) environment variables to be passed to each operator They should be
+          passed using key=value format Eg. sdf run -e foo=bar -e key=value -e one=1
+      --skip-dataflow
+          
+      --timeout <TIMEOUT>
+          timeout in seconds [env: TIMEOUT=] [default: 60]
+```
+
+Where:
+* `--ui` starts graphical representation of the project in a web browser. The default port is `8000`.
+* `--port` sets the port for the web server to listen on
+* `--env` sets environment variables to be passed to operators
+* `--skip-dataflow` skips deploying the dataflow in the current directory.
+
+
+Once deployment is complete, the `deploy` command opens interactive shell to worker.
+
+
+### `deploy` interactive shell
+
+The interactive shell allows you to look-up runtime objects, such as stat
+
+```bash copy="fl"
+>> help
+SDF - Stateful Dataflow
+
+Usage: <COMMAND>
+
+Commands:
+  show     Show or List states. Use `show state --help` for more info
+  select   
+  delete   
+  restart  
+  stop     
+  exit     Stop interactive session
+  help     Print this message or the help of the given subcommand(s)
+
+```
+
+
+#### `show state`
+
+Show states or show state for given namespace and key.
+
+```bash copy="fl"
+>> show state -h
+List all states or show state for given key
+
+Usage: show state [OPTIONS] [NAMESPACE]
+
+Arguments:
+  [NAMESPACE]  namespace of state
+
+Options:
+      --key <KEY>        key of state
+      --filter <FILTER>  filter regex
+```
+
+Where:
+* `--key` and `--filter` refines the result.
+
+### Managing dataflow in interactive shell
+
+Please see the [deployment] section for more details.
+
+
+[deployment]: /sdf/deployment
