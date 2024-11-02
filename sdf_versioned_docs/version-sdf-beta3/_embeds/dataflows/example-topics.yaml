@@ -1,0 +1,19 @@
+topics:
+  cars:
+    schema:
+      value:
+        type: Car
+        converter: json
+    consumer:
+      default_starting_offset:
+        value: 0
+        position: End
+  car-events:
+    schema:
+      key:
+        type: CarLicense
+      value:
+        type: CarEvent
+    producer:
+      linger_ms: 0
+      batch_size: 1000000

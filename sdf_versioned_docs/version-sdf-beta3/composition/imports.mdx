@@ -1,0 +1,86 @@
+---
+title: Imports
+description: :Package imports
+sidebar_position: 400
+---
+
+Dataflows and packages can import function and types from other packages.  This hierarchical import structure allows you to reuse code and types across multiple projects.
+
+Importing a package involves these steps:
+- specifying the package to import
+- specifying the functions
+- specifying the types to import
+
+You can either import functions or types or both.
+
+# Importing Functions
+
+Use keyword: `functions` in a `imports` sections to import functions.
+
+Syntax: 
+```yaml
+imports:
+  - pkg: <package-namespace>/<package-name>@<package-version>
+    functions:
+      - name: <function-name>
+        alias: <alias-name>
+```    
+
+
+Here is sample config to  imports a function `my-hello-fn` from the package `sdf-test/hello`:
+
+```yaml
+imports:
+  - pkg: sdf-test/hello@0.2.0
+    functions:
+      - name: my-hello-fn
+        alias: hello-fn
+```
+
+The function can be alias to a different name. In this case, the function `my-hello-fn` is imported as `hello-fn`.
+
+After import, you can reference the function with the `uses` keyword. 
+
+```yaml
+  transforms:
+      - operator: filter-map
+        uses: hello-fn
+```
+
+Since `hello-fn` is filter-map function, It can only be used in the `filter-map` operator.
+
+# Importing Types
+
+Similar to functions, you can also import types from other packages.
+
+Syntax: 
+```yaml
+imports:
+  - pkg: <package-namespace>/<package-name>@<package-version>
+    types:
+      - name: <type-name>
+```
+
+Here is sample config that imports a type `my-hello-type` from the package `sdf-test/hello`:
+
+```yaml
+imports:
+  - pkg: sdf-test/hello@0.2.0
+    types:
+      - name: my-hello-type
+```
+
+Of course you can mix and match functions and types in the same `imports` section.
+
+```yaml
+imports:
+  - pkg: sdf-test/hello@0.2.0
+    functions:
+      - name: my-hello-fn
+    types:
+      - name: my-hello-type
+```
+
+# Recursive Imports
+
+Recursive imports are also supported.  You can import functions and types from packages that themselves import functions and types from other packages. 

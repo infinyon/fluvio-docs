@@ -1,0 +1,71 @@
+---
+title: Publishing
+description: Guide to publishing packages to the InfinyOn Hub.
+sidebar_position: 30
+---
+
+# Introduction
+
+The InfinyOn Hub is the cloud infrastructure for sharing and discovering SDF packages.  Please see [Hub] for more information.
+
+An SDF Package can be published as either a public or private package.  Public packages are available to anyone without restriction.  Private packages are only available to users who have been granted access to the namespace.
+
+By default, all packages are private unless explicitly published as public.
+
+
+
+# Ready for Publishing
+
+SDF Packages are immutable.  Once published, the package cannot be changed.  If you need to make changes, you will need to create a new version of the package.  This is why it is important to ensure that the package is tested and ready for publishing.
+
+SDF packages follow semver versioning.  The version number is specified in the `meta.version` field of the package file.
+
+Before publishing,
+- Test with `sdf test` to ensure it is working with sample data.
+- Run with test dataflow to ensure it is working in a dataflow.
+
+To test with a dataflow, create a dataflow file and add `dev` section at the bottom of the file:
+```
+dev:
+  imports:
+    - pkg: example/sentence-pkg@0.1.0
+      path: ./packages/sentence
+```
+
+The dev section instructs the dataflow to use the package from the local directory.
+
+Then run the dataflow with: `sdf run`. The `dev` mode will not work in the `deploy` command.
+
+# Publishing
+
+After tested and ready, publish the package using with `sdf publish` command.  As mentioned before, the packages are private by default.
+
+```bash
+$ sdf publish
+```
+
+To list all the packages run: `sdf hub list` command.
+
+```bash
+$ sdf hub list
+```
+
+## Publishing as package as public, use `--public` flag
+
+```bash
+$ sdf publish --public
+```
+
+Once you have published the package, it will be available to anyone.  Each version of package can be published as public or private.
+
+# Using Hub Package from Dataflow or Package
+
+Please see [Imports] for more information on how to use packages from the Hub in the dataflow or package files.
+
+When you run the dataflow or package, imported packages will be automatically downloaded from the Hub and used.
+
+### References
+
+
+[Hub]: /docs/hub/overview
+[Imports]: imports.mdx
