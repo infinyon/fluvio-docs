@@ -1,0 +1,70 @@
+---
+sidebar_position: 2
+title: "Use the Hub"
+description: "The Hub is a central repository for Connectors, SmartModules, Dataflows, and more"
+---
+
+# How to use the Hub
+
+The InfinyOn Hub serves as a centralized repository for InfinyOn tConnectors, SmartModules, and Dataflows. It facilitates the discovery and deployment of extensions to enhance the data streaming capabilities of Fluvio. The hub provides a platform for developers and data engineers to easily access pre-built solutions or share their own extensions.
+
+
+## List
+
+List the SmartModules available for download.
+
+```shell copy="fl"
+$ fluvio hub smartmodule list
+  SMARTMODULE                              Visibility
+  infinyon-labs/array-map-json@x.y.z       public
+  infinyon-labs/dedup-filter@x.y.z         public
+  infinyon-labs/json-formatter@x.y.z       public
+  infinyon-labs/key-gen-json@x.y.z         public
+  infinyon-labs/regex-map-json@x.y.z       public
+  infinyon-labs/regex-map@x.y.z            public
+  infinyon-labs/stars-forks-changes@x.y.z  public
+  infinyon/jolt@x.y.z                      public
+  infinyon/json-sql@x.y.z                  public
+  infinyon/regex-filter@x.y.z              public
+```
+
+List the Connectors available for download.
+
+```shell copy="fl"
+$ fluvio hub connector list
+  CONNECTOR                          Visibility
+  infinyon-labs/graphite-sink@x.y.z  public
+  infinyon/duckdb-sink@x.y.z         public
+  infinyon/http-sink@x.y.z           public
+  infinyon/http-source@x.y.z         public
+  infinyon/ic-webhook-source@x.y.z   public
+  infinyon/kafka-sink@x.y.z          public
+  infinyon/kafka-source@x.y.z        public
+  infinyon/mqtt-source@x.y.z         public
+  infinyon/sql-sink@x.y.z            public
+```
+
+
+## Download
+
+Downloading a SmartModule to a target cluster defined by your [`profile`]. SmartModules need to be downloaded before they are used in transformations.
+
+```shell copy="fl"
+$ fluvio hub sm download infinyon/jolt@x.y.z
+downloading infinyon/jolt@x.y.z to infinyon-jolt-x.y.z.ipkg
+... downloading complete
+... checking package
+trying connection to fluvio router.infinyon.cloud:9003
+... cluster smartmodule install complete
+```
+
+Running `fluvio hub conn download` will download the package containing source code of the Connector.
+
+```shell copy="fl"
+$ fluvio hub conn download infinyon/http-source@x.y.z
+downloading infinyon/http-source@x.y.z to infinyon-http-source-x.y.z.ipkg
+... downloading complete
+```
+
+
+ [`profile`]: fluvio/cli/fluvio/profile.mdx
