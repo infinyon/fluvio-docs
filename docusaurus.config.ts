@@ -9,7 +9,7 @@ import sdfVersionsList from "./sdf_versions.json" with { type: "json" };
 
 const FLUVIO_REPOSITORY_URL = "https://github.com/InfinyOn/fluvio";
 
-const STABLE_VERSION = "0.12.0";
+const STABLE_VERSION = "0.13.0";
 
 // read sdf-versions.json and build versions object
 const sdfVersions = sdfVersionsList.reduce((acc, version) => ({

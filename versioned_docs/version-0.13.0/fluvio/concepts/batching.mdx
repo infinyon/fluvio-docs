@@ -1,0 +1,92 @@
+---
+sidebar_position: 10
+title: "Batching"
+---
+
+Fluvio producers try to send records in batches to reduce the number of messages sent and improve throughput. Each producer has some configurations that can be set to improve performance for a specific use case. For instance, they can be used to reduce disk usage, reduce latency, or improve throughput.
+As of today, batching behavior in Fluvio Producers can be modified with the following configurations:
+
+- `max_request_size`: Indicates the maximum number of bytes that the producer can send in a single request. If the record is larger than the max request size, the producer will fail to send the record. Only the uncompressed size of the record is considered. Defaults to 1048576 bytes.
+- `batch_size`: Indicates the maximum number of bytes that can be accumulated in a batch. If the record is larger than the batch size, the producer will send the record in a single new batch. Only the uncompressed size of the record is considered. Defaults to 16384 bytes.
+- `compression`: Compression algorithm used by the producer to compress each batch before sending it to the SPU. Supported compression algorithms are none, gzip, snappy and lz4.
+- `linger`:  Time to wait before sending batches to the server that have not reached maximum batch size. Defaults to 100 ms.
+
+
+# Trade-offs and Considerations
+
+Every configuration presents a mix of advantages and disadvantages:
+
+- `max_request_size`: Allows the producer to send larger records, will improve throughput but drop packets that don't match criteria.
+- `batch_size`: Larger value can reduce the number of requests sent to the server, but will increase latency.
+- `compression`: Helps decrease storage size and improve networking throughput but will increase CPU usage and add latency.
+- `linger`: A value of 0 sends records immediately, minimizing latency but will reduce throughput. Higher values will introduce delay but improve throughput and network utilization.
+
+The ideal parameters for the `max_request_size`, `batch_size`, `linger` and `compression` depend on your application needs.
+
+# Example Scenarios
+
+Create a topic and generate a large data file:
+
+```bash
+fluvio topic create example-topic
+printf 'This is a sample line. ' | awk -v b=500000 '{while(length($0) < b) $0 = $0 $0}1' | cut -c1-500000 > large-data-file.txt
+```
+
+### Max Request Size
+
+`max_request_size` defines the maximum size of a message that can be sent by the producer. If a message exceeds this size, Fluvio will throw an error.
+
+```bash
+fluvio produce example-topic --max-request-size 16384 --file large-data-file.txt --raw
+```
+
+Will be displayed the following error:
+
+```bash
+Error: Record dropped: record size (xyz bytes), exceeded maximum request size (16384 bytes)
+```
+
+### Batch Size
+
+`batch_size` defines the cumulative size of all records sent in the same batch. If a record exceeds this size, Fluvio will process the record in a new batch without the `batch_size` as limit.
+
+```bash
+fluvio produce example-topic --batch-size 16536 --file large-data-file.txt --raw
+```
+
+In this example, the record is divided into multiple batches. Hence, there is no error.
+
+### Compression
+
+The algorithm computes all values pre-compression. Use raw size values to ensure to ensure your records are processed.
+
+`batch_size` and `max_request_size` will only use the uncompressed message size.
+
+```bash
+fluvio produce example-topic --batch-size 16536 --compression gzip --file large-data-file.txt --raw
+fluvio produce example-topic --max-request-size 16384 --compression gzip --file large-data-file.txt --raw
+```
+
+Only the second command will display an error because the uncompressed message exceeds the max request size.
+
+
+### Linger
+
+`linger` defines the time that the producer will wait before sending a batch of records.
+
+As linger is only relevant when the records are smaller than the batch size, in the following example, the records are sent without delay:
+
+```bash
+fluvio produce example-topic --linger 10sec --file large-data-file.txt --raw
+```
+
+In the following example, we are using small records and linger waits for the time-based trigger to produce:
+  
+```bash   
+fluvio produce example-topic --linger 10sec
+> abc
+> abc
+> abc
+```
+
+As all the records are small and the batch is not full, the producer will wait for the linger time to send the batch.
