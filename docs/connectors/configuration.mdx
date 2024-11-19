@@ -28,6 +28,13 @@ meta:
 
  # optional (outbound connectors)
  consumer:
+   # optional as default, but required if offset strategy is provided
+   id:
+   # optional
+   offset:
+    strategy:
+    start:
+    flush:
    # optional
    partition:
    # optional
@@ -86,6 +93,48 @@ Connectors support `transforms`. Records can be modified before they are sent to
 * `uses` is the reference to the SmartModule used in the transform.
 * `with` is the configuration for the transform
 
+## Consumer with Offset
+
+Consumers can be configured with different `start` offsets to determine where to begin consuming records from a topic.
+
+The following options are available for the `start` offset:
+
+- **`absolute: x`**: Starts consuming from the absolute index `x` of the topic.
+- **`beginning`**: Starts consuming from the very beginning of the topic.
+- **`from-beginning: x`**: Starts consuming from index `x` from the beginning of the topic.
+- **`end`**: Starts consuming from the end of the topic.
+- **`from-end: x`**: Starts consuming from index `x` from the end of the topic.
+
+### Offset Management
+
+Offset management is a Fluvio feature that stores the offset of the last consumed record. This is especially useful when a connector is stopped and restarted, as it allows the connector to resume consumption from the last saved offset rather than starting over.
+
+The behavior of offset management depends on the `strategy` field. When `strategy` is set to `auto` or `manual`, offset management is enabled, and the `start` rule is based on the saved offset rather than the entire topic.
+
+The `strategy` field supports the following values:
+
+- **`auto`**: Automatically commits the offset after each record is consumed.
+- **`manual`**: Requires the user to commit the offset manually.
+- **`none`**: Disables offset management entirely.
+
+### Example Configuration
+
+A consumer connector with offset management might look like this:
+
+```yaml
+apiVersion: 0.1.0
+meta:
+  name: my-connector
+  type: my-connector-type
+  version: x.y.z
+  topic: my-topic
+consumer:
+  id: my-consumer
+  offset:
+    strategy: auto
+    start: beginning 
+    flush: 10s
+```
 
 ### References
 
@@ -93,9 +142,11 @@ The following references will provide additional information for:
 
 * [SmartModules] for additional information on transformations
 * [Tutorials] for end-to-end examples
+* [Offsets] for more information on offsets
 
 
 [SmartModules]: smartmodules/overview.mdx
 [Tutorials]: fluvio/tutorials/index.md
 [connectors]: connectors/overview.mdx
 [the Hub]: hub/connectors/index.md
+[Offsets]: fluvio/concepts/offsets.mdx
