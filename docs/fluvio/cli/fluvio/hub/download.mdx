@@ -4,6 +4,10 @@ title: "download"
 description: "Download the SmartModule from the Hub to the local or to Cloud Cluster"
 ---
 
+import CodeBlock from '@theme/CodeBlock';
+import SmDownloadJsonSql from '!!raw-loader!../../../../_embeds/cmds/hub-sm-download-json-sql.bash';
+import SmDownloadJsonSqlOutput from '!!raw-loader!../../../../_embeds/cmds/hub-sm-download-json-sql-output.bash';
+
 # The `fluvio hub download` command
 
 Download operation sends a copy of the SmartModule from the Hub to the local or Cloud cluster, defined by [`the profile`] in the Fluvio Client.
@@ -14,15 +18,11 @@ After downloading, all SmartModules, regardless of their source, are treated the
 
 Downloading a SmartModule From the Hub is as follows:
 
-```bash copy="fl"
-$ fluvio hub download infinyon/json-sql@0.1.0
+<CodeBlock language="bash" copyBehavior="fl">$ {SmDownloadJsonSql}</CodeBlock>
 
-trying connection to fluvio router.infinyon.cloud:9003
-downloading infinyon/json-sql@0.1.0 to infinyon-json-sql-0.1.0.ipkg
-... downloading complete
-... checking package
-... cluster smartmodule install complete
-```
+Expect the following output:
+
+<CodeBlock language="bash">$ {SmDownloadJsonSqlOutput}</CodeBlock>
 
 #### Download with InfinyOn Cloud
 
@@ -44,4 +44,3 @@ downloading infinyon/json-sql@0.1.0 to infinyon-json-sql-0.1.0.ipkg
 
 [`the profile`]: fluvio/cli/fluvio/profile.mdx
 [InfinyOn Cloud]: https://infinyon.cloud/
-
