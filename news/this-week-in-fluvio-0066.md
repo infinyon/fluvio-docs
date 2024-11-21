@@ -35,6 +35,10 @@ curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
 
 If you are enjoying Fluvio please share with your friends!
 
+:::info
+Also check out the Stateful Data Flow (SDF) streaming analytics in beta [SDF Examples](https://github.com/infinyon/stateful-dataflows-examples)
+:::
+
 ## New features
 Notable changes in this new version:
 
