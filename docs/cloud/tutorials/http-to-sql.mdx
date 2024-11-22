@@ -4,6 +4,10 @@ title: "Create a Data Pipeline from HTTP to SQL"
 description: "Data pipeline that periodically reads from a website and sends the result to a SQL database."
 ---
 
+import CodeBlock from '@theme/CodeBlock';
+import SmDownloadJsonSql from '!!raw-loader!../../_embeds/cmds/hub-sm-download-json-sql.bash';
+import SmDownloadJolt from '!!raw-loader!../../_embeds/cmds/hub-sm-download-jolt.bash';
+
 This guide expects your Fluvio Cluster is already installed. If you need to install it, please follow the instructions [here][installation]!
 
 ## Connector Pipeline
@@ -60,7 +64,7 @@ meta:
  name: cat-facts
  type: http-source
  topic: cat-facts
- 
+
 http:
  endpoint: "https://catfact.ninja/fact"
  interval: 10s
@@ -164,15 +168,11 @@ We also need to run a few commands with `fluvio` to download some prepackaged Sm
 
 [This SmartModule](https://www.fluvio.io/smartmodules/certified/json-sql) will do a basic mapping of the JSON input into a SQL statement for the Outbound SQL connector
 
-```bash
-$ fluvio hub sm download infinyon/json-sql@x.y.z
-```
+<CodeBlock language="bash" copyBehavior="fl">$ {SmDownloadJsonSql}</CodeBlock>
 
 If you have not added `infinyon/jolt@x.y.z` SmartModule on previous steps, we need to add it as well:
 
-```bash
-$ fluvio hub sm download infinyon/jolt@x.y.z
-```
+<CodeBlock language="bash" copyBehavior="fl">$ {SmDownloadJolt}</CodeBlock>
 
 For more info about the SmartModule Hub, check out the [Hub Overview page](https://www.fluvio.io/smartmodules/hub/overview/)
 
