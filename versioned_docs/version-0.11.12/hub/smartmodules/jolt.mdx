@@ -52,22 +52,23 @@ The Jolt SmartModule applies the operations in sequence: `remove` followed by `s
 To demonstrate how **Jolt** SmartModule works we will use [SMDK] tool.
 
 :::info
-All smartmodule versions are marked with `x.y.z`. To find the latest version, run:
+All smartmodule versions are marked with `0.4.1`. To find the latest version, run:
 *  `fluvio hub smartmodule list`
 :::
 
 First, we need to download it to our cluster:
 
-```bash copy="fl"
-$ fluvio hub smartmodule download infinyon/jolt@x.y.z
-```
+import CodeBlock from '@theme/CodeBlock';
+import SmDownloadJolt from '!!raw-loader!../../_embeds/cmds/hub-sm-download-jolt.bash';
+
+<CodeBlock language="bash" copyBehavior="fl">$ {SmDownloadJolt}</CodeBlock>
 
 Second, we create a file `transform.yaml` with transformation specification defined above:
 
 ```yaml
 # transform.yaml
 transforms:
-  - uses: infinyon/jolt@x.y.z
+  - uses: infinyon/jolt@0.4.1
       spec:
         - operation: remove
           spec:
