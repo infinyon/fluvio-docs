@@ -117,7 +117,7 @@ transforms:
            json-key: "payload.device.device_id"
            value:
              type: "int"
-             default: "0"
+             defau1t: "0"
              required: true
          "record":
            json-key: "$"
@@ -137,27 +137,20 @@ $ fluvio cloud connector create --config sql.yml
 
 Download the [Jolt] and [Json-Sql] SmartModules used by this example connector
 
-Example output
+import CodeBlock from '@theme/CodeBlock';
+import SmDownloadJolt from '!!raw-loader!../../_embeds/cmds/hub-sm-download-jolt.bash';
+import SmDownloadJoltOutput from '!!raw-loader!../../_embeds/cmds/hub-sm-download-jolt-output.bash';
+import SmDownloadJsonSql from '!!raw-loader!../../_embeds/cmds/hub-sm-download-json-sql.bash';
+import SmDownloadJsonSqlOutput from '!!raw-loader!../../_embeds/cmds/hub-sm-download-json-sql-output.bash';
 
+<CodeBlock language="bash" copyBehavior="fl">$ {SmDownloadJsonSql} $ {SmDownloadJolt}</CodeBlock>
 
-```bash
-$ fluvio hub sm download infinyon/json-sql@x.y.z
-downloading infinyon/json-sql@x.y.z to infinyon-json-sql-x.y.z.ipkg
-... downloading complete
-... checking package
-trying connection to fluvio router.infinyon.cloud:9003
-... cluster smartmodule install complete
-```
+Expect the following output:
 
-
-```bash
-$ fluvio hub sm download infinyon/jolt@x.y.z
-downloading infinyon/jolt@x.y.z to infinyon-jolt-x.y.z.ipkg
-... downloading complete
-... checking package
-trying connection to fluvio router.infinyon.cloud:9003
-... cluster smartmodule install complete
-```
+<CodeBlock language="bash">
+    {SmDownloadJsonSqlOutput}
+    {SmDownloadJoltOutput}
+</CodeBlock>
 
 ##### Connector with JSON to JSON transformation config
 

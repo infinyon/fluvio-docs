@@ -22,7 +22,7 @@ Example:
 
 ```yaml
 transforms:
- - uses: infinyon/jolt@0.3.0
+ - uses: infinyon/jolt@0.4.1
    with:
      spec:
        - operation: default
@@ -30,14 +30,14 @@ transforms:
            source: "http"
 ```
 
-we have one transformation, which is a SmartModule named [`infinyon/jolt@0.3.0`].
+we have one transformation, which is a SmartModule named [`infinyon/jolt@0.4.1`].
 The name must match a SmartModule previously downloaded to the Cluster:
 
 
 ```bash
 fluvio sm list
   SMARTMODULE              SIZE
-  infinyon/jolt@0.3.0      608.4 KB
+  infinyon/jolt@0.4.1      608.4 KB
 ```
 
 
@@ -93,7 +93,7 @@ Multiple SmartModules can be activated in series. The output of the previous Sma
 
 ```yaml
 transforms:
- - uses: infinyon/jolt@0.3.0
+ - uses: infinyon/jolt@0.4.1
    with:
      spec:
        - operation: shift
@@ -108,4 +108,4 @@ transforms:
 In this example, the `jolt` transformation is performed first, then its output is the input the `regex-filter`.
 
 [SmartModules]: smartmodules/overview.mdx
-[`infinyon/jolt@0.3.0`]: hub/smartmodules/jolt.mdx
+[`infinyon/jolt@0.4.1`]: hub/smartmodules/jolt.mdx

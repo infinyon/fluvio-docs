@@ -17,7 +17,16 @@ function maybeStringifyChildren(children: ReactNode): ReactNode {
     return children;
   }
   // The children is now guaranteed to be one/more plain strings
-  return Array.isArray(children) ? children.join('') : (children as string);
+
+  // If child is "$" or "$$" jump to the next line, if not add a space
+  return React.Children.toArray(children).map((child, index) => {
+    if (typeof child === 'string') {
+      if (index > 0) {
+        return child.replace(/\$\$?/g, (match) => (match === '$' ? '\n$' : ' '));
+      }
+    }
+    return child;
+  });
 }
 
 export default function CodeBlock({
