@@ -1,0 +1,55 @@
+---
+title: "What's new"
+description: Changes and updates to SDF
+sidebar_position: 20
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
+
+# Beta 4
+
+## Upgrading 
+
+To upgrade CLI to the beta4, run the following command:
+
+<CodeBlock language="bash">{InstallFvm}</CodeBlock>
+
+Make sure that [`wasm32-wasip2`](https://doc.rust-lang.org/rustc/platform-support/wasm32-wasip2.html#wasm32-wasip2) target is installed. Typically, can be  installed via:
+
+```bash
+$ rustup target add wasm32-wasip2
+```
+
+To upgrade host workers, shutdown and restart the worker:
+
+```bash
+$ sdf worker shutdown <host-worker-name>
+$ sdf worker create <host-worker-name>
+```
+
+For upgrading cloud workers, please contact [InfinyOn support](#infinyon-support).
+
+### Compatibility and Breaking changes
+
+
+### CLI changes
+- `sdf setup` now checks that Fluvio is running and that we can connect to it.
+
+### Changes
+- renamed [configuration used to connect to remote clusters] from `profile` to `remote_cluster_profile`.
+- updated to use `wasm32-wasip2` target for building wasm modules.
+
+## Improvements
+- Support definition of [nested types].
+- Performance improvements.
+
+## Bug Fixes
+- When using windows, events with an older timestamp are skipped now.
+
+## InfinyOn Support
+
+For any questions or issues, please contact InfinyOn support at support@infinyon.com  or https://discordapp.com/invite/bBG2dTz
+
+[configuration used to connect to remote clusters]: concepts/dataflow-yaml.mdx#topics
+[nested types]: concepts/types.mdx#nested-types
