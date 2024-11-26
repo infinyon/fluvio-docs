@@ -1,0 +1,34 @@
+---
+title: shutdown
+---
+
+# `sdf worker shutdown`
+
+The `sdf worker shutdown` will terminate worker process and all its running dataflows.
+
+
+### `sdf worker shutdown` command
+
+The `worker shutdown` command has the following hierarchy:
+
+```bash copy="fl"
+$ sdf worker shutdown -h
+Usage: sdf worker shutdown <NAME>
+
+Arguments:
+  <NAME>  
+
+Options:
+  -h, --help  Print help
+```
+
+#### Examples
+
+##### sdf worker shutdown
+
+```bash copy="fl"
+$ sdf worker shutdown main
+Shutting down pid: 90202
+Shutting down pid: 90203
+Host worker: main has been shutdown
+```
