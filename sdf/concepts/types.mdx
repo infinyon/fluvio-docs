@@ -197,6 +197,78 @@ types:
 
 <hr />
 
+## Nested types
+
+To enhance organization and clarity, we can define complex data structures within other types.
+
+In particular, we can define nested types in `object`, `enum` and `list` types. In order to do that, we need to add the `type-name` configuration to the type that is being added.
+
+We must ensure that type names are unique within the dataflow. If a dataflow has duplicated type names with different definition, it will fail to validate.
+
+For example, the following is a valid syntax to define nested types:
+
+```yaml
+types:
+  # Nested object within an object
+  person:
+    type: object
+    properties:
+      name:
+        type: string
+      address:
+        type: object
+        type-name: address
+        properties:
+          street:
+            type: string
+          city:
+            type: string
+          zip_code:
+            type: string
+
+  # Nested list within an object
+  product:
+    type: object
+    properties:
+      name:
+        type: string
+      categories:
+        type: list
+        type-name: categories
+        items:
+          type: object
+          type-name: category
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+
+  # Nested object within a list
+  brands:
+    type: list
+    items:
+      type: object
+      type-name: brand
+      properties:
+        name:
+          type: string
+        country:
+          type: string
+  
+  # Nested object within an enum
+  car-type:
+    type: enum
+    oneOf:
+      sedan:
+        type: null
+      truck:
+        type: object
+        type-name: truck-details
+        properties:
+          num_wheels:
+            type: u8
+```
 
 ## Types in the Operator 
 

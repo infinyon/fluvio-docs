@@ -215,7 +215,7 @@ topics:
       <consumer-properties>
     producer: 
       <producer-properties>
-    profile: <optional-string>
+    remote_cluster_profile: <optional-string>
 ```
 
 #### Where
@@ -228,7 +228,7 @@ topics:
   * **converter** - is the converter to deserialize the key (**optional** - defaults to [config](#config)).
 * **producer** - is the producer configuration (**optional** - defaults to [config](#config)).
 * **consumer** - is the consumer configuration (**optional** - defaults to [config](#config)).
-* **profile** - is the [Fluvio profile] that will be used to perform the connection. Useful to reach an external cluster.
+* **remote_cluster_profile** - is the [Fluvio profile] that will be used to perform the connection. Useful to reach an external cluster.
 
 #### For Example
 
