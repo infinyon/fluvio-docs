@@ -7,13 +7,19 @@ sidebar_position: 20
 import CodeBlock from '@theme/CodeBlock';
 import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
 
-# Beta 3
+# Beta 4
 
 ## Upgrading 
 
-To upgrade CLI to the beta3, run the following command:
+To upgrade CLI to the beta4, run the following command:
 
 <CodeBlock language="bash">{InstallFvm}</CodeBlock>
+
+Make sure that [`wasm32-wasip2`](https://doc.rust-lang.org/rustc/platform-support/wasm32-wasip2.html#wasm32-wasip2) target is installed. Typically, can be  installed via:
+
+```bash
+$ rustup target add wasm32-wasip2
+```
 
 To upgrade host workers, shutdown and restart the worker:
 
@@ -28,27 +34,22 @@ For upgrading cloud workers, please contact [InfinyOn support](#infinyon-support
 
 
 ### CLI changes
-- `sdf worker list` now performs workers version check by default
+- `sdf setup` now checks that Fluvio is running and that we can connect to it.
 
-### Package migration
-
-We suggest to regenerate the packages again and copy the operator logic in the new generated file, to include the package generated code improvements.
-
-## New Features
-
-- Support connecting to other fluvio cluster topics via profile. See how to access external clusters in [topics configuration].
+### Changes
+- renamed [configuration used to connect to remote clusters] from `profile` to `remote_cluster_profile`.
+- updated to use `wasm32-wasip2` target for building wasm modules.
 
 ## Improvements
-- Support `sdf cleanup` in packages.
-- Improvements on SDF packages.
+- Support definition of [nested types].
+- Performance improvements.
 
 ## Bug Fixes
-- Sdf dataflow properly terminates in host worker.
+- When using windows, events with an older timestamp are skipped now.
 
 ## InfinyOn Support
 
 For any questions or issues, please contact InfinyOn support at support@infinyon.com  or https://discordapp.com/invite/bBG2dTz
 
-
-[deployment]: deployment.mdx
-[topics configuration]: concepts/dataflow-yaml.mdx#topics
+[configuration used to connect to remote clusters]: concepts/dataflow-yaml.mdx#topics
+[nested types]: concepts/types.mdx#nested-types
