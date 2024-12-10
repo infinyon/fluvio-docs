@@ -165,6 +165,40 @@ In this case, additional transformation will be performed before records are sen
 
 Read more about [JSON to JSON transformations].
 
+### Offset Management
+
+Fluvio Consumer Offset feature allows for a connector to store the offset in the Fluvio cluster and use it on restart.
+To activate it, you need to provide the `consumer` name and set the `strategy: auto`.
+See the example below:
+
+```yaml
+apiVersion: 0.1.0
+meta:
+  version: x.y.z
+  name: my-http-sink
+  type: http-sink
+  topic: http-sink-topic
+  consumer:
+    id: my-http-sink
+    offset:
+      strategy: auto
+      start: beginning
+      flush-period:
+        secs: 10
+        nanos: 0
+http:
+  endpoint: "http://127.0.0.1/post"
+```
+
+After the connector processed any records, you can check the last stored offset value via:
+```bash
+$ fluvio consumer list
+  CONSUMER      TOPIC            PARTITION  OFFSET  LAST SEEN
+  my-http-sink  http-sink-topic  0          0       3s
+```
+
+Read more about [Fluvio Offset].
+
 ## Contributing
 
 Follow on the conventional `CONTRIBUTING.md` file to setup your environment and
@@ -172,3 +206,4 @@ contribute to this project.
 
 [Transformations]: /docs/latest/fluvio/concepts/transformations
 [JSON to JSON transformations]: /docs/latest/hub/smartmodules/jolt
+[Fluvio Offset]: /docs/latest/fluvio/concepts/offsets
