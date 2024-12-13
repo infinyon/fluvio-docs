@@ -56,16 +56,16 @@ SDF - Stateful Dataflow
 Usage: <COMMAND>
 
 Commands:
-  show     Show or List states. Use `show state --help` for more info
-  select   
-  delete   
-  restart  
-  stop     
+  show     Show or List states or dataflows Use `show --help` for more info
+  select   Select dataflow in context
+  delete   Delete a dataflow
+  restart  Restart a dataflow
+  stop     Stop a dataflow
+  sql      Start sql mode
   exit     Stop interactive session
   help     Print this message or the help of the given subcommand(s)
 
 ```
-
 
 #### `show state`
 
@@ -88,9 +88,13 @@ Options:
 Where:
 * `--key` and `--filter` refines the result.
 
+#### SQL mode
+
+Use the SQL mode in the CLI, to be able to run SQL queries on SDF states. See more details in [sql mode for sdf run]
+
 ### Managing dataflow in interactive shell
 
 Please see the [deployment] section for more details.
 
-
 [deployment]: /sdf/deployment
+[sql mode for sdf run]: /sdf/cli/run.mdx#sql-mode

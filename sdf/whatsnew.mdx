@@ -15,12 +15,6 @@ To upgrade CLI to the beta4, run the following command:
 
 <CodeBlock language="bash">{InstallFvm}</CodeBlock>
 
-Make sure that [`wasm32-wasip2`](https://doc.rust-lang.org/rustc/platform-support/wasm32-wasip2.html#wasm32-wasip2) target is installed. Typically, can be  installed via:
-
-```bash
-$ rustup target add wasm32-wasip2
-```
-
 To upgrade host workers, shutdown and restart the worker:
 
 ```bash
@@ -34,22 +28,20 @@ For upgrading cloud workers, please contact [InfinyOn support](#infinyon-support
 
 
 ### CLI changes
-- `sdf setup` now checks that Fluvio is running and that we can connect to it.
+
+- `sdf run` not longer accepts `--dev` as it is the default. In order to use `sdf run` in non development mode, use `--prod`. 
+
+### Improvements
+
+- Added [sql mode] to interactive shell.
+- Added capability to run complex queries like join on states in operator context through the [sql function].
 
 ### Changes
-- renamed [configuration used to connect to remote clusters] from `profile` to `remote_cluster_profile`.
-- updated to use `wasm32-wasip2` target for building wasm modules.
-
-## Improvements
-- Support definition of [nested types].
-- Performance improvements.
-
-## Bug Fixes
-- When using windows, events with an older timestamp are skipped now.
+- Replaced dashes in tables. Previously, when the state name has dashes in it, we were escaping the state name in sql context with quotes. From sdf-beta5, we should access them using `_` instead of `-` on the table name in order to avoid the escaping.
 
 ## InfinyOn Support
 
 For any questions or issues, please contact InfinyOn support at support@infinyon.com  or https://discordapp.com/invite/bBG2dTz
 
-[configuration used to connect to remote clusters]: concepts/dataflow-yaml.mdx#topics
-[nested types]: concepts/types.mdx#nested-types
+[sql mode]: cli/run.mdx#sql-mode
+[sql function]: concepts/state-dataframe.mdx#sql-function

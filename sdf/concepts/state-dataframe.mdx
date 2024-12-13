@@ -35,6 +35,7 @@ Then this will be mapped to arrow dataframe as follows:
 | banana | 2 |
 | grape | 1 |
 
+## Updating a Dataframe state
 
 To update the state, you can use the `update-state` operator as below:
 
@@ -55,15 +56,16 @@ This API is invoked by the `update-state` operator, which only returns the value
 
 In the example, `count_per_word` represents a row value of the dataframe.  If operator sees  `apple`, it will be first row in the dataframe above.
 
-However, aggregate operators like `flush` can access the entire state and perform aggregation across all partitions. In this case, the `count_per_word` state function returns the entire DataFrame, not just individual rows. You can then perform DataFrame operations using the SQL API. The snippet below shows how to use SQL to get the 3 most frequent words.
+## SQL function
+
+Aggregate operators like `flush`, or external services that reference a state can perform SQL queries on the aggregated data of all partitions of a state. In order to do that, is introduced a function `sql` to the context.  The `sql` state function performs the SQL operation passed as parameter on the aggregated view of the states and not in their individual rows. The snippet below shows how to use SQL to get the 3 most frequent words.
 
 ```yaml
 flush:
     run: |
         fn aggregate_wordcount() -> Result<TopWords> {
-        let word_counts = count_per_word();
 
-        let top3 = word_counts.sql("select * from count_per_word order by count desc limit 3")?;
+        let top3 = sql("select * from count_per_word order by count desc limit 3")?;
         let rows = top3.rows()?;
 
         let mut top_words = vec![];
@@ -81,15 +83,18 @@ flush:
         }
 ```
 
+The output of the `sql` function implements also the following methods that will be described above: sql, rows, col, key, next
+
 ## SQL API
 
 For any state that is dataframe, you can use SQL API to perform dataframe operation.  SDF uses polar SQL to perform dataframe operation.  
 The result of the SQL operation is always dataframe.  So you can perform multiple SQL operation to get the desired result.
 
-The SQL is executed in the context of the dataframe.  And name of the dataframe is state as illustrated below:
+The SQL is executed in the context of all the available dataframes, so you can perform any JOIN or complex SQL operations with them. Each dataframe is represented as a table, and each table name is their state name replacing hyphens(-) with underscores(_) as illustrated below.
+
 
 ```rust
-let top3 = word_counts.sql("select * from count_per_word order by count desc limit 3")?;
+let top3 = sql("select * from count_per_word order by count desc limit 3")?;
 ```
 
 ## Row API
