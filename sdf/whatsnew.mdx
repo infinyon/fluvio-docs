@@ -24,17 +24,19 @@ $ sdf worker create <host-worker-name>
 
 For upgrading cloud workers, please contact [InfinyOn support](#infinyon-support).
 
-### Compatibility and Breaking changes
+## Featured change
 
+- Added [sql mode] to interactive shell. With this change, user should be able to run SQL queries (including JOINS) in states of dataflow. The states that support the queries are the [dataframe states]. In particular, when the state has a window context, the queries are againts the last flushed state.
 
 ### CLI changes
 
-- `sdf run` not longer accepts `--dev` as it is the default. In order to use `sdf run` in non development mode, use `--prod`. 
+- `sdf run` not longer accepts `--dev`. Develoment mode is now the default for `sdf run`. If you want to run in non-development mode use `--prod`.
 
 ### Improvements
 
-- Added [sql mode] to interactive shell.
 - Added capability to run complex queries like join on states in operator context through the [sql function].
+- Performance improvements.
+- Improved error messages when nested types definitions are wrong.
 
 ### Changes
 - Replaced dashes in tables. Previously, when the state name has dashes in it, we were escaping the state name in sql context with quotes. From sdf-beta5, we should access them using `_` instead of `-` on the table name in order to avoid the escaping.
@@ -45,3 +47,4 @@ For any questions or issues, please contact InfinyOn support at support@infinyon
 
 [sql mode]: cli/run.mdx#sql-mode
 [sql function]: concepts/state-dataframe.mdx#sql-function
+[dataframe states]: concepts/state-dataframe.mdx
