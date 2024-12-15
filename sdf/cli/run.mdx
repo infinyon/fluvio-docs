@@ -35,10 +35,8 @@ Options:
           when set, it will skip running the service
       --build-profile <BUILD_PROFILE>
           [default: release]
-      --dev
-          set runtime to use dev mode [env: DEV=]
       --prod
-          set runtime to use production mode [env: PROD=]
+          set runtime to use production mode this will disable dev configurations [env: PROD=]
       --force-update
           Force update
 ```
@@ -49,7 +47,6 @@ Where:
 * `--env` sets environment variables to be passed to operators
 * `--skip-running` - compiles components and exists without running the dataflow
 * `--build-profile` - sets the build profile
-* `--dev` - sets runtime to apply dev specific parameters
 * `--prod` - sets runtime to apply prod specific parameters
 * `--force-update` - forces the update of the project dependencies
 
@@ -68,9 +65,10 @@ Usage: <COMMAND>
 
 Commands:
   show  Show or List states. Use `show state --help` for more info
+  sql   Start sql mode
   exit  Stop interactive session
+  help  Print this message or the help of the given subcommand(s)
 ```
-
 
 #### `show state`
 
@@ -94,7 +92,6 @@ Where:
 * `--key` and `--filter` refines the result.
 
 #### Examples
-
 
 ##### Run command
 
@@ -127,4 +124,59 @@ Show the detailed information:
 >> show state filter-service/filter-questions/metrics
  Key    Window  succeeded  failed
  stats  *       2          0
+```
+
+#### SQL mode
+
+Use the SQL mode in the CLI, to be able to run SQL queries on SDF states. For a given dataflow, we will have in context for SQL all the dataframe states, which are basically the states with an `arrow-row` value.
+
+For states that are scoped to a window, we will have access to the last flush state. For states that are not window aware we will have access to the global state. 
+
+In order to enter the SQL mode, type `sql` in the SDF interactive shell. In the SQL mode we could perform any sql command supported by the polars engine.
+
+#### Examples:
+
+##### Run command
+
+Navigate to the directory with `dataflow.yaml` file, and run the command:
+
+```bash
+$ sdf run
+```
+
+##### Enter the SQL mode
+
+Using the sql command:
+
+```bash
+>> sql
+SDF SQL version sdf-beta5
+Type .help for help.
+```
+
+#### Show tables in context
+```bash
+sql>> show tables
+shape: (1, 1)
+┌────────────────┐
+│ name           │
+│ ---            │
+│ str            │
+╞════════════════╡
+│ count_per_word │
+└────────────────┘
+```
+
+#### Perform a query
+
+```bash
+sql>> select * from count_per_word;
+shape: (0, 2)
+┌──────┬─────────────┐
+│ _key ┆ occurrences │
+│ ---  ┆ ---         │
+│ str  ┆ u32         │
+╞══════╪═════════════╡
+│ abc  │  10         |
+└──────┴─────────────┘
 ```
