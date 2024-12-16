@@ -1,0 +1,47 @@
+# dataflow.yaml
+apiVersion: 0.5.0
+meta:
+  name: split-filter-example
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: raw
+
+topics:
+  sentences:
+    schema:
+      value:
+        type: string
+  question:
+    schema:
+      value:
+        type: string
+  not-question:
+    schema:
+      value:
+        type: string
+
+
+services:
+  filter-service:
+    sources:
+      - type: topic
+        id: sentences
+    sinks:
+      - type: topic
+        id: question
+        transforms:
+          - operator: filter
+            run: |
+              fn filter_question(sentence: String) -> Result<bool>{
+                Ok(sentence.contains("?"))
+              }
+      - type: topic
+        id: not-question
+        transforms:
+          - operator: filter
+            run: |
+              fn filter_not_question(sentence: String) -> Result<bool>{
+                Ok(!sentence.contains("?"))
+              }
