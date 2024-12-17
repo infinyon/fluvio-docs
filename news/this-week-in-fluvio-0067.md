@@ -65,7 +65,9 @@ We love our open source community contributors. Here are some issues that you co
 ---
 
 Get in touch with us on [GitHub Discussions] or join [our Discord channel] and come say hello!
+
 See some of the interesting community projects, examples, and utilities in the [Fluvio Community] GitHub org.
+
 
 For the full list of changes this week, be sure to check out [our CHANGELOG].
 
@@ -81,3 +83,4 @@ For the full list of changes this week, be sure to check out [our CHANGELOG].
 [Profiles in alphabetical order by name]: https://github.com/infinyon/fluvio/issues/4246
 [Improve fluvio topic describe with additional information]: https://github.com/infinyon/fluvio/issues/3968
 [Different default SPU port]: https://github.com/infinyon/fluvio/issues/3739
+[Fluvio Community]:  https://github.com/fluvio-community
