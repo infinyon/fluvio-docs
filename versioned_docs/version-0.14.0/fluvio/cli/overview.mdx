@@ -1,0 +1,56 @@
+---
+sidebar_position: 1
+title: "Overview"
+description: "Fluvio CLI is an all-in-one tool for installing and managing Fluvio, as well as for producing and consuming data on the command-line"
+---
+
+# The `fluvio` CLI
+
+The Fluvio CLI is an all-in-one tool for managing Fluvio, as well as for producing and consuming data on the command-line.
+
+:::tip
+  If Fluvio is not installed yet, you can install it by following the
+  instructions in the [quickstart].
+:::
+
+## Commands to Know
+
+Let's have a look at some common commands you'll want to know when starting
+out with Fluvio.
+
+#### Setting up a cluster
+
+- [Create your own Fluvio cluster with `fluvio cluster start`]
+
+#### Sending and Receiving data from Fluvio
+
+- [Create a topic with `fluvio topic create`]
+- [Produce data to a topic with `fluvio produce`]
+- [Consume data from a topic with `fluvio consume`]
+#### Enriching data with SmartModules
+
+- [Overview for SmartModules]
+- [Write a custom filtering SmartModule]
+- [Consume enriched data using SmartModules]
+
+#### Viewing the status of the cluster
+
+- [See all of your topics with `fluvio topic list`]
+- [See your partitions and data replication with `fluvio partition list`]
+- [See the status of the SPUs in your cluster with `fluvio cluster spu list`]
+
+[quickstart]: fluvio/quickstart.mdx
+
+[Create your own Fluvio cluster with `fluvio cluster start`]: fluvio/cli/fluvio/cluster.mdx
+
+[Create a topic with `fluvio topic create`]: fluvio/cli/fluvio/topic.mdx
+[Produce data to a topic with `fluvio produce`]: fluvio/cli/fluvio/produce.mdx
+[Consume data from a topic with `fluvio consume`]: fluvio/cli/fluvio/consume.mdx
+
+[Overview for SmartModules]: smartmodules/overview.mdx
+[Write a custom filtering SmartModule]: smartmodules/features/operators/filter.mdx
+[Consume enriched data using SmartModules]: fluvio/cli/fluvio/consume.mdx#consume-using-a-smartmodule
+
+[See all of your topics with `fluvio topic list`]: fluvio/cli/fluvio/topic.mdx#fluvio-topic-list
+[See your partitions and data replication with `fluvio partition list`]: fluvio/cli/fluvio/partition.mdx#fluvio-partition-list
+[See the status of the SPUs in your cluster with `fluvio cluster spu list`]: fluvio/cli/fluvio/cluster.mdx#fluvio-cluster-spu-list
