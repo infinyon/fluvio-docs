@@ -128,5 +128,26 @@ $ fluvio cluster spu list
  5001  custom-spu-5001  Online  "custom"   -    localhost:9010  localhost:9011
 ```
 
+## `fluvio cluster upgrade`
+
+Upgrade a local Fluvio cluster from an older version to a newer version of Fluvio.
+
+:::danger
+  Be careful, this cannot be undone.
+:::
+
+**Example usage**
+
+To upgrade a Fluvio local cluster, shutdown the cluster with its current version,
+`fvm` switch to the new version of Fluvio, perform the upgrade, then resume the cluster.
+
+```bash copy="fl"
+$ fluvio cluster shutdown
+$ fvm switch stable # or desired newer version e.g. fvm switch 0.14.0
+$ fluvio cluster upgrade
+$ fluvio cluster resume
+```
+
+
 [getting started guide]: fluvio/quickstart.mdx
 [Kubernetes Install]: fluvio/installation/kubernetes.mdx
