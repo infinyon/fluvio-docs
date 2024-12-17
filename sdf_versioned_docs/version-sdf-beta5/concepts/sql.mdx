@@ -1,8 +1,10 @@
 ---
-title: State - Arrow Dataframe
-description: Stateful Dataflows Dataframe Integration
+title: SQL Interface
+description: Stateful Dataflows Dataframe SQL Integration
 sidebar_position: 60
 ---
+
+## Dataframe states
 
 States are a key concept in SDF. They hold a simple value or they can be divided into multiple partitions based on a key.  Each partition state can have many different types.  
 
@@ -22,8 +24,7 @@ One of the type is `arrow-row`.  For example, follow snippet define state `count
                 type: u32
 ```
 
-
-In here, we are defining a state `count_per_word` to track frequency of the words.  For each key, we have a row that has a column `count` that store the count of the word.
+An `arrow-row` state can be seen as an SQL table. In  the previous example, we are defining a state `count_per_word` to track frequency of the words.  For each key, we have a row that has a column `count` that store the count of the word.
 For example, let's we have following word: `apple`, `orange`, `banana`, `orange`, `grape`, `orange`, `banana`.  
 
 Then this will be mapped to arrow dataframe as follows:
@@ -52,9 +53,9 @@ update-state:
 
 Note that state value can be access using `count_per_word` state function which is automatically injected by SDF builder.
 
-This API is invoked by the `update-state` operator, which only returns the value of the partition state.
+This API is invoked by the `update-state` operator, which only is able to update the value of the partition state.
 
-In the example, `count_per_word` represents a row value of the dataframe.  If operator sees  `apple`, it will be first row in the dataframe above.
+In the example, `count_per_word` represents a row value of the dataframe.  If operator sees  `apple`, it will be the first row in the dataframe above.
 
 ## SQL function
 
@@ -83,15 +84,14 @@ flush:
         }
 ```
 
-The output of the `sql` function implements also the following methods that will be described above: sql, rows, col, key, next
+The output of the `sql` function implements also the following methods that will be described below: sql, rows, col, key, next
 
 ## SQL API
 
-For any state that is dataframe, you can use SQL API to perform dataframe operation.  SDF uses polar SQL to perform dataframe operation.  
-The result of the SQL operation is always dataframe.  So you can perform multiple SQL operation to get the desired result.
+For any state that is dataframe, you can use SQL API to perform dataframe operation.  SDF uses polars SQL to perform dataframe operations.  
+The result of a SQL operation is always a dataframe.  So you can perform multiple SQL operation to get the desired result.
 
 The SQL is executed in the context of all the available dataframes, so you can perform any JOIN or complex SQL operations with them. Each dataframe is represented as a table, and each table name is their state name replacing hyphens(-) with underscores(_) as illustrated below.
-
 
 ```rust
 let top3 = sql("select * from count_per_word order by count desc limit 3")?;
