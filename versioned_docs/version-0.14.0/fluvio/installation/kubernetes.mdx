@@ -1,0 +1,109 @@
+---
+sidebar_position: 800
+title: "Kubernetes"
+description: "Fluvio and Kubernetes"
+---
+
+Fluvio runs with many kubernetes installations. If you are comfortable with kubernetes already, install with your current context using the [`fluvio cluster`] command.
+
+We have a more detailed tutorial to install and run with **Rancher Desktop Kubernetes** below, but we have fluvio users who use fluvio with:
+
+- [minikube] (linux + others)
+- [colima] (macos)
+- [orbstack] (macos + linux)
+- [AWS EKS]
+
+If you have any questions, feel free to ask on our [Discord channel], our [Fluvio github repository]
+
+[`fluvio cluster`]: fluvio/cli/fluvio/cluster.mdx#kubernetes
+[Rancher Desktop Kubernetes]: ./kubernetes.mdx
+
+[minikube]: https://minikube.sigs.k8s.io/docs/
+[colima]: https://github.com/abiosoft/colima
+[orbstack]: https://orbstack.dev/
+[AWS EKS]: https://aws.amazon.com/eks/
+[Discord channel]: https://discordapp.com/invite/bBG2dTz
+[Fluvio github repository]: https://github.com/infinyon/fluvio
+
+
+## Install Rancher Desktop
+
+:::note
+
+First [install Fluvio] to go through this tutorial.
+
+[install Fluvio]: fluvio/quickstart.mdx
+
+:::
+
+
+
+Navigate to the Rancher Desktop [installation page](https://docs.rancherdesktop.io/getting-started/installation/) and follow the instructions. Rancher Desktop will provide access to other utilities needed to run Fluvio such as `kubectl` and `helm`.
+
+Please make sure that the container runtime is `dockerd (moby)`. That configuration can be changed in the `Kubernetes Settings` section on the sidebar.
+
+<img
+    src="/img/docs/concepts/advanced/install-on-rancher/rancher-dockerd.png"
+    alt="A screenshot of the Rancher Desktop using dockerd as container"
+    style={{ justify: 'center', maxWidth: '800px' }}
+/>
+
+## Start Fluvio cluster
+
+You can start a Fluvio cluster by running `fluvio cluster start`.
+
+```bash copy="fl"
+$ fluvio cluster start --k8 --use-k8-port-forwarding
+```
+
+If rancher desktop is configured to manage a kubernetes cluster on a non-local host or ip, the `--proxy-addr` argument needs to provide that host dns name, or ip of that cluster.
+
+```bash copy="fl"
+$ fluvio cluster start --k8 --proxy-addr HOSTNAME_OR_IP
+```
+
+### Verify cluster is running
+
+We can check the fluvio cluster by checking version and status with the following command:
+
+```bash
+$ fluvio version
+```
+
+## Hello, Fluvio!
+
+Congratulations, you've successfully installed Fluvio on your local machine!
+
+Let's use the Fluvio CLI to play with some basic functionality.
+
+The first thing we need to do is create a [topic].
+
+```bash copy="fl"
+$ fluvio topic create greetings
+topic greetings created
+```
+
+Now that we have a topic, we can [produce] some messages!
+
+Use the following command to send a message to the `greetings` topic:
+
+```bash copy="fl"
+$ echo Hello, Fluvio | fluvio produce greetings
+```
+
+Finally, we can [consume] messages back from the topic
+
+```bash copy="fl"
+$ fluvio consume greetings -B -d
+Consuming records from the beginning of topic 'greetings'
+Hello, Fluvio
+```
+
+Way to go! You're well on your way to writing real-time distributed apps with Fluvio!
+
+If you run into any problems along the way, make sure to check out our [troubleshooting] page to find a fix.
+
+[topic]: fluvio/concepts/architecture/sc.mdx#topics
+[produce]: fluvio/concepts/produce-consume.mdx#producer
+[consume]: fluvio/concepts/produce-consume.mdx#consumer
+[troubleshooting]: fluvio/troubleshooting.mdx

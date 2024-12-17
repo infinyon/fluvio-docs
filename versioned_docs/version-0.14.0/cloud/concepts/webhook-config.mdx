@@ -1,0 +1,51 @@
+---
+title: Webhook Configuration
+weight: 100
+description: "Reference for Webhook configs"
+---
+
+## Webhook config template
+```yaml
+# example-webhook-template.yaml
+meta:
+  name: my-webhook
+  topic: my-topic
+# optional
+transforms:
+ - uses: smartmodule_name
+   with:
+     param_name: param_value
+# optional
+webhook:
+  outputParts: [body | full (default)]
+  outputType: [text | json (default)]
+```
+
+## Config options
+### Meta
+* `name` - The name of your webhook
+* `topic` - The name of the topic you want events to be stored. It will be automatically created if it doesn't exist.
+
+### Transforms
+Webhook connectors support `transforms`.  Records can be modified before they are sent to the topic. The transforms section is a list of transform objects. Each transform object has an uses and a with section.
+
+* `uses` is the reference to the SmartModule used in the transform.
+  *  `with` is the configuration for the transform
+      *  The section is different for each transform
+      *  See the connectors reference documentation for available configuration options
+
+## Webhook
+The output record from the webhook request is configurable
+
+`outputParts` options:
+* `full` - Return the headers and body of the request (Default)
+* `body` - Only return the body of the request
+
+`outputType` options:
+* `json`- Output is parsed into json (Default)
+* `text` - Output is plaintext
+
+
+## References
+
+* [How to Use WebHooks]: ../how-to/use-webhooks.mdx
