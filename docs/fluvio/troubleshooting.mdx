@@ -8,7 +8,6 @@ This document will help you troubleshoot common issues with your Fluvio cluster.
 
 ## Troubleshooting a Local Cluster
 
-
 To troubleshoot a local Fluvio cluster, you can check the logs of the SC and SPUs processes.
 
 - Run `cat ~/.fluvio/log/flv_sc.log` for SC logs
@@ -17,9 +16,21 @@ To troubleshoot a local Fluvio cluster, you can check the logs of the SC and SPU
 
 You can also use `tail -n 100 ~/.fluvio/log/flv_sc.log` to just print the last 100 lines of the log file.
 
+### Getting help
+
+You can ask for help from the Fluvio [Discord] group,
+
+The logging information needed for diagnostics can be packaged up with the command
+`fluvio cluster diagnostics`. The compressed archive can be shared in the Discord group or sent via PM to Infinyon admins
+
+## Upgrading the Cluster
+
+If you receive an error `Check Versions match failed Check Versions match failed: cannot resume a x.y.z cluster with fluvio version a.b.c.` This is an error that may be shown when upgrading Fluvio version of a locally deployed cluster. The fluvio cluster may need to be
+upgraded to the new version: see the [`fluvio cluster upgrade`] command for more information.
+
 ### Log directory
 
-By default, Fluvio logs are stored in the `~/.fluvio/log` directory. 
+By default, Fluvio logs are stored in the `~/.fluvio/log` directory.
 But if you have the `FLUVIO_DIR` environment variable set, the logs will be stored in the directory specified by the variable.
 
 ### Setting log level
@@ -40,5 +51,8 @@ $ RUST_LOG=info fluvio run sc --local
 
 The log level can be set to `trace`, `debug`, `info`, `warn`, `error`.
 
-[filtering tracing log]: https://tracing.rs/tracing_subscriber/filter/struct.envfilter
+
+[`fluvio cluster upgrade`]: cli/fluvio/cluster.mdx#fluvio-cluster-upgrade
+[filtering tracing log]: https://docs.rs/tracing-subscriber/latest/tracing_subscriber/filter/struct.EnvFilter.html
+[Discord]: https://discord.com/invite/bBG2dTz
 
