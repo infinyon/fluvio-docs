@@ -1,0 +1,97 @@
+---
+title: "Collaborate using Organizations"
+description: "A short guide on colaboration using organizations"
+sidebar_position: 4
+---
+
+Organizations allow teams to collaborate by sharing access to clusters and private hub packages.
+
+The user that creates an organziaton becomes its owner and all invited users are considered members. Cluster creation/deletion and user management is limited to the owner. 
+Members have permission to perform all other operations.
+
+At the moment access control within an organization is not configurable. 
+Therefore, in cases where you need to segment access to resources, we recommend that you create an organization per segment.
+
+Members of an organization may publish InfinyOn Hub packages to be made availabile to the organization.
+Any private packages published to this organization will be available to all its cluster and users.
+
+### Create an organization
+
+The `fluvio-cloud admin org create` command will walk you though creating an org and creating its first cluster.
+
+```bash
+$ fluvio-cloud admin org create --name my-org --display-name MyOrganization
+Created organization: MyOrganization (my-org)
+
+? Would you like to select the newly created organization? Yes
+
+? This organization has no clusters yet. Would you like to create one? Yes
+
+? Would you like auto-generate a name for this cluster? Yes
+
+Creating cluster...
+Starting unified-platypus... Done!
+Downloading cluster config
+Registered sdf worker: unified-platypus
+Switched to new profile: unified-platypus
+```
+
+### Invite teammates
+
+The invited teammate will have access to the new cluster created in your organization.
+
+```bash
+$ fluvio cloud admin org user invite my.first.teammate@example.com
+
+An email has been sent to the user my.first.teammate@example.com with an invite code.
+You can also provide the invite code to the user manually.
+
+Invite code: RBDSPL3RLNIKBI4JQRFKOSAG7R6RK35V
+```
+
+You may continue adding additional teammates using this command.
+
+
+### Accepting an invite and joining the organization
+
+As the person being invited to join, you will receive an email with an invitation code. 
+If you do not already have an InfinyOn Cloud user account you will be prompted to create one.
+
+Log in with the CLI
+
+```bash
+$ fluvio cloud login
+Infinyon Cloud email: my.first.teammate@example.com
+Password: **********
+
+Logged in successfully as Teammate 1 (my.first.teammate@example.com)
+```
+
+Accept the invitation using the code from the organization owner
+```
+$ fluvio cloud org invite accept P2Z4EDA6G2ETE7IFNZP75F6GC7A4H3EY
+You have successfully joined to the MyOrganization (my-org) organization
+```
+
+Select the newly join organization to use the shared cluster
+```
+$ fluvio cloud org select my-org
+Selected organization: MyOrganization (my-org).
+Cluster actions will be performed in this organization.
+
+This organization has the following clusters:
+ ID                ACTIVE  STATE      VERSION  SPU_COUNT
+ unified-platypus  true    Installed  0.14.0   1
+
+? Would you like to use cluster unified-platypus on this machine? Yes
+
+Downloading cluster config
+Registered sdf worker: unified-platypus
+Switched to new profile: unified-platypus
+```
+
+The Fluvio profile is now loaded on to the teammate's machine and can be used by the Fluvio CLI and other Fluvio client applications.
+
+[InfinyOn Cloud]: https://infinyon.cloud
+[Cloud CLI]: cloud/cli/overview.mdx
+[Cloud CLI docs]: cloud/cli/overview.mdx
