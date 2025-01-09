@@ -1,0 +1,89 @@
+---
+sidebar_position: 90
+title: "admin org"
+description: "CLI commands for managing an organization"
+---
+
+The `fluvio cloud admin org` command is used manage an organization and its users.
+
+```bash
+$ fluvio cloud admin org           
+Organization management
+
+Usage: fluvio-cloud admin org <COMMAND>
+
+Commands:
+  create  Create a new organization
+  user    Manage users in the organization
+```
+
+## `fluvio cloud admin org create`
+```bash
+$ fluvio cloud admin org create -h
+Create a new organization
+
+Usage: fluvio-cloud admin org create --name <NAME> --display-name <DISPLAY_NAME>
+
+Options:
+      --name <NAME>                  organization name
+      --display-name <DISPLAY_NAME>  organization display name
+```
+
+Example usage
+```bash
+$ fluvio cloud admin org create --name org1 --display-name "Organization 1"
+Created organization: Organization 1 (org1)
+```
+
+## `fluvio cloud admin org user list`
+Lists all users in the organization
+
+Example usage
+```bash
+$ fluvio cloud admin org user list
+ USER NAME  ROLE   EMAIL           FULL NAME   
+ self       Owner  me@example.com  My Name
+```
+
+## `fluvio cloud admin org user remove`
+```bash
+$ fluvio cloud admin org user remove -h
+Remove a user from the organization
+
+Usage: fluvio-cloud admin org user remove <EMAIL>
+
+Arguments:
+  <EMAIL>  email of the user to remove from the organization
+```
+
+## `fluvio cloud admin org user invite`
+```bash
+$ fluvio cloud admin org user invite -h
+Invite a user to the organization
+
+Usage: fluvio-cloud admin org user invite <EMAIL>
+
+Arguments:
+  <EMAIL>  email of the user to invite
+```
+
+Example usage 
+```bash
+$ fluvio cloud admin org user invite invitee@example.com
+
+An email has been sent to the user invitee@example.com with an invite code.
+You can also provide the invite code to the user manually.
+
+Invite code: RBDSPL3RLNIKBI4JQRFKOSAG7R6RK35V
+```
+
+## `fluvio cloud admin org user revoke`
+```bash
+$ fluvio cloud admin org user revoke -h
+Revoke a user invitation
+
+Usage: fluvio-cloud admin org user revoke <INVITE_CODE>
+
+Arguments:
+  <INVITE_CODE>  code of the invite
+```
