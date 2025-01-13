@@ -1,0 +1,92 @@
+---
+sidebar_position: 80
+title: org
+description: "CLI commands for organization membership"
+---
+
+The `fluvio cloud org` command is used to select org context for cluster commands.
+Invitations to join other organization can be accepted or rejected using the `invite` subcommand.
+
+```bash
+$ fluvio cloud org
+View and sync organizations
+
+Usage: fluvio-cloud org <COMMAND>
+
+Commands:
+  list    List all organizations
+  select  Select organization and sync clusters
+  invite  Invitations to join a new organization
+```
+
+## `fluvio cloud org list`
+```bash
+$ fluvio cloud org list
+    NAME         DISPLAY-NAME     
+    self         Personal             
+ *  my-org       My Organization
+```
+
+## `fluvio cloud org select`
+```bash
+$ fluvio cloud org select -h
+Select organization and sync clusters
+
+Usage: fluvio-cloud org select [ORG_NAME]
+
+Arguments:
+  [ORG_NAME]  organization name
+```
+
+Example usage
+```bash
+$ fluvio cloud org select  
+? You are member of the following organizations. Which one would you like to use?  
+  Personal (self)
+>  My Organization (my-org)
+
+This organization has the following clusters:
+ NAME          ACTIVE  STATUS     VERSION  SPU_COUNT 
+ my-cluster-1  true    Installed  0.12.0   1         
+
+? Would you like to use cluster my-cluster-1 on this machine? yes
+
+Downloading cluster config
+Registered sdf worker: my-cluster-1
+Switched to new profile: my-cluster-1
+```
+
+## `fluvio cloud org invite`
+```bash
+$ fluvio cloud org invite
+Invitations to join a new organization
+
+Usage: fluvio-cloud org invite <COMMAND>
+
+Commands:
+  accept  Accept an invite
+  reject  Reject an invite
+  help    Print this message or the help of the given subcommand(s)
+```
+
+## `fluvio cloud org invite accept`
+```bash
+$ fluvio cloud org invite accept -h
+Accept an invite
+
+Usage: fluvio-cloud org invite accept <INVITE_CODE>
+
+Arguments:
+  <INVITE_CODE>  code of the invite
+```
+
+## `fluvio cloud org invite reject`
+```bash
+$ fluvio cloud org invite reject
+Reject an invite
+
+Usage: fluvio-cloud org invite reject <INVITE_CODE>
+
+Arguments:
+  <INVITE_CODE>  code of the invite
+```
