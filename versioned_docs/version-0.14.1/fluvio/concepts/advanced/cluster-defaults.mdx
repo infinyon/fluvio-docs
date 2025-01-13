@@ -1,0 +1,110 @@
+---
+sidebar_position: 5
+title: "Configuration Defaults"
+---
+
+## Overview
+
+When a Fluvio Cluster is created without extra params, either in Kubernetes
+or locally certain assumptions on limitations are made.
+
+This document outlines the default configurations for a Fluvio Cluster.
+
+## Default Configurations
+
+### Cluster
+
+| Resource | Default Value |
+|-|-|
+| SPUs | `1` |
+
+### SPU Group
+
+| Resource | Default Value |
+|-|-|
+| Number of replicas | `1` |
+| Minimum ID in Group | `0` |
+| Store Size | `10 GB` |
+
+### SPUs
+
+| Resource | Default Value |
+|-|-|
+| SPU ID | `0` |
+| SPU Type | Managed |
+| Public Endpoint's IP Address | `localhost:30004`
+| Public Endpoint Encryption | `PLAINTEXT` |
+| Private Endpoint's IP Address | `fluvio-spg-main.default.svc.cluster.local:9006`
+| Private Endpoint Encryption | `PLAINTEXT` |
+
+:::tip
+  By default SPU communication have no encryption enabled.<br />
+  It is recommended to enable encryption for production clusters.
+:::
+
+### Topic
+
+| Resource | Default Value |
+|-|-|
+| Compression Type | Not specified. |
+| Partitions | `1` |
+| Replicas | `1` |
+| Segment Size | `1 GB` |
+
+### Partition
+
+| Resource | Default Value |
+|-|-|
+| Replicas | `0`
+
+## Overriding Defaults
+
+### Cluster
+
+#### SPUs
+
+**Specify the number of SPUs**
+
+```bash copy="fl"
+$ fluvio cluster start --spu 3
+```
+
+### SPU Group
+
+#### Storage Size
+
+Storage size can be specified when starting a Fluvio Cluster.
+
+```bash copy="fl"
+$ fluvio cluster start --spu-storage-size '50 GB'
+```
+
+### Topic
+
+#### Segment Size
+
+A topic's segment size can be specified when creating a topic.
+
+**Specify a segment size using units**
+
+```bash copy="fl"
+$ fluvio topic create foo --segment-size '1 GB'
+```
+
+**Specify a segment size using bytes (50 MB)**
+
+```bash copy="fl"
+$ fluvio topic create foo --segment-size '50000000'
+```
+
+### Partition
+
+#### Replicas
+
+A partition's replicas can be specified when creating a topic.
+
+**Specify the number of replicas**
+
+```bash copy="fl"
+$ fluvio topic create foo --replicas 3
+```
