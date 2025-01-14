@@ -17,7 +17,7 @@ const PARTITION_NUM: u32 = 0;
 #[async_std::main]
 async fn main() {
     // Connect to Fluvio cluster
-    let fluvio = Fluvio::connect().await.unwrap();
+    let fluvio = Fluvio::connect().await.expect("Failed to connect to Fluvio");
 
     // Build smartmodule invocation from wasm file
     let sm_invocation = build_smartmodule_from_file(
@@ -33,10 +33,10 @@ async fn main() {
         .offset_start(Offset::end())
         .smartmodule(vec![sm_invocation])
         .build()
-        .unwrap();
+        .expect("Failed to build consumer config");
 
     // Create consumer & stream one record
-    let mut stream = fluvio.consumer_with_config(config).await.unwrap();
+    let mut stream = fluvio.consumer_with_config(config).await.expect("Failed to create consumer");
     if let Some(Ok(record)) = stream.next().await {
         let string = String::from_utf8_lossy(record.value());
         println!("{}", string);

@@ -8,7 +8,7 @@ const REPLICAS: u32 = 1;
 #[async_std::main]
 async fn main() {
     // Connect to Fluvio cluster
-    let fluvio = Fluvio::connect().await.unwrap();
+    let fluvio = Fluvio::connect().await.expect("Failed to connect to Fluvio");
 
     // Create a topic
     let admin = fluvio.admin().await;
@@ -18,7 +18,7 @@ async fn main() {
         .await;
 
     // List topics    
-    let topics = admin.all::<TopicSpec>().await.unwrap();
+    let topics = admin.all::<TopicSpec>().await.expect("Failed to list topics");
     let topic_names = topics.iter().map(|topic| topic.name.clone()).collect::<Vec<String>>();
     
     println!("Topics:\n  - {}", topic_names.join("\n  - "));

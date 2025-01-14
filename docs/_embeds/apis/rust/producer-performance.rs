@@ -11,19 +11,20 @@ async fn main() {
         .batch_size(500)
         .linger(Duration::from_millis(500))
         .compression(Compression::Gzip)
-        .build().expect("Failed to create topic producer config");
+        .build()
+        .expect("Failed to create topic producer config");
 
     // Connet to fluvio cluster & create a producer
-    let fluvio = Fluvio::connect().await.unwrap();
+    let fluvio = Fluvio::connect().await.expect("Failed to connect to Fluvio");
     let producer = fluvio.topic_producer_with_config(TOPIC_NAME, producer_config)
         .await.expect("Failed to create a producer");
 
     // Send 10 records
     for i in 1..=10 {
         let record = format!("Record-{}", i);
-        producer.send(RecordKey::NULL, record.as_str()).await.unwrap();
+        producer.send(RecordKey::NULL, record.as_str()).await.expect("Failed to send record");
+        producer.flush().await.expect("Failed to flush");
     }
-    producer.flush().await.unwrap();
 
     println!("Sent 10 records successfully.");
 }
