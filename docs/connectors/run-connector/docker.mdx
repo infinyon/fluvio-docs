@@ -6,7 +6,7 @@ description: "Run a Connector on Docker"
 
 # Run Connectors on Docker
 
-This document will guide you through downloading an running a fluvio connector on Docker. For additinonal information take a look at the [docker connector section in gitnub].
+This document will guide you through downloading an running a fluvio connector on Docker. The files below are also [in github].
 
 # Prerequisites
 
@@ -76,13 +76,13 @@ The connector requires a Fluvio profile to authenticate with the cluster. If you
 
 List the available profiles:
 
-```bash
+```bash copy="fl"
 $ fluvio profile list
 ```
 
 Export the active profile to a file named `fluvio_profile.toml`.
 
-```bash
+```bash copy="fl"
 $ fluvio profile export > fluvio_profile.toml
 ```
 
@@ -113,7 +113,7 @@ If you run a differenet connector, change the configuration to match the connect
 
 Build your Docker image using the following command:
 
-```bash 
+```bash copy="fl"
 $ docker build --progress=plain -t my-org/http-source:0.3.8 .
 ```
 
@@ -121,8 +121,8 @@ Where `my-org` is your organization/domain name.
 
 Run the image:
 
-```bash
-docker run --network host --rm my-org/http-source:0.3.8
+```bash copy="fl"
+$ docker run --network host --rm my-org/http-source:0.3.8
 ```
 
 ## 4. Check the Result
@@ -131,12 +131,12 @@ The connector will start producing quotes to the `quotes` topic.
 
 Open a new terminal and run the following command to view the messages:
 
-```bash
+```bash copy="fl"
 $ fluvio consume quotes
 ```
 
 A new quote is generated every 2 seconds.
 
 
-[docker connector section in gitnub]: https://github.com/infinyon/fluvio/tree/master/connector/docker
+[in github]: https://github.com/infinyon/fluvio/tree/master/connector/docker
 [install fluvio]: /docs/fluvio/quickstart#install-fluvio
