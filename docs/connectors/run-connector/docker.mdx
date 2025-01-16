@@ -1,0 +1,142 @@
+---
+sidebar_position: 20
+title: Docker 
+description: "Run a Connector on Docker"
+---
+
+# Run Connectors on Docker
+
+This document will guide you through downloading an running a fluvio connector on Docker. For additinonal information take a look at the [docker connector section in gitnub].
+
+# Prerequisites
+
+The Docker container requires a Fluvio profile and a connector configuration file. The profile passes the credentials to the connector. The configuration file specifies the connector properties.
+
+## 1. Create a Dockerfile
+
+Open and editor and create a new file named `Dockerfile` with the following content:
+
+```bash
+FROM debian:stable-slim
+
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install -y tini
+RUN apt-get install -y curl
+
+# setup fluvio as non user
+ENV USER=fluvio
+RUN adduser \
+    --disabled-password \
+    --home "/home/$USER" \
+    "$USER"
+USER $USER
+WORKDIR /home/fluvio
+
+# install fluvio
+RUN curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
+RUN ls -la /home/fluvio/.fluvio/bin
+ENV PATH="/home/fluvio/.fluvio/bin:$PATH"
+RUN export PATH
+RUN fluvio version
+
+# copy fluvio profile and test
+COPY ./fluvio_profile.toml /home/fluvio/.fluvio/config
+
+WORKDIR /home/fluvio/connector
+
+# Download specific connector (change to your connector)
+RUN cdk hub download infinyon/http-source@0.3.8
+RUN tar xf infinyon-http-source-0.3.8.ipkg
+RUN tar -xzf manifest.tar.gz
+RUN ls -la
+
+# Copy connector configuration
+COPY ./connector.yaml /home/fluvio/connector
+RUN ls -la /home/fluvio/connector
+
+# run http-source, this will be different for each connector
+ENTRYPOINT ["/home/fluvio/connector/http-source",  "--config", "/home/fluvio/connector/connector.yaml"]
+```
+
+The Dockerfile performs the following operations:
+* installs the Fluvio CLI
+* copies the profile to the container
+* downloads `http-source` connector from InfinyOn Hub. 
+* runs the connector
+
+To run a different connector, perform the following steps:
+* run `fluvio hub connector list` to list the available connectors
+* change `infinyon/http-source@0.3.8` and `infinyon-http-source-0.3.8.ipkg` with your connector equivalent.
+* change the executable command `http-source` to connector equivalent.
+
+
+## 2. Export Fluvio profile
+
+The connector requires a Fluvio profile to authenticate with the cluster. If you use multiple profiles it is important to choose the profile for your target cluster before you export. 
+
+List the available profiles:
+
+```bash
+$ fluvio profile list
+```
+
+Export the active profile to a file named `fluvio_profile.toml`.
+
+```bash
+$ fluvio profile export > fluvio_profile.toml
+```
+
+:::tip
+If you don't have a fluvio profile, [install fluvio] and create a cluster. The profile will be created automatically.
+::: 
+
+
+## 2. Create a Connector Configuration File
+
+The following configuration file allows you to run the`http-source` connector to read a new quote `quote` from the `demo-data` server every 2 seconds. Copy the following configuration to a file named `connector.yaml`:
+
+```yaml
+apiVersion: 0.1.0
+meta:
+  version: 0.3.8
+  name: http-quotes
+  type: http-source
+  topic: quotes
+http:
+  endpoint: https://demo-data.infinyon.com/api/quote
+  interval: 2s
+```
+
+If you run a differenet connector, change the configuration to match the connector.
+
+## 3. Build  & Run the Docker Image
+
+Build your Docker image using the following command:
+
+```bash 
+$ docker build --progress=plain -t my-org/http-source:0.3.8 .
+```
+
+Where `my-org` is your organization/domain name.
+
+Run the image:
+
+```bash
+docker run --network host --rm my-org/http-source:0.3.8
+```
+
+## 4. Check the Result
+
+The connector will start producing quotes to the `quotes` topic.
+
+Open a new terminal and run the following command to view the messages:
+
+```bash
+$ fluvio consume quotes
+```
+
+A new quote is generated every 2 seconds.
+
+
+[docker connector section in gitnub]: https://github.com/infinyon/fluvio/tree/master/connector/docker
+[install fluvio]: /docs/fluvio/quickstart#install-fluvio
