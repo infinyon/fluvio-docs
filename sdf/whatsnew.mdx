@@ -7,11 +7,11 @@ sidebar_position: 20
 import CodeBlock from '@theme/CodeBlock';
 import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
 
-# Beta 5
+# Beta 6
 
 ## Upgrading 
 
-To upgrade CLI to the beta4, run the following command:
+To upgrade CLI to this version, run the following command:
 
 <CodeBlock language="bash">{InstallFvm}</CodeBlock>
 
@@ -26,25 +26,21 @@ For upgrading cloud workers, please contact [InfinyOn support](#infinyon-support
 
 ## Featured change
 
-- Added [sql mode] to interactive shell. With this change, user should be able to run SQL queries (including JOINS) in states of dataflow. The states that support the queries are the [dataframe states]. In particular, when the state has a window context, the queries are againts the last flushed state.
+- Remove the need of saving the WIT generated files in SDF packages.
 
 ### CLI changes
 
-- `sdf run` not longer accepts `--dev`. Development mode is now the default for `sdf run`. If you want to run in non-development mode use `--prod`.
+- Added --build-profile to sdf build and sdf test subcommands.
 
 ### Improvements
 
-- Added capability to run complex queries like join on states in operator context through the [sql function].
-- Performance improvements.
-- Improved error messages when nested types definitions are wrong.
+- Allow publishing packages with no functions.
+- Generate wit files for pkg on build time.
 
 ### Changes
-- Replaced dashes in tables. Previously, when the state name has dashes in it, we were escaping the state name in sql context with quotes. From sdf-beta5, we should access them using `_` instead of `-` on the table name in order to avoid the escaping.
+- Added validation to check that output of filter-map operators are optional.
+- Removed `anyhow` dependencies from operators rust code, it is reexported now in the `sdfg` crate, use with `sdfg::anyhow`. 
 
 ## InfinyOn Support
 
 For any questions or issues, please contact InfinyOn support at support@infinyon.com  or https://discordapp.com/invite/bBG2dTz
-
-[sql mode]: cli/run.mdx#sql-mode
-[sql function]: concepts/sql.mdx#sql-function
-[dataframe states]: concepts/sql.mdx#dataframe-states

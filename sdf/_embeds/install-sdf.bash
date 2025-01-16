@@ -1,1 +1,1 @@
-fvm install sdf-beta5
+fvm install sdf-beta6
