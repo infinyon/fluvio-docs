@@ -104,7 +104,9 @@ Arguments:
 
 Options:
   -v, --value <VALUE>          Record value mapped to the `value` input of the function
+      --value-file <VALUE_FILE>  record value from file
   -k, --key <KEY>              Record key mapped to the `key` input of the function
+      --key-file <KEY_FILE>      key value from file
   -s, --state-key <STATE_KEY>  The key of the state the function runner uses to look-up
                                state object
   -o, --output <OUTPUT>        Output types, where  v: is value (default), and kv: is
@@ -112,8 +114,10 @@ Options:
 ```
 
 Where:
-* `--value` maps ot the input parameter of the function
-* `--key` maps to the `optional` input parameter of the function
+* `--value` maps to the input parameter of the function
+* `--value-file` maps a file content to the input parameter of the function
+* `--key` maps to the `optional` input key parameter of the function
+* `--key-file` maps a file content to the `optional` input key parameter of the function
 * `--state-key` asks by the engine to look-up a state
 * `--output` ask the engine to show values-only or key-values
 
