@@ -1,0 +1,176 @@
+---
+title: "State Example Arrow Row"
+description: "State Example with Arrow"
+sidebar_position: 1000
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Arrow from '!!raw-loader!../_embeds/dataflows/arrow_state.yaml';
+
+This tutorial is a continuation from the previous state example. This tutorial shows how to use arrow-rows to store more complicated data types not available in primitive key-values. Read more about [arrow rows][arrow]. We will continue from the tutorial from the merge example to have a saved balance.
+
+## Prerequisites
+
+This guide uses `local` Fluvio cluster. If you need to install it, please follow the instructions at [here][installation].
+
+## Dataflow
+
+### Overview
+In this example, we will first show how to create a state, update the state as data enters from the source, and how to interface with the state. The state and update will be defined in the `mergeservice` and the interfacing will be defined in the `interface` service.
+
+<img src="/img/sdf/how_to_images/state_arrow_example.png" alt="Visual of defined dataflow"  style={{ display: 'block', margin: '0 auto', }} width="700" />
+
+### Mergeservice
+
+#### 1. Define the state
+
+For this state, we will simply only track the balance as a float.
+
+```YAML
+states:
+  tracker: 
+    type: keyed-state
+    properties:
+      key: 
+        type: string
+      value: 
+        type: arrow-row
+        properties:
+          balance:
+            type: f32
+```
+
+Here, the `key` is a string but the value is stored as an `arrow-row` which can contain multiple `properties`(acts like columns).
+
+#### 2. Assign key
+Like our previous example, we will use a trivial key to store the balance. 
+```YAML
+partition:
+  assign-key:
+    run: |
+      fn map_cash(order: f32) -> Result<String> {
+        Ok("cash".to_string())
+      }
+  update-state:
+    (...)
+```
+#### 3. Updating State
+To update the state in an `arrow-row`, we need to update the individual row's columns manual and call an `update()`.
+```YAML
+partition:
+  assign-key:
+    (...)
+  update-state:
+    run: |
+      fn add_count(order: f32) -> Result<()> {
+        let mut tracker = tracker();
+        tracker.balance += order; 
+        tracker.update()?;
+        Ok(())
+```
+
+States are terminal so no other action will be run.
+
+### Interface
+The second service serves as a way to read from the state.
+
+```YAML
+interface:
+  sources:
+    - type: topic
+      id: command
+  states:
+    tracker:
+      from: mergeservice.tracker
+  sinks:
+    - type: topic
+      id: message
+      transforms:
+        - operator: map 
+          run: |
+            fn new_input(_input: String) -> Result<String> {
+              let track = tracker();
+              let trackrow = track.sql(&format!("select * from `tracker`"))?;
+              let rows = trackrow.rows()?;
+              if !rows.next() {
+                return Ok("empty".to_string())
+              }
+              let balancecol = trackrow.col("balance")?;
+              let balance = rows.f32(&balancecol)?;
+              Ok(format!("{:#?}",balance))
+            }
+```
+The service first has to refer to the state created by the `mergeservice`. Inside the sink is the transform that will iterface with the state. For simplicity, whatever is sent to the source `command` will result in the service `message` outputting how much the balance is. For the transform function:
+##### 1. We use a sql statement to read from `track`, a `LazyDf`.  
+```
+let trackrow = track.sql(&format!("select * from `tracker`"))?;
+```
+##### 2. Afterwards, we can select the column `balance`.
+```
+let rows = trackrow.rows()?;
+if !rows.next() {
+  return Ok("empty".to_string())
+}
+let balancecol = trackrow.col("balance")?;
+let balance = rows.f32(&balancecol)?;
+```
+
+
+## Running the Example
+### Full Code
+Copy and paste following config and save it as `dataflow.yaml`.
+<CodeBlock language="yaml">{Arrow}</CodeBlock>
+
+### Running SDF
+To run example:
+```bash copy="cmd"
+$ sdf run
+```
+
+### Produce data
+We will produce some data for the first service through the `buy` and `sell` topics. 
+```bash copy="cmd"
+$ echo '{"name":"AMZN","amount":20,"price":173.33}' | fluvio produce buy
+$ echo '{"name":"TSLA","amount":20,"price":219.41}' | fluvio produce sell
+```
+Make sure the state exists by entering `show state` in sdf. It should have the following states:
+```bash copy="cmd"
+>> show state
+ Namespace                                Keys  Type   
+ (...)
+ mergeservice/tracker/state               1     u32    
+ (...)
+```
+And when running a `show state` on the that state
+```bash copy="cmd"
+>> show state mergeservice/tracker/state
+ Key   Window  balance  
+ cash  *       921.6001
+```
+
+### Consume data
+Then lets send any string to `command` and consume the output found in `message`
+```bash copy="cmd"
+$ echo 'Do stuff' | fluvio produce command
+$ fluvio consume message -Bd
+921.6001
+```
+
+## Cleanup
+
+Exit `sdf` terminal and clean-up. The `--force` flag removes the topics:
+
+```bash copy="cmd"
+$ sdf clean --force
+```
+
+
+## Conclusion
+
+We just implement example using arrow states. The following link contains another example with arrow-states.
+1. [Temperature Example][github_arrow_1]
+
+
+[installation]: /docs/fluvio/quickstart#install-fluvio
+[arrow]: ../concepts/sql.mdx#dataframe-states
+[github_arrow_1]: https://github.com/infinyon/stateful-dataflows-examples/tree/main/primitives/update-state

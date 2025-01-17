@@ -1,0 +1,4 @@
+meta:
+  name: my-dataflow
+  version: 0.1.0
+  namespace: my-org
