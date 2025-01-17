@@ -1,0 +1,44 @@
+---
+title: list
+---
+
+# `sdf worker list`
+
+The `sdf worker list` prints out the workers.
+
+
+### `sdf worker list` command
+
+The `worker list` command has the following hierarchy:
+
+```bash copy="fl"
+$ sdf worker list -h
+Usage: sdf worker list [OPTIONS]
+
+Options:
+  -a, --all   show all workers
+  -h, --help  Print help
+```
+
+Where:
+* `--all` to show all workers including remote workers
+
+
+#### Examples
+
+##### sdf worker list
+
+```bash copy="fl"
+$ sdf worker list
+    NAME  TYPE  CLUSTER  WORKER ID                            
+ *  main  Host  local    a729a022-f6d5-4d94-95d8-11d90feeb759
+ ```
+
+##### sdf worker list --all
+
+```bash copy="fl"
+$ sdf worker list -all
+    NAME  TYPE    CLUSTER  WORKER ID                            
+ *  main  Host    local    7fd7eda3-2738-41ef-8edc-9f04e500b919
+    N/A   Remote  local    edg2-worker-id
+```

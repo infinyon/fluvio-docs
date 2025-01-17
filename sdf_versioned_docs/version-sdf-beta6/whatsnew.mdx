@@ -1,0 +1,43 @@
+---
+title: "What's new"
+description: Changes and updates to SDF
+sidebar_position: 20
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
+
+# Beta 6
+
+## Upgrading 
+
+To upgrade CLI to this version, run the following command:
+
+<CodeBlock language="bash">{InstallFvm}</CodeBlock>
+
+To upgrade host workers, shutdown and restart the worker:
+
+```bash
+$ sdf worker shutdown <host-worker-name>
+$ sdf worker create <host-worker-name>
+```
+
+For upgrading cloud workers, please contact [InfinyOn support](#infinyon-support).
+
+### CLI changes
+
+- Added --build-profile to sdf build and sdf test subcommands.
+- Added ability to pass file as input for `sdf test`.
+
+### Improvements
+
+- Allow publishing packages with no functions.
+- Remove the need of saving the WIT generated files in SDF packages.
+
+### Changes
+- Added validation to check that output of filter-map operators are optional.
+- Removed `anyhow` dependencies from operators rust code, it is reexported now in the `sdfg` crate, use with `sdfg::anyhow`. 
+
+## InfinyOn Support
+
+For any questions or issues, please contact InfinyOn support at support@infinyon.com  or https://discordapp.com/invite/bBG2dTz
