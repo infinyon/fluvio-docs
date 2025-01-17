@@ -311,7 +311,7 @@ window:
                   top_words.push(word_count);
                 }
               },
-                _ => return Err(anyhow::anyhow!("unexpected schema")),
+                _ => return Err(sdfg::anyhow::anyhow!("unexpected schema")),
             }
             Ok(top_words)
       }
