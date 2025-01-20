@@ -1,0 +1,11 @@
+[package]
+edition = "2021"
+name = "fluvio-rust-example"
+publish = false
+version = "0.0.0"
+
+[dependencies]
+async-std = {version = "1", features = ["attributes"]}
+chrono = "0.4"
+flate2 = "1.0.35"
+fluvio = "0.24"
