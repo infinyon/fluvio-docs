@@ -1,4 +1,4 @@
-FROM debian:stable-slim as builder
+FROM debian:stable-slim AS builder
 
 RUN apt-get update && apt-get -y upgrade
 RUN apt-get install -y curl
