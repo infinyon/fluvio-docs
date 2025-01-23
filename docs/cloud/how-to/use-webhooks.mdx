@@ -148,6 +148,42 @@ The consumer should now show the following output:
 }
 ```
 
+### Webhook Path and Query info
+
+A curl with path and query info to `https://infinyon.cloud/webhooks/v1/[uri-key]/path_a/path_b?param_a=1&param_b=2` can be sent as follows: *(note the single quotes around the URI)*
+
+```bash
+$ curl -v -X POST -H "Content-Type: application/json" -d '{"key": "value"}' \
+  'https://infinyon.cloud/webhooks/v1/[uri-key]/path_a/path_b?param_a=1&param_b=2'
+```
+The consumer should show return path and query information as follows:
+
+```json
+{
+  "body": {
+    "key": "value"
+  },
+  "headers": {
+    "accept": "*/*",
+    "accept-encoding": "gzip, br",
+    "content-length": "16",
+    "content-type": "application/json",
+    "host": "infinyon.cloud",
+    "user-agent": "curl/x.y.z",
+    "x-forwarded-for": "..."
+  },
+  "path": "path_a/path_b",
+  "query": "param_a=1&param_b=2"
+}
+```
+
+:::note
+
+Json output is the recommended way to receive uri `path` and `query` information
+so that Smartmodule transformation can be directly applied. See [Webhook Config] for more details.
+
+:::
+
 ## Conclusion
 
 You now know how to create and configure the output of Webhooks. Check out the [Webhook Config] reference to see how to configure other transformations.

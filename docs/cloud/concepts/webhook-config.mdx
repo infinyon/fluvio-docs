@@ -19,6 +19,7 @@ transforms:
 webhook:
   outputParts: [body | full (default)]
   outputType: [text | json (default)]
+  outputUri: [none | full (default)]
 ```
 
 ## Config options
@@ -42,10 +43,40 @@ The output record from the webhook request is configurable
 * `body` - Only return the body of the request
 
 `outputType` options:
-* `json`- Output is parsed into json (Default)
-* `text` - Output is plaintext
+* `json`- Output is parsed into json
+* `text` - Output is plaintext (Default)
 
+`outputUri` options:
+* `full` - Parse URI path and query parameters into output
+* `none` - Don't parse path and query parameters into output (Default)
+* `path` - Only record path into the output
+* `query` - Only record query parameters into the output
+
+## output behavior
+
+If `outputUri` behavior is fully enabled, information from the URI call is encoded in
+the webhook records.
+
+A http webhook connection to a URI of `https://infinyon.cloud/webhooks/v1/[uri-key]/path1/path2/path3?p1=1&param2=2`
+will return path and query information as follows:
+* path: `path1/path2/path3`
+* query: `p1=1&param2=2`
+
+:::note
+
+If intending to process URI `path` & `query` information with Smartmodule
+transformations, it is recommended to also configure `outputType` to json.
+The path and query parameters will be part of the json object and can be
+directly operated upon by the Smartmodule.
+
+See the How to Use WebHooks: [URI path & query] section for an example of
+the json object.
+
+:::
 
 ## References
 
-* [How to Use WebHooks]: ../how-to/use-webhooks.mdx
+* [How to Use WebHooks]
+
+[How to Use WebHooks]: ../how-to/use-webhooks.mdx
+[URI path & query]: ../how-to/use-webhooks.mdx#webhook-path-and-query-info
