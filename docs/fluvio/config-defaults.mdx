@@ -1,18 +1,35 @@
 ---
-sidebar_position: 5
+sidebar_position: 900
 title: "Configuration Defaults"
 ---
 
-## Overview
+# Configuration Defaults
+
+Configuration defaults for the Fluvio Client and Cluster can be found on this page
+
+## Fluvio Client
+
+### Producer
+
+| Resource | Default Value |
+|-|-|
+| max_request_size | 1048576 bytes |
+| batch_size | 16384 bytes |
+| compression | none |
+| linger | 0 ms|
+
+See the [Batching page] for additional info regarding these parameters
+
+### Consumer
+
+See the [Consumers] concepts page for more information about consumers
+
+## Cluster
 
 When a Fluvio Cluster is created without extra params, either in Kubernetes
 or locally certain assumptions on limitations are made.
 
 This document outlines the default configurations for a Fluvio Cluster.
-
-## Default Configurations
-
-### Cluster
 
 | Resource | Default Value |
 |-|-|
@@ -57,54 +74,8 @@ This document outlines the default configurations for a Fluvio Cluster.
 |-|-|
 | Replicas | `0`
 
-## Overriding Defaults
+For information on changing the defaults see the advanced [Overriding page]
 
-### Cluster
-
-#### SPUs
-
-**Specify the number of SPUs**
-
-```bash copy="fl"
-$ fluvio cluster start --spu 3
-```
-
-### SPU Group
-
-#### Storage Size
-
-Storage size can be specified when starting a Fluvio Cluster.
-
-```bash copy="fl"
-$ fluvio cluster start --spu-storage-size '50 GB'
-```
-
-### Topic
-
-#### Segment Size
-
-A topic's segment size can be specified when creating a topic.
-
-**Specify a segment size using units**
-
-```bash copy="fl"
-$ fluvio topic create foo --segment-size '1 GB'
-```
-
-**Specify a segment size using bytes (50 MB)**
-
-```bash copy="fl"
-$ fluvio topic create foo --segment-size '50000000'
-```
-
-### Partition
-
-#### Replicas
-
-A partition's replicas can be specified when creating a topic.
-
-**Specify the number of replicas**
-
-```bash copy="fl"
-$ fluvio topic create foo --replicas 3
-```
+[Consumers]: fluvio/concepts/consumers.mdx
+[Batching page]: fluvio/concepts/batching.mdx
+[Overriding page]: fluvio/concepts/advanced/config-overriding.mdx
