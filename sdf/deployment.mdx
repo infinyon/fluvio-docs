@@ -16,17 +16,17 @@ For production deployment, the `deploy` command is used to deploy the dataflow o
 
 To use deployment mode, it's essential to understand what a worker is, and [how to manage a dataflow inside a worker](#managing-dataflows).
 
+
 ## Workers
 
 A worker is the deployment target for a dataflow and must be created and provisioned before deploying a dataflow. The worker can run anywhere as long as it can connect to the same Fluvio cluster. If you're using InfinyOn Cloud, the worker is automatically provisioned.
 
 There is no limit to the number of dataflows you can run on each worker, apart from CPU, memory, and disk constraints. For optimal performance, it is recommended to run a single worker per machine.
 
-There are two types of workers: `Host` and `Remote`.  `Host` is a simple worker designed for local deployment without requiring any additional infrastructure.  It is not designed for robust production deployment.  
-For typical production deployment, you will use `Remote` worker.  It is designed to run in the cloud, data center, or edge device.   If you are using InfinyOn Cloud, the `remote` cloud worker is automatically provisioned and registered in your profile. 
+There are two types of workers: `host` and `remote`.  A host worker is a simple worker designed for local deployment without requiring any additional infrastructure.  It is not designed for robust production deployments.  For typical production deployments, you will use remote workers.  Remote workers are designed to run in the cloud, data center, or on edge devices.   If you are using InfinyOn Cloud, the remote cloud worker is automatically provisioned and registered in your profile.
 
-Each worker has a unique identifier for the Fluvio cluster. The worker profile is stored in the local machine and is used to match the worker with the Fluvio cluster. When you switch the Fluvio profile, the worker profile is also switched. Once a worker is selected, it will be used for all dataflow operations until you choose a different worker.
-The worker also human-readable name that is used to identify the worker in the CLI.
+A worker "profile" is maintained for each Fluvio cluster. The worker profile maintains a list of uuids of the cluster's workers, as well as the currently selected worker. When you switch the Fluvio profile, the corresponding worker profile is used automatically. Together, the worker profile and Fluvio profile allow the [SDF CLI] to issue commands to the selected worker. Once a worker is selected, it will be used for all dataflow operations until you choose a different worker.  Each worker also has a human-readable name which is used to easily identify the worker in the CLI.
+
 
 ### Host Workers
 
@@ -35,20 +35,20 @@ To create host worker, you can use the following command.
 $> sdf worker create <name>
 ```
 
-This will creates and register a new worker in your machine.  It will run in the background until you shutdown the worker or machine is rebooted.  The name can be anything as long as it is unique for your machine since profile are not shared across different machines.  
+This will creates and register a new worker on your machine.  It will run in the background until you shutdown the worker or machine is rebooted.  The name can be anything.
 
-Once you have created the worker, You can list them. 
+Once you have created a worker, You can view the list of workers on your Fluvio cluster.
 
 ```bash
 $> sdf worker create main
 Worker `main` created for cluster: `local`
 $> sdf worker list
-    NAME  TYPE  CLUSTER  WORKER ID                            
- *  main  Host  local    7fd7eda3-2738-41ef-8edc-9f04e500b919
+    NAME  TYPE  CLUSTER  WORKER ID                             VERSION
+ *  main  Host  local    7fd7eda3-2738-41ef-8edc-9f04e500b919  <your SDF version>
 ```
-The `*` indicates the current selected worker.  
+The `*` indicates the current selected worker.
 
-SDF only support running a single HOST worker for each machine since a single worker can support many dataflow.  If you try to create another worker, you will get an error message.
+SDF only supports running a single HOST worker for each machine since a single worker can support many dataflows.  If you try to create another worker, you will get an error message.
 
 ```bash
 $ sdf worker create main2
@@ -59,13 +59,11 @@ There is already a host worker with pid 20686 running.  Please terminate it firs
 Shutting down a worker will terminate all running dataflow and worker processes. 
 ```bash
 $> sdf worker shutdown main
-sdf worker shutdown main
 Shutting down pid: 20688
-Shutting down pid: 20686
 Host worker: main has been shutdown
 ```
 
-Even though host worker is shutdown and removed from the profile, the dataflow files and state are still persisted.   You can restart the worker and the dataflow will resume.
+Even though the host worker is shutdown and removed from the profile, the dataflow files and state are still persisted.   You can restart the worker and the dataflow will resume.
 
 For example, if you have dataflow `fraud-detector` and `car-processor` running in the worker and you shut down the worker, the dataflow process will be terminated.   But you can resume by recreating the HOST worker.
 
@@ -253,3 +251,5 @@ After you delete the dataflow, it will no longer be listed in the dataflow list.
 ```
 
 Note that since `myorg/wordcount-simple@0.10 ` is deleted, it is no longer listed in the dataflow list.
+
+[SDF CLI]: sdf/cli/index.mdx
