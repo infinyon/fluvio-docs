@@ -48,7 +48,7 @@ $> sdf worker list
 ```
 The `*` indicates the current selected worker.
 
-SDF only supports running a single HOST worker for each machine since a single worker can support many dataflows.  If you try to create another worker, you will get an error message.
+SDF only supports running a single host worker for each machine since a single worker can support many dataflows.  If you try to create another worker, you will get an error message.
 
 ```bash
 $ sdf worker create main2
@@ -57,24 +57,16 @@ There is already a host worker with pid 20686 running.  Please terminate it firs
 ```
 
 Shutting down a worker will terminate all running dataflow and worker processes. 
+
 ```bash
 $> sdf worker shutdown main
 Shutting down pid: 20688
 Host worker: main has been shutdown
 ```
 
-Even though the host worker is shutdown and removed from the profile, the dataflow files and state are still persisted.   You can restart the worker and the dataflow will resume.
+Even though the host worker is shutdown and removed from the profile, the dataflow files and state are still persisted.  You can restart the worker and the dataflow will resume.
 
-For example, if you have dataflow `fraud-detector` and `car-processor` running in the worker and you shut down the worker, the dataflow process will be terminated.   But you can resume by recreating the HOST worker.
-
-```bash
-$> sdf worker create main
-```
-
-The local worker stores the dataflow state in the local file system.  The dataflow state is stored in the `~/.sdf/<cluster>/worker/<dataflow>`.
-For the `local` cluster, files will be stored in `~/.sdf/local/worker/dataflows`.
-
-if you have deleted the fluvio cluster, the worker needs to be manually shutdown and created again.  This limitation will be removed in a future release
+Host workers store the dataflow state in the local file system at `~/.sdf/local/worker/dataflows`.  If you have deleted your local fluvio cluster, the worker needs to be manually shutdown and created again.  This limitation will be removed in a future release
 
 
 ### Remote Workers
@@ -87,7 +79,7 @@ Typical lifecycle for using remote worker:
 
 Note that there are many ways to manage the remote worker.  You can use Kubernetes, Docker, Systemd, Terraform, Ansible, or any other tool that can manage the server process and ensure it can restart when server is rebooted.  Please contact InfinyOn support for more information.
 
-InfinyOn cloud is a simplest way to use the remote worker.   When you create a cluster in InfinyOn cloud, it will automatically provision and sync worker for you.  
+InfinyOn cloud is a simplest way to use the remote worker.  When you create a cluster in InfinyOn cloud, it will automatically provision and sync worker for you.
 
 The worker is automatically register when you create the cluster.  By default, worker is name as cluster name.
 
@@ -153,6 +145,9 @@ finding all available workers:
 ```
 
 With `-all` option, it will display `version` of the discovered worker. 
+
+// check if this is true for remote workers
+The dataflow state is stored in the `~/.sdf/<cluster>/worker/<dataflow>`.
 
 ### Workers on InfinyOn Cloud
 
