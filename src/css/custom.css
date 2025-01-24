@@ -21,6 +21,9 @@ code, code * {
   font-family: "Spline Sans Mono", monospace;
   font-style: normal !important;
   font-weight: 400 !important;
+  vertical-align: top;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 p {
