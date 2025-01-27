@@ -118,7 +118,10 @@ To register the remote worker, you can use the `register` command.
 $> sdf worker register my-worker 665b200d-21ab-46ac-8a8d-ad0e15d9b968
 Worker `my-worker` is registered for cluster: `my-cluster`
 ```
-and you can switch between workers using the `switch` command.
+
+Now that the worker is registered you can run your dataflows on the remote cluster. Deploying your first dataflow and more will be covered in the [next section](#managing-dataflows)
+
+When you have multiple workers, you can switch between them using the `switch` command.
 
 ```bash
 $> sdf worker switch <name>
@@ -126,10 +129,16 @@ $> sdf worker switch <name>
 
 #### Clean up
 
-When you are done with a worker, you can unregister it:
+When you are done with a worker, you can unregister it.
 
 ```bash
 $> sdf worker unregister <name>
+```
+
+When a worker is unregistered, it will no longer be visible in you SDF profile but it will continue to run.  To remove a remote worker you can use the `shutdown` command.
+
+```bash
+$> sdf worker shutdown <name>
 ```
 
 ## Managing Dataflows
