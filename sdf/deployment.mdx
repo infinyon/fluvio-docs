@@ -6,9 +6,9 @@ sidebar_position: 60
 
 ## Introduction
 
-When you use the `run` command to execute a dataflow, it runs within the same process as the CLI. This is useful for development and testing because it's easy to start without needing to manage additional resources. It allows for quick testing and validation of the dataflow, and you can easily load and integrate development packages.
+When you use the `run` command to execute a dataflow, it runs within the same process as the [CLI]. This is useful for development and testing because it's easy to start without needing to manage additional resources. It allows for quick testing and validation of the dataflow, and you can easily load and integrate development packages.
 
-For production deployment, the `deploy` command is used to deploy the dataflow on a `worker`. All operations available in `run` also apply to deploy, with the following differences:
+For production deployment, the `deploy` command is used to deploy the dataflow on a `worker`. All operations available in `run` also apply to `deploy`, with the following differences:
 - The dataflow is executed on the worker, not within the CLI process. The CLI communicates with the worker on the user's behalf.
 - The dataflow continues running even if the CLI is shut down. It will only terminate if the worker is stopped or shut down, or if the dataflow is explicitly stopped or deleted.
 - Dataflows in the worker only have access to published packages, unlike `run` mode, which allows access to local packages. If you need to use a package, you must publish it first.
@@ -19,13 +19,13 @@ To use deployment mode, it's essential to understand what a worker is, and [how 
 
 ## Workers
 
-A worker is the deployment target for a dataflow and must be created and provisioned before deploying a dataflow. The worker can run anywhere as long as it can connect to the same Fluvio cluster. If you're using InfinyOn Cloud, the worker is automatically provisioned.
+A `worker` is the deployment target for a dataflow and must be created and provisioned before deploying a dataflow. The worker can run anywhere as long as it can connect to the same Fluvio cluster.
 
 There is no limit to the number of dataflows you can run on each worker, apart from CPU, memory, and disk constraints. For optimal performance, it is recommended to run a single worker per machine.
 
 There are two types of workers: `host` and `remote`.  A host worker is a simple worker designed for local deployment without requiring any additional infrastructure.  It is not designed for robust production deployments.  For typical production deployments, you will use remote workers.  Remote workers are designed to run in the cloud, data center, or on edge devices.   If you are using InfinyOn Cloud, the remote cloud worker is automatically provisioned and registered in your profile.
 
-A worker "profile" is maintained for each Fluvio cluster. The worker profile maintains a list of uuids of the cluster's workers, as well as the currently selected worker. When you switch the Fluvio profile, the corresponding worker profile is used automatically. Together, the worker profile and Fluvio profile allow the [SDF CLI] to issue commands to the selected worker. Once a worker is selected, it will be used for all dataflow operations until you choose a different worker.  Each worker also has a human-readable name which is used to easily identify the worker in the CLI.
+A worker "profile" is maintained for each Fluvio cluster. The worker profile maintains a list of `uuid`s and human-readable names for each worker deployed on the cluster, as well as the currently selected worker. When you switch the Fluvio profile, the corresponding worker profile is used automatically. Together, the worker profile and Fluvio profile allow the [SDF CLI] to issue commands to the selected worker. Once a worker is selected, it will be used for all dataflow operations until you choose a different worker.
 
 
 ### Host Workers
@@ -53,7 +53,7 @@ SDF only supports running a single host worker for each machine since a single w
 ```bash
 $ sdf worker create main2
 $ Starting worker: main2
-There is already a host worker with pid 20686 running.  Please terminate it first
+There is already a host worker with pid 20686
 ```
 
 Shutting down a worker will terminate all running dataflow and worker processes. 
@@ -71,101 +71,75 @@ Host workers store the dataflow state in the local file system at `~/.sdf/local/
 
 ### Remote Workers
 
-Typical lifecycle for using remote worker:
-1. Provision remote worker in the server.
-2. Register the worker with the name in your machine.
-3. Run the dataflow in the remote worker.
-4. Unregister the worker when it is no longer needed.  This doesn't shutdown the worker but remove it from the profile.
+There are many ways to deploy a remote worker, you may use Kubernetes, Docker, Systemd, Terraform, Ansible, or any other tool that can manage the server process and ensure it can restart when server is rebooted.
 
-Note that there are many ways to manage the remote worker.  You can use Kubernetes, Docker, Systemd, Terraform, Ansible, or any other tool that can manage the server process and ensure it can restart when server is rebooted.  Please contact InfinyOn support for more information.
+If you are planning to use InfinyOn Cloud to run SDF, your first worker will be automatically provisioned and registered in your locally maintained SDF profile. Additional Infinyon Cloud workers can be provisioned by contacting support. If are planning to use Infinyon Cloud's hosted workers, you can safely skip to [Managing Dataflows](#managing-dataflows).
 
-InfinyOn cloud is a simplest way to use the remote worker.  When you create a cluster in InfinyOn cloud, it will automatically provision and sync worker for you.
+#### Overview
 
-The worker is automatically register when you create the cluster.  By default, worker is name as cluster name.
+Below is the typical strategy for using a remote worker.
 
-```bash
-$ fluvio cloud create cluster
-Creating cluster bigfoot
-Done!
+1. Provision the remote worker on a server.
+2. Register the worker on your local machine with a human readable name. This will add it to your SDF profile so it can be controlled from the [CLI].
+3. Run your dataflows on the remote worker.
+4. Unregister the worker when it is no longer needed.  This doesn't shut down the worker but removes it from your SDF profile.
 
-$ sdf worker list
-    NAME          TYPE    CLUSTER           WORKER ID                            
- *  big-foot      Remote  big-foot-awx      big-foot
+#### Provisioning
+
+First, comfirm your Fluvio profile is pointing at your remote cluster.
 
 ```bash
-
-
-To register the known remote worker, you can use `register` command.
-
-```bash
-$> sdf worker register <name> <worker-id>
+$> fluvio profile switch <my-cluster>
 ```
 
-Example, registering the remote worker with name `edge2` and worker id `edg2-worker-id`.
+Then provision the worker on the remote cluster.
 
 ```bash
-$> sdf worker register edge2 edg2-worker-id
-Worker `edge2` is registered for cluster: `local`
+$> sdf worker create <name>
 ```
 
-You can switch among worker using `switch` command.
+Once the worker is created, you should be able to view it with `sdf worker list`.
 
 ```bash
-$> sdf worker switch <worker_profile>
+$> sdf worker list
+    NAME       TYPE    FLUVIO      WORKER ID                             VERSION
+ *  my-worker  Remote  my-cluster  665b200d-21ab-46ac-8a8d-ad0e15d9b968  sdf-beta6
 ```
 
-To unregister the worker after you are done with and no longer need,  you can use `unregister` command:
+To view workers that have been provisoned by someone else, you can use `sdf worker list --all`.
+
+#### Registration
+
+Registering a worker will add it to the SDF profile maintained on your local machine, so you can control the worker from the SDF CLI.
+
+To register the remote worker, you can use the `register` command.
+
+```bash
+$> sdf worker register my-worker 665b200d-21ab-46ac-8a8d-ad0e15d9b968
+Worker `my-worker` is registered for cluster: `my-cluster`
+```
+
+Now that the worker is registered you can run your dataflows on the remote cluster. Deploying your first dataflow and more will be covered in the [next section](#managing-dataflows)
+
+When you have multiple workers, you can switch between them using the `switch` command.
+
+```bash
+$> sdf worker switch <name>
+```
+
+#### Clean up
+
+When you are done with a worker, you can unregister it.
 
 ```bash
 $> sdf worker unregister <name>
 ```
 
-### Managing workers
-
-Workers must be registered before deploying a dataflow. The CLI provides commands to manage workers, including creating, listing, switching, and deleting them.
-
-
-To switch the worker, you can use `switch` command:
+When a worker is unregistered, it will no longer be visible in you SDF profile but it will continue to run.  To remove a remote worker you can use the `shutdown` command.
 
 ```bash
-$> sdf worker switch <worker-name>
+$> sdf worker shutdown <name>
 ```
-
-This assumes worker-name is already created or registered.  
-
-
-You can use `sdf worker list -all` command to discover workers in the same fluvio cluster. This is useful when you are working in the team and want to know what workers are available.
-
-```bash
-$> sdf worker list -all
-finding all available workers:
-    NAME  TYPE    CLUSTER  WORKER ID                                   VERSION                       
- *  main  Host    local    7fd7eda3-2738-41ef-8edc-9f04e500b919        beta2
-    N/A   Remote  local    edg2-worker-id                              beta2
-```
-
-With `-all` option, it will display `version` of the discovered worker. 
-
-// check if this is true for remote workers
-The dataflow state is stored in the `~/.sdf/<cluster>/worker/<dataflow>`.
-
-### Workers on InfinyOn Cloud
-
-With InfinyOn Cloud, there is no need to manage the worker.  It provisions the worker for you.  It also sync profile when cluster is created.
-
-For example, creating cloud cluster will automatically provision and create SDF worker profile.
-
-```bash
-$> fluvio cloud login --use-oauth2
-$> fluvio cloud cluster create
-Creating cluster...
-Done!
-Downloading cluster config
-Registered sdf worker: jellyfish
-Switched to new profile: jellyfish
-```
-
-You can unregister the cloud worker like any other remote worker.
 
 ## Managing Dataflows
 
@@ -248,3 +222,4 @@ After you delete the dataflow, it will no longer be listed in the dataflow list.
 Note that since `myorg/wordcount-simple@0.10 ` is deleted, it is no longer listed in the dataflow list.
 
 [SDF CLI]: sdf/cli/index.mdx
+[CLI]: sdf/cli/index.mdx
