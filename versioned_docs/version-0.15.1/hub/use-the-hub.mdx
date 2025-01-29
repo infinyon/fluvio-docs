@@ -1,0 +1,93 @@
+---
+sidebar_position: 2
+title: "Use the Hub"
+description: "The Hub is a central repository for Connectors, SmartModules, Dataflows, and more"
+---
+import CodeBlock from '@theme/CodeBlock';
+import HubConnList from '!!raw-loader!../_embeds/cmds/hub-conn-list.bash';
+import HubSmList from '!!raw-loader!../_embeds/cmds/hub-sm-list.bash';
+import HubSmDownloadJolt from '!!raw-loader!../_embeds/cmds/hub-sm-download-jolt.bash';
+import CdkDownloadHttpSink from '!!raw-loader!../_embeds/cmds/cdk-hub-download-http-sink.bash';
+import CdkDeployHttpSinkGen from '!!raw-loader!../_embeds/cmds/cdk-deploy-start-http-sink-generic.bash';
+
+# How to use the Hub
+
+The InfinyOn Hub serves as a centralized repository for InfinyOn [Connectors](#connectors), [SmartModules](#smartmodules), and Dataflows. It facilitates the discovery and deployment of extensions to enhance Fluvio's data streaming capabilities. The hub provides developers and data engineers a platform to access pre-built solutions or share their extensions easily.
+
+
+## Connectors
+
+List the Connectors available for download. The official connectors (prepended with `infinyon/`) can run on InfinyOn Cloud and in your local environment.
+
+### List Connectors
+
+Use `fluvio hub connector list` or `cdk hub list` to list the available connectors.
+
+<CodeBlock language="bash" copyBehavior="fl">$ {HubConnList}</CodeBlock>
+
+Check out [Connectors for Developers] to learn how to build and publish your own connectors for the Hub.
+
+### Use Connectors
+
+If you use a connector in InfinyOn Cloud, the Cloud infrastructure will automatically download and run the connector package. If you use connectors in your local environment, you must use the `cdk` command to download and run the connector package.
+
+#### Download and Run Locally
+
+Connectors are independent binaries that run outside of Fluvio. Use the `cdk` command to download and run connectors locally:
+
+<CodeBlock language="bash" copyBehavior="fl">$ {CdkDownloadHttpSink}</CodeBlock>
+
+The same connector configuration file can run the connector locally or in InfinyOn Cloud.
+
+<CodeBlock language="bash" copyBehavior="fl">$ {CdkDeployHttpSinkGen}</CodeBlock>
+
+To stop a connector, use the `cdk deploy shutdown` command.
+
+
+#### Deploy on InfinyOn Cloud
+
+Connectors are automatically downloaded to InfinyOn Cloud. The management of InfinyOn Cloud is performed using the `fluvio cloud` commands. To run a connector in InfinyOn Cloud, use the command `fluvio cloud connector create`.
+
+```shell copy="fl"
+$ fluvio cloud connector create --config <CONFIG>
+```
+
+**Note** List your profiles (`fluvio profile list`) to ensure your CLI points to the InfinyOn Cloud cluster.
+
+
+## SmartModules
+
+SmartModules are custom-defined programs that connectors use to transform data records during processing. Similar to connectors, SmartModules can be published to the Hub and made available for download. However, unlike connectors, SmartModules are downloaded to the cluster and are not executed outside of Fluvio.
+
+### List SmartModules
+
+List the SmartModules available for download. The official SmartModules (prepended with `infinyon/`).
+
+<CodeBlock language="bash" copyBehavior="fl">$ {HubSmList}</CodeBlock>
+
+
+### Download and Run SmartModules
+
+Use `fluvio hub smartmodule download` to download specific SmartModules to a local or InfinyOn Cloud cluster. Use `fluvio profile list` to identify the target cluster.
+
+<CodeBlock language="bash" copyBehavior="fl">$ {HubSmDownloadJolt}</CodeBlock>
+
+SmartModules downloaded to a cluster can be used by the producer CLI or consumer CLI to transform records. They can also be accessed within the Connectors via the configuration file.
+
+To see the SmartModules currently installed on the cluster, use the following command:
+
+```shell copy="fl"
+$ fluvio smartmodule list 
+ ```
+
+### References
+- [Connector Developer Kit (cdk)]
+- [Connector Configuration File]
+- [SmartModule Developer Kit (smdk)]
+
+[cdk deploy shutdown]: /connectors/developers/overview.mdx#shutdown-a-connector
+[`profile`]: fluvio/cli/fluvio/profile.mdx
+[Connectors for Developers]: /connectors/developers/overview.mdx
+[Connector Configuration File]: connectors/configuration.mdx
+[Connector Developer Kit (cdk)]: /connectors/developers/overview.mdx
+[SmartModule Developer Kit (smdk)]: smartmodules/developers/overview.mdx
