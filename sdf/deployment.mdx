@@ -145,13 +145,13 @@ $> sdf worker shutdown <name>
 
 ### Deploying Dataflows to Workers
 
-Once a worker is selected, you can deploy the dataflow using the `deploy` command:
+Once a worker is selected, you can deploy a dataflow defined in a `dataflow.yaml` file using the `deploy` command:
 
 ```bash
 $> sdf deploy
 ```
 
-The deploy command is similar to the run command. It deploys the dataflow and starts the REPL prompt. In deploy mode, the CLI sends the request to the worker. If no worker is selected, an error message will be displayed.
+The deploy command is similar to the run command. It deploys a dataflow and starts the REPL prompt. In deploy mode, the CLI sends requests to the worker. If no worker is selected, an error message will be displayed.
 
 ```bash
 Error: No workers. run `sdf worker create` to create one.
@@ -161,18 +161,18 @@ When you are running a dataflow on a worker, it will indicate the name of the wo
 
 ```bash
 $> sdf deploy
-[main] >> show state
+[jolly-pond] >> show state
 ```
 
-### Listing and selecting dataflows
+### Listing and Selecting Dataflows
 
-To list all dataflows running in the worker, you can use the `show dataflow` command which shows the fully qualified name of the dataflow and its status.
+To list all dataflows running in the worker, you can use the `show dataflow` command which shows the fully qualified name of each dataflow and its status.
 
 ```bash
 $> sdf deploy
 [jolly-pond]>> show dataflow 
     Dataflow                           Status           Last Updated 
-    myorg/wordcount-simple@0.1.0        running          2 days ago
+    myorg/wordcount-simple@0.1.0       running          2 days ago
  *  myorg/user-job-map@0.1.0           running          10 minutes ago
 [jolly-pond]>> 
 ```
@@ -185,23 +185,24 @@ No dataflow selected.  Run `select dataflow`
 [jolly-pond]>> 
 ```
 
-To select the dataflow, you can use `dataflow select` with the fully qualified dataflow name.
+To select a dataflow, you can use the `dataflow select` command with the fully qualified dataflow name.
 
 ```bash
 [jolly-pond]>> select dataflow myorg/wordcount-simple@0.1.0
 dataflow switched to: myorg/wordcount-simple@0.1.0
 ```
 
-### Stopping and Restarting dataflow
+### Stopping and Restarting Dataflows
 
-In certain cases, you want to stop the dataflow but not delete it.  You can use the `stop` command.
+In certain cases, you may want to stop a dataflow without deleting it.  This can be done with the `stop` command.
 
 ```bash
 [jolly-pond]>> stop dataflow myorg/wordcount-simple@0.1.0
 Stopped dataflow: `my-org/wordcount-simple@0.1.0`
 ```
 
-And restart:
+You can then restart the dataflow with the `restart` command.
+
 ```bash
 [jolly-pond]>> restart dataflow myorg/wordcount-simple@0.1.0
 Restarted dataflow: `my-org/wordcount-current@0.1.0`
@@ -209,11 +210,9 @@ Restarted dataflow: `my-org/wordcount-current@0.1.0`
 
 Note that the `stop` command is not persistent.  If a worker is restarted, its dataflows will be restarted as well. 
 
-### Deleting dataflows
+### Deleting Dataflows
 
-To delete a dataflow, you can use the `dataflow delete` command.
-
-After you delete the dataflow, it will no longer appear in the dataflow list.
+To delete a dataflow, you can use the `dataflow delete` command.  After you delete a dataflow, it will no longer appear in the dataflow list.
 
 ```bash
 [jolly-pond]>> delete dataflow myorg/wordcount-simple@0.1.0 
