@@ -14,7 +14,7 @@ import WordLength from '!!raw-loader!./_embeds/dataflows/word-length.yaml';
 Provisioning and operating a Stateful Dataflow is simple and only requires two prerequisites:
 
 1. A [Fluvio Cluster] to enable dataflows to consume and produce streaming data.
-2. A [Dataflow File][dataflow-yaml] to define the schema, transformations, and composition.
+2. A [Dataflow File][dataflow-yaml] to define how a dataflow sources, transforms, and emits data.
 
 You can build, test, and run Stateful Dataflows locally, then [deploy] them to your InfinyOn Cloud cluster.
 
@@ -53,7 +53,7 @@ Add the following content to the `dataflow.yaml`:
 
 <CodeBlock language="yaml">{WordLength}</CodeBlock>
 
-This `dataflow.yaml` first declares a version for the Dataflow configuration structure. It then defines a default record converter, "raw" instead of "json" in this case. Next, it lists two Fluvio Topics which the dataflow expects to be present, with an expected record schema. SDF will create these Topics if they do not already exist. Finally, the config defines a Service which will read from a source topic and write to a sink topic. The service uses two Operators, in this case defined in-line in Rust, to perform transformations on the data.
+This `dataflow.yaml` first declares a version for the dataflow configuration structure. It then defines a default record converter, "raw" instead of "json" in this case. Next, it lists two Fluvio Topics which the dataflow expects to be present, with an expected record schema. SDF will create these Topics if they do not already exist. Finally, the config defines a Service which will read from a source topic and write to a sink topic. The service uses two Operators, in this case defined in-line in Rust, to perform transformations on the data.
 
 ### 3. Run the Dataflow
 
