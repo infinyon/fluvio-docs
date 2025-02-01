@@ -6,6 +6,7 @@ sidebar_position: 10
 
 import CodeBlock from '@theme/CodeBlock';
 import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
+import WordLength from '!!raw-loader!./_embeds/dataflows/word-length.yaml';
 
 
 # SDF Quickstart
@@ -50,51 +51,7 @@ $ touch dataflow.yaml
 
 Add the following content to the `dataflow.yaml`:
 
-```yaml title="dataflow.yaml"
-apiVersion: 0.5.0
-
-meta:
-  name: word-length
-  version: 0.1.0
-  namespace: example
-
-config:
-  converter: raw
-
-topics:
-  sentences:
-    schema:
-      value:
-        type: string
-        converter: raw
-  words:
-    schema:
-      value:
-        type: string
-        converter: raw
-
-services:
-  calc-word-length:
-    sources:
-      - type: topic
-        id: sentences
-
-    transforms:
-      - operator: flat-map
-        run: |
-          fn sentence_to_words(sentence: String) -> Result<Vec<String>> {
-            Ok(sentence.split_whitespace().map(String::from).collect())
-          }
-      - operator: map
-        run: |
-          pub fn word_length(word: String) -> Result<String> {
-            Ok(format!("{}({})", word, word.chars().count()))
-          }
-
-    sinks:
-      - type: topic
-        id: words
-```
+<CodeBlock language="yaml">{WordLength}</CodeBlock>
 
 This `dataflow.yaml` first declares a version for the Dataflow configuration structure. It then defines a default record converter, "raw" instead of "json" in this case. Next, it lists two Fluvio Topics which the dataflow expects to be present, with an expected record schema. SDF will create these Topics if they do not already exist. Finally, the config defines a Service which will read from a source topic and write to a sink topic. The service uses two Operators, in this case defined in-line in Rust, to perform transformations on the data.
 
