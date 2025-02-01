@@ -97,9 +97,9 @@ there(5)
 
 ### 5. Show State
 
-Stateful Dataflows are of course, stateful. SDF will keep track of certain metrics automatically for you. Leveraging custom state objects is extremely powerful, but for now, let's just check the built-in metrics.
+Stateful Dataflows are capable of maintaining `states` (data values) in durable storage, which like a database, will persist when an SDF session ends. You can define arbitrary state values which can be accessed and updated in your dataflow. SDF also maintains some built-in state values which keep track of the dataflow's status.
 
-Check the `sentence-to-words` counters:
+To view the default metrics for the `sentence-to-words` operator, use the `show state` command:
 
 ```bash copy="fl"
 >> show state calc-word-length/sentence-to-words/metrics
@@ -107,7 +107,7 @@ Check the `sentence-to-words` counters:
  stats  *       2          0
 ```
 
-Check the `word-length` counters:
+View the metrics for the `word-length` operator:
 
 ```bash copy="fl"
 >> show state calc-word-length/word-length/metrics
