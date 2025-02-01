@@ -140,7 +140,7 @@ there(5)
 
 ### 5. Show State
 
-SDF collects dataflow runtime metrics which you can inspect in the REPL.
+Stateful Dataflows are of course, stateful. SDF will keep track of certain metrics automatically for you. Leveraging custom state objects is extremely powerful, but for now, let's just check the built-in metrics.
 
 Check the `sentence-to-words` counters:
 
@@ -150,7 +150,7 @@ Check the `sentence-to-words` counters:
  stats  *       2          0
 ```
 
-Check the `augment-count` counters:
+Check the `word-length` counters:
 
 ```bash copy="fl"
 >> show state calc-word-length/word-length/metrics
