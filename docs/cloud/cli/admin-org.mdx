@@ -1,5 +1,5 @@
 ---
-sidebar_position: 90
+sidebar_position: 100
 title: "admin org"
 description: "CLI commands for managing an organization"
 ---
@@ -7,7 +7,7 @@ description: "CLI commands for managing an organization"
 The `fluvio cloud admin org` command is used manage an organization and its users.
 
 ```bash
-$ fluvio cloud admin org           
+$ fluvio cloud admin org
 Organization management
 
 Usage: fluvio-cloud admin org <COMMAND>
@@ -41,7 +41,7 @@ Lists all users in the organization
 Example usage
 ```bash
 $ fluvio cloud admin org user list
- USER NAME  ROLE   EMAIL           FULL NAME   
+ USER NAME  ROLE   EMAIL           FULL NAME
  self       Owner  me@example.com  My Name
 ```
 
@@ -67,7 +67,7 @@ Arguments:
   <EMAIL>  email of the user to invite
 ```
 
-Example usage 
+Example usage
 ```bash
 $ fluvio cloud admin org user invite invitee@example.com
 

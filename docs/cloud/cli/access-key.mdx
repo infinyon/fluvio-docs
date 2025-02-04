@@ -1,0 +1,61 @@
+---
+sidebar_position: 80
+title: access-key
+description: "CLI commands for access keys"
+---
+
+Access keys allow websocket access to Infinyon Cloud clusters. Access keys are set via the CLI. Each access key has a user defined name and a generated key.
+
+The websocket endpoint is `wss://infinyon.cloud/wsr/v1/fluvio?access_key=<KEY>`.
+
+## `fluvio cloud access-key` subcommands
+
+- create
+- list
+- delete
+- rotate
+
+```bash
+$ fluvio cloud access-key create <NAME>
+$ fluvio cloud access-key list
+$ fluvio cloud access-key delete <NAME>
+$ fluvio cloud access-key rotate <NAME>
+```
+
+## `fluvio cloud access-key create`
+
+Creates an access key with the given name.
+
+```bash
+$ fluvio cloud access-key create <NAME>
+```
+
+## `fluvio cloud access-key list`
+
+Lists all access keys with their name and key.
+
+```bash
+$ fluvio cloud access-key list
+
+ NAME   KEY
+ demo1  T8qfLk5l6KWfpOrWYgUfHYKzKsvwjw6m
+ demo2  iSmvJXJXDkyq3SgEGpsgTDv1RTaZXdQD
+```
+
+
+## `fluvio cloud access-key delete`
+
+This will delete the named access key.
+
+```bash
+$ fluvio cloud access-key delete <NAME>
+```
+
+
+## `fluvio cloud access-key rotate`
+
+This will generate a new key for the named access key.
+
+```bash
+$ fluvio cloud access-key rotate <NAME>
+```
