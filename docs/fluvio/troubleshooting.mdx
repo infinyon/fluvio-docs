@@ -52,6 +52,16 @@ $ RUST_LOG=info fluvio run sc --local
 The log level can be set to `trace`, `debug`, `info`, `warn`, `error`.
 
 
+## Producer
+
+### Max Record Size Exceeded
+
+if you are having issues with the producer, like the error `record size (35707200 bytes), exceeded maximum request size (33554432 bytes)` you can increase the maximum record size by setting the `max_record_size` parameter in the producer command.
+
+```yaml
+fluvio produce hello-node --max-request-size 37748736
+```
+
 [`fluvio cluster upgrade`]: cli/fluvio/cluster.mdx#fluvio-cluster-upgrade
 [filtering tracing log]: https://docs.rs/tracing-subscriber/latest/tracing_subscriber/filter/struct.EnvFilter.html
 [Discord]: https://discord.com/invite/bBG2dTz
