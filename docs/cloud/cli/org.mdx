@@ -1,5 +1,5 @@
 ---
-sidebar_position: 80
+sidebar_position: 90
 title: org
 description: "CLI commands for organization membership"
 ---
@@ -22,8 +22,8 @@ Commands:
 ## `fluvio cloud org list`
 ```bash
 $ fluvio cloud org list
-    NAME         DISPLAY-NAME     
-    self         Personal             
+    NAME         DISPLAY-NAME
+    self         Personal
  *  my-org       My Organization
 ```
 
@@ -40,14 +40,14 @@ Arguments:
 
 Example usage
 ```bash
-$ fluvio cloud org select  
-? You are member of the following organizations. Which one would you like to use?  
+$ fluvio cloud org select
+? You are member of the following organizations. Which one would you like to use?
   Personal (self)
 >  My Organization (my-org)
 
 This organization has the following clusters:
- NAME          ACTIVE  STATUS     VERSION  SPU_COUNT 
- my-cluster-1  true    Installed  0.12.0   1         
+ NAME          ACTIVE  STATUS     VERSION  SPU_COUNT
+ my-cluster-1  true    Installed  0.12.0   1
 
 ? Would you like to use cluster my-cluster-1 on this machine? yes
 
