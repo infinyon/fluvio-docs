@@ -1,0 +1,95 @@
+---
+title: "Use WebSocket Gateway"
+description: "A short guide on using the WebSocket Gateway"
+sidebar_position: 2
+---
+
+This guide assumes that `fluvio` is installed, and logged-in to InfinyOn Cloud. Follow the [Quick Start] to get set up.
+
+The WebSocket Gateway allows you to produce and consume data using a WebSocket connection. This is useful for sending data from a web browser or other applications that can use WebSockets.
+
+## Create a topic
+
+First, create a topic to interact with.
+
+```shell
+$ fluvio topic create my-topic
+topic "my-topic" created
+```
+
+## Create an access key
+
+Create an access key to authenticate the WebSocket connection. This key will only allow access to the specified topic.
+
+```shell
+$ fluvio cloud access-key create my-access-key-1 --topic my-topic
+Access key "my-access-key-1" crated: zGO0WBmCM4EAEJYbksCjGzJrrKHdgwPa
+```
+
+### Restrict produce or consume
+Optionally, you can restrict an access key to only allow producing or consuming data by passing the `--consume` or `--produce` flag when creating the access key.
+
+#### Consume Only
+```shell
+$ fluvio cloud access-key create my-consume-key --topic my-topic --consume
+```
+
+#### Produce Only
+```shell
+$ fluvio cloud access-key create my-produce-key --topic my-topic --produce
+```
+
+
+## Produce data
+
+To produce data, you need to connect to the WebSocket Gateway produce endpoint. The access key is passed as a query parameter in the URL. The access key determines which topic will be written to.
+
+Gateway Produce Endpoint URL: `wss://infinyon.cloud/wsr/v1/simple/produce
+
+Exmaple:
+```javascript
+const access_key = "zGO0WBmCM4EAEJYbksCjGzJrrKHdgwPa";
+
+const ws = new WebSocket(
+    `wss://infinyon.cloud/wsr/v1/simple/produce?access_key=${access_key}`,
+);
+
+const myData = {};
+
+ws.send(JSON.stringify(myData));
+```
+
+## Consume data
+
+To consume data, you need to connect to the WebSocket Gateway consume endpoint. The access key is passed as a query parameter in the URL. The access key determines which topic will be read from.
+
+Gateway Consume Endpoint URL: `wss://infinyon.cloud/wsr/v1/simple/consume
+
+Example:
+```javascript
+const access_key = "zGO0WBmCM4EAEJYbksCjGzJrrKHdgwPa";
+
+const ws = new WebSocket(
+    `wss://infinyon.cloud/wsr/v1/simple/consume?access_key=${access_key}`,
+);
+
+ws.onmessage = (event) => {
+    console.log(event.data);
+};
+
+```
+
+## Demo
+
+Here is a simple example of how to use the WebSocket Gateway to produce and consume data.
+
+[Demo]
+
+## Conclusion
+
+In this guide, you learned how to use the WebSocket Gateway to produce and consume data secured by access keys. See [Access Key CLI Docs] for more information on managing access keys.
+
+
+[Quick Start]: cloud/quickstart.mdx
+[Access Key CLI Docs]: cloud/cli/access-key.mdx
+[Demo]: cloud/demos/ws-gateway.mdx
