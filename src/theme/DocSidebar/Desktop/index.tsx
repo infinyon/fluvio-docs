@@ -7,6 +7,7 @@ import Content from '@theme/DocSidebar/Desktop/Content';
 import type {Props} from '@theme/DocSidebar/Desktop';
 
 import styles from './styles.module.css';
+import DocSidebarFooter from '@site/src/components/DocSidebarFooter';
 
 function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}: Props) {
   const {
@@ -26,6 +27,7 @@ function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}: Props) {
       {hideOnScroll && <Logo tabIndex={-1} className={styles.sidebarLogo} />}
       <Content path={path} sidebar={sidebar} />
       {hideable && <CollapseButton onClick={onCollapse} />}
+      <DocSidebarFooter />
     </div>
   );
 }
