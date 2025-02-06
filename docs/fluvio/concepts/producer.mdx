@@ -1,0 +1,111 @@
+---
+sidebar_position: 5
+title: "Producer"
+---
+
+# Producer
+
+The **Fluvio Producer** is a core component of the Fluvio ecosystem, designed to efficiently ingest records into a distributed streaming platform. It abstracts the complexities of record transmission, partition management, data transformation, and compression behind a simple command-line interface (CLI). This document outlines the key concepts and strategies that underpin the Fluvio Producer.
+
+---
+
+## Capabilities
+
+- **Record Ingestion**:  
+  The Producer accepts records from various input sources—such as standard input (stdin) or files—and sends them to a specified topic. This flexibility supports both interactive and batch data ingestion workflows.
+
+- **Destination Topics**:  
+  Records are directed to user-defined topics, which are subdivided into partitions. Each partition has a leader that handles the write operations, ensuring scalability and ordered processing.
+
+- **Dynamic Data Transformation**:  
+  Fluvio Producer integrates with [SmartModules](https://github.com/infinyon/fluvio/tree/fdcfce51067a44c06a91bc8e4aab518f0a193145/smartmodule/examples/map) (WASM modules) that can transform records on the fly. These transformations occur after the records are produced but before they are committed, enabling use cases like data capitalization, filtering, or enrichment.
+
+- **Compression Support**:  
+  To optimize network throughput and storage efficiency, the Producer supports various compression algorithms (e.g., GZIP). Compressed records reduce disk usage and bandwidth, though they incur additional CPU overhead for (de)compression.
+
+---
+
+## Record Production & Partitioning Strategies
+
+A central function of the Producer is to distribute records among multiple partitions. This distribution follows two primary strategies based on how the records are formatted:
+
+### 1. Producing Key/Value Records
+
+- **Key Extraction**:  
+  When records are provided in a key/value format (e.g., using a delimiter such as `:`), the Producer separates the key from the value.
+
+- **Hash-based Partitioning**:  
+  The extracted key is hashed to determine the target partition. This strategy ensures that **all records with the same key** are consistently sent to the same partition.  
+
+  **Example**:  
+  When sending:
+  ```bash
+  $ fluvio produce my-topic --key-separator=":"
+  > alice:Hello, World!
+  > batman:Goodbye!
+  ```
+  The hash of `"alice"` and `"batman"` will decide their respective partitions, maintaining record order for each key.
+
+### 2. Producing Non Key/Value Records
+
+- **Round-Robin Partitioning**:  
+  When records are not parsed as key/value pairs (i.e., no key is specified), the Producer employs a round-robin algorithm.  
+
+  **Key Characteristics**:
+  - **Even Load Distribution**: Records are cyclically assigned across all partitions, ensuring a balanced load.
+  - **Simplicity**: This method avoids the computational overhead of hashing when key-based routing is unnecessary.
+
+  **Example**:  
+  When producing simple text records without a key separator:
+  ```bash
+  $ fluvio produce my-topic -f records.txt
+  ```
+  Each record will be sent to the next partition in sequence, distributing records evenly across the topic.
+
+---
+
+## Integration with SmartModules
+
+Fluvio Producer supports the integration of SmartModules—WASM-based modules that allow real-time data transformation during production.
+
+- **How It Works**:  
+  A SmartModule can be applied to the producer session either by:
+  - Directly referencing a compiled WASM file.
+  - Using a pre-registered module stored in the Fluvio cluster.
+  
+- **Benefits**:  
+  SmartModules enable on-the-fly modifications, such as transforming text (e.g., converting to uppercase), filtering unwanted records, or enriching the data with additional context—all without altering the original producer logic.
+
+---
+
+## Compression for Enhanced Efficiency
+
+To balance throughput and resource utilization, the Producer offers support for data compression:
+
+- **Compression Algorithms**:  
+  Algorithms like GZIP are available to compress records before they are transmitted to the streaming cluster.
+  
+- **Operational Impact**:  
+  - **Reduced Disk Usage**: Compressed records consume less storage on the brokers.
+  - **Network Efficiency**: Lower data sizes result in improved network performance.
+  - **Transparent Consumption**: Consumers retrieve and decompress the records without needing additional configuration.
+
+---
+
+## Summary
+
+The **Fluvio Producer** is engineered to simplify the process of sending data into a distributed streaming system. Its design encompasses several abstract yet essential concepts:
+
+- **Flexible Record Ingestion**: Supports both interactive and batch processing.
+- **Intelligent Partitioning**:  
+  - **Hash-based** for key/value records, ensuring consistency and ordered processing.
+  - **Round-robin** for non key/value records, promoting even load distribution.
+- **Dynamic Data Transformation**: Through SmartModule integration.
+- **Optimized Data Handling**: Via built-in compression options.
+
+By abstracting these complexities, the Fluvio Producer allows users to focus on building robust data pipelines without worrying about the underlying partitioning and transformation details.
+
+For further details and practical examples, please [check out the producer in the CLI reference].
+
+
+[check out the producer in the CLI reference]: fluvio/cli/fluvio/produce.mdx
