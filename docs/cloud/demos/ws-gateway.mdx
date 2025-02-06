@@ -10,8 +10,11 @@ sidebar_position: 1
     3. Login with CLI
     4. Create a Cluster
     5. Create a topic named <strong>webdemo</strong>
-2. Create and access key
-    ```shell
+        ```shell copy="fl"
+        $ fluvio topic create webdemo
+        ```
+2. Create an access key
+    ```shell copy="fl"
     $ fluvio cloud access-key create web-demo --topic webdemo
     ```
 4. Start producer with access key
