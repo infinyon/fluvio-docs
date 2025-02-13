@@ -7,7 +7,7 @@ sidebar_position: 20
 import CodeBlock from '@theme/CodeBlock';
 import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
 
-# Beta 6
+# Beta 7
 
 ## Upgrading 
 
@@ -26,17 +26,15 @@ For upgrading Infinyon Cloud (remote) workers, please contact [InfinyOn support]
 
 ### CLI changes
 
-- Added --build-profile to sdf build and sdf test subcommands.
-- Added ability to pass file as input for `sdf test`.
+- Added option to connect/attach to sdf worker, with `sdf worker connect`
 
 ### Improvements
 
-- Allow publishing packages with no functions.
-- Remove the need of saving the WIT generated files in SDF packages.
+- Performance improvements related to the memory management.
 
-### Changes
-- Added validation to check that output of filter-map operators are optional.
-- Removed `anyhow` dependencies from operators rust code, it is reexported now in the `sdfg` crate, use with `sdfg::anyhow`. 
+### Features
+
+- Add interfaces to access window and key in guest operators.
 
 ## InfinyOn Support
 
