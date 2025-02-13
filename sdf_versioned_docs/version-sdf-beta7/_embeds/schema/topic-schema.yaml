@@ -1,0 +1,5 @@
+topics:
+  persons:
+    schema:
+      value:
+        type: person

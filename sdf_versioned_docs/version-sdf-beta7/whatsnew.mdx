@@ -1,0 +1,43 @@
+---
+title: "What's new"
+description: Changes and updates to SDF
+sidebar_position: 20
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
+
+# Beta 7
+
+## Upgrading 
+
+To upgrade CLI to this version, run the following command:
+
+<CodeBlock language="bash">{InstallFvm}</CodeBlock>
+
+To upgrade local (host) workers, shutdown and restart the worker:
+
+```bash
+$ sdf worker shutdown <host-worker-name>
+$ sdf worker create <host-worker-name>
+```
+
+For upgrading Infinyon Cloud (remote) workers, please contact [InfinyOn support](#infinyon-support).
+
+### CLI changes
+
+- Added option to connect/attach to sdf worker, with `sdf worker connect`
+
+### Improvements
+
+- Performance improvements related to the memory management.
+
+### Features
+
+- Add [interfaces] to access window and key in guest operators.
+
+## InfinyOn Support
+
+For any questions or issues, please contact InfinyOn support at support@infinyon.com  or https://discordapp.com/invite/bBG2dTz
+
+[interfaces]: concepts/operator-context.mdx
