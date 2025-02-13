@@ -1,0 +1,69 @@
+---
+title: Operator context
+description: Operator utils
+sidebar_position: 70
+---
+
+SDF operators can access metadata and context information from the SDF engine using several utility functions.  These functions provide access to windowing, keying, and SQL capabilities.
+
+In particular, we have available the following functions:
+
+*   [`window()`](#window-function) (Since sdf-beta7)
+*   [`key()`](#key-function) (Since sdf-beta7)
+*   [`sql()`](sql.mdx) (Since sdf-beta6)
+
+## `window()` Function
+
+The `window()` function allows SDF operators to retrieve the start and end timestamps of the window assigned to the current operator. It takes no parameters and returns a tuple of `i64` representing the start and end times.
+
+Example:
+
+```rust
+  let (start_time, end_time): (i64, i64) = window();
+```
+
+If no explicit window is assigned to the dataflow, window() returns the global window, represented by the range (i64::MIN, i64::MAX).  This indicates that the operator is processing data across the entire timeline.
+
+## `key()` Function
+
+The `key()` function retrieves the key assigned to the current operator, if any. Keys are only assigned to operators within partitioned services. Therefore, this function returns an Option value, which will be None if the operator is not in a partitioned service.
+
+
+The key() function returns an optional value of the following type:
+
+
+```wit
+variant key-type {
+    %string(string),
+    %u64(u64),
+    i64(s64),
+    %bool(bool)
+} 
+```
+
+In Rust, this WIT type is represented by the following enum:
+
+```
+enum KeyType {
+    String(String),
+    U64(u64),
+    I64(i64),
+    Bool(bool)
+}
+```
+
+Example:
+
+```rust
+let maybe_key: Option<KeyType> = key();
+
+match maybe_key {
+    Some(KeyType::String(s)) => { /* ... handle string key ... */ },
+    Some(KeyType::U64(u)) => { /* ... handle u64 key ... */ },
+    Some(KeyType::I64(i)) => { /* ... handle i64 key ... */ },
+    Some(KeyType::Bool(b)) => { /* ... handle bool key ... */ },
+    None => { /* ... handle case where no key is assigned ... */ },
+}
+```
+
+[sql]: sql.mdx
