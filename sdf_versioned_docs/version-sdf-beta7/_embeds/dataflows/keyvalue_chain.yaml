@@ -1,0 +1,85 @@
+apiVersion: 0.5.0
+
+meta:
+  name: chained-key
+  version: 0.1.0
+  namespace: example
+
+config:
+  converter: json
+  consumer:
+    default_starting_offset:
+      value: 0
+      position: End
+
+types:
+  car-info:
+    type: object
+    properties:
+      year:
+        type: u32 
+      brand:
+        type: string
+      model:
+        type: string
+  car-short:
+    type: object
+    properties:
+      vin:
+        type: string
+      desc:
+        type: string
+#Both topics are key-values
+topics:
+  input:
+    schema:
+      key:
+        type: string
+      value:
+        type: car-info
+  output:
+    schema:
+      key:
+        type: string
+      value:
+        type: car-short
+
+services:
+  kv-to-kv:
+    sources:
+      - type: topic
+        id: input
+
+    transforms:
+      - operator: map
+        run: |
+          fn vin_to_car(vin: Option<String>, car: CarInfo) -> Result<CarShort> {
+            Ok(CarShort{
+                vin: vin.unwrap(),
+                desc: format!("{} {} {}",car.year,car.brand,car.model),
+            })
+          }
+
+      - operator: map
+        run: |
+          fn car_to_manu(vin: Option<String>, car_short: CarShort) -> Result<(Option<String>, CarShort)> {
+            let country = if let Some(first_char) = vin.unwrap().chars().next() {
+                if first_char == '1' || first_char == '4' || first_char == '5' { "United States" } 
+                else if first_char == '2' { "Canada" } 
+                else if first_char == '3' { "Mexico" } 
+                else if first_char == 'J' { "Japan" } 
+                else if first_char == 'K' { "South Korea" } 
+                else if first_char == 'L' { "China" } 
+                else if first_char == 'S' { "United Kingdom" } 
+                else if first_char == 'V' { "France" } 
+                else if first_char == 'W' { "Germany" } 
+                else if first_char == 'Z' { "Italy" } 
+                else { "Unknown" }
+                } 
+            else { "Invalid VIN" };
+            Ok((Some(country.to_string()), car_short))
+          }
+
+    sinks:
+      - type: topic
+        id: output

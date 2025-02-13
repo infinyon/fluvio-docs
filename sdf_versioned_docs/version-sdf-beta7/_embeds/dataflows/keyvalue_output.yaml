@@ -1,0 +1,61 @@
+apiVersion: 0.5.0
+
+meta:
+  name: key-value-output
+  version: 0.1.0
+  namespace: example
+
+config:
+  converter: json
+  consumer:
+    default_starting_offset:
+      value: 0
+      position: End
+
+types:
+  book:
+    type: object
+    properties:
+      name:
+        type: string
+      year:
+        type: u32
+      author:
+        type: string
+
+topics:
+  new-book:
+    schema:
+      value:
+        type: book
+  books-in-system:
+    schema:
+      key:
+        type: string
+      value:
+        type: book
+
+services:
+  addbook:
+    sources:
+      - type: topic
+        id: new-book
+
+    transforms:
+      - operator: map
+        run: |
+          fn newbook(book:Book) -> Result<(Option<String>,Book)>{
+            let mut p:u32 = 53; 
+            let m:u32 = 1000000009;
+            let mut hash:u32 = 0;
+            for c in book.name.chars() {
+                hash = (hash + (c as u32)*p) % m;
+                p = (p*53) % m;
+            }
+            
+            Ok((Some(hash.to_string()),book))
+          }
+
+    sinks:
+      - type: topic
+        id: books-in-system

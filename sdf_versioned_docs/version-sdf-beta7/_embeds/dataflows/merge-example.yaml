@@ -1,0 +1,57 @@
+# dataflow.yaml
+apiVersion: 0.5.0
+meta:
+  name: merge-example
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: json
+
+types:
+  order:
+    type: object
+    properties:
+      name:
+        type: string
+      amount:
+        type: u32
+      price:
+        type: f32  
+
+topics:
+  buy:
+    schema:
+      value:
+        type: order
+  sell:
+    schema:
+      value:
+        type: order
+  message:
+    schema:
+      value:
+        type: string
+
+services:
+  mergeservice:
+    sources:
+      - type: topic
+        id: buy
+        transforms:
+          - operator: map
+            run: |
+              fn buy_order(order: Order) -> Result<String> {
+                Ok(format!("+ Buy Order for  {}x{} at {}",order.name,order.amount,order.price))
+              }
+      - type: topic
+        id: sell 
+        transforms:
+          - operator: map
+            run: |
+              fn sell_order(order: Order) -> Result<String> {
+                Ok(format!("- Sell Order for {}x{} at {}",order.name,order.amount,order.price))
+              }
+    sinks:
+      - type: topic
+        id: message
