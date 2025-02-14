@@ -8,11 +8,11 @@ SDF operators can output logs using standard output (stdout), which can then be 
 
 Within Rust operators, you can use the standard `println!` macro to write to stdout.  The output will be captured and displayed when you execute `sdf log`.
 
-This is particularly useful for debugging and understanding the context in which your operator is running. You can, for example, print the key using [`key()`](../concepts/operator-context.mdx#key-function) or the window boundaries using [`window()`](../concepts/operator-context.mdx#window-function
-
-).
+This is particularly useful for debugging and understanding the context in which your operator is running. You can, for example, print the key using [`key()`](../concepts/operator-context.mdx#key-function) or the window boundaries using [`window()`](../concepts/operator-context.mdx#window-function).
 
 ## Example
+
+Code example of an update-state operator with some output sent to standard output.
 
 ```rust
 fn add_count(input: String) -> Result<()> {
