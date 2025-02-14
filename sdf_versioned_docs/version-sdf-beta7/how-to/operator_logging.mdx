@@ -1,0 +1,30 @@
+---
+title: Operator Logging
+description: Logging within SDF operators using stdout and the `sdf log` command.
+sidebar_position: 1200
+---
+
+SDF operators can output logs using standard output (stdout), which can then be viewed using the [`sdf log`](../cli/log) command.  This allows developers to debug and monitor the behavior of their operators.
+
+Within Rust operators, you can use the standard `println!` macro to write to stdout.  The output will be captured and displayed when you execute `sdf log`.
+
+This is particularly useful for debugging and understanding the context in which your operator is running. You can, for example, print the key using [`key()`](../concepts/operator-context.mdx#key-function) or the window boundaries using [`window()`](../concepts/operator-context.mdx#window-function).
+
+## Example
+
+Code example of an update-state operator with some output sent to standard output.
+
+```rust
+fn add_count(input: String) -> Result<()> {
+    if let Some(k) = key() {
+        println!("Key: {:?}", k); // Print the key if it exists
+    }
+
+    let (window_start, window_end) = window();
+    println!("Window start timestamp: {}, Window end timestamp: {}", window_start, window_end);
+
+    let new_value = counter().increment(1);
+    println!("New counter value: {}", new_value);
+
+    Ok(())
+}
