@@ -1,0 +1,184 @@
+---
+sidebar_position: 60
+title: "Authenticating End Users with Gateway"
+description: "A tutorial on authenticating end users using the WebSocket Gateway"
+---
+
+This tutorial will walk you through setting up multi-user or multi-tenant access to a topic in Infinyon Cloud.
+
+## Concepts
+
+* **WebSocket Gateway**: The WebSocket Gateway allows you to produce and consume data using a WebSocket connection.
+* **Access Key**: Used to authenticate the WebSocket connection. This key will only allow access to a cluster and topic specified by the Access Key. This key can be shared with multiple end users.
+* **End-User Token**: A token that can be used to authenticate a end-user in addition to the Access Key. This token can be used to filter Fluvio records based on the user's identity.
+* **Fluvio Record Key**: A record in Fluvio is a key-value pair. The key can be set when producing, and can contain metadata such as end user identity.
+* **Key Filter**: A string that is used to filter records being consumed from the WebSocket Gateway. This filter can be used to restrict access to records based on the end user's identity. This value is checked against the Fluvio Record Key for an exact match.
+* **Key Filter Server**: A HTTP server that exposes a HTTP POST endpoint which returns a Key Filter based on End-User Token.
+* **Key Filter Remote URL**: The HTTPS URL of the Key Filter Server.
+
+## Prerequisites
+
+This tutorial assumes that the Fluvio CLI is installed, and logged-in to InfinyOn Cloud. Follow the [Quick Start] to get set up.
+
+## Create a topic
+
+First, create a topic to interact with.
+
+```shell copy="fl"
+$ fluvio topic create multi-user-demo
+topic "multi-user-demo" created
+```
+
+## Produce records
+
+Produce end user keyed records to the topic using the Fluvio CLI.
+
+```shell copy="cmd"
+$ echo "Message for User1" | fluvio produce multi-user-demo --key "user1"
+$ echo "Message for User2" | fluvio produce multi-user-demo --key "user2"
+```
+
+Confirm that the records were produced successfully with the correct key.
+
+```shell copy="fl"
+$ fluvio consume -Bdk multi-user-demo
+Consuming records from 'multi-user-demo' starting from the beginning of log
+[user1] Message for User1
+[user2] Message for User2
+```
+
+## Set up a Key Filter Server (Rust Example)
+
+Create a simple Key Filter Server that returns a Key Filter based on the End-User Token.
+
+### Setup a new Rust project
+
+Create a HTTP application server using [Actix].
+
+```shell copy="fl"
+$ cargo new key_filter_server
+```
+
+Add the `actix-web` dependency to the `Cargo.toml` file.
+
+```toml
+[package]
+name = "key_filter_server"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4"
+```
+
+Add the following code to the `src/main.rs` file.
+
+```rust
+use actix_web::{web, App, HttpResponse, HttpServer, Responder};
+
+// Example end user token lookup function
+fn lookup(end_user_token: String) -> Option<String> {
+    if end_user_token == "user1_token_example" {
+        Some("user1".to_string())
+    } else if end_user_token == "user2_token_example" {
+        Some("user2".to_string())
+    } else {
+        None
+    }
+}
+
+// Key Filter endpoint POST handler
+async fn keyfilter(end_user_token: String) -> impl Responder {
+    lookup(end_user_token)
+        .map(|key| HttpResponse::Ok().body(key))
+        .unwrap_or_else(|| HttpResponse::NotFound().finish())
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    // Start an HTTP server at 127.0.0.1:4000
+    HttpServer::new(|| {
+        App::new()
+            // Map POST requests on "/keyfilter" to the `keyfilter` function
+            .route("/keyfilter", web::post().to(keyfilter))
+    })
+    .bind(("127.0.0.1", 4000))?
+    .run()
+    .await
+}
+```
+
+### Run the Key Filter Server
+
+Run the Key Filter Server.
+
+```shell copy="fl"
+$ cargo run
+```
+
+Keep this server running in a separate terminal for the duration of this tutorial.
+
+### Expose the Key Filter Server to the Internet using pinggy.io
+
+Expose the Key Filter Server to the internet using pinggy.io. This will allow the WebSocket Gateway to fetch the Key Filter based on the End-User Token.
+
+```shell copy="fl"
+$ ssh -p 443 -R0:localhost:4000 a.pinggy.io
+You are not authenticated.
+Your tunnel will expire in 60 minutes. Upgrade to Pinggy Pro to get unrestricted tunnels. https://dashboard.pinggy.io
+
+http://rnlky-<EXAMPLE>.a.free.pinggy.link
+https://rnlky-<EXAMPLE>.a.free.pinggy.link
+```
+
+Note the assigned public HTTPS URL, which will be used as the Key Filter Remote URL.
+
+Keep the ssh tunnel running in a separate terminal for the duration of this tutorial.
+
+## Create an Access Key
+
+Create an Access Key to authenticate the WebSocket connection. This key will only allow consumer access to the specified topic.
+
+We specify `user_token` as the query parameter that the WebSocket Gateway will expect and pass to the Key Filter Server to fetch the Key Filter.
+
+```shell copy="fl"
+$ fluvio cloud access-key create my-access-key-1 --topic multi-user-demo --consume --key-filter-remote user_token:<TUNNEL_URL>/keyfilter
+```
+
+## Consuming records as an End User
+
+### Install `websocat`
+
+```shell copy="fl"
+$ cargo install websocat
+```
+
+### Consume records using the WebSocket Gateway
+
+Consume records from the topic using the WebSocket Gateway. The Access Key is passed as a query parameter in the URL. The Access Key determines which topic will be read from.
+
+Typically we would consume records using the WebSocket Gateway consume endpoint. Specify `head=0` query param to start consuming from the beginning of the topic.
+
+```shell copy="fl"
+$ websocat "wss://infinyon.cloud/wsr/v1/simple/consume?access_key=<ACCESS_KEY>&head=0"
+```
+
+This will not work since the Access Key is configured with the Key Kilter Remote option. We need to pass the `user_token` query parameter to the consume endpoint.
+
+Since we specified `--key-filter-remote user_token:https://rnlky-example.a.free.pinggy.link/keyfilter`, we need to pass the `user_token` query parameter to the consume endpoint.
+
+The following shows the connecting to the WebSocket Gateway consume endpoint with the `user_token` query parameter set for User1's token `user1_token_example`.
+
+```shell copy="fl"
+$ websocat "wss://infinyon.cloud/wsr/v1/simple/consume?access_key=<ACCESS_KEY>&head=0&user_token=user1_token_example"
+Message for User1
+```
+
+Note that only the record with the key `user1` is returned, effectively enforcing that User1 is only seeing records intended for User1.
+
+## Conclusion
+
+This tutorial demonstrated how to authenticate end users using the WebSocket Gateway. By using a Key Filter Server, you can restrict access to records based on the end user's identity. This allows you to build multi-user or multi-tenant applications targeting Infinyon Cloud.
+
+[Quick Start]: /cloud/quick-start
+[Actix]: https://actix.rs/docs/getting-started
