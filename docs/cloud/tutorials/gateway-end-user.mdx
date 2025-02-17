@@ -3,6 +3,9 @@ sidebar_position: 60
 title: "Authenticating End Users with Gateway"
 description: "A tutorial on authenticating end users using the WebSocket Gateway"
 ---
+import CodeBlock from '@theme/CodeBlock';
+import ExampleToml from '!!raw-loader!../../_embeds/cloud/gateway-end-user/_example-cargo.toml';
+import ExampleMain from '!!raw-loader!../../_embeds/cloud/gateway-end-user/main.rs';
 
 This tutorial will walk you through setting up multi-user or multi-tenant access to a topic in Infinyon Cloud.
 
@@ -61,52 +64,11 @@ $ cargo new key_filter_server
 
 Add the `actix-web` dependency to the `Cargo.toml` file.
 
-```toml
-[package]
-name = "key_filter_server"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-actix-web = "4"
-```
+<CodeBlock language="toml">{ExampleToml}</CodeBlock>
 
 Add the following code to the `src/main.rs` file.
 
-```rust
-use actix_web::{web, App, HttpResponse, HttpServer, Responder};
-
-// Example end user token lookup function
-fn lookup(end_user_token: String) -> Option<String> {
-    if end_user_token == "user1_token_example" {
-        Some("user1".to_string())
-    } else if end_user_token == "user2_token_example" {
-        Some("user2".to_string())
-    } else {
-        None
-    }
-}
-
-// Key Filter endpoint POST handler
-async fn keyfilter(end_user_token: String) -> impl Responder {
-    lookup(end_user_token)
-        .map(|key| HttpResponse::Ok().body(key))
-        .unwrap_or_else(|| HttpResponse::NotFound().finish())
-}
-
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    // Start an HTTP server at 127.0.0.1:4000
-    HttpServer::new(|| {
-        App::new()
-            // Map POST requests on "/keyfilter" to the `keyfilter` function
-            .route("/keyfilter", web::post().to(keyfilter))
-    })
-    .bind(("127.0.0.1", 4000))?
-    .run()
-    .await
-}
-```
+<CodeBlock language="rust">{ExampleMain}</CodeBlock>
 
 ### Run the Key Filter Server
 
@@ -118,9 +80,11 @@ $ cargo run
 
 Keep this server running in a separate terminal for the duration of this tutorial.
 
-### Expose the Key Filter Server to the Internet using pinggy.io
+### Make the Key Filter Server accessible to the Infinyon Cloud WebSocket Gateway
 
-Expose the Key Filter Server to the internet using pinggy.io. This will allow the WebSocket Gateway to fetch the Key Filter based on the End-User Token.
+Exposing the Key Filter Server to the internet will allow the WebSocket Gateway to fetch the Key Filter based on the End-User Token.
+
+In this example we will use pinggy.io to expose the Key Filter Server to the internet. You may also use services such as Cloudflare tunnel and others that expose your local server to the internet over HTTPS.
 
 ```shell copy="fl"
 $ ssh -p 443 -R0:localhost:4000 a.pinggy.io
@@ -135,6 +99,14 @@ Note the assigned public HTTPS URL, which will be used as the Key Filter Remote 
 
 Keep the ssh tunnel running in a separate terminal for the duration of this tutorial.
 
+### Test the Key Filter Server
+
+Test the Key Filter Server by sending a POST request with the End-User Token as the body.
+
+```shell copy="fl"
+$ curl -X POST -d 'user1_token_example' https://<TUNNEL_URL>/keyfilter
+```
+
 ## Create an Access Key
 
 Create an Access Key to authenticate the WebSocket connection. This key will only allow consumer access to the specified topic.
@@ -142,13 +114,18 @@ Create an Access Key to authenticate the WebSocket connection. This key will onl
 We specify `user_token` as the query parameter that the WebSocket Gateway will expect and pass to the Key Filter Server to fetch the Key Filter.
 
 ```shell copy="fl"
-$ fluvio cloud access-key create my-access-key-1 --topic multi-user-demo --consume --key-filter-remote user_token:<TUNNEL_URL>/keyfilter
+$ fluvio cloud access-key create my-access-key-1 --topic multi-user-demo --consume --key-filter-remote user_token:https://<TUNNEL_URL>/keyfilter
 ```
 
 ## Consuming records as an End User
 
-### Install `websocat`
+### Install websocat
 
+Install the `websocat` command line tool to consume records from the WebSocket Gateway.
+
+Follow the instructions from the [websocat GitHub repository] for your operating system.
+
+You may also install from source using Cargo.
 ```shell copy="fl"
 $ cargo install websocat
 ```
@@ -182,3 +159,4 @@ This tutorial demonstrated how to authenticate end users using the WebSocket Gat
 
 [Quick Start]: /cloud/quick-start
 [Actix]: https://actix.rs/docs/getting-started
+[websocat GitHub repository]: https://github.com/vi/websocat?tab=readme-ov-file#installation
