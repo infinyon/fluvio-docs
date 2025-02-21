@@ -54,8 +54,7 @@ services:
           - operator: map 
             run: |
               fn new_input(_input: String) -> Result<String> {
-                let track = tracker();
-                let trackrow = track.sql(&format!("select * from `tracker`"))?;
+                let trackrow = sql(&format!("select * from `tracker`"))?;
                 let rows = trackrow.rows()?;
                 if !rows.next() {
                   return Ok("empty".to_string())
