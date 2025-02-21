@@ -90,7 +90,7 @@ interface:
           run: |
             fn new_input(_input: String) -> Result<String> {
               let track = tracker();
-              let trackrow = sql(&format!("select * from `tracker`"))?;
+              let trackrow = track.sql(&format!("select * from `tracker`"))?;
               let rows = trackrow.rows()?;
               if !rows.next() {
                 return Ok("empty".to_string())
@@ -103,7 +103,7 @@ interface:
 The service first has to refer to the state created by the `mergeservice`. Inside the sink is the transform that will iterface with the state. For simplicity, whatever is sent to the source `command` will result in the service `message` outputting how much the balance is. For the transform function:
 ##### 1. We use a sql statement to read from `track`, a `LazyDf`.  
 ```
-let trackrow = sql(&format!("select * from `tracker`"))?;
+let trackrow = track.sql(&format!("select * from `tracker`"))?;
 ```
 ##### 2. Afterwards, we can select the column `balance`.
 ```
