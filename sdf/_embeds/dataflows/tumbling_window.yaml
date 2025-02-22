@@ -16,11 +16,11 @@ topics:
   digit-start-col:
     schema:
       value:
-        type: string 
+        type: string
   digit-start:
     schema:
       value:
-        type: string 
+        type: string
 
 services:
   window-collect-service:
@@ -31,15 +31,15 @@ services:
       count-by-first-digit:
         type: keyed-state
         properties:
-          key: 
+          key:
             type: string
           value:
-            type: u32   
-    window: 
-      tumbling: 
+            type: u32
+    window:
+      tumbling:
         duration: 15s
       assign-timestamp:
-        run: | 
+        run: |
           fn assign_event_timestamp(_str: String, time: i64) -> Result<i64> {
             Ok(time)
           }
@@ -54,7 +54,7 @@ services:
             }
         update-state:
           run: |
-            fn increment_digit_count(str: String) -> Result<()> {
+            fn increment_digit_count(_str: String) -> Result<()> {
               count_by_first_digit().increment(1);
               Ok(())
             }
@@ -63,7 +63,7 @@ services:
           fn get_first_digit_count() -> Result<String> {
             let cc = count_by_first_digit().clone();
             Ok(cc.into_iter().map(|(digit, count)|
-                format!("Numbers with {} occured {} times,",digit,count)
+                format!("Numbers with {} occurred {} times,",digit,count)
             ).collect())
           }
     sinks:
@@ -80,6 +80,7 @@ services:
           fn split(input: String) -> Result<Vec<String>> {
             let result: Vec<String> = input.split(',')
               .map(|s| s.to_string())
+              .filter(|s| !s.is_empty())
               .collect();
             Ok(result)
           }
