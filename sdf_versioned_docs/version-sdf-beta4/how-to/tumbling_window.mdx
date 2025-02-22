@@ -105,7 +105,7 @@ flush:
     fn get_first_digit_count() -> Result<String> {
       let cc = count_by_first_digit().clone();
       Ok(cc.into_iter().map(|(digit, count)|
-          format!("Numbers with {} occured {} times,",digit,count)
+          format!("Numbers with {} occurred {} times,",digit,count)
       ).collect())
     }
 ```
@@ -159,19 +159,19 @@ $ fluvio consume digit-start-col -Bd
 
 The output of the string is random, but should look something like this.
 ```
-Numbers with 3 occured 1 times,Numbers with 7 occured 1 times,...
+Numbers with 3 occurred 1 times,Numbers with 7 occurred 1 times,...
 ```
 The output is a single entry in the sink topic.
 
 Consuming the topic `digit-start` will result in something like the following
 ```bash copy="cmd"
 $ fluvio consume digit-start -Bd
-Numbers with 8 occured 1 times
-Numbers with 9 occured 1 times
-Numbers with 2 occured 6 times
-Numbers with 1 occured 3 times
-Numbers with 3 occured 1 times
-Numbers with 5 occured 1 times
+Numbers with 8 occurred 1 times
+Numbers with 9 occurred 1 times
+Numbers with 2 occurred 6 times
+Numbers with 1 occurred 3 times
+Numbers with 3 occurred 1 times
+Numbers with 5 occurred 1 times
 ```
 In this case, every 15 seconds a new set of records are added to the topic.
 
