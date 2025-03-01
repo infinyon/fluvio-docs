@@ -1,0 +1,44 @@
+---
+title: "What's new"
+description: Changes and updates to SDF
+sidebar_position: 20
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
+
+# Beta 8
+
+## Upgrading 
+
+To upgrade CLI to this version, run the following command:
+
+<CodeBlock language="bash">{InstallFvm}</CodeBlock>
+
+To upgrade local (host) workers, shutdown and restart the worker:
+
+```bash
+$ sdf worker shutdown <host-worker-name>
+$ sdf worker create <host-worker-name>
+```
+
+For upgrading Infinyon Cloud (remote) workers, please contact [InfinyOn support](#infinyon-support).
+
+### CLI changes
+
+- Show df command now also returns the last restart time.
+- Do not ignore deployment when the dataflow is the same. 
+
+### Improvements
+
+- Updated fluvio version which includes better reconnection support for consumers.
+
+### Features
+
+- Added support for idleness on window based services.
+
+## InfinyOn Support
+
+For any questions or issues, please contact InfinyOn support at support@infinyon.com  or https://discordapp.com/invite/bBG2dTz
+
+[idleness]: concepts/window-processing.mdx#idleness

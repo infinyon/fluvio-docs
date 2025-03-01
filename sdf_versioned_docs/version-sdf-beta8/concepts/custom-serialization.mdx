@@ -1,0 +1,200 @@
+---
+title: Custom Serialization
+description: Stateful Dataflows custom serialization support
+sidebar_position: 119
+---
+
+An Stateful Dataflow Service reads records from topics and push them to topics.
+The data obtained from the topics is deserialized using either `json` or `raw` format. Similarly,
+the data produced to a topic is serialized using either `json` or `raw`.
+
+### Raw format
+
+Raw format or binary format, tries to create the types using their binary representation. This is only valid for the following primitive types:
+
+- `string`: Bytes are converted assuming they are valid UTF-8.
+- `bool`: Last bit of byte is used for the conversion.
+- `numeric types`: Are converted using big endian binary representation.
+- `bytes`: No conversion needed, data from records is passed as a list of `u8`.
+
+### Json format
+
+With the `json` format, data from topics is deserialized and serialized into expected types using json. 
+All the serialization/deserialization, is done using Rust `serde` auto-implementation.
+This mean, among other things, that for object types are de(serialized) using `snake_case` and enum types are de(serialized) with `UpperCamelCase`.
+
+In some cases, we may want to rename fields to use another casing. This can be done in `objects` and `enum` types by using the `deserialize` or `serialize` configuration in their attributes and variants.
+
+#### Json default behavior
+
+If we have the following types defined:
+
+```yaml
+types:
+  new:
+    type: object
+    properties:
+      title:
+        type: string
+      image-url:
+        type: string
+        optional: true
+      keywords:
+        type: keywords
+      visibility:
+        type: visibility
+  keywords:
+    type: list
+    items:
+      type: keyword
+  keyword:
+    type: object
+    properties:
+      slug:
+        type: string
+      human-label:
+        type: string
+  visibility:
+    type: enum
+    oneOf:
+      public:
+        type: null
+      private:
+        type: null
+```
+
+A valid example of a record that could be deserialized properly for the `new` type, would be something like:
+
+```yaml
+{
+    "title": "Fluvio is great!",
+    "image_url": "https://fluvio.io/img/fluvio.jpg"
+    "keywords": [
+        {
+            "slug": "tech",
+            "human-label": "Technology"
+        }
+    ],
+    "visibility": "Public"
+}
+```
+
+#### Json custom deserialization
+
+In some occasions, we may want to use different casing. For that reason, we have the `serialize` and `deserialize` configuration on object attributes and enum variants.
+
+The serialize and deserialize configurations facilitate a flexible and robust way to manage data transformations. By clearly defining how properties should be renamed during these processes, the system can seamlessly integrate with external APIs or services while maintaining an internal structure that is coherent and easy to manage.
+
+##### Serialization configuration
+
+The serialize configuration is used to specify how a property should be transformed during the serialization process. It is defined within the properties section of an object type or within the variants of an enum and can have the following options:
+- `rename`: Specifies the new name for the property when serialized.
+
+Example:
+```yaml
+types:
+  new:
+    type: object
+    properties:
+      image-url:
+        type: string
+        optional: true
+        serialize:
+          rename: imageUrl
+```
+
+In this example, the image-url property will be serialized as imageUrl. The same configuration could be applied on enum variants.
+
+
+##### Deserialization configuration
+
+The deserialize configuration is used to specify how a property should be transformed during the deserialization process. It is also defined within the properties section of an object type or within the variants of an enum and can have the following options:
+
+- `rename`: Specifies the new name for the property when deserialized.
+
+```
+types:
+  visibility:
+    type: enum
+    oneOf:
+      public:
+        deserialize:
+          rename: available
+        type: null
+      private:
+        deserialize:
+          rename: draft
+        type: null
+```
+In this example, the `visibility` type will successfully deserialize when the input is `available` or `draft`. The same configuration could be applied on object properties.
+
+#### Custom deserialization in example
+
+For instance, if we want to parse the following data:
+
+```yaml
+{
+    "title": "Fluvio is great!",
+    "imageUrl": "https://fluvio.io/img/fluvio.jpg"
+    "keywords": [
+        {
+            "slug": "tech",
+            "humanLabel": "Technology"
+        }
+    ],
+    "visibility": "available"
+}
+```
+
+Let's look at the full example
+
+```yaml
+types:
+  new:
+    type: object
+    properties:
+      title:
+        type: string
+      image-url:
+        type: string
+        optional: true
+        serialize:
+          rename: imageUrl
+        deserialize:
+          rename: imageUrl
+      keywords:
+        type: keywords
+  keywords:
+    type: list
+    items:
+      type: keyword
+  keyword:
+    type: object
+    properties:
+      slug:
+        type: string
+      human-label:
+        type: string
+        deserialize:
+          rename: humanLabel
+        serialize:
+          rename: humanLabel
+
+  visibility:
+    type: enum
+    oneOf:
+      public:
+        serialize:
+          rename: available
+        deserialize:
+          rename: available
+        type: null
+      private:
+        deserialize:
+          rename: draft
+        serialize:
+          rename: draft
+        type: null
+```
+
+Notice, that `serialize` and `deserialize` are independent and that if a type is used both in serialization and deserialization, adding a configuration for serialize and deserialize could be needed.
