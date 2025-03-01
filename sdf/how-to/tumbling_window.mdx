@@ -39,6 +39,8 @@ We will define a window with the following syntax
     window: 
       tumbling: 
         (...)
+      watermark:
+        (...)
       assign-timestamp:
         (...)
       partition:
@@ -50,16 +52,25 @@ We will define a window with the following syntax
         (...)
 ```
 
-### Five components of a window
+### Six components of a window
 
 #### 1. Add Window duration
 ```YAML
 tumbling: 
   duration: 15s
 ```
-The following sets the duration of the window to discrete 15 second blocks.
+The above configuration sets the duration of the window to discrete 15 second blocks.
 
-#### 2. Assigning a timestamp
+#### 2. Assigning an idleness time (optional)
+
+```YAML
+watermark: 
+  idleness: 60s
+```
+
+With the above configuration, the system will wait for 60 seconds of inactivity (no new data) before closing a window. This allows a 60-second grace period for late-arriving events.
+
+#### 3. Assigning a timestamp
 
 ```YAML
 assign-timestamp:
@@ -70,7 +81,7 @@ assign-timestamp:
 ```
 The above code assigns a timestamp to each of the entries from the source. In other cases, if a timestamp is encoded in the data, the code could also instead use the encoded timestamp.
 
-#### 3. Assigning a partition key
+#### 4. Assigning a partition key
 
 ```YAML
 assign-key:
@@ -84,7 +95,7 @@ assign-key:
 ```
 We need to make sure we have a mapping function that takes the string and maps it to a key. In this case, we are writing a dataflow that counts the number of occurance the first character appears in the window. Thus, the code just extracts the first digit as a key.
 
-#### 4. Update the state
+#### 5. Update the state
 
 ```YAML
 update-state:
@@ -96,7 +107,7 @@ update-state:
 ```
 To update the state, we have to call the object created by the state listed above. The `update-state` will automatically apply the state instance of the parameter. For our case, we call the increment function. Each time a string appears, the function will update the mapped key's value. In this case, the first digit.
 
-#### 5. Flush the window
+#### 6. Flush the window
 
 The final step is to flush the window. All the contents of the window gets popped and outputted into source.
 ```YAML
@@ -182,7 +193,6 @@ Exit `sdf` terminal and clean-up. The `--force` flag removes the topics:
 ```bash copy="cmd"
 $ sdf clean --force
 ```
-
 
 ## Conclusion
 
