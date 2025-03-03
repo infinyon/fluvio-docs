@@ -4,9 +4,9 @@ description: Stateful Dataflows Window Processing
 sidebar_position: 100
 ---
 
-Window processing addresses a well-defined stream processing problem described in depth by the ["The Dataflow Model"] whitepaper. A window operation turns data streaming records into a group of finite records, also known as bounded context, defined by the window size computed by a watermark operation. Fluvio performs a window processing operation by chaining multiple operators to assign timestamps, group them by key, and apply custom operations.
+Window processing addresses a well-defined stream processing problem described in depth by the ["The Dataflow Model"] whitepaper. A window operation turns data streaming records into a group of finite records, also known as bounded context, defined by the window size computed by a watermark operation. SDF performs a window processing operation by chaining multiple operators to assign timestamps, group them by key, and apply custom operations.
 
-While there are several types of windows, and Fluvio will eventually implement all of them, this preview will focus on two: `tumbling window` and `sliding window`.
+While there are several types of windows, and SDF will eventually implement all of them, this preview will focus on two: `tumbling window` and `sliding window`.
 
 **Tumbling windows** are equal-sized, continuous and `non-overlapping` windows. Each record is present in exactly one window.
 
@@ -22,4 +22,4 @@ While there are several types of windows, and Fluvio will eventually implement a
   **Sliding windows** is currently in development.
 :::
 
-["The Dataflow Model"]: https://storage.googleapis.com/pub-tools-public-publication-data/pdf/43864.pdf
+["The Dataflow Model"]: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43864.pdf
