@@ -6,14 +6,16 @@ description: "CLI commands to check your cluster usage status"
 
 Query the CPU and memory usage of your SPUs.
 
-## `fluvio cloud usage`
+## `fluvio cloud cluster usage`
 
 Example usage:
 
-```bash
-$ fluvio cloud usage
- SPU     CPU       Memory
- main-0  1066037n  3168Ki
+```bash copy="fl"
+$ fluvio cloud cluster usage
+Current organization: inf-ops
+Using cluster inf-dashboard based on Fluvio Profile
 
-Note: CPU usage is expressed in nanocores. 1 nanocore is equal to 1 billionth of 1 core.
+ SPU     CPU    Memory 
+ main-0  0.06%  4560Ki 
+
 ```
