@@ -69,8 +69,8 @@ watermark:
   grace-period: 3s
 ```
 
-`watermark.idleness: 60s`: This specifies that if there's no new data for 60 seconds, the window will be closed. This handles late-arriving events
-`watermark.grace-period: 3s`: This allows a 3 second grace period for out-of-order events. If an event arrives within this grace period after the window's end, it will still be included in the window's calculation. This prevents the dropping of slightly late events due to network delays or other factors.
+- `watermark.idleness: 60s`: This specifies that if there's no new data for 60 seconds, the window will be closed. This handles late-arriving events
+- `watermark.grace-period: 3s`: This allows a 3 second grace period for out-of-order events. If an event arrives within this grace period after the window's end, it will still be included in the window's calculation. This prevents the dropping of slightly late events due to network delays or other factors.
 
 #### 3. Assigning a timestamp
 
