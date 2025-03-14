@@ -1,0 +1,85 @@
+---
+title: Scheduling events
+description: Stateful Dataflow schedule configuration.
+sidebar_position: 1100
+---
+
+:::info
+**schedule** requires using `apiVersion: 0.6.0` or higher in your dataflow configuration.
+:::
+
+The `schedule` configuration defines recurring events that can be used as input sources for your services, enabling time-based automation.
+
+
+### Structure:
+
+```yaml
+apiVersion: 0.6.0 # Requires 0.6.0 or higher
+...
+schedule:
+  <event-name>:
+    cron: "<cron-expression>"
+```
+
+### Using Scheduled Events as Service Inputs:
+
+```yaml
+services:
+  <service-name>:
+    sources:
+      - type: schedule
+        id: <event-name>
+```
+
+
+## Schedule configuration fields
+
+- `<event-name>`: (String, required) A unique identifier for the scheduled event. This name is used to reference the event in service configurations.
+- `cron`: (String, required) A cron expression that defines the schedule. The expression follows the standard Unix cron format:
+```
+* * * * *
+- - - - -
+| | | | |
+| | | | +----- day of week (0 - 7) (Sunday=0 or 7)
+| | | +------- month (1 - 12)
+| | +--------- day of month (1 - 31)
+| +----------- hour (0 - 23)
++------------- minute (0 - 59)
+```
+For more details on cron expressions, refer to online cron expression generators and documentation.
+
+## Example:
+
+This dataflow will produce a record to the `output` topic once per day at 8:00 AM
+
+```yaml
+apiVersion: 0.6.0
+meta:
+  name: schedule
+  version: 0.1.0
+  namespace: example
+# default config
+config:
+  converter: json
+  consumer:
+    default_starting_offset:
+      value: 0
+      position: End
+topics:
+  output:
+    name: time-events
+    schema:
+      value:
+        type: i64
+schedule:
+  daily-report:
+    cron: "0 8 * * *" # Trigger at 8:00 AM daily
+services:
+  produce-daily:
+    sources:
+      - type: schedule
+        id: daily-report
+    sinks:
+      - type: topic
+        id: output
+```
