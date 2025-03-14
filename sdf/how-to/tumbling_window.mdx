@@ -1,6 +1,6 @@
 ---
 title: "Tumbling Window"
-description: "Tumbling Window"
+description: "Learn how to use tumbling windows in SDF to aggregate data over fixed time intervals."
 sidebar_position: 1100
 ---
 
@@ -61,14 +61,16 @@ tumbling:
 ```
 The above configuration sets the duration of the window to discrete 15 second blocks.
 
-#### 2. Assigning an idleness time (optional)
+#### 2. Assigning an `idleness` time and `grace-period` (optional)
 
 ```YAML
 watermark: 
   idleness: 60s
+  grace-period: 3s
 ```
 
-With the above configuration, the system will wait for 60 seconds of inactivity (no new data) before closing a window. This allows a 60-second grace period for late-arriving events.
+- `watermark.idleness: 60s`: This specifies that if there's no new data for 60 seconds, the window will be closed. This handles late-arriving events
+- `watermark.grace-period: 3s`: This allows a 3 second grace period for out-of-order events. If an event arrives within this grace period after the window's end, it will still be included in the window's calculation. This prevents the dropping of slightly late events due to network delays or other factors.
 
 #### 3. Assigning a timestamp
 
