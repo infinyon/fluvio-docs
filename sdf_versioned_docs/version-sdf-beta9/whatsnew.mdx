@@ -1,0 +1,43 @@
+---
+title: "What's new"
+description: Changes and updates to SDF
+sidebar_position: 20
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
+
+# Beta 9
+
+## Upgrading 
+
+To upgrade CLI to this version, run the following command:
+
+<CodeBlock language="bash">{InstallFvm}</CodeBlock>
+
+To upgrade local (host) workers, shutdown and restart the worker:
+
+```bash
+$ sdf worker shutdown <host-worker-name>
+$ sdf worker create <host-worker-name>
+```
+
+For upgrading Infinyon Cloud (remote) workers, please contact [InfinyOn support](#infinyon-support).
+
+### CLI changes
+
+- SDF interactive shell not longer exits on ctrl-c
+- Introduced the `--clear-all` and `--clear-state`  options to the dataflow restart command, allowing users to clear the dataflow state before restarting.
+
+### New features
+
+- Added capability to schedule events using CRON format.
+- Added grace period configuration to window watermark, in order to support allowing out of order events.
+
+### Logging and Debugging Enhancements
+
+- Enhanced the sdf log -v command to include record offset and partition information.
+
+## InfinyOn Support
+
+For any questions or issues, please contact InfinyOn support at support@infinyon.com  or https://discordapp.com/invite/bBG2dTz

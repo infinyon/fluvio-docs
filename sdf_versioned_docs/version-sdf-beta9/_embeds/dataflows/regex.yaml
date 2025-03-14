@@ -1,0 +1,41 @@
+# dataflow.yaml
+apiVersion: 0.5.0
+meta:
+  name: regex-example
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: raw
+
+topics:
+  sentences:
+    schema:
+      value:
+        type: string
+  validlink:
+    schema:
+      value:
+        type: string
+
+services:
+  verify-service:
+    sources:
+      - type: topic
+        id: sentences
+
+    transforms:
+      - operator: filter
+        dependencies:
+          - name: regex
+            version: "1"
+        run: |
+          fn verify(input: String) -> Result<bool> {
+            let re = regex::Regex::new(r"^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$")
+                        .unwrap();
+            Ok(re.is_match(&input))
+          }
+
+    sinks:
+      - type: topic
+        id: validlink
