@@ -1,0 +1,100 @@
+---
+sidebar_position: 60
+title: Widgets
+description: "Widgets - User authored UI components for visualizing streams"
+---
+
+# Widgets
+
+Widgets are user-published UI components that can be used to visualize data streams. By utilizing the [web components model], and leveraging [Infinyon Websocket Gateways] widgets make it easy to create custom visualizations for [Fluvio Topics] and _Infinyon Marketplace Subscriptions_, which can be used in the Infinyon Dashboard or on any webpage.
+
+### Examples
+
+Example widget templates can be found in the [Widget Examples Repo] on Github.
+
+### Development
+
+Widgets are just web components with a few specific constraints. To illustrate the constraints, consider the following source code for an example widget:
+
+```js
+class InfinyonLineGraph extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    const wsGatewayUrl = this.getAttribute('ws-gateway-url');
+
+    connectWebSocket(wsGatewayUrl);
+  }
+
+  connectWebSocket(url) {
+    this.ws = new WebSocket(url);
+
+    this.ws.onopen = () => console.log(`Connected to WebSocket: ${url}`);
+    this.ws.onmessage = (event) => console.log('Received:', event.data);
+    this.ws.onerror = (error) => console.error('WebSocket error:', error);
+    this.ws.onclose = () => console.log(`WebSocket closed: ${url}`);
+  }
+}
+
+customElements.define('infinyon-line-graph-0-1-0', InfinyonLineGraph);
+```
+
+Every widget is a web component which expects a `ws-gateway-url` attribute to be set. When instantiated, this widget logs the websocket stream to the developer console.
+
+This web component is a valid widget because all of the following are true:
+
+1. The web component expects to receive a `ws-gateway-url` attribute holding a websocket url for its data source.
+2. The web component has a name of the form `<org>-<name>-<version>`, where `<org>` is the publishing organization, `<name>` is a name unique to the organiation, and `<version>` is a SemVer string, delineated by hyphens instead of periods.
+3. The entry point for the web component is in a file named `start.js`
+
+**Note**: Most javascript bundling tools will generate a directory named `dist/` or `build/` with a top level javascript file named `index.js`, to use your javascript project as a widget, configure your bundler to name your entry point file `start.js`.
+
+### Publishing
+
+Widgets can be published to the Infinyon [Hub] to be used on the **Infinyon Dashboard** or any website. To publish a widget, create a `widget.yaml` in the root of your project.
+
+```yaml
+name: vite-react-template
+organization: infinyon
+version: x.y.z
+visibility: public
+included:
+  - ./dist
+entry_point: ./dist/start.js
+```
+
+This `widget.yaml` contains the same `name`, `organization`, `version` metadata as other packages in the Infinyon Ecosystem.
+
+The `visibility` field can be set to `public` or `private`. When a `private` widget is published, the widget can only be viewed by other members of the same organization.
+
+`included` is a list of directories which will be uploaded with the widget. This should be the root of your distribution assets.
+
+Finally, `entry_point` is a relative path to your widget's top level `js` file. This file should define a web component, and load any other assets that are needed to run the widget.
+
+Once the `widget.yaml` is defined, the widget can be published using the [Fluvio Cloud CLI]
+
+```bash
+$ fluvio cloud widget publish
+```
+
+### Listing
+
+Once your widget is published, you can confirm it is available by running the `list` command:
+
+```bash
+$ fluvio cloud widget list
+ WIDGET                               VISIBILITY  RELEASED       
+ infinyon/datatable@0.0.2             public      5 days ago     
+ infinyon/line-graph@0.0.1            public      5 days ago     
+ infinyon/vite-react-template@0.0.8   public      1 minute ago 
+```
+
+[web components model]: https://developer.mozilla.org/en-US/docs/Web/API/Web_components
+[Infinyon Cloud website]: https://infinyon.cloud/ui/account/studio
+[Infinyon Websocket Gateways]: docs/cloud/demos/ws-gateway.mdx
+[Fluvio Topics]: docs/fluvio/concepts/topics.mdx
+[Hub]: docs/hub/overview.mdx
+[Fluvio Cloud CLI]: docs/cloud/quickstart.mdx
+[Widget Examples Repo]: https://github.com/infinyon/widget-examples
