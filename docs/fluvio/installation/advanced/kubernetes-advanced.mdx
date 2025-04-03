@@ -99,9 +99,7 @@ helm install fluvio-app k8-util/helm/fluvio-app  --values ./k8-util/helm/fluvio-
 fluvio profile add k2 127.0.0.1:30103
 fluvio cluster create spg default
 ```
-
 and so forth.
-
 
 To delete a Fluvio instances, supply namespace as an argument.
 
@@ -111,5 +109,11 @@ $ fluvio cluster delete --k8 --namespace first
 
 You can only a delete `fluvio-sys` chart when you have deleted all the Fluvio instances.
 
+## Resource config with direct CRD specs
+
+Fluvio resources are generally mapped to Kubernetes CRDs. Specific cluster configurations
+can be packaged as a set of kubectl specs and configuration controlled. See samples of configuring in the [Fluvio CRD Samples] in the Fluvio repository.
+
+[Fluvio CRD Samples]: https://github.com/infinyon/fluvio/tree/master/k8-util/samples/crd
 [troubleshooting]: fluvio/troubleshooting.mdx
 [discussions]: https://github.com/infinyon/fluvio/discussions
