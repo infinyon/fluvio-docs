@@ -47,8 +47,8 @@ lint: build
 
 
 resync-ver:
-	rm -rf versioned_docs/version-0.16.1
-	rsync -aurv docs/ versioned_docs/version-0.16.1
+	rm -rf versioned_docs/version-0.17.0
+	rsync -aurv docs/ versioned_docs/version-0.17.0
 
 sync-ver:
-	rsync -aurv docs/ versioned_docs/version-0.16.1
+	rsync -aurv docs/ versioned_docs/version-0.17.0

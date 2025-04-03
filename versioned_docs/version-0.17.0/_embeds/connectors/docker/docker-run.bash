@@ -1,0 +1,1 @@
+$ docker run --network host --rm my-org/http-source:0.3.8
