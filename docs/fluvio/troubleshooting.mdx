@@ -62,7 +62,41 @@ if you are having issues with the producer, like the error `record size (3570720
 fluvio produce hello-node --max-request-size 37748736
 ```
 
+# Fluvio Client Disconnects
+
+If you frequently experience Fluvio client disconnects or reconnects for either
+the producer, consumer, or both, you may see error messages like:
+
+- `Error: the produce request retry timeout limit reached`
+- `Error: Reconnecting to stream consumer`
+
+These issues often stem from network reliability or insufficient async task
+scheduling time.
+
+### Troubleshooting Steps
+
+1. **Check Network Connectivity**:
+   - Review network logs to ensure a stable connection to the Fluvio cluster.
+
+2. **Verify CPU Allocation**:
+   - Ensure sufficient CPUs are allocated to the application and the async
+   runtime. Running all async tasks on a single CPU can starve the Fluvio
+   client, causing timeouts and reconnections.
+
+3. **Inspect Async Runtime Configuration**:
+   - If using the Tokio crate, ensure the `full` or `rt-multi-thread` feature is
+   enabled in your `Cargo.toml`:
+     ```toml
+     [dependencies]
+     tokio = { version = "1.0", features = ["full"] }
+     ```
+
+For more details on handling CPU-bound tasks, refer to the Tokio documentation
+on [CPU bound tasks].
+
+
 [`fluvio cluster upgrade`]: cli/fluvio/cluster.mdx#fluvio-cluster-upgrade
 [filtering tracing log]: https://docs.rs/tracing-subscriber/latest/tracing_subscriber/filter/struct.EnvFilter.html
 [Discord]: https://discord.com/invite/bBG2dTz
+[CPU bound tasks]: https://docs.rs/tokio/latest/tokio/#cpu-bound-tasks-and-blocking-code
 
