@@ -1,0 +1,97 @@
+---
+sidebar_position: 20
+title: Docker 
+description: "Run a Connector on Docker"
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import Dockerfile from '!!raw-loader!../../_embeds/connectors/docker/Dockerfile';
+import ConnectorYaml from '!!raw-loader!../../_embeds/connectors/docker/connector.yaml';
+import DockerBuild from '!!raw-loader!../../_embeds/connectors/docker/docker-build.bash';
+import DockerRun from '!!raw-loader!../../_embeds/connectors/docker/docker-run.bash';
+
+# Run Connectors on Docker
+
+This document will guide you through downloading an running a fluvio connector on Docker. The files below are also [in github].
+
+# Prerequisites
+
+The Docker container requires a Fluvio profile and a connector configuration file. The profile passes the credentials to the connector. The configuration file specifies the connector properties.
+
+
+## 1. Create a Dockerfile
+
+Open and editor and create a new file named `Dockerfile` with the following content:
+
+<CodeBlock language="bash">{Dockerfile}</CodeBlock>
+
+The Dockerfile performs the following operations:
+* installs the Fluvio CLI
+* copies the profile to the container
+* downloads `http-source` connector from InfinyOn Hub. 
+* runs the connector
+
+To run a different connector, perform the following steps:
+* run `fluvio hub connector list` to list the available connectors
+* change `infinyon/http-source@0.3.8` and `infinyon-http-source-0.3.8.ipkg` with your connector equivalent.
+* change the executable command `http-source` to connector equivalent.
+
+
+## 2. Export Fluvio profile
+
+The connector requires a Fluvio profile to authenticate with the cluster. If you use multiple profiles it is important to choose the profile for your target cluster before you export. 
+
+List the available profiles:
+
+```bash copy="fl"
+$ fluvio profile list
+```
+
+Export the active profile to a file named `fluvio_profile.toml`.
+
+```bash copy="fl"
+$ fluvio profile export > fluvio_profile.toml
+```
+
+:::tip
+If you don't have a fluvio profile, [install fluvio] and create a cluster. The profile will be created automatically.
+::: 
+
+
+## 2. Create a Connector Configuration File
+
+The following configuration file allows you to run the`http-source` connector to read a new quote `quote` from the `demo-data` server every 2 seconds. Copy the following configuration to a file named `connector.yaml`:
+
+<CodeBlock language="yaml">{ConnectorYaml}</CodeBlock>
+
+If you run a differenet connector, change the configuration to match the connector.
+
+
+## 3. Build  & Run the Docker Image
+
+Build your Docker image using the following command:
+
+<CodeBlock language="bash" copyBehavior="fl">{DockerBuild}</CodeBlock>
+
+Where `my-org` is your organization/domain name.
+
+Run the image:
+
+<CodeBlock language="bash" copyBehavior="fl">{DockerRun}</CodeBlock>
+
+
+## 4. Check the Result
+
+The connector will start producing quotes to the `quotes` topic.
+
+Open a new terminal and run the following command to view the messages:
+
+```bash copy="fl"
+$ fluvio consume quotes
+```
+
+A new quote is generated every 2 seconds.
+
+
+[in github]: https://github.com/infinyon/fluvio/tree/master/connector/docker
+[install fluvio]: /docs/fluvio/quickstart#install-fluvio
