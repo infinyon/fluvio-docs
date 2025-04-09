@@ -51,6 +51,23 @@ $ RUST_LOG=info fluvio run sc --local
 
 The log level can be set to `trace`, `debug`, `info`, `warn`, `error`.
 
+##  SPU Server Port Conflict  
+By default, the SPU server uses port 9010. If this port is already in use, the server will fail to start and report the following error:
+
+```bash
+Error binding TcpListener: Address already in use
+```
+To verify the issue, check the SPU logs using the command: 
+Run `cat ~/.fluvio/log/spu_log_5001.log` for spu with id `5001`
+
+### Solution: Use an Alternative Port
+
+To resolve the port conflict, first stop any currently running SPU if necessary. Next, start the Fluvio cluster using the `--spu=0` flag to prevent automatic SPU provisioning. Then, launch the SPU manually with your preferred port numbers. Finally, register the SPU server so it can be recognized by the cluster.
+
+
+1. `fluvio cluster start --spu=0`
+2. `fluvio run spu -i 5001 -p 0.0.0.0:9020 -v 0.0.0.0:9021 --log-base-dir ~/.fluvio/data > ~/.fluvio/log/spu_log_5001.log 2>&1 &` 
+3. `fluvio cluster spu register  --id 5001 --public-server localhost:9020 --private-server localhost:9021`  
 
 ## Producer
 
