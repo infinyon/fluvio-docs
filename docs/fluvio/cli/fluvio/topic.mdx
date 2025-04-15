@@ -126,22 +126,74 @@ $ fluvio topic list
 
 ## `fluvio topic describe`
 
-This command prints more detailed information about a specific topic.
+This command prints more detailed information about a specific topic. The table contains partition information. `-s` is used to show system topics.
 
 **Example usage**
 
 
 ```bash copy="fl"
-$ fluvio topic describe greeting
- Name                    :  greeting
- Type                    :  computed
- Partition Count         :  1
- Replication Factor      :  1
- Ignore Rack Assignment  :  false
- Status                  :  provisioned
- Reason                  :
- -----------------
+$ fluvio topic describe kv-topic
+   Name:kv-topic                
+   Type:computed                
+   Partition Count:3            
+   Replication Factor:1         
+   Ignore Rack Assignment:false 
+   Status:provisioned           
+   Reason:                      
+   -----------------            
+  TOPIC     PARTITION  LEADER  MIRROR  REPLICAS  RESOLUTION  SIZE   BASE  HW  LEO  LRS  FOLLOWER OFFSETS     
+  kv-topic  0          5001            []        Online      532 B  0     4   4    4    0                 [] 
+  kv-topic  1          5001            []        Online      0 B    0     0   0    0    0                 [] 
+  kv-topic  2          5001            []        Online      507 B  0     5   5    5    0                 [] 
+
 ```
+**Example system topic**
+
+```bash copy="fl"
+$ fluvio topic describe kv-topic
+   Name:consumer-offset         
+   Type:computed                
+   Partition Count:1            
+   Replication Factor:1         
+   Ignore Rack Assignment:false 
+   Status:provisioned           
+   Reason:                      
+   -----------------            
+  TOPIC            PARTITION  LEADER  MIRROR  REPLICAS  RESOLUTION  SIZE  BASE  HW  LEO  LRS  FOLLOWER OFFSETS     
+  consumer-offset  0          5001            []        Online      0 B   0     0   0    0    0                 [] 
+
+```
+
+Following is the brief description of the columns.
+
+### Partition Details 
+
+| Column | Description |
+| --- | --- |
+| **TOPIC** | The name of the topic to which this partition belongs. Each topic can have multiple partitions. |
+| **PARTITION** | The numerical ID or index of the partition within its topic (usually starting from 0). |
+| **LEADER** | The ID of the SPU (Streaming Processing Unit) that serves as the leader for this partition. The leader handles all read and write operations for the partition. |
+| **MIRROR** | Indicates if this partition is mirroring data from another cluster. Shows source cluster information when mirroring is active. |
+| **REPLICAS** | List of SPU IDs that maintain copies of this partition's data. Includes both the leader and follower SPUs. |
+| **RESOLUTION** | The status of the partition synchronization. Values can include "Online" (fully functional), "Offline", or other states indicating issues. |
+
+
+### Offset Details
+
+| Column | Description |
+| --- | --- |
+| **SIZE** | The total size of the log data stored in this partition, typically shown in bytes or with appropriate unit (KB, MB, etc.). |
+| **BASE** | The offset of the oldest available record in the partition. Also called the "low watermark". |
+| **HW** (High Watermark) | The offset up to which all replicas have successfully replicated data. Represents the last confirmed offset. |
+| **LEO** (Log End Offset) | The offset of the last record written to the leader's log. This is the next offset where a new record would be appended. |
+| **LRS** (Last Stable Offset) | The latest offset that is considered stable and safe across potential leader changes. |
+| **FOLLOWER OFFSETS** | The current replication position for each follower SPU, showing how far behind they might be from the leader. |
+
+
+More information about the columns HW, LEO, and LRS can be found in the details regarding the [Synchronization Algorithm].
+
+
+[Synchronization Algorithm]: fluvio/concepts/architecture/replica-election.mdx#synchronization-algorithm
 
 ---
 
