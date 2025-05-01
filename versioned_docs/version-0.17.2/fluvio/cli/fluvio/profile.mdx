@@ -1,0 +1,148 @@
+---
+sidebar_position: 70
+title: "profile"
+description: "Manage Cluster Connection Details using Fluvio CLI"
+---
+
+# The `fluvio profile` command
+
+A Fluvio profile contains the a reference to cluster's connection details.
+
+Profile details are stored in the Fluvio configuration file at `~/.fluvio/config`.
+
+### `fluvio profile current`
+
+Prints out the name of the active Fluvio profile.
+
+```bash
+Print the name of the current context
+
+Usage: fluvio profile current
+
+Options:
+  -h, --help  Print help
+```
+
+**Example usage**
+
+
+```bash copy="fl"
+$ fluvio profile current
+local
+```
+
+### `fluvio profile delete`
+
+Deletes the specified Fluvio cluster connection profile from your Fluvio configuration (`~/.fluvio/config`).
+
+This will not delete a cluster. See [`fluvio cluster delete`] for more info.
+
+### `fluvio profile delete-cluster`
+
+Deletes only cluster connection information from your profile.
+
+This will not delete a cluster. See [`fluvio cluster delete`] for more info.
+
+**Example usage**
+
+
+```bash copy="fl"
+$ fluvio profile delete-cluster local
+Cluster local deleted
+```
+
+### `fluvio profile list`
+
+Prints a table of your profiles, including the address of the associated
+cluster and which profile is active.
+
+**Example usage**
+
+
+```bash copy="fl"
+$ fluvio profile list
+    PROFILE    CLUSTER    ADDRESS                          TLS
+ *  minikube   minikube   10.99.16.213:9003                Disabled
+    local      local      localhost:9003                   Disabled
+```
+
+### `fluvio profile rename`
+
+```bash
+Rename a profile
+
+Usage: fluvio profile rename <FROM> <TO>
+
+Arguments:
+  <FROM>  The name of the profile to rename
+  <TO>    The new name to give the profile
+
+Options:
+  -h, --help  Print help
+```
+
+### `fluvio profile switch`
+
+```bash
+Switch to the named profile
+
+Usage: fluvio profile switch <profile name>
+
+Arguments:
+  <profile name>
+
+Options:
+  -h, --help  Print help
+```
+
+### `fluvio profile sync`
+
+```bash
+Sync a profile from a cluster
+
+fluvio profile sync <COMMAND>
+
+Commands:
+  k8     Sync a profile from a Kubernetes cluster
+  local  Sync a profile from a local cluster
+
+Options:
+  -h, --help  Print help
+```
+
+### `fluvio profile export`
+
+```bash
+Export a profile for use in other applications.
+
+Usage: fluvio profile export [OPTIONS] [PROFILE_NAME]
+
+Arguments:
+  [PROFILE_NAME]
+
+Options:
+  -O, --output <type>  [default: json] [possible values: toml, yaml, json]
+  -h, --help           Print help
+```
+
+By default a fluvio config in toml format is exported which can be used by setting environment variable FLV_PROFILE_PATH
+to the exported file for configuration in environments like CI workflows or Docker containers.
+
+### `fluvio profile add`
+
+```bash
+Manually add a profile (advanced)
+
+Usage: fluvio profile add <PROFILE_NAME> <CLUSTER_ADDRESS> [INSTALLATION_TYPE]
+
+Arguments:
+  <PROFILE_NAME>       Name of profile to add
+  <CLUSTER_ADDRESS>    address of cluster, e.g. 127.0.0.1:9003
+  [INSTALLATION_TYPE]  Installation type of cluster, e.g. local, local-k8, k8
+
+Options:
+  -h, --help  Print help
+```
+
+
+[`fluvio cluster delete`]: fluvio/cli/fluvio/cluster.mdx#fluvio-cluster-delete
