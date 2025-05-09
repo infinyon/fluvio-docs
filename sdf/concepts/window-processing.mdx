@@ -4,7 +4,8 @@ description: Stateful Dataflows Window Processing
 sidebar_position: 100
 ---
 
-Window processing addresses a well-defined stream processing problem described in depth by the ["The Dataflow Model"] whitepaper. A window operation turns data streaming records into a group of finite records, also known as bounded context, defined by the window size and computed by a watermark operation. SDF performs a window processing operation by chaining multiple operators to assign timestamps, group them by key, and apply custom operations.
+Window processing, a fundamental concept in stream processing extensively detailed in the ["The Dataflow Model"] whitepaper, addresses the challenge of analyzing unbounded data streams by partitioning them into finite sets of records known as windows or bounded contexts. A window operation is characterized by its window size, defining the temporal or count-based boundaries of each window, and is typically governed by a watermark mechanism to manage event-time progression and late-arriving data. SDF performs a window processing operation by chaining multiple operators to assign timestamps, group them by key, and apply custom operations.
+
 
 While there are several types of windows, and SDF will eventually implement all of them, this preview will focus on two: `tumbling window` and `sliding window`.
 
@@ -190,7 +191,7 @@ When a window instance for a given key closes, the aggregate_wordcount function 
 
 These components—window type definition, timestamp assignment, optional watermarking rules, pre-partitioning transformations, data partitioning, state updates per key, and the flushing logic—provide a comprehensive and flexible framework for stateful stream processing over bounded windows of data in SDF.
 
-As an actual example running example, take a look at the [How-To example of tumbling windows].
+As a running example, take a look at the [How-To example of tumbling windows].
 
 
 ["The Dataflow Model"]: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43864.pdf
