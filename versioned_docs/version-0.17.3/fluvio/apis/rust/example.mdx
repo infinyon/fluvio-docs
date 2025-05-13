@@ -1,0 +1,375 @@
+---
+title: Examples
+sidebar_position: 20
+---
+import CodeBlock from '@theme/CodeBlock';
+import ExampleToml from '!!raw-loader!../../../_embeds/apis/rust/_example-cargo.toml';
+import CreateListTopics from '!!raw-loader!../../../_embeds/apis/rust/create-list-topics.rs';
+import ProducerSimple from '!!raw-loader!../../../_embeds/apis/rust/producer-simple.rs';
+import ProducerKV from '!!raw-loader!../../../_embeds/apis/rust/producer-kv.rs';
+import ProducerPerformance from '!!raw-loader!../../../_embeds/apis/rust/producer-performance.rs';
+import ConsumerSimple from '!!raw-loader!../../../_embeds/apis/rust/consumer-simple.rs';
+import ConsumerWasmFile from '!!raw-loader!../../../_embeds/apis/rust/consumer-wasm-file.rs';
+import ConsumerWasmName from '!!raw-loader!../../../_embeds/apis/rust/consumer-wasm-name.rs';
+import ConsumerAutoOffset from '!!raw-loader!../../../_embeds/apis/rust/consumer-auto-offsets.rs';
+import ConsumerManualOffset from '!!raw-loader!../../../_embeds/apis/rust/consumer-manual-offsets.rs';
+
+
+# Rust SDK Examples
+
+* The Rust client is the core client for all language clients.
+  * New features arrive in the Rust client before any of the other clients
+* Full support for the [Admin API](https://docs.rs/fluvio/latest/fluvio/struct.FluvioAdmin.html) to manage cluster components.
+* This client uses [async Rust](https://rust-lang.github.io/async-book/) for communication with the Fluvio cluster.
+
+Refer to the [fluvio API docs.rs page] for full detail.
+
+
+#### Prerequisites
+
+Follow the [installation instructions] to run this example. 
+
+Let's get started.
+
+
+## Create a Rust Project
+
+Create a new Rust project, and import the dependencies we'll use in the examples.
+
+```shell
+$ mkdir fluvio-rust-example && cd fluvio-rust-example && cargo init
+```
+
+Add the following dependencies to your `Cargo.toml` file:
+
+<CodeBlock language="toml">{ExampleToml}</CodeBlock>
+
+Let's build the project to ensure dependencies are installed correctly:
+
+```shell copy="fl"
+$ cargo build
+```
+
+We are ready to add some code.
+
+
+## Manage Topics
+
+Fluvio has an admin interface that manages fluvio resources such as topics.
+
+### Create and List Topics
+
+In this examples we'll create a topic called `hello-rust` and list all topics.
+
+In your `main.rs` file, add the following code:
+
+<CodeBlock language="rust">{CreateListTopics}</CodeBlock>
+
+#### Run the example
+
+```shell copy="fl"
+$ cargo run
+```
+
+You can also use fluvio cli to double check:
+
+```shell copy="fl"
+$ fluvio topic list
+```
+
+Checkout the documentation for examples on how to [delete a topic].
+
+## Produce
+
+Fluvio uses a producer API to send records to a topic.
+
+
+### Produce Records
+
+The producer API has many configuration parameters. Let's start with a simple example, where we produce one record with a timestamp.
+
+Replace the content in the `main.rs` file with the following code:
+
+<CodeBlock language="rust">{ProducerSimple}</CodeBlock>
+
+#### Run the example
+
+```shell copy="fl"
+$ cargo run
+```
+
+You can also use fluvio cli to double check:
+
+```shell copy="fl"
+$ fluvio consume hello-rust -T=1 -d
+```
+
+The flags are `-T` to specify the number of messages to produce and `-d` to to disable continuous consumption.
+
+
+### Produce Key/Value Records
+
+Producer API may send records with a key and value.
+
+Replace the content in the `main.rs` file with the following code:
+
+<CodeBlock language="rust">{ProducerKV}</CodeBlock>
+
+#### Run the example
+
+```shell copy="fl"
+$ cargo run
+```
+
+Let's use fluvio cli to check the result:
+
+```shell copy="fl"
+$ fluvio consume hello-rust -k -d -T=1
+```
+
+The `-k` or `--key-value` parameter ask the CLI to display the key and value of the record.
+
+### Tune Producer Performance
+
+Producer performance is affected by your network bandwidth and the average packets size. You can tune the performane by chaning the following configuration options:
+
+    * `batch_size` - default: **16Mb**
+    * `linger` - default: **0 milliseconds**
+    * `compression` - default: **none**
+
+In in the following example, we set the `linger` to 500 milliseconds and the `batch_size` to 500 bytes, and compression to `Gzip`. Let's create a `TopicProducerConfigBuilder ` object and set the configuration options.
+
+Replace the content in the `main.rs` file with the following code:
+
+<CodeBlock language="rust">{ProducerPerformance}</CodeBlock>
+
+#### Run the example
+
+```shell copy="fl"
+$ cargo run
+```
+
+While it's difficult to see the outcomme for applying these parameters without a performance test and encoding/decoding is performed before an after writing to disk, we can see that the records have been sent to the topic:
+
+```shell copy="fl"
+$ fluvio consume hello-rust -d -T=10
+```
+
+
+## Consume
+
+Fluvio uses a consumer API to retrieve records from a topic.
+
+
+### Consume Records
+
+Let's start with a simple example, where we consume the last record from a topic.
+
+Update the `main.rs` file with the following code:
+
+<CodeBlock language="rust">{ConsumerSimple}</CodeBlock>
+
+#### Run the example
+
+```shell copy="fl"
+$ cargo run
+```
+
+For example [fluvio::Offset] is set to read 1 record from th end. However, the offset allows you to read records from the beginining, from the end, or from a specific offset value.
+
+### Consume with SmartModules
+
+Fluvio can apply custom SmartModules to transform the data as it is consumed. The SmartModule tranformations are applied before the record is sent to the consumer.
+
+The consumer API allows you to load a [local WASM file](#loal-smartmodule-wasm-file) or reference a SmartModule that has been [uploaded to the cluster](#use-smartmodules-from-fluvio-cluster). 
+
+#### Loal SmartModule WASM File
+
+In general, you would use [Smartmodule Development Kit (smdk)] to develop a smartmodule, compile it to WebAssembly and load it into the consumer code.
+
+In this example, we will use a [pre-compiled SmartModule](https://github.com/infinyon/fluvio/tree/main/examples/smartmodule/wasm/hello-world) that simply prints the record key and value to the console.
+
+
+```bash
+git clone https://github.com/fluvio-community/smartmodules
+cd smartmodules/regex-text
+smdk build
+cd ../..
+cp smartmodules/regex-text/target/wasm32-wasip1/release-lto/regex_text.wasm .
+```
+
+Update the `main.rs` file with the following code:
+
+<CodeBlock language="rust">{ConsumerWasmFile}</CodeBlock>
+
+This smartmodule, uses regex, to replace `secret` with `****`.
+
+#### Run the example
+
+```shell copy="fl"
+$ cargo run
+```
+
+Produce a record:
+
+```shell copy="fl"
+$ echo "this is a secret value" | fluvio produce hello-rust
+```
+
+As you can see, the "secret" has been replaced.
+
+
+#### Use SmartModules from Fluvio Cluster
+
+In this example, we'll use a SmartModule developed by someone else and available for download to the cluster from the [InfinyOn Hub].
+
+Update the `main.rs` file with the following code:
+
+<CodeBlock language="rust">{ConsumerWasmName}</CodeBlock>
+
+The code performs a similar regex replace as the previous example, but uses a SmartModule that has been uploaded to the cluster.
+
+#### Run the example
+
+Download the Smartmodule from the [InfinyOn Hub]:
+
+```shell copy="fl"
+$ fluvio hub smartmodule download fluvio/regex-text@0.1.0
+```
+
+Compile and run:
+
+```shell copy="fl"
+$ cargo run
+```
+
+Produce a record:
+
+```shell copy="fl"
+$ echo "this is a secret value" | fluvio produce hello-rust
+```
+
+As you can see, the "secret" has been replaced.
+
+
+### Consume with Managed Offsets
+
+Fluvio automatically manages consumer offsets for you, eliminating the need to track the last record you've consumed. This ensures that when your client resumes, it seamlessly continues consuming from where it left off.
+
+Fluvio provides two offset management strategies: [automatic commits](#offset-management-with-automatic-commits), where offsets are managed seamlessly by the system, and [manual commits](#offset-management-with-manual-commits), giving you full control over when offsets are updated.
+
+
+#### Offset Management with Automatic Commits
+
+In this example, we'll create a consumer that commits offsets automatically. Checkout the [consumer_with_config] for more details.
+
+Update the `main.rs` file with the following code:
+
+<CodeBlock language="rust">{ConsumerAutoOffset}</CodeBlock>
+
+The code creates a consumer that automatically commits offsets.
+
+#### Run the example
+
+```shell copy="fl"
+$ cargo run
+```
+
+Produce the following records:
+
+```shell
+$ fluvio produce hello-rust <<EOF       
+Message 1
+Message 2
+Message 3
+EOF
+```
+
+List the consumers:
+
+```shell copy="fl"
+$ fluvio consumer list
+```
+
+You'll notice the system created a `consumer-auto` consumer to capture the last offset.
+
+Use `<Ctrl-C>` to stop the consumer, and produce a few more records:
+
+```shell
+$ fluvio produce hello-rust <<EOF       
+Message 4
+Message 5
+Message 6
+EOF
+```
+
+Resume the script and notice that the consumer resumes from where it left off.
+
+
+#### Offset Management with Manual Commits
+
+In this example, we'll create a consumer that manually commits offsets. 
+
+Update the `main.rs` file with the following code:
+
+<CodeBlock language="rust">{ConsumerManualOffset}</CodeBlock>
+
+The code calls `commit` and `flush` during every iteration of the loop. You may change this interval based on your business logic.
+
+#### Run the example
+
+```shell copy="fl"
+$ cargo run
+```
+
+Produce the following records:
+
+```shell
+$ fluvio produce hello-rust <<EOF       
+Message 1
+Message 2
+Message 3
+EOF
+```
+
+List the consumers:
+
+```shell copy="fl"
+$ fluvio consumer list
+```
+
+You'll notice the system created a `consumer-auto` consumer to capture the last offset.
+
+Use `<Ctrl-C>` to stop the consumer, and produce a few more records:
+
+```shell
+$ fluvio produce hello-rust <<EOF       
+Message 4
+Message 5
+Message 6
+EOF
+```
+
+Resume the script and notice that the consumer resumes from where it left off.
+
+
+## Links to Docs
+
+Refer to the [fluvio docs.rs page] for full detail. The following are some of the most important links:
+
+* [Connect to Fluvio](https://docs.rs/fluvio/0.12.12/fluvio/struct.Fluvio.html#method.connect)
+* [Create a Producer](https://docs.rs/fluvio/latest/fluvio/struct.Fluvio.html#method.topic_producer)
+* [Send to Topic](https://docs.rs/fluvio/latest/fluvio/struct.TopicProducer.html#method.send)
+* [Create a Consumer](https://docs.rs/fluvio/latest/fluvio/struct.Fluvio.html#method.partition_consumer)
+* [Create a Stream](https://docs.rs/fluvio/latest/fluvio/consumer/struct.PartitionConsumer.html#method.stream)
+
+[Admin Api]: https://docs.rs/fluvio/latest/fluvio/struct.FluvioAdmin.html
+[async rust]: https://rust-lang.github.io/async-book/
+[fluvio API docs.rs page]: https://docs.rs/fluvio/
+[installation instructions]: ../rust/installation
+[delete a topic]: https://docs.rs/fluvio/latest/fluvio/struct.FluvioAdmin.html#method.delete
+[review in fluvio project docs]: https://docs.rs/fluvio/latest/fluvio/struct.Fluvio.html#method.topic_producer_with_config
+[consumer_with_config]: https://docs.rs/fluvio/latest/fluvio/struct.Fluvio.html#method.consumer_with_config
+[fluvio::Offset]: https://docs.rs/fluvio/latest/fluvio/struct.Offset.html
+[Smartmodule Development Kit (smdk)]: smartmodules/developers/overview.mdx
+[InfinyOn Hub]: https://infinyon.cloud/ui/hub
