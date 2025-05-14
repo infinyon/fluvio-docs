@@ -21,7 +21,7 @@ jobs:
       - name: create sdf version
         run: npm run docusaurus docs:version:sdf $SDF_VERSION
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           add-paths: |
             sdf_versioned_docs
