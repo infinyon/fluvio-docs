@@ -126,7 +126,7 @@ Watermarks are a fundamental concept in stream processing, representing the poin
 The watermark configuration is nested within the window block.
 
 - `grace-period`: The grace-period (also known as allowed lateness) defines an additional amount of time after a window's end time (as determined by the watermark) during which late-arriving records are still accepted and processed for that window. Records whose timestamps fall within the window's original range but arrive after the watermark has passed the window's end (but before the grace period expires) can still be included.
-- `idleness`: The idleness configuration helps in scenarios where there are not new events for an extended period of time. If the service is idle for the specified duration (i.e., no new messages arrive), SDF can advance the watermark and therefore closing a window, preventing the overall system watermark from being stalled.
+- `idleness`: The idleness configuration helps in scenarios where there are not new events for an extended period of time. If the service is idle for the specified duration (i.e., no new messages arrive), SDF can advance the watermark and therefore closing a window, preventing the overall system watermark from being stalled. it's generally recommended that the idleness timeout is larger than the duration of the window to avoid premature window closure.
 
 #### Example:
 
@@ -136,7 +136,7 @@ The watermark configuration is nested within the window block.
       tumbling:
         duration: 10s
       watermark:
-        idleness: 12s # Consider a partition idle after 10s of no data
+        idleness: 12s # Consider a partition idle after 12s of no data
         grace-period: 3s # Allow data to be 3s late for this window
 ```
 
