@@ -7,7 +7,7 @@ sidebar_position: 20
 import CodeBlock from '@theme/CodeBlock';
 import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
 
-# Beta 9
+# Beta 10
 
 ## Upgrading 
 
@@ -24,19 +24,19 @@ $ sdf worker create <host-worker-name>
 
 For upgrading Infinyon Cloud (remote) workers, please contact [InfinyOn support](#infinyon-support).
 
-### CLI changes
 
-- SDF interactive shell not longer exits on ctrl-c
-- Introduced the `--clear-all` and `--clear-state`  options to the dataflow restart command, allowing users to clear the dataflow state before restarting.
+### Improvements
 
-### New features
+- Improve error output for some of the yaml parsing errors.
+- Do not require `type-name` in list type
+- Avoid generating invalid WIT names
+- Use dev runtime by default on `sdf test`
+- Add validation to check if pkg namespace/name conflicts with df
+- Improve State recovery on window services on restart
 
-- Added capability to schedule events using CRON format.
-- Added grace period configuration to window watermark, in order to support allowing out of order events.
+### Changes
 
-### Logging and Debugging Enhancements
-
-- Enhanced the sdf log -v command to include record offset and partition information.
+- Make types respect casing defined on yaml for deserialization and serialization when using `apiVersion: 0.6.0`
 
 ## InfinyOn Support
 
