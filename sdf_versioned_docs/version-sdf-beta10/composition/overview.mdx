@@ -1,0 +1,182 @@
+---
+title: Overview
+description: Stateful Dataflows Composition.
+sidebar_position: 10
+---
+
+**Composable Dataflows** allow you to create individual [package](#packages) and import them to create [dataflows](#the-dataflow). They are a great way to organize and reuse your code in large dataflows. For simple dataflows, we recommend using [Inline Dataflows].
+
+<img src="/img/sdf/packages-dataflows.png" alt="Composition Diagram"
+  style={{ display: 'block', margin: '0 auto' }} width="600" />
+
+
+## Directory Structure
+
+Dataflow and packages require a definition file for code generation and composition:
+
+* [sdf-package.yaml](#sdf-packageyaml) -  code generation definitions
+* [dataflow.yaml](#dataflowyaml) - composition definitions
+
+Consequently, each dataflow and package must have its dedicated directory.
+
+For example, a dataflow named `split-sentence` and a package `sentence`:
+
+```bash
+split-sentence
+├── dataflow.yaml
+└── packages
+    ├── sentence
+    │   └── sdf-package.yaml
+```
+
+While placing the packages inside a dataflow is not strictly necessary, it often makes sense.
+
+
+## Packages
+
+**Packages** are dataflow building blocks of one or more types, states, and functions. You can structure all the components in one package or divide them by responsibility across multiple packages. The packages also allow hierarchical imports, where a package can use other packages' types, states, or functions.
+
+
+#### `sdf-package.yaml`
+
+The [SDF] command line tool uses the stateful dataflows package definition file `sdf-package.yaml` to generate the code and state and type definitions for the package. The package file has the following hierarchy:
+
+```yaml name="sdf-package.yaml"
+apiVersion: <version>
+
+meta:
+  name: <package-name>
+  version: <package-version>
+  namespace: <package-namespace>
+
+imports:
+  - pkg: <package-namespace>/<package-name>@<package-version>
+    types:
+      - name: <type-name>
+    functions:
+      - name: <function-name>
+    states:
+      - name: <state-name>
+
+types:
+  <type-name>: <type-props>
+
+states:
+  <state-name>: <state-props>
+
+functions:
+  <function-name>:
+    operator: <operator-type>
+    states:
+      - name: <state-name>
+    inputs:
+      - name: <input-name>
+        type: <input-type>
+    output:
+      type: <output-type>
+      optional: <boolean, default to false>
+
+dev:
+  converter: <converter-props>
+  imports:
+    - pkg:  <package-namespace>/<package-name>@<package-version>
+      path: <relative-path>
+
+```
+
+The sections are as follows:
+* `meta` - metadata about the package
+* `imports` - imports other packages' types, states, functions
+* `types` - defines types used in the package
+* `states` - defines states used in functions
+* `functions` - defines functions in the package
+* `dev` - defines substitutions used during development and test
+
+## The Dataflow
+
+The **dataflow** imports functions, types, and states from one more package. Packages may also import components from others; however, dataflow maintains the final composition.
+
+#### `dataflow.yaml`
+
+The [SDF] command line tool uses the dataflow definition file `dataflow.yaml` to assemble the data application, and it has the following hierarchy:
+
+```yaml name="dataflow.yaml"
+apiVersion: <version>
+
+meta:
+  name: <dataflow-name>
+  version: <dataflow-version>
+  namespace: <dataflow-namespace>
+
+imports:
+  - pkg: <package-namespace>/<package-name>@<package-version>
+    types:
+      - name: <type-name>
+    functions:
+      - name: <function-name>
+    states:
+      - name: <state-name>
+
+config:
+  converter: <converter-props>
+  consumer: <consumer-props>
+
+types:
+  <type-name>: <type-props>
+
+topics:
+  <topic-name>: <topic-props>
+
+services:
+  <service-name>:
+    sources:
+      -type: <source-props>
+
+    states:
+      <state-name>: <state-props>
+
+    transforms:
+      - operator: <operator-type>
+        uses: <imported-function-name>
+
+    sinks:
+      - type: <sink-props>
+
+dev:
+  converter: <converter>
+  imports:
+    - pkg:  <package-namespace>/<package-name>@<package-version>
+      path: <relative-path>
+```
+
+The sections are as follows:
+* `meta` - metadata about the package
+* `imports` - imports other packages' types, states, functions
+* `config` - short for configurations, holds the default configurations.
+* `types` - defines types used in the package
+* `topics` - defines topics used in the package
+* `states` - defines states used in functions
+* `services` - defines the service properties
+  * `sources` - defines the source topics used in the service
+  * `states` - defines the state properties used in the service
+  * `transforms` - defines the list of operators and the imported functions used in the service
+  * `sinks` - defines the sink topics used in the service
+* `dev` - defines substitutions used during development and test
+
+The dataflow file has other variants such as `window` and `partitions`, which are omitted for simplicity. For additional details check the [Dataflow file] section.
+
+# Getting started
+
+See [next section] for a quickstart.
+
+
+### References
+
+* [Example Workflows in github]
+
+[next section]: quickstart.mdx
+[Inline Dataflows]: sdf/quickstart.mdx
+[Dataflow file]: sdf/concepts/dataflow-yaml.mdx
+[SDF]: sdf/cli/index.mdx
+[github]: https://github.com/infinyon/stateful-dataflows-examples/tree/main/dataflows-composed/split-sentence
+[Example Workflows in github]: https://github.com/infinyon/stateful-dataflows-examples

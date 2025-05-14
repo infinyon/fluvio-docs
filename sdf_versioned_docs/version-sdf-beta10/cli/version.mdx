@@ -1,0 +1,35 @@
+---
+description: SDF Version Command
+sidebar_position: 100
+---
+
+# `sdf version`
+
+The `sdf version` prints information about the binary like the version, architecture and the SHA256. 
+
+### `sdf version` command
+
+The `setup` command has the following hierarchy:
+
+```bash copy="fl"
+$ sdf version -h
+Prints binary version
+
+Usage: sdf version
+
+Options:
+  -h, --help  Print help
+```
+
+#### Examples
+
+##### sdf version
+
+```bash copy="fl"
+$ sdf version
+ SDF        : sdf-beta1                                                        
+ SDF Arch   : aarch64-apple-darwin                                             
+ SDF SHA256 : de967a59556cda82042978a7a0891b525b3a0632503445c9173a2af3ee96e345 
+ Git Commit : c2c64841547815908e5c2037eddf909f733cf9fa                         
+ OS Details : Darwin 14.5 (kernel 23.5.0)                                      
+```

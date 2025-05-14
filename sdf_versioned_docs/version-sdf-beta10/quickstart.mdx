@@ -1,0 +1,139 @@
+---
+title: Quickstart
+description: Getting started with Stateful Dataflows
+sidebar_position: 10
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
+import WordLength from '!!raw-loader!./_embeds/dataflows/word-length.yaml';
+
+
+# SDF Quickstart
+
+Provisioning and operating a Stateful Dataflow is simple and only requires two prerequisites:
+
+1. A [Fluvio Cluster] to enable dataflows to consume and produce streaming data.
+2. A [Dataflow File][dataflow-yaml] to define how a dataflow sources, transforms, and emits data.
+
+You can build, test, and run Stateful Dataflows locally, then [deploy] them to your InfinyOn Cloud cluster.
+
+# In-line Dataflows
+
+Dataflows can be defined in [dataflow.yaml][dataflow-yaml] files. When prototyping, a dataflow.yaml can be composed of in-line code, making it the single asset required to define a dataflow.
+
+Deploying an in-line dataflow is simple:
+
+1. [Download (or create) a dataflow file](#2-create-the-dataflow-file)
+2. [Run the dataflow](#3-run-the-dataflow)
+
+While in-line dataflows are a breeze to get started with, maintaining code in YAML is not always ideal. For complex projects, we recommend using [Composable Dataflows].
+
+## Create and Run a Dataflow
+
+Let's create a simple in-line dataflow which receives a sentence, splits it into words, and outputs the length of each word.
+
+### 1. Installing the SDF CLI
+
+Dataflows are managed via the [SDF CLI] that we install using [fvm].
+
+<CodeBlock language="bash">{InstallFvm}</CodeBlock>
+
+### 2. Create the Dataflow file
+
+Create the dataflow file in a directory named `word-length`:
+
+```bash
+$ mkdir -p word-length
+$ cd word-length
+$ touch dataflow.yaml
+```
+
+Add the following content to the `dataflow.yaml`:
+
+<CodeBlock language="yaml">{WordLength}</CodeBlock>
+
+This `dataflow.yaml` first declares a version for the dataflow configuration structure. It then defines a default record converter, "raw" instead of "json" in this case. Next, it lists two Fluvio Topics which the dataflow expects to be present, with an expected record schema. SDF will create these Topics if they do not already exist. Finally, the config defines a Service which will read from a source topic and write to a sink topic. The service uses two Operators, in this case defined in-line in Rust, to perform transformations on the data.
+
+### 3. Run the Dataflow
+
+Use the `sdf` CLI to run the dataflow. This will start a REPL which we can use to communicate with the dataflow.
+
+```bash
+$ sdf run --ui
+```
+
+**Note:** When passed to `sdf run`, the `--ui` flag will start a local webserver allowing you to view the graphical representation of the dataflow on [SDF Studio].
+
+### 4. Test the Dataflow
+
+First, let's use Fluvio to consume from the `words` topic so we can see the output of the dataflow in real time:
+
+```bash copy="fl"
+$ fluvio consume words
+```
+
+Then use Fluvio to produce sentences to the `sentences` topic:
+
+```bash copy="fl"
+$ fluvio produce sentences
+```
+
+Enter the following strings into the producer REPL:
+
+```bash
+Hello world
+Hi there
+```
+
+You should see the following output in the consumer stream:
+
+```bash
+Hello(5)
+world(5)
+Hi(2)
+there(5)
+```
+
+### 5. Show State
+
+Stateful Dataflows are capable of maintaining `states` (data values) in durable storage, which like a database, will persist when an SDF session ends. You can define arbitrary state values which can be accessed and updated in your dataflow. SDF also maintains some built-in state values which keep track of the dataflow's status.
+
+To view the default metrics for the `sentence-to-words` operator, use the `show state` command:
+
+```bash copy="fl"
+>> show state calc-word-length/sentence-to-words/metrics
+ Key    Window  succeeded  failed
+ stats  *       2          0
+```
+
+View the metrics for the `word-length` operator:
+
+```bash copy="fl"
+>> show state calc-word-length/word-length/metrics
+ Key    Window  succeeded  failed
+ stats  *       4          0
+```
+
+Congratulations! You've successfully built and run a dataflow! Many more examples are available on [Github].
+
+### 6. Clean-up
+
+Exit the `sdf` terminal and then remove the topics we created:
+
+```bash
+sdf clean --force
+```
+
+**Note:** The `--force` option should only be used if you want to remove everything, including the topics created by this dataflow.
+
+[Infinyon Hub]: /docs/hub/overview
+[fvm]: /docs/fluvio/fvm/introduction
+[Composable Dataflows]: composition/overview.mdx
+[dataflow-yaml]: concepts/dataflow-yaml.mdx
+[deploy]: deployment.mdx
+[Github]: https://github.com/infinyon/stateful-dataflows-examples/
+[Example Workflows in github]: https://github.com/infinyon/stateful-dataflows-examples
+[Fluvio Cluster]: /docs/fluvio/quickstart#start-a-cluster
+[SDF CLI]: cli/index.mdx
+[SDF Studio]: /sdf/studio.mdx

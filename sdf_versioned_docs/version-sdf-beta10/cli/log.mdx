@@ -1,0 +1,30 @@
+---
+description: SDF Log Command
+sidebar_position: 90
+---
+
+# `sdf log`
+
+The `sdf logs` command prints the stream of logs produced by dataflow operators. You can filter the logs by dataflow name or operator name.
+
+### `sdf logs` command
+
+The `logs` command has the following hierarchy:
+
+```bash copy="fl"
+$ sdf logs -h
+Print dataflow logs
+
+Usage: sdf log [OPTIONS]
+
+Options:
+  -f, --follow               Specify if the logs should be streamed
+  -t, --tail <TAIL>          the number of lines of log to fetch
+      --dataflow <DATAFLOW>  filter by dataflow name
+      --operator <OPERATOR>  filter by operator
+  -v, --verbose              
+  -h, --help                 Print help
+```
+
+Where:
+* `--follow` causes the command to not stop after printing the logs.

@@ -1,0 +1,53 @@
+---
+title: SDF Architecture
+description: InfinyOn Data Stack
+sidebar_position: 1
+---
+
+# SDF Architecture Diagram
+
+This InfinyOn Data Stack is designed to handle complex data processing workflows, allowing for customization and scalability through various programming languages and system primitives.
+
+<img src="/img/sdf/sdf-data-stack.png" alt="SDF Data Stack"  style={{ display: 'block', margin: '0 auto', }} width="700" />
+
+Let's define each layer from bottom to top.
+
+### Data Streaming & State Management
+
+At the core, the InfinyOn data stack combines `data streaming` and `state management` technologies. [Fluvio] handles event streaming, persistence, replication, and connections with external data sources and target destinations. [SDF] manages state objects such as SQL tables and key-value documents.
+
+### Services
+
+[Services], while omitted from the diagram, define the composition of a subsection of the data-pipelines. Services define the data source, chain of operations, state objects, and the destination.
+
+### Operators
+
+[Operators] are functions and primitives that provide access to data streaming records and stateful objects. There are two types of operators for transformations and window processing. The first type performs record-by-record operations such as filter, map, filter-map, or flat-map. The second allows the user to shape the records into a bounded context for window processing. These window operations are computing aggregates, aka materialized views.
+
+### Functions
+
+Operators generate functional APIs with placeholders for the user to apply their custom business logic. Custom logic can apply transformations, perform call-outs for third-party applications, build state objects, and more. See the examples in [github] for more details. The functions support programming languages like Rust and Python (coming soon) or SQL queries.
+
+### Dataflow & Packages
+
+A dataflow is a collection of functions and operators switched together to form a data processing workflow. Dataflows are defined inline or composed via packages. The packages are collections of types, states, and functions that are built and tested independently. A package can be imported locally or shared via [InfinyOn Hub] and applied to multiple dataflows.
+
+### SDF (Builder / Runner)
+
+[SDF] is the primary component for building and running dataflows; it consists of the runtime engine and the [command line interface] (CLI). The engine provisions workers to execute the functions and operators. The CLI allows you to create and test packages and deploy dataflows.
+
+### Studio (Graphical Visualizer)
+
+The studio is the dataflow visualization tool. It allows you to investigate the hierarchy of the dataflow and show runtime analytics. Future releases will allow you to build dataflows via a drag-and-drop interface.
+
+### Hub (Dataflow/Package Store)
+
+[InfinyOn Hub] is the data store for packages and dataflows. It allows you to share dataflows and packages with other users.
+
+[Fluvio]: https://github.com/infinyon/fluvio
+[SDF]: /sdf
+[Services]: services.mdx
+[Operators]: operators.mdx
+[command line interface]: sdf/cli/index.mdx
+[github]: https://github.com/infinyon/stateful-dataflows-examples
+[InfinyOn Hub]: /docs/hub/overview

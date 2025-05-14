@@ -1,0 +1,55 @@
+---
+title: SDF CLI (sdf)
+description: Stateful Dataflows Command Line Interface.
+sidebar_position: 10
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import InstallFvm from '!!raw-loader!../_embeds/install-sdf.bash';
+
+Stateful Dataflows (sdf) is a binary, shipped with fluvio, that helps developers build, test, and deploy packages and dataflows.
+
+### Install SDF
+
+1. Download [fluvio version manager (fvm)], the package manager for fluvio and sdf:
+
+```bash copy="fl"
+$ curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
+```
+
+2. Install the preview release:
+
+<CodeBlock language="bash">{InstallFvm}</CodeBlock>
+
+### SDF Commands
+
+The command line interface is used to build and test packages, and run the dataflow.
+
+#### Dataflow commands
+
+* [sdf run] - run a dataflow
+* [sdf clean] - removes the dataflow artifacts
+
+#### Package commands
+
+* [sdf generate] - generate the code for a package
+* [sdf build] - build the code
+* [sdf test] - test the code
+* [sdf clean] - removes the package artifacts
+
+#### Other commands
+
+* [sdf setup] - updates the prerequisites
+* [sdf version] - retrieves the version number
+* [sdf log] - retrieves the runtime logs and print messages
+* [sdf worker] - manages SDF workers
+
+[sdf run]: run.mdx
+[sdf clean]: clean.mdx
+[sdf generate]: generate.mdx
+[sdf build]: build.mdx
+[sdf test]: test.mdx
+[sdf setup]: setup.mdx
+[sdf version]: version.mdx
+[sdf log]: log.mdx
+[sdf worker]: worker/

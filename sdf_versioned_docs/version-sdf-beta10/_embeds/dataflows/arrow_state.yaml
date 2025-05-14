@@ -1,0 +1,108 @@
+# dataflow.yaml
+apiVersion: 0.5.0
+meta:
+  name: arrow-example
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: json
+
+types:
+  order:
+    type: object
+    properties:
+      name:
+        type: string
+      amount:
+        type: u32
+      price:
+        type: f32  
+
+topics:
+  buy:
+    schema:
+      value:
+        type: order
+  sell:
+    schema:
+      value:
+        type: order
+  command:
+    schema:
+      value:
+        type: string
+        converter: raw
+  message:
+    schema:
+      value:
+        type: string
+  
+
+services:
+  interface:
+    sources:
+      - type: topic
+        id: command
+    states:
+      tracker:
+        from: mergeservice.tracker
+    sinks:
+      - type: topic
+        id: message
+        transforms:
+          - operator: map 
+            run: |
+              fn new_input(_input: String) -> Result<String> {
+                let trackrow = sql(&format!("select * from tracker"))?;
+                let rows = trackrow.rows()?;
+                if !rows.next() {
+                  return Ok("empty".to_string())
+                }
+                let balancecol = trackrow.col("balance")?;
+                let balance = rows.f32(&balancecol)?;
+                Ok(format!("{:#?}",balance))
+              }
+  mergeservice:
+    sources:
+      - type: topic
+        id: buy
+        transforms:
+          - operator: map
+            run: |
+              fn buy_order(order: Order) -> Result<f32> {
+                Ok(order.amount as f32 * order.price * -1.0)
+              }
+      - type: topic
+        id: sell 
+        transforms:
+          - operator: map
+            run: |
+              fn sell_order(order: Order) -> Result<f32> {
+                Ok(order.amount as f32 * order.price)
+              }
+    states:
+      tracker: 
+        type: keyed-state
+        properties:
+          key: 
+            type: string
+          value: 
+            type: arrow-row
+            properties:
+              balance:
+                type: f32
+    partition:
+      assign-key:
+        run: |
+          fn map_cash(order: f32) -> Result<String> {
+            Ok("cash".to_string())
+          }
+      update-state:
+        run: |
+          fn add_count(order: f32) -> Result<()> {
+            let mut tracker = tracker();
+            tracker.balance += order; 
+            tracker.update()?;
+            Ok(())
+          }

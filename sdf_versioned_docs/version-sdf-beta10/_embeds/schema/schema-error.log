@@ -1,0 +1,2 @@
+$ sdf log -f
+Error deserializing input value ExpectedUnsigned at character 0

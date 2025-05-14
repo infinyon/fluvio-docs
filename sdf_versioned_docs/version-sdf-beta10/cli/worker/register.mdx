@@ -1,0 +1,33 @@
+---
+title: register
+---
+
+# `sdf worker register`
+
+The `sdf worker register` registers a remote worker
+
+
+### `sdf worker register` command
+
+The `worker register` command has the following hierarchy:
+
+```bash copy="fl"
+$ sdf worker register -h
+Usage: sdf worker register <NAME> <WORKER_ID>
+
+Arguments:
+  <NAME>       
+  <WORKER_ID>  
+
+Options:
+  -h, --help  Print help
+```
+
+#### Examples
+
+##### sdf worker register
+
+```bash copy="fl"
+$ sdf worker register edge2 edg2-worker-id
+Worker `edge2` is registered for cluster: `local`
+ ```

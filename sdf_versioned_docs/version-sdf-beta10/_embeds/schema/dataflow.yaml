@@ -1,0 +1,53 @@
+apiVersion: 0.5.0
+meta:
+  name: person-age-validation
+  version: 0.1.0
+  namespace: examples
+config:
+  converter: json
+  consumer:
+    default_starting_offset:
+      value: 0
+      position: End
+
+types:
+  user:
+    type: object
+    properties:
+      name:
+        type: string
+      age:
+        type: u8
+
+topics:
+  user-topic:
+    name: user
+    schema:
+      value:
+        type: user
+
+  message-topic:
+    name: message
+    schema:
+      value:
+        type: string
+
+
+services:
+  check-adult:
+    sources:
+      - type: topic
+        id: user-topic
+    transforms:
+      - operator: map
+        run: |
+          fn age_check(user: User) -> Result<String> {
+            if user.age < 18 {
+              Ok("minor".to_string())
+            } else {
+              Ok("adult".to_string())
+            }
+           }
+    sinks:
+      - type: topic
+        id: message-topic
