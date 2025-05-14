@@ -1,0 +1,39 @@
+---
+title: create
+sidebar_position: 10
+---
+
+# `sdf worker create`
+
+The `sdf worker create` spawns a worker process in the background.
+
+
+### `sdf worker create` command
+
+The `worker create` command has the following hierarchy:
+
+```bash copy="fl"
+$ sdf worker create -h
+Usage: sdf worker create [OPTIONS] <NAME>
+
+Arguments:
+  <NAME>  
+
+Options:
+      --worker-id <WORKER_ID>  [env: WORKER_ID=]
+  -h, --help                   Print help
+```
+
+Where:
+* `--worker-id` to set the id of the worker
+
+
+#### Examples
+
+##### sdf worker create
+
+```bash copy="fl"
+$ sdf worker create main
+Starting worker: main
+Worker `main` created for 
+```
