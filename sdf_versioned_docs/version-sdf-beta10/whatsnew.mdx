@@ -1,0 +1,43 @@
+---
+title: "What's new"
+description: Changes and updates to SDF
+sidebar_position: 20
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import InstallFvm from '!!raw-loader!./_embeds/install-sdf.bash';
+
+# Beta 10
+
+## Upgrading 
+
+To upgrade CLI to this version, run the following command:
+
+<CodeBlock language="bash">{InstallFvm}</CodeBlock>
+
+To upgrade local (host) workers, shutdown and restart the worker:
+
+```bash
+$ sdf worker shutdown <host-worker-name>
+$ sdf worker create <host-worker-name>
+```
+
+For upgrading Infinyon Cloud (remote) workers, please contact [InfinyOn support](#infinyon-support).
+
+
+### Improvements
+
+- Improve error output for some of the yaml parsing errors.
+- Do not require `type-name` in list type
+- Avoid generating invalid WIT names
+- Use dev runtime by default on `sdf test`
+- Add validation to check if pkg namespace/name conflicts with df
+- Improve State recovery on window services on restart
+
+### Changes
+
+- Make types respect casing defined on yaml for deserialization and serialization when using `apiVersion: 0.6.0`
+
+## InfinyOn Support
+
+For any questions or issues, please contact InfinyOn support at support@infinyon.com  or https://discordapp.com/invite/bBG2dTz
