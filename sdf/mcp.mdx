@@ -1,0 +1,69 @@
+---
+title: MCP
+description: MCP Integration
+sidebar_position: 90
+---
+
+# Introduction
+
+With [MCP](https://modelcontextprotocol.io/introduction) is protocol to let agents interact with tools.  With MCP integration, MCP client interact with SDF.   In this integration, SDF expose MCP capability thru stdio interface.
+
+## SDF MCP Proxy
+
+SDF MCP integration only works with SDF worker for now.  The dataflow must be deployed to worker before MCP client can interact with SDF.  The SDF MCP proxy is launched by MCP Client.
+
+### Using with Claude Desktop
+
+To start SDF MCP proxy with Claude desktop.  
+
+1. Download and install [Claude Desktop](https://claude.ai/download) 
+2. Start Claude Desktop
+3. Click "Settings"
+4. Click "Developer"
+5. Click "Edit Config". 
+6. Open with any text editor
+7. Add the following lines to the config file in section: "mcpServers".
+
+```
+{
+  "mcpServers": {
+    "sdf": {
+      "command": "/home/.fluvio/bin/sdf",
+      "args": [
+        "mcp",
+        "worker"
+      ]
+    }
+  }
+}
+
+```
+The command path should be absolute path to SDF binary.  You can find SDF by running `which sdf` in terminal.
+
+
+8. Restart Claude Desktop
+
+
+## Running SDF prompt.
+
+Once SDF MCP proxy is started, you can execute SDF command by executing prompt.  To interact with SDF, you need to select dataflow first.  To do so run prompt like: "select dataflow".  The MCP client like Claude will then search dataflow and present the list of dataflow.
+
+## List of tools interface provided:
+
+### Select dataflow
+
+This is equal to `select dataflow` command.
+
+### List dataflow 
+
+This is equal to `list dataflow` command.
+
+### Get table 
+
+This is equal to `show table` command in the SQL mode.
+
+### Run SQL 
+
+This will execute SQL query on the selected dataflow.  The MCP client will translate prompt into SQL automatically.
+
+For example, you can run prompt like "which car has greatest mileage" which will translate into SQL query like `SELECT * FROM cars ORDER BY mileage DESC LIMIT 1`.  The result of the query can pipe to visual chart using subsequent prompt like "visualize mileage using pie chart".
