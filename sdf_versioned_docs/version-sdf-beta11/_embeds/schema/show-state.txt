@@ -1,0 +1,11 @@
+>> show state
+ Namespace                                Keys  Type   
+ check-adult/user-topic/topic.offset      1     offset 
+ check-adult/age-check/metrics            1     table  
+ request-processing/request/metrics       1     table  
+ request-processing/request/topic.offset  1     offset 
+ check-adult/user-topic/metrics           1     table  
+>> show state check-adult/user-topic/metrics
+ Key    Window  succeeded  failed  last_error_offset 
+ stats  *       4          2       5                 
+>> 
