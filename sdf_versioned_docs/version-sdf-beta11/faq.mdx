@@ -1,0 +1,41 @@
+---
+title: FAQ
+description: Frequently Asked Questions
+sidebar_position: 100
+---
+
+### What is Stateful Dataflows (SDF)?
+
+Stateful Dataflows (SDF) is an intuitive platform designed to help developers build, troubleshoot, and run full-featured event-driven pipelines, also known as dataflows.
+
+### How does SDF relate to Fluvio?
+
+SDF leverages Fluvio topics as the mechanism for receiving input and publishing the output of its data processing pipelines.
+
+### Is prior experience with Fluvio required to use SDF effectively?
+
+No, while SDF utilizes Fluvio for message transport, direct interaction with Fluvio by SDF developers is minimal. You don't need in-depth Fluvio expertise to begin using SDF.
+
+### What programming languages are supported for writing custom logic in SDF?
+
+Currently, our tooling exclusively supports Rust. We may explore the implementation of support for other languages in the future.
+
+### How does SDF ensure low latency of dataflows?
+
+SDF achieves low latency by leveraging the performance characteristics of Rust and WebAssembly (WASM), the compilation target for custom logic within the dataflows.
+
+## Can I perform HTTP(S) requests from operators?
+
+Yes, operators can perform HTTP(S) requests by utilizing the `sdf-http-guest` crate available at https://github.com/infinyon/sdf-http-guest.
+
+### How does SDF handle data serialization and deserialization?
+
+SDF automatically generates serialization and deserialization logic based on the topic configuration defined for the dataflows. Each topic must specify the associated data type and whether the format is JSON or raw (which is only permitted for native data types).
+
+### What are SDF packages?
+
+An SDF package is a modular unit used to define reusable data types and/or functions that can then be incorporated into dataflows. Utilizing packages is the recommended and most effective way to add custom logic to your dataflows.
+
+### Can I change a namespace in a package after I have implemented the code?
+
+Yes, you can change the namespace of a package after implementation. However, this is a potentially breaking change. If the namespace is modified, any code that imports types or functions from this package will likely need to be updated to reflect the new namespace in their import statements.
