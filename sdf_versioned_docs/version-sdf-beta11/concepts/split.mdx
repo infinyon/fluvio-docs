@@ -1,0 +1,153 @@
+---
+title: Split
+description: Stateful Dataflow split feature.
+sidebar_position: 70
+---
+
+Dataflows can split events data into multiple topics. The split behavior is defined in the `sinks` section of the service definition. Similar to merge, the split operation can transform the event to match a target topic schema.
+
+```yaml
+  sinks:
+    - type: topic
+      id: <topic-id>
+      transforms:
+        - operator: <operator-name>
+          ...
+    - type: topic
+      id: <topic-id>
+      transforms:
+        - operator: <operator-name>
+```
+
+The `transforms` section defines the transformation to apply to the event before sending it to the target topic. The operator type depends on the desired business logic.
+
+
+## Split Example
+
+We'll create a dataflow that reads `person` records from the `user`topic and splits them into `child` and `adult` topics based on age.
+
+#### 1. Create a Dataflow file
+
+Create a directory `split-test`:
+
+```bash copy="fl"
+$ mkdir split-test; cd split-test
+```
+
+Add the following `dataflow.yaml` file:
+
+```yaml
+# dataflow.yaml
+apiVersion: 0.5.0
+
+meta:
+  name: split
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: json
+
+types:
+  person:
+    type: object
+    properties:
+      name:
+        type: string
+      age:
+        type: i32
+
+topics:
+  user:
+    schema:
+      value:
+        type: person
+  child:
+    schema:
+      value:
+        type: person
+  adult:
+    schema:
+      value:
+        type: person
+services:
+  split-service:
+    sources:
+      - type: topic
+        id: user
+    sinks:
+      - type: topic
+        id: child
+        transforms:
+          - operator: filter
+            run: |
+              fn is_child(person: Person) -> Result<bool> {
+                  Ok(person.age < 18)
+              }
+      - type: topic
+        id: adult
+        transforms:
+          - operator: filter
+            run: |
+              fn is_adult(person: Person) -> Result<bool> {
+                  Ok(person.age >= 18)
+              }
+```
+
+In this example, we used the `filter` operator as the target schema matches the source. If there is a mismatch, use `filter-map` and update the record accordingly.
+
+Run dataflow:
+
+```bash  copy="fl"
+$ sdf run
+```
+
+Add `--ui` if you want to see the graphical representation of the dataflow.
+
+
+#### 2. Test the Dataflow
+
+Produce to `user`:
+
+```bash copy="fl"
+$ fluvio produce user
+```
+
+```bash
+{"name":"Andrew","age":16}
+{"name":"Jackson","age":17}
+{"name":"Randy","age":32}
+{"name":"Alice","age":28}
+{"name":"Linda","age":15}
+```
+
+Consume from `child`:
+
+```bash copy="fl"
+$ fluvio consume child -Bd
+```
+
+```bash
+{"age":16,"name":"Andrew"}
+{"age":17,"name":"Jackson"}
+{"age":15,"name":"Linda"}
+```
+
+Consume from `adult`:
+
+```bash copy="fl"
+$ fluvio consume adult -Bd
+```
+
+```bash
+{"age":32,"name":"Randy"}
+{"age":28,"name":"Alice"}
+```
+
+In summary, `split-service` utilizes `sinks` to divide the data into two different topics: `child` and `adult.` The `child` filter operator passes records with ages less than 18 years old. The `adult` filter operator passes records with an age greater or equal to 18 years old.
+
+### References
+
+* [Split Examples (github)]
+
+[Split Examples (github)]: https://github.com/infinyon/stateful-dataflows-examples/tree/main/primitives/split

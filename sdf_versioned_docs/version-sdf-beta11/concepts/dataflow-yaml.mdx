@@ -1,0 +1,313 @@
+---
+title:  "Dataflow"
+description: Stateful Dataflow file definition and examples.
+sidebar_position: 10
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import ApiVersion from '!!raw-loader!../_embeds/dataflows/example-api-version.yaml';
+import Metadata from '!!raw-loader!../_embeds/dataflows/example-metadata.yaml';
+import Imports from '!!raw-loader!../_embeds/dataflows/example-imports.yaml';
+import Config from '!!raw-loader!../_embeds/dataflows/example-config.yaml';
+import Topics from '!!raw-loader!../_embeds/dataflows/example-topics.yaml';
+
+
+# Dataflow File: dataflow.yaml
+
+The `dataflow.yaml` file defines the end-to-end composition [DAG] of the data-streaming application. The dataflows can perform a variety of operations, such as:
+
+* **routing** with service chaining, split and merge
+* **shaping** with transforms operators
+* **state processing** with state operators
+* **window aggregates** with window operators
+
+and cover a board set of use cases.
+
+The dataflow user-defined business logic can be applied `inline` or `imported` from packages. This document focuses on `inline` dataflows. The [composition section] defines dataflows imported from packages.
+
+
+## Service Composition
+
+Services are core building blocks of a dataflow, where each service represents a flow that has one or more sources, one or more operators, and one or more destinations. Operators are processed in the order they are defined in the service definition. Each operator has an independent state machine.
+
+Services that read from unrelated topics are processed in parallel, whereas services that read from a topic written by another service are processed in sequence. 
+
+<img src="/img/sdf/parallel-sequence.png" alt="Service Chaining"
+  style={{ display: 'block', margin:'0 auto' }} width="800" />
+
+In this example, Service-X and Service-Y form a parallel chain, whereas Service-Y and Service-Z form a sequential chain.
+
+The [Services Section] defines the different types of services the engine supports.
+
+
+## File: `dataflow.yaml`
+
+The dataflow file is defined in YAML and has the following hierarchy:
+
+```bash
+apiVersion: <version>
+
+meta: 
+  <metadata-properties>
+imports: 
+  <import-properties>
+config: 
+  <config-properties>
+types: 
+  <types-properties>
+topics: 
+  <topics-properties>
+services: 
+  <service-properties>
+dev: 
+  <development-properties>
+```
+
+#### Where
+
+* [apiVersion](#apiversion) - defines engine version of the dataflow file.
+* [meta](#meta) - defines the name, version, and namespace of the dataflow.
+* [imports](#imports) - defines the external packages `optional`.
+* [config](#config) - defines configurations applied to the entire dataflow file `optional`.
+* [types](#types)- defines the type definitions `optional`.
+* [topics](#topics) - defines the topics used in the dataflow.
+* [services](#services) - defines the input, output, operators and states for each flow.
+* [dev](#dev) - defines properties for developers `optional`.
+
+Let's go over each section in detail.
+
+<hr/>
+
+### `apiVersion`
+
+The `apiVersion` informs the engine about the runtime version it must use to execute a particular dataflow.
+
+```yaml
+apiVersion: <version>
+```
+
+#### Where
+  - **apiVersion** - is the version number of the dataflow engine to use.
+
+
+#### For example
+
+<CodeBlock language="yaml">{ApiVersion}</CodeBlock>
+
+<hr/>
+
+
+### `meta`
+
+Meta, short for metadata, holds the stateful dataflow properties, such as name & version.
+
+```yaml
+meta:
+  name: <dataflow-name>
+  version: <dataflow-version>
+  namespace: <dataflow-namespace>
+```
+
+#### Where
+
+* **name** - is the name of the dataflow.
+* **version** - the version number of the dataflow (semver).
+* **namespace** - the namespace this dataflow belongs to.
+
+The tuple `namespace:name` becomes the [WASM Component Model] package name.
+
+#### For example
+
+<CodeBlock language="yaml">{Metadata}</CodeBlock>
+
+<hr/>
+
+### `imports`
+
+The `imports` section is used to import external packages into a dataflow. A package may define one or more types, functions, and states. A dataflow can import from as many packages as needed.
+
+```yaml
+imports:
+  - pkg: <package-namespace>/<package-name>@<package-version>
+    types:
+      - name: <type-name>
+    functions:
+      - name: <function-name>
+    states:
+      - name: <state-name>
+```
+
+#### Where
+
+* **pkg** - is the unique identifier of the package
+* **types** - the list of types referenced by name.
+* **functions** - the list of functions referenced by name.
+* **states** - the list of states referenced by name.
+
+#### For example
+
+<CodeBlock language="yaml">{Imports}</CodeBlock>
+
+<hr/>
+
+
+### `config`
+
+Config, short for configurations, defines the configuration parameters applied to the entire dataflow.
+
+```yaml
+config:
+  converter: 
+    <converter-properties>
+  consumer: 
+    <consumer-properties>
+  producer: 
+    <producer-properties>
+```
+
+#### Where
+
+* **converter** - define the default serialization/deserialization for reading and writing events. Supported formats are: `raw` and `json`. The converter configuration can be overwritten by the topic configuration.
+
+* **consumer** - define the default consumer configuration. Supported properties are:
+  * `default_starting_offset` - define the default starting offset for the consumer. The consumer can read from `beginning` or `end` with an offset `value`. User `0` if you want to read the first or last item.
+
+* **producer** - define the default producer configuration. Supported properties are:
+  * `linger_ms` - the time in milliseconds to wait for additional records to arrive before publishing a message batch.
+  * `batch_size` - the maximum size of a message batch.
+
+Checkout [batching] for more details.
+
+
+#### For example
+
+<CodeBlock language="yaml">{Config}</CodeBlock>
+
+All consumers start reading from the end of the data-stream and parse the records from json. All producers write their records to the data-stream in json.
+
+
+#### Defaults
+
+The `config` field is optional, and by default the system will read records from the `end` and decode records as `raw`.
+
+<hr/>
+
+
+### `topics`
+
+Dataflows use topics for internal and external communications. During the Dataflow initialization, the engine creates new topics or links to existing ones before it starts the services.
+
+The topics have a definition section that defines their schema and a provisioning section inside the [service](#services).
+
+The topic definition can have one or more topics:
+
+```yaml
+topics:
+  <topic-name>:
+    schema:
+      key:
+        type: <type-name>
+      value:
+        type: <type-name>
+        converter: 
+          <converter-type>
+    consumer: 
+      <consumer-properties>
+    producer: 
+      <producer-properties>
+    remote_cluster_profile: <optional-string>
+```
+
+#### Where
+
+* **topic-name** - is the name of the topic.
+* **key** - is the schema definition for the record key (**optional**).
+  * **type** - is the schema type for the key. The key only supports [primitive types].
+* **value** - is the schema definition for the record value
+  * **type** - is the schema type for the value.
+  * **converter** - is the converter to deserialize the key (**optional** - defaults to [config](#config)).
+* **producer** - is the producer configuration (**optional** - defaults to [config](#config)).
+* **consumer** - is the consumer configuration (**optional** - defaults to [config](#config)).
+* **remote_cluster_profile** - is the [Fluvio profile] that will be used to perform the connection. Useful to reach an external cluster.
+
+#### For Example
+
+<CodeBlock language="yaml">{Topics}</CodeBlock>
+
+The [Key Handling section] describes how to map topic keeps to functions.
+
+<hr/>
+
+
+### `types`
+
+Dataflows use types to define the schema of the objects in topics, states, and functions. 
+* Check out the [Types] section for the list of supported types.
+
+
+<hr/>
+
+### `services`
+
+Services define the dataflow composition and the business logic. Check out the [Services] section for details.
+
+<hr/>
+
+
+### `dev`
+
+
+The [sdf] section is used to test package without publishing them to the Hub. 
+
+To develop package from start:
+
+* Create a local package
+* Add `dev` section to the `dataflow.yaml` file to locate the local package.
+* Run the dataflow without the `--prod` flag to load the local package instead of downloading them from the Hub.
+* Repeat the process until the package is ready for publishing.
+* Then publish the package to the Hub.
+
+Here is syntax for the `dev` section:
+```yaml
+dev:
+  imports:
+    - pkg: <package-namespace>/<package-name>@<package-version>
+      path: <local path>
+```
+
+#### For Example
+
+```yaml
+dev:
+  imports:
+    - pkg: example/sentence-pkg@0.1.0
+      path: ./packages/sentence
+```
+
+<hr/>
+
+
+## Dataflow Examples
+
+* Checkout the github repo for [dataflow examples].
+
+## References
+* [Services]
+* [Types]
+* [Operators]
+* [SDF]
+
+
+[composition section]: composition/overview.mdx
+[WASM Component Model]: https://component-model.bytecodealliance.org/
+[Key Handling section]: key-handling.mdx
+[Types]: types.mdx
+[primitive types]: types.mdx#primitive-types
+[Operators]: operators.mdx
+[SDF]: /sdf
+[DAG]: https://en.wikipedia.org/wiki/Directed_acyclic_graph
+[Services]: services.mdx
+[Services Section]: services.mdx
+[batching]: /docs/latest/fluvio/concepts/batching
+[dataflow examples]: https://github.com/infinyon/stateful-dataflows-examples
+[Fluvio profile]: /docs/latest/fluvio/cli/fluvio/profile
