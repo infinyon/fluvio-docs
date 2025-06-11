@@ -55,7 +55,7 @@ partition:
     (...)
 ```
 #### 3. Updating State
-To update the state in an `arrow-row`, we need to update the individual row's columns manual and call an `update()`.
+To update the state in an `arrow-row`, we need to update the individual row's columns manual and call an `update()`. There is also available the `delete()` method that will remove the state for the current key.
 ```YAML
 partition:
   assign-key:

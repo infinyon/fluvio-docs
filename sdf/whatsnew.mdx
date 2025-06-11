@@ -30,14 +30,14 @@ For upgrading Infinyon Cloud (remote) workers run `fluvio cloud sdf version sdf-
 
 ### New Features & Improvements
 
-- Row State delete() API: You can now easily delete specific rows from your state values, giving you finer control over your data.
-- _updated_at Column for DataFrames: All DataFrames now include a new _updated_at column. This provides a timestamp indicating the last time each row was updated, allowing you to track data freshness.
-- Time-to-Live (TTL) for Row State: Configure [TTL] for row state values to automatically purge rows that haven't been updated within a specified time. This helps you manage data lifecycle and reduce stale data.
-- MCP Server Integration: We've integrated the [MCP server] into SDF, enhancing internal communication and system stability.
+- **Row State `delete()` API**: You can now easily delete specific rows from your state values, giving you finer control over your data.
+- **_updated_at Column for DataFrames**: All DataFrames now include a new `_updated_at` column. This provides a timestamp indicating the last time each row was updated, allowing you to track data freshness.
+- **Time-to-Live (TTL) for Row State:** Configure [TTL] for row state values to automatically purge rows that haven't been updated within a specified time. This helps you manage data lifecycle and reduce stale data.
+- **MCP Server Integration**: We've integrated the [MCP server] into SDF, enhancing internal communication and system stability.
 
 ## InfinyOn Support
 
 For any questions or issues, please contact InfinyOn support at support@infinyon.com  or https://discordapp.com/invite/bBG2dTz
 
-- [TTL]: concepts/ttl.mdx
-- [MCP server]: mcp.mdx
+[TTL]: concepts/ttl.mdx
+[MCP server]: mcp.mdx
