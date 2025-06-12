@@ -1,0 +1,57 @@
+---
+sidebar_position: 5
+title: "Configuration Defaults"
+---
+## Config Defaults, Overriding
+
+
+
+### Cluster
+
+#### SPUs
+
+**Specify the number of SPUs**
+
+```bash copy="fl"
+$ fluvio cluster start --spu 3
+```
+
+### SPU Group
+
+#### Storage Size
+
+Storage size can be specified when starting a Fluvio Cluster.
+
+```bash copy="fl"
+$ fluvio cluster start --spu-storage-size '50 GB'
+```
+
+### Topic
+
+#### Segment Size
+
+A topic's segment size can be specified when creating a topic.
+
+**Specify a segment size using units**
+
+```bash copy="fl"
+$ fluvio topic create foo --segment-size '1 GB'
+```
+
+**Specify a segment size using bytes (50 MB)**
+
+```bash copy="fl"
+$ fluvio topic create foo --segment-size '50000000'
+```
+
+### Partition
+
+#### Replicas
+
+A partition's replicas can be specified when creating a topic.
+
+**Specify the number of replicas**
+
+```bash copy="fl"
+$ fluvio topic create foo --replicas 3
+```
