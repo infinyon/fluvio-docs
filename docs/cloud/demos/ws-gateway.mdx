@@ -4,21 +4,31 @@ description: "WebSocket Gateway Demomstration"
 sidebar_position: 1
 ---
 
-1. Setup a Cloud Cluster
-    1. Register
-    2. Install CLI
-    3. Login with CLI
-    4. Create a Cluster
-    5. Create a topic named <strong>webdemo</strong>
-2. Create and access key
-    ```shell
+1. Setup an Infinyon Cloud cluster by following the [Quick Start]
+2. Create a topic named <strong>webdemo</strong>
+    ```shell copy="fl"
+    $ fluvio topic create webdemo
+    ```
+3. Create an access key
+    ```shell copy="fl"
     $ fluvio cloud access-key create web-demo --topic webdemo
     ```
-4. Start producer with access key
-3. Start consumer with access key
+4. Start producer with access key from step 3
+5. Start consumer with access key from step 3
 
 ### Producer Iframe
+The producer demo app runs in a CodePen iframe. It will connect to the WebSocket Gateway and produce (x, y) values of a sine wave to the <strong>webdemo</strong> topic. This is independent of the consumer charting app and is only interacting with the Fluvio topic via the WebSocket Gateway.
 <iframe height="256" width="100%" title="Producer" src="https://codepen.io/Nick-Cardin/embed/PwYrjjw?default-tab=result"></iframe>
 
 ### Consumer Iframe
+The consumer demo app runs in a CodePen iframe. It will connect to the WebSocket Gateway and consume and chart (x, y) values from the <strong>webdemo</strong> topic. This is independent of the sine wave producer app and is only interacting with the Fluvio topic via the WebSocket Gateway.
 <iframe height="512" width="100%" title="Consumer" src="https://codepen.io/Nick-Cardin/embed/PwYrjEq?default-tab=result"></iframe>
+
+### Watch with Fluvio CLI
+The data being produced can be simultaneously consumed with the Fluvio CLI.
+
+```shell copy="fl"
+$ fluvio consume webdemo
+```
+
+[Quick Start]: cloud/quickstart.mdx
