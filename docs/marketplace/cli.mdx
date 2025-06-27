@@ -1,0 +1,85 @@
+---
+sidebar_position: 40
+title: "CLI"
+description: "CLI for Marketplace"
+---
+
+
+# Prerequisites
+
+Please make sure you have the following installed:
+- Fluvio Cloud CLI
+- FVM (Fluvio Version Manager)
+
+
+# Installation
+
+To install Marketplace CLI, run the following command:
+
+```bash
+fvm install mkp-beta1-dev
+```
+
+Once installed, you can run the following command to verify the installation:
+
+```bash
+mkp help
+```
+
+# Provider commands
+
+## Pre-requisite for listing provider
+
+To managing the marketplace listing, you must have provisioned fluvio cluster and created at least one topic to list your datastream.
+
+## Creating Marketplace listing
+
+Listing creation command requires that you already have a selected cluster as source of the data source.
+
+
+```bash
+mkp listing create <listing-name> --topic <topic>
+```
+
+The topic must exist in the current fluvio cluster.
+
+## Getting list of your market place listing
+
+```bash
+mkp listing list
+
+```
+
+# Subscriber commands
+
+## Pre-requisite for subscribing
+
+To subscribe to a listing, you don't need to have a fluvio cluster. You can subscribe to any listing that is available in the marketplace.
+
+## Subscribing to a listing
+
+```bash
+mkp subscription subscribe <listing-name>
+```
+
+## Unsubscribe from a listing
+
+```bash
+mkp subscription unsubscribe <listing-name>
+```
+
+## List of your subscriptions
+
+```bash
+mkp subscription list
+```
+
+# Public market place listing
+
+To see all the public listing, you don't need to be authenticated. You can run the following command to see all the public listing.
+
+```bash
+mkp marketplace list
+```
+
+
