@@ -1,0 +1,85 @@
+---
+sidebar_position: 40
+title: "benchmark"
+description: "benchmark is a tool for running performance tests on Fluvio"
+---
+
+# fluvio benchmark
+
+## Produce benchmark
+
+This command is used to benchmark the performance of Fluvio by producing records to a topic.
+
+**Example usage**
+
+```bash copy="fl"
+$ fluvio benchmark produce
+```
+
+The following options can be used with the `fluvio benchmark produce` command along with their default values:
+
+```
+Options:
+  -b, --batch-size <bytes>
+          Size of each batch [default: 16kib]
+  -q, --queue-size <QUEUE_SIZE>
+          Number of records to send [default: 100]
+      --max-request-size <bytes>
+          Maximum size of a request [default: 32mib]
+  -l, --linger <LINGER>
+          Time to wait for new records [default: 0ms]
+      --server-timeout <SERVER_TIMEOUT>
+          Timeout for the server [default: 5000ms]
+  -c, --compression <COMPRESSION>
+          Compression algorithm to use [default: none]
+      --num-samples <NUM_SAMPLES>
+          Number of samples to take [default: 3]
+      --time-between-samples <TIME_BETWEEN_SAMPLES>
+          Time between each sample [default: 250ms]
+      --worker-timeout <WORKER_TIMEOUT>
+          Timeout for each worker [default: 3000s]
+      --record-key-allocation-strategy <RECORD_KEY_ALLOCATION_STRATEGY>
+          Strategy for allocating record keys [default: no-key] [possible values: no-key, all-share-same-key, producer-worker-unique-key, random-key]
+      --num-producers <NUM_PRODUCERS>
+          Number of producers that will send records [default: 1]
+      --num-records <NUM_RECORDS>
+          Number of records each producer will send [default: 10000]
+      --record-size <bytes>
+          Size of each record in bytes [default: 5kib]
+  -p, --partitions <PARTITIONS>
+          Number of partitions for the topic [default: 1]
+  -r, --replicas <REPLICAS>
+          Number of replicas for the topic [default: 1]
+  -t, --topic-name <TOPIC_NAME>
+          Name of the topic to create [default: benchmark-hn1oyqczaf]
+  -k, --keep-topic
+          Keep the topic after the benchmark
+      --ignore-rack
+          Ignore rack assignment
+  -h, --help
+          Print help (see more with '--help')
+```
+
+## Matrix benchmark
+
+It runs multiple benchmarks sequentially and displays the results of each benchmark configuration.
+
+You can also pass a configuration file to customize the benchmark matrix using the `--config` option:
+
+**Example usage**
+
+```bash copy="fl"
+$ fluvio benchmark matrix --config matrix.yaml
+```
+
+The `fluvio benchmark` command is an alias for `fluvio benchmark matrix`:
+
+**Example usage**
+
+```bash copy="fl"
+$ fluvio benchmark
+```
+
+Check out the [batching concept] page for more details about batching parameters.
+
+[batching concept]: fluvio/concepts/batching.mdx

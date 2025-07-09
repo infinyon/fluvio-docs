@@ -1,0 +1,51 @@
+---
+sidebar_position: 30
+title: "Kafka"
+description: "Kafka inbound connector listens to a Kafka topic and passes the data to fluvio."
+---
+
+# Kafka Connector
+
+This is a connector for taking data from a Kafka topic and sending to a Fluvio topic.
+
+### Configuration
+
+| Opt            | default               | type     | description                            |
+| :---           | :---                  | :---     | :----                                  |
+| url            | -                     | String   | The url for the kafka connector        |
+| topic          | -                     | String   | The kafka topic                        |
+| partition      | 0                     | Integer  | The kafka partition                    |
+| group          | fluvio-kafka-source   | String   | The kafka consumer group               |
+
+Example:
+
+:::info
+The connector version is marked with `x.y.z`. To find the latest version, run:
+*  `fluvio hub connector list`
+:::
+
+```yaml
+apiVersion: 0.1.0
+meta:
+  version: x.y.z
+  name: my-kafka-connector
+  type: kafka-source
+  topic: kafka-topic
+kafka:
+  url: "localhost:9092"
+  topic: fluvio-topic
+```
+
+### Usage
+
+To try out Kafka Source connector locally, you can use Fluvio CDK tool:
+
+
+```bash
+$ cdk deploy -p kafka-source start --config crates/kafka-source/sample-config.yaml
+```
+
+## Transformations
+Fluvio Kafka Connectors support [Transformations].
+
+[Transformations]: /docs/latest/fluvio/concepts/transformations

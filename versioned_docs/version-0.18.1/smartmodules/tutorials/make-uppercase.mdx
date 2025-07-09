@@ -1,0 +1,100 @@
+---
+sidebar_position: 2
+title: "Uppercase (map)"
+description: "Create a smartmodule that converts records to uppercase."
+---
+
+# Make Uppercase (map)
+
+Create a SmartModule that converts records to uppercase. 
+
+### Prerequisites
+
+* SDMK CLI is part of the Fluvio installation. [Install Fluvio] and start a local a cluster to build and test the SmartModule.
+
+
+## Generate a Smartmodule Project
+
+Use SMDK generator to create a new SmartModule project of type `map`. 
+
+```bash copy="cmd"
+$ smdk generate uppercase
+🤷   Please set a group name: acme
+✔ 🤷   Which type of SmartModule would you like? · map
+✔ 🤷   Will your SmartModule use init parameters? · false
+✔ 🤷   Will your SmartModule be public? · false
+[1/7]   Done: .gitignore
+[2/7]   Done: Cargo.toml
+[3/7]   Done: README.md
+[4/7]   Done: SmartModule.toml
+[5/7]   Done: rust-toolchain.toml
+[6/7]   Done: src/lib.rss
+[7/7]   Done: src    
+```
+
+### Add Custom logic
+
+Let's checkout the project tree:
+
+```bash copy="cmd"
+$ cd uppercase; tree
+.
+├── Cargo.toml
+├── README.md
+├── SmartModule.toml
+├── rust-toolchain.toml
+└── src
+    └── lib.rs
+```
+
+Replace the existing code in `src/lib.rs` with the following:
+
+```rust
+use fluvio_smartmodule::{smartmodule, Result, SmartModuleRecord, RecordData};
+
+#[smartmodule(map)]
+pub fn map(record: &SmartModuleRecord) -> Result<(Option<RecordData>, RecordData)> {
+    let key = record.key.clone();
+
+    let string = std::str::from_utf8(record.value.as_ref())?;
+    let upper = string.to_string().to_uppercase();
+
+    Ok((key, upper.into()))
+}
+```
+
+### Build and Test
+
+It's time to build the SmartModule:
+
+```bash copy="cmd"
+$ smdk build
+```
+
+Test the SmartModule:
+
+```bash copy="cmd"
+$ smdk test --text "Hello in uppercase"
+HELLO IN UPPERCASE
+```
+
+### Load Smartmodule to your Cluster
+
+You must upload the SmartModule to your cluster to use it.
+
+```bash copy="cmd"
+$ smdk load
+Creating SmartModule: uppercase
+```
+
+Ensure it has been uploaded by running the following command:
+
+```bash copy="cmd"
+$ fluvio sm list
+  SMARTMODULE                         SIZE     
+  acme/uppercase@0.1.0                40.9 KB 
+```
+
+:tada: Congratulations! Your smartmodule is ready to use.
+
+[Install Fluvio]: docs/fluvio/quickstart.mdx#install-fluvio

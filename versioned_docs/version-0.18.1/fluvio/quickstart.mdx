@@ -1,0 +1,251 @@
+---
+sidebar_position: 0
+title: "Quickstart"
+description: "Getting started with Fluvio in a few minutes."
+---
+import CodeBlock from '@theme/CodeBlock';
+import HttpSrcQuotes from '!!raw-loader!../_embeds/connectors/http-source-quotes.yaml';
+import HttpSrcQuotesTransform from '!!raw-loader!../_embeds/connectors/http-source-quotes-transform.yaml';
+import CdkHubDownload from '!!raw-loader!../_embeds/cmds/cdk-hub-download-http-source.bash';
+import CdkDeployHttpSrcQuotes from '!!raw-loader!../_embeds/cmds/cdk-deploy-start-http-source-quotes.bash';
+import CdkDeployHttpSrcStringQuotes from '!!raw-loader!../_embeds/cmds/cdk-deploy-start-http-source-string-quotes.bash';
+import FlvHubSmListJolt from '!!raw-loader!../_embeds/cmds/hub-sm-list-jolt.bash';
+import FlvHubSmDownloadJolt from '!!raw-loader!../_embeds/cmds/hub-sm-download-jolt.bash';
+import HubSmListJolt from '!!raw-loader!../_embeds/cmds/sm-list-jolt.bash';
+import TransformsJolt from '!!raw-loader!../_embeds/transforms/infinyon-jolt.yaml';
+
+
+# Quickstart
+
+This guide will walk you through the process of setting up Fluvio and then
+will introduce you to the basic concepts.
+
+## Install Fluvio
+
+Fluvio is installed via the **Fluvio Version Manager**, also known as `fvm`.
+
+To install `fvm`, run the following command:
+
+```bash copy="fl"
+curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
+
+☁️  Downloading fluvio version manager, fvm
+   target arch aarch64-apple-darwin
+⬇️ Installing fvm
+   ...
+```
+
+As part of the initial setup, `fvm` will also install the Fluvio CLI
+available in the **stable** channel as of the moment of installation.
+
+Fluvio is stored in `$HOME/.fluvio`, with the executable binaries stored in
+`$HOME/.fluvio/bin`.
+
+:::tip
+  For the best compatibliity on Windows, InfinyOn recommends [WSL2]
+:::
+
+## Start a Cluster
+
+Start cluster on you local machine with the following command:
+
+```bash copy="fl"
+$ fluvio cluster start
+```
+
+:::tip
+  To run a cloud cluster, see the [Cloud] documentation.
+:::
+
+## Create your first topic
+
+Topics are used to store data and send data streams.
+
+You can create a topic with the following command:
+
+```bash copy="fl"
+$ fluvio topic create quickstart-topic
+```
+
+> Where `quickstart-topic` is the name of your topic
+
+## Produce Records
+
+You can send data (aka _produce_) to your topic.
+
+Let’s try to produce text to your topic interactively:
+
+```bash copy="fl"
+$ fluvio produce quickstart-topic
+> hello world!
+Ok!
+```
+
+Typing anything and then pressing Enter will send a record to your topic.
+
+> Press `Ctrl+C` to exit the interactive producer prompt.
+
+## Consume Records
+
+You can read data (aka _consume_) from your topic.
+
+This command will create a consumer that listens to your topic for new records and then prints it to the screen:
+
+```bash copy="fl"
+$ fluvio consume quickstart-topic
+Consuming records from the end of topic 'quickstart-topic'. This will wait for new records
+```
+
+Note, that `hello world!` was already sent to the topic, so you will not see it printed to the screen.
+
+To see previously sent data, open a new terminal and add an option to your consume command to request a starting offset with the ` -B, --beginning <offset>` flag.
+
+```bash copy="fl"
+$ fluvio consume quickstart-topic -B -d
+hello world!
+```
+
+**Flags**:
+- `-B, --beginning` flag is used to specify the starting offset. Defaults to `0`
+- `-d, --disable-continuous` closes the consumer connection after all data has been sent.
+
+## Start a Connector
+
+InfinyOn offers a growing number of connectors to communicate with external services. In this example, we will be covering the HTTP Source connector. The connector polls data from an HTTP endpoint that returns a random quote every 3 seconds to a topic called quotes.
+
+Create a file and save the following configuration:
+
+<CodeBlock language="yaml">{HttpSrcQuotes}</CodeBlock>
+
+
+## Running the HTTP Connector
+
+We'll use [Connector Developer Kit (cdk)] to download and run the connector.
+
+<CodeBlock language="bash" copyBehavior="fl">$ {CdkHubDownload}</CodeBlock>
+
+Run the following command to deploy the connector:
+
+<CodeBlock language="bash" copyBehavior="fl">$ {CdkDeployHttpSrcQuotes}</CodeBlock>
+
+Use the following command to see the connector status.
+
+```bash copy="fl"
+$ cdk deploy list
+ NAME         STATUS
+ http-quotes  Running
+```
+
+We can monitor new data in the connector’s topic with fluvio consume quotes
+
+```bash copy="fl"
+$ fluvio consume quotes
+Consuming records from 'quotes'
+{"quote":"We cannot solve our problems with the same thinking we used when we created them.","by":"Albert Einstein"}
+{"quote":"Whatever you are, be a good one.","by":"Abraham Lincoln"}
+{"quote":"You can't build a reputation on what you're going to do.","by":"Henry Ford"}
+{"quote":"Success is not final, failure is not fatal: It is the courage to continue that counts.","by":"Winston Churchill"}
+```
+
+## Transform Records with SmartModules
+
+SmartModules are user-defined functions compiled into WebAssembly and applied to data streaming for inline data manipulation. You can use SmartModules in the producers, consumers, as well as Connectors. InfinyOn has several pre-compiled SmartModules that you can use out of the box. Alternatively, you can [build your own].
+
+To list available smartmodules, run:
+
+<CodeBlock language="bash" copyBehavior="fl">$ {FlvHubSmListJolt}</CodeBlock>
+
+
+### Use `jolt` SmartModule to turn JSON records into sentences
+
+Let’s download the Smartmodule to our cluster:
+
+<CodeBlock language="bash" copyBehavior="fl">$ {FlvHubSmDownloadJolt}</CodeBlock>
+
+Check the cluster to ensure it has been successfully downloaded:
+
+<CodeBlock language="bash" copyBehavior="fl">$ {HubSmListJolt}</CodeBlock>
+
+
+Next, we’ll create a transform file and test the output.
+
+### Create a SmartModule transformation file
+
+SmartModules can be chained together and often require additional parameters. Fluvio uses a YAML file is used to define the transformations.
+
+Create a file named `transforms.yaml` and paste the following configuration:
+
+<CodeBlock language="yaml">{TransformsJolt}</CodeBlock>
+
+Jolt is a complex Smartmodule that allows you to perform multiple types of JSON transformations. For additional information, check out the SmartModule Jolt docs.
+
+### Test the SmartModule
+
+```bash copy="fl"
+$  fluvio consume quotes --transforms-file transforms.yaml -T=2
+Consuming records from 'quotes' starting 2 from the end of log
+"The greatest glory in living lies not in never falling, but in rising every time we fall."
+"Simplicity is the ultimate sophistication."
+```
+
+We are consuming the last two quotes topic records and transforming the json into a string. The stream continues consuming as our connectors is still running.
+
+
+## Create a data pipeline with a Connector and a SmartModule
+
+Let’s say we don’t use the authors in the quotes; instead, only the quote represented strings. We can accomplish this result by simply applying the transformation to the connector.
+
+Let’s create a new file add the following configuration:
+
+<CodeBlock language="yaml">{HttpSrcQuotesTransform}</CodeBlock>
+
+Ready to run the connector:
+
+<CodeBlock language="bash" copyBehavior="fl">$ {CdkDeployHttpSrcStringQuotes}</CodeBlock>
+
+Use the following command to see the connector status.
+
+```bash copy="fl"
+$ cdk deploy list
+ NAME           STATUS
+ http-quotes    Running
+ string-quotes  Running
+```
+
+Let’s take a look at string-quotes
+
+```bash copy="fl"
+$ fluvio consume string-quotes
+Consuming records from 'string-quotes'
+"It's not whether you get knocked down, it's whether you get up."
+"Honesty is the first chapter in the book of wisdom."
+```
+
+We now have two topics running in parallel and producing different results with a simple SmartModule transformation. When you apply inline transformations, the number of possibilities are virtually endless.
+
+## Clean-up Resources
+
+During this tutorial, we’ve created a couple connectors and three topics. Let's clean-up:
+
+```bash
+cdk deploy shutdown --name http-quotes
+cdk deploy shutdown --name string-quotes
+fluvio topic delete quotes
+fluvio topic delete string-quotes
+fluvio topic delete quickstart-topic
+```
+
+## Build complex data pipelines with Stateful Dataflows (sdf)
+
+Stateful Dataflows, also known as SDF, allow you to build hierarchical data pipelines with enrichment, window processing, and more.
+
+![Stateful Services Chart](/img/stateful-services.png)
+
+Checkout the [SDF section] for more information.
+
+[Connector Developer Kit (cdk)]: connectors/cdk.mdx
+[build your own]: smartmodules/developers/overview.mdx
+[Cloud]: cloud/quickstart.mdx
+[SDF section]: /sdf
+
+[WSL2]: https://www.windowscentral.com/how-install-wsl2-windows-10

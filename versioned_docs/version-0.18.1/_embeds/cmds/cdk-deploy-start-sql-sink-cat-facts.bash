@@ -1,0 +1,1 @@
+cdk deploy start --ipkg infinyon-sql-sink-0.4.3.ipkg --config ./sql-cat-fact.yaml
