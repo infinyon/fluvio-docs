@@ -1,0 +1,1 @@
+cdk deploy start --ipkg infinyon-http-source-0.3.8.ipkg -c string-quotes-source-connector.yml

@@ -1,0 +1,360 @@
+---
+sidebar_position: 70
+title: "Mirroring - Raspberry Pi to Cluster"
+description: "Reliable IoT monitoring from movable or static Remote sensors."
+---
+
+# Mirroring IoT Data from Raspberry Pi
+
+This advanced tutorial requires a Raspberry Pi and a local installation of your collector cluster running on Local.
+
+## Raspberry Pi to Local Cluster
+
+This section will use a Raspberry Pi v3 running Ubuntu as the remote device and our local machine for the home cluster.
+
+Let's start with installing and configuring the home cluster.
+
+
+### Download `fluvio` binary
+
+Use `curl` to download and install:
+
+
+```bash
+curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
+```
+
+Make sure to add `.fluvio/bin` to the `$PATH`as specified in the installation script.
+
+
+### Start home cluster
+
+Use the fluvio binary to start the cluster:
+
+
+```bash
+fluvio cluster start
+```
+
+Check the result with:
+
+
+```bash
+fluvio cluster status
+```
+
+
+
+**Remote Raspberry Cluster**:
+
+
+```bash
+fluvio remote register remote-raspberry
+```
+
+### Create the mirror topic
+
+Mirror topics on the home cluster have multiple partitions, where each partition has a `1-to-1` relationship with the remote cluster.
+
+Create the mirror topic, then add the remote to it:
+
+```bash
+fluvio topic create mirror-topic  --mirror
+fluvio topic add-mirror mirror-topic remote-raspberry
+```
+
+or apply a JSON file with an array of remotes that you want to assign when creating a topic:
+
+```bash
+echo '["remote-raspberry"]' > assignment_file.json
+fluvio topic create mirror-topic --mirror-apply assignment_file.json
+```
+
+List partitions to check the assignment:
+
+
+```bash
+fluvio partition list
+```
+
+It should display all partitions:
+
+```bash
+  TOPIC         PARTITION  LEADER  MIRROR                     REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
+  mirror-topic  0          5001    remote-raspberry           []        Online      0 B   0   0    0    0                 []
+```
+
+List remote clusters to check their status:
+
+
+```bash
+fluvio remote list
+```
+
+It should show the following:
+
+```bash
+  REMOTE              SC STATUS  SPU STATUS  LAST SEEN  ERRORS
+  remote-raspberry    Waiting    Waiting     -          -
+```
+
+### Generate Metadata for a Remote Cluster
+
+Each remote cluster requires a unique metadata file that gives the remote cluster the information to connect to the home cluster and the topic/mirror where the data is synchronized.
+
+The home remote device is a Raspberry Pi device. You may skip this if you don't have such a device.
+
+:::tip
+  The IP address of our machine where the home server is running is `192.168.1.42`.  Please identify your own IP address and replace it with the command below.
+:::
+
+
+```bash
+fluvio remote export remote-raspberry --public-endpoint 192.168.1.42 --file remote2.json
+```
+
+We'll transfer these files to remote devices in the following sections.
+
+# Install Remote Cluster on Raspberry Pi
+
+We'll use the same procedure as before to mirror from the Raspberry Pi to the same home cluster.
+The test below was performed on a Raspberry Pi v3 running an Ubuntu image.
+
+### Download the metadata file
+
+We'll use the metadata file `remote-raspberry.json` that we've exported above to provision this device.
+
+:::tip
+  Identify the IP address of your Raspberry Pi device and it replaces below
+:::
+
+Using the `home` terminal, let's use the `scp` command to send the `remote-raspberry.json` file to the remote device:
+
+
+```bash
+scp remote-raspberry.json fluvio@192.168.1.50:~
+```
+
+### Login to the remote device
+
+Spawn a new terminal and login into the Raspberry Pi:
+
+
+```bash
+ssh fluvio@192.168.1.50
+```
+
+### Download fluvio binaries
+
+On the Raspberry Pi, run the following command:
+
+
+```bash
+curl -fsS https://hub.infinyon.cloud/install/install.sh | bash
+```
+
+Run `fluvio version` to double-check.
+
+### Start cluster
+
+First we will start the cluster:
+
+
+```bash
+fluvio cluster start
+```
+
+
+Then, we'll use the metadata file on the Raspberry Pi to connect:
+
+```bash
+fluvio home connect --file remote-raspberry.json
+```
+
+Let's check the partitions:
+
+
+```bash
+fluvio partition list
+```
+
+The remote device should show the following partition::
+
+```bash
+  TOPIC       PARTITION  LEADER  MIRROR                         REPLICAS  RESOLUTION  SIZE  HW  LEO  LRS  FOLLOWER OFFSETS
+  mirror-topic  0          5001    home_name:0:public_endpoint    []        Online      0 B   11  11   11   0                 []
+```
+
+
+---
+
+## Test 1:  Mirror from Raspberry Pi Remote to Home
+
+Let's produce on the Raspberry Pi and consume from the home cluster.
+
+### Produce for a remote cluster
+
+Produce on the `pi` terminal:
+
+
+```bash
+fluvio produce mirror-topic
+```
+
+```bash
+> A
+Ok!
+> B
+Ok!
+```
+
+### Consume from home
+
+Consume on the `home` terminal:
+
+```bash
+fluvio consume mirror-topic --mirror remote-raspberry -B
+```
+
+```bash
+A
+B
+```
+
+Mirror test is successful.
+
+
+
+## Test 2:  Home Cluster Offline
+
+Shutdown the home cluster and check that the remote cluster can continue receiving records. Then, resume the home cluster and ensure the data is synchronized and can be consumed on both sides.
+
+### Shutdown the home cluster
+
+On the `home` terminal, shutdown the cluster:
+
+
+```bash
+fluvio cluster shutdown --local
+```
+
+Ensure the cluster is off with:
+
+
+```bash
+ fluvio cluster status
+```
+
+### Produce on the remote cluster
+
+Produce a few more records on the `pi` terminal:
+
+```bash
+fluvio produce mirror-topic
+```
+
+```
+C
+D
+E
+```
+
+### Reconnect home cluster & consume from topic
+
+On the `home` terminal, restart the cluster:
+
+
+```bash
+fluvio cluster upgrade --local
+```
+
+The topic on the home cluster should automatically synchronize with the remote cluster.
+
+:::tip
+  Wait for the connection retry interval to trigger for the records to arrive.
+:::
+
+Let's consume:
+
+
+```bash
+fluvio consume mirror-topic --mirror remote-raspberry -B
+```
+
+```
+A
+B
+C
+D
+E
+```
+
+The disconnect test was successful.
+
+
+
+## Test 3: Remote Cluster Offline
+
+This test ensures that the remote cluster will not lose data following a power loss.
+
+### Restart the remote cluster
+
+On the `remote` terminal, shutdown the cluster:
+
+
+```bash
+fluvio cluster shutdown --local
+```
+
+Restart the cluster:
+
+
+```bash
+fluvio cluster upgrade
+```
+
+### Consume from a remote cluster
+
+First, on the `pi` terminal, check the status of the target cluster:
+
+```bash
+fluvio cluster home
+```
+```bash
+HOME  ROUTE            STATUS  SC STATUS  SPU STATUS  LAST SEEN  ERRORS
+home  localhost:30003  Online  Connected  Connected   1s         -
+```
+
+Then, consume from the remote cluster:
+
+
+```bash
+fluvio consume mirror-topic -B
+```
+
+```
+A
+B
+C
+D
+E
+```
+
+Produce records and observe that the mirror will resume the synchronization.
+
+🎉 Congratulations! You have successfully tested remote mirroring using the Raspberry Pi. It is now time to roll it out in your environment.
+
+
+
+#### Related
+* [Try Mirroring]
+* [Try Mirroring - Cloud]
+* [IoT Mirroring - Cloud]
+* [Discord]
+
+[Try Mirroring]: fluvio/tutorials/mirroring-two-clusters.mdx
+[Try Mirroring - Cloud]: cloud/tutorials/try-mirroring-cloud.mdx
+[IoT Mirroring - Cloud]: cloud/tutorials/iot-mirroring-cloud.mdx
+[Discord]: https://discord.com/invite/bBG2dTz
+[Install Fluvio on Local]: fluvio/installation/local.mdx
+

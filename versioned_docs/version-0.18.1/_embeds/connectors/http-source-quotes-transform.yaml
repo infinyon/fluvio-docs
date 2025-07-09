@@ -1,0 +1,17 @@
+# string-quotes-source-connector.yml
+apiVersion: 0.1.0
+meta:
+  version: 0.3.8
+  name: string-quotes
+  type: http-source
+  topic: string-quotes
+http:
+  endpoint: https://demo-data.infinyon.com/api/quote
+  interval: 3s
+transforms:
+  - uses: infinyon/jolt@0.4.1
+    with:
+      spec:
+        - operation: shift
+          spec:
+            quote: ""

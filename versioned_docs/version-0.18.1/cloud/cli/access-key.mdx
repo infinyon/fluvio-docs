@@ -1,0 +1,91 @@
+---
+sidebar_position: 80
+title: access-key
+description: "CLI commands for access keys"
+---
+
+Access keys allow websocket access to Infinyon Cloud clusters. Access keys are set via the CLI. Each access key has a user defined name and a generated key.
+
+## `fluvio cloud access-key` subcommands
+
+- create
+- list
+- delete
+- rotate
+
+```bash
+$ fluvio cloud access-key create <NAME>
+$ fluvio cloud access-key list
+$ fluvio cloud access-key delete <NAME>
+$ fluvio cloud access-key rotate <NAME>
+```
+
+## `fluvio cloud access-key create`
+
+Creates an access key with the given name.
+
+### Simple WebSocket Access Key
+
+```bash
+$ fluvio cloud access-key create <NAME> --topic <TOPIC> [--consume] [--produce] [--key-filter-remote <QUERY_PARAM_NAME:REMOTE_URL>]
+```
+
+
+This will create an access key that targets specified topic. The access key can optionally be restricted to only allow producing or consuming data by passing the `--consume` or `--produce` flag.
+
+This access key can be used to connect via WebSocket URL `wss://infinyon.cloud/wsr/v1/simple/consume?access_key=<KEY>` for consuming and `wss://infinyon.cloud/wsr/v1/simple/produce?access_key=<KEY>` for producing.
+
+#### Key Filter Remote
+
+The `--key-filter-remote <QUERY_PARAM_NAME:REMOTE_URL>` option can be used to specify a remote key filter. This is useful for enforcing that when this access key is used for consuming, only records matching the key filter will be returned.
+
+When using the `--key-filter-remote` option, the gateway consume endpoint will accept a query parameter specified in `QUERY_PARAM_NAME`. The value of this query parameter will be used to fetch the key filter from the remote URL specified in `REMOTE_URL`. The key filter will be fetched via a HTTP POST request with the value of the query parameter as the body. The key filter returned must be a UTF-8 string, it will be checked against the key of the record for an exact match.
+
+The records will be checked against the key filter for an exact match. The key filter will be fetched from the remote URL via https.
+
+Example:
+1. Access key is created with `--key-filter-remote user_token:https://example.com/key-filter`
+2. The consume endpoint is called by WebSocket with access key and the specified query parameter `wss://infinyon.cloud/wsr/v1/simple/consume?access_key=<ACCESS_KEY>&user_token=<MY_USER_TOKEN>`
+3. The gateway will fetch the key filter from `https://example.com/key-filter` by performing a HTTP POST with the `<MY_USER_TOKEN>` as the body.
+4. The remote key-filter server will respond to the gateway with the key filter.
+5. The gateway will use the key filter to filter the records being consumed.
+
+### Fluvio over WebSocket Access Key
+
+```bash
+$ fluvio cloud access-key create <NAME> --protocol fluvio
+```
+
+This will create an access key that allows the [Fluvio WASM Client] client to connect to your cluster. The access key allows full Fluvio protocol access which can be used for producing and consuming as well as admin operations. The client will need to be configured to connect to `wss://infinyon.cloud/wsr/v1/fluvio?access_key=<KEY>`.
+
+## `fluvio cloud access-key list`
+
+Lists all access keys with their name and key.
+
+```bash
+$ fluvio cloud access-key list
+
+ NAME   KEY
+ demo1  T8qfLk5l6KWfpOrWYgUfHYKzKsvwjw6m
+ demo2  iSmvJXJXDkyq3SgEGpsgTDv1RTaZXdQD
+```
+
+
+## `fluvio cloud access-key delete`
+
+This will delete the named access key.
+
+```bash
+$ fluvio cloud access-key delete <NAME>
+```
+
+
+## `fluvio cloud access-key rotate`
+
+This will generate a new key for the named access key.
+
+```bash
+$ fluvio cloud access-key rotate <NAME>
+```
+
+[Fluvio WASM Client]: https://github.com/infinyon/fluvio-client-wasm

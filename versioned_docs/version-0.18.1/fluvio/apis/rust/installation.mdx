@@ -1,0 +1,18 @@
+---
+title: Installation
+sidebar_position: 10
+---
+import CodeBlock from '@theme/CodeBlock';
+import FluvioCrateVersion from '!!raw-loader!../../../_embeds/apis/rust/_fluvio-crate-version.toml';
+
+## Rust SDK Installation Guide
+
+The only requirement is to [install a basic Rust development environment](https://www.rust-lang.org/tools/install)
+
+## Add [`fluvio`] crate
+
+Then add [`fluvio`] under `[dependencies]` to your project's `Cargo.toml`
+
+<CodeBlock language="toml">{FluvioCrateVersion}</CodeBlock>
+
+[`fluvio`]: https://crates.io/crates/fluvio

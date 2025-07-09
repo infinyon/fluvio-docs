@@ -1,0 +1,81 @@
+---
+sidebar_position: 900
+title: "Configuration Defaults"
+---
+
+# Configuration Defaults
+
+Configuration defaults for the Fluvio Client and Cluster can be found on this page
+
+## Fluvio Client
+
+### Producer
+
+| Resource | Default Value |
+|-|-|
+| max_request_size | 1048576 bytes |
+| batch_size | 16384 bytes |
+| compression | none |
+| linger | 0 ms|
+
+See the [Batching page] for additional info regarding these parameters
+
+### Consumer
+
+See the [Consumers] concepts page for more information about consumers
+
+## Cluster
+
+When a Fluvio Cluster is created without extra params, either in Kubernetes
+or locally certain assumptions on limitations are made.
+
+This document outlines the default configurations for a Fluvio Cluster.
+
+| Resource | Default Value |
+|-|-|
+| SPUs | `1` |
+
+### SPU Group
+
+| Resource | Default Value |
+|-|-|
+| Number of replicas | `1` |
+| Minimum ID in Group | `0` |
+| Store Size | `10 GB` |
+
+### SPUs
+
+| Resource | Default Value |
+|-|-|
+| SPU ID | `0` |
+| SPU Type | Managed |
+| Public Endpoint's IP Address | `localhost:30004`
+| Public Endpoint Encryption | `PLAINTEXT` |
+| Private Endpoint's IP Address | `fluvio-spg-main.default.svc.cluster.local:9006`
+| Private Endpoint Encryption | `PLAINTEXT` |
+
+:::tip
+  By default SPU communication have no encryption enabled.<br />
+  It is recommended to enable encryption for production clusters.
+:::
+
+### Topic
+
+| Resource | Default Value |
+|-|-|
+| Compression Type | Not specified. |
+| Partitions | `1` |
+| Replicas | `1` |
+| Segment Size | `1 GB` |
+
+### Partition
+
+| Resource | Default Value |
+|-|-|
+| Replicas | `0`
+
+For information on changing the defaults see the advanced [Overriding page]
+
+[Consumers]: fluvio/concepts/consumers.mdx
+[Batching page]: fluvio/concepts/batching.mdx
+[Overriding page]: fluvio/concepts/advanced/config-overriding.mdx
