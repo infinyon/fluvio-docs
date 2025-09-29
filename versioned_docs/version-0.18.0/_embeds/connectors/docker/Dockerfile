@@ -20,10 +20,11 @@ FROM debian:stable-slim
 
 # setup fluvio as non user
 ENV USER=fluvio
-RUN adduser \
-    --disabled-password \
-    --home "/home/$USER" \
-    "$USER"
+RUN useradd \
+  --create-home \
+  --home-dir "/home/$USER" \
+  --shell /bin/bash \
+  "$USER"
 USER $USER
 WORKDIR /home/fluvio/connector
 
