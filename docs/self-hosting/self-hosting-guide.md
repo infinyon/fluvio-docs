@@ -332,6 +332,34 @@ For Kubernetes clusters, this removes the namespace and all resources. For local
 
 - **Docs**: https://www.fluvio.io/docs/fluvio/cli/fluvio/cluster/
 
+### 6.4 Transitioning Data Between Clusters
+
+When moving to a new Fluvio cluster, the simplest approach is to **repopulate topics from their original sources**. This ensures data consistency and avoids complexity.
+
+However, if you need to migrate existing topic data between clusters (e.g., from a cloud instance to self-hosted), use the `flvpipe` utility:
+
+```bash
+# Install from the fluvio-community utilities repo
+git clone https://github.com/fluvio-community/utilities
+cd utilities/flvpipe
+cargo build --release
+```
+
+Transfer data between clusters using profiles:
+```bash
+# Transfer 100,000 records from source cluster to destination cluster
+flvpipe \
+  --num-records 100000 \
+  source-topic --in-profile=production \
+  dest-topic --out-profile=local
+```
+
+**Note**: `flvpipe` is designed for one-time transfers. For ongoing data movement, use connectors instead.
+
+**Caution**: Large datasets can be time and bandwidth intensive to transfer. Consider testing with a subset of records first using `--num-records` to estimate transfer time.
+
+- **Utility**: https://github.com/fluvio-community/utilities/blob/main/flvpipe/readme.md
+
 ## 7. Community Resources
 
 - **Main Repo**: https://github.com/infinyon/fluvio
