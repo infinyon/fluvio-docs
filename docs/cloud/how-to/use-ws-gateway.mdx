@@ -12,7 +12,7 @@ The WebSocket Gateway allows you to produce and consume data using a WebSocket c
 
 First, create a topic to interact with.
 
-```shell
+```shell copy="fl"
 $ fluvio topic create my-topic
 topic "my-topic" created
 ```
@@ -21,7 +21,7 @@ topic "my-topic" created
 
 Create an access key to authenticate the WebSocket connection. This key will only allow access to the specified topic.
 
-```shell
+```shell copy="fl"
 $ fluvio cloud access-key create my-access-key-1 --topic my-topic
 Access key "my-access-key-1" created: zGO0WBmCM4EAEJYbksCjGzJrrKHdgwPa
 - Produce: wss://infinyon.cloud/wsr/v1/simple/produce?access_key=zGO0WBmCM4EAEJYbksCjGzJrrKHdgwPa
@@ -32,12 +32,12 @@ Access key "my-access-key-1" created: zGO0WBmCM4EAEJYbksCjGzJrrKHdgwPa
 Optionally, you can restrict an access key to only allow producing or consuming data by passing the `--consume` or `--produce` flag when creating the access key.
 
 #### Consume Only
-```shell
+```shell copy="fl"
 $ fluvio cloud access-key create my-consume-key --topic my-topic --consume
 ```
 
 #### Produce Only
-```shell
+```shell copy="fl"
 $ fluvio cloud access-key create my-produce-key --topic my-topic --produce
 ```
 
